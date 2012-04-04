@@ -99,7 +99,9 @@ class ThingsMixin(local):
         '''swap context to default context'''
         return self.swap()
 
-    rw = unswap
+    def rw(self):
+        '''switch to read/write context'''
+        return self._uclear().unswap()
 
     def reswap(self):
         '''swap contexts to current preferred context'''
@@ -313,8 +315,11 @@ class ResultMixin(local):
 
     def peek(self):
         '''results from read-only context'''
+        self.ro()
         out = self._wrapper(self._util)
-        return out[0] if len(out) == 1 else out
+        results = out[0] if len(out) == 1 else out
+        self.rw()
+        return results
 
     def results(self):
         '''yield outgoing things, clearing outgoing things as it iterates'''

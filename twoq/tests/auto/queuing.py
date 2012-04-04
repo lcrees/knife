@@ -14,10 +14,12 @@ class AQMixin(object):
             self.qclass([1, 2, 3, 4, 5, 6]).__repr__(), strings,
         ))
 
-    def test_ro(self):
-        self.assertListEqual(
-            self.qclass([1, 2, 3, 4, 5, 6]).ro().peek(), [1, 2, 3, 4, 5, 6],
-        )
+    def test_peek(self):
+        initial = self.qclass(1, 2, 3, 4, 5, 6)
+        self.assertListEqual(initial.peek(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(len(initial), 6)
+        self.assertListEqual(initial.outsync().end(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertEqual(
