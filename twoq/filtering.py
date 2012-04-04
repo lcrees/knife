@@ -98,15 +98,15 @@ class CollectMixin(local):
 
     def deepmembers(self):
         '''collect object members from incoming things and their bases'''
-        _mf = self._mfilter
+        _mf, mro = self._mfilter, getmro
         _mz = lambda x: _mf(self._call, x)
-        def _memfilters(thing, mz=_mz, gc=getcls, ci=ichain):
-            return ci(imap(mz, ci([getmro((gc(thing))), [thing]])))
+        def memfilters(thing, mz=_mz, gc=getcls, ci=ichain, mro=mro): #@IgnorePep8
+            return ci(imap(mz, ci([mro((gc(thing))), [thing]])))
         with self._context():
             return self._xtend(
-                ichain(imap(_memfilters, self._iterable))
+                ichain(imap(memfilters, self._iterable))
             )
-            
+
     def extract(self):
         '''extract object members from incoming things'''
         with self._context():
@@ -123,6 +123,11 @@ class CollectMixin(local):
             return self._xtend(ichain(imap(
                 lambda x: mfilter(call, x), self._iterable,
             )))
+
+    def mro(self):
+        '''extract ancestors of things by method resolution order'''
+        with self._context():
+            return self._extend(getmro(i) for i in self._iterable)
 
     def pick(self, *names):
         '''collect object attributes from incoming things by their `*names`'''

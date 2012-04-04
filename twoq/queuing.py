@@ -6,10 +6,15 @@ from collections import deque
 from itertools import tee, repeat
 from contextlib import contextmanager
 
+from stuf.utils import OrderedDict
+from stuf.core import stuf, frozenstuf, orderedstuf
+
+from twoq.support import n2u, n2b
+
 SLOTS = [
     '_work', 'outgoing', '_util', 'incoming', '_call', '_alt', '_wrapper',
     '_args', '_kw', '_clearout', '_context', '_CONFIG', '_INQ', '_WORKQ',
-    '_UTILQ', '_OUTQ', '_iterator',
+    '_UTILQ', '_OUTQ', '_iterator', 'current_mode', '_snapshots',
 ]
 
 
@@ -29,8 +34,12 @@ class ThingsMixin(local):
     # 4. outgoing things
     _OUTCFG = 'outq'
     _OUTVAR = 'outgoing'
+    # read/write mode marker
+    _RW = 'read/write'
+    # read-only mode marker
+    _RO = 'read-only'
 
-    def __init__(self, incoming, outgoing):
+    def __init__(self, incoming, outgoing, **kw):
         '''
         init
 
@@ -38,6 +47,8 @@ class ThingsMixin(local):
         @param outgoing: outgoing things
         '''
         super(ThingsMixin, self).__init__()
+        # snapshots
+        self._snapshots = deque(maxlen=kw.pop('snapshots', 5))
         # incoming things
         self.incoming = incoming
         # outgoing things
@@ -52,6 +63,8 @@ class ThingsMixin(local):
         self._args = ()
         # reset keyword arguments
         self._kw = {}
+        # mode
+        self.current_mode = self._RW
         # set defaults
         self.unswap()
 
@@ -59,6 +72,13 @@ class ThingsMixin(local):
     def balanced(self):
         '''if queues are balanced'''
         return self.outcount() == self.__len__()
+
+    @staticmethod
+    def _repr(*args):
+        return (
+            '<{0}.{1}<<{2}>>([IN: {3}({4}) => WORK: {5}({6}) => UTIL: {7}({8})'
+            ' => OUT: {9}: ({10})]) at {11}>'
+        ).format(*args)
 
     def clear(self):
         '''clear every thing'''
@@ -72,6 +92,7 @@ class ThingsMixin(local):
     @contextmanager
     def ctx1(self, **kw):
         '''swap to one-armed context'''
+        self.snapshot()
         q = kw.pop(self._WORKCFG, self._INVAR)
         self.swap(workq=q, utilq=q, context=self.ctx1, **kw)
         yield
@@ -99,13 +120,36 @@ class ThingsMixin(local):
         '''swap context to default context'''
         return self.swap()
 
-    def rw(self):
-        '''switch to read/write context'''
-        return self._uclear().unswap()
-
     def reswap(self):
         '''swap contexts to current preferred context'''
         return self.swap(**self._CONFIG)
+
+    ###########################################################################
+    ## mode ###################################################################
+    ###########################################################################
+
+    def rw(self):
+        '''switch to read/write mode'''
+        self.current_mode = self._RW
+        return self._uclear().unswap()
+
+    ###########################################################################
+    ## snapshots ##############################################################
+    ###########################################################################
+
+    def undo(self):
+        '''revert to last snapshot'''
+        self.clear()
+        self.incoming = self._snapshots.pop()
+        self.snapshot()
+        return self
+
+    def revert(self, snapshot=0):
+        '''revert to specific snapshot'''
+        self.clear()
+        self.incoming = self._snapshots[snapshot]
+        self.snapshot()
+        return self
 
     ###########################################################################
     ## current callable management ############################################
@@ -168,20 +212,6 @@ class ThingsMixin(local):
         return self.tap(wrap)
 
     defactory = detap
-
-    def wrap(self, wrapper):
-        '''
-        wrapper for outgoing things
-
-        @param wrapper: an iterator
-        '''
-        self._wrapper = wrapper
-        return self
-
-    def unwrap(self):
-        '''clear current wrapper'''
-        self._wrapper = list
-        return self
 
     ###########################################################################
     ## things rotation ########################################################
@@ -301,6 +331,78 @@ class ThingsMixin(local):
 class ResultMixin(local):
 
     '''result things mixin'''
+
+    def wrap(self, wrapper):
+        '''
+        wrapper for outgoing things
+
+        @param wrapper: an iterator
+        '''
+        self._wrapper = wrapper
+        return self
+
+    def unwrap(self):
+        '''clear current wrapper'''
+        return self.list()
+
+    def dict(self):
+        '''set wrapper to `d    ict`'''
+        self._wrap = dict
+        return self
+
+    def ordered_dict(self):
+        '''set wrapper to `OrderedDict`'''
+        self._wrap = OrderedDict
+
+    def list(self):
+        '''set wrapper to `list`'''
+        self._wrap = list
+        return self
+
+    def unicode(self, encoding='utf-8'):
+        '''set wrapper to `unicode` with given `encoding`'''
+        self._wrap = lambda x: n2u(x, encoding)
+        return self
+
+    def bytes(self, encoding='ISO-8859-1'):
+        '''set wrapper to `bytes` with given `encoding`'''
+        self._wrap = lambda x: n2b(x, encoding)
+        return self
+
+    def tuple(self):
+        '''set wrapper to `tuple`'''
+        self._wrap = tuple
+        return self
+
+    def set(self):
+        '''set wrapper to `set`'''
+        self._wrap = set
+        return self
+
+    def frozenset(self):
+        '''set wrapper to `frozenset`'''
+        self._wrap = frozenset
+        return self
+
+    def deque(self):
+        '''set wrapper to `deque`'''
+        self._wrap = deque
+        return self
+
+    def stuf(self):
+        '''set wrapper to `stuf`'''
+        self._wrap = stuf
+        return self
+
+    def frozenstuf(self):
+        '''set wrapper to `frozenstuf`'''
+        self._wrap = frozenstuf
+        return self
+
+    def orderedstuf(self):
+        '''set wrapper to `orderedstuf`'''
+        self._wrap = orderedstuf
+        return self
 
     def first(self):
         '''first incoming thing'''

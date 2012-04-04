@@ -146,3 +146,65 @@ else:
                 self_get = self.get
                 for elem in iterable:
                     self[elem] = self_get(elem, 0) + 1
+
+
+if six.PY3:
+
+    def n2b(n, encoding='ISO-8859-1'):
+        '''
+        the given native string as a byte string in the given encoding
+        '''
+        # In Python 3, the native string type is unicode
+        return n.encode(encoding)
+
+    def n2u(n, encoding='ISO-8859-1'):
+        '''
+        the given native string as a unicode string with the given encoding
+        '''
+        # In Python 3, the native string type is unicode
+        return n
+
+    def ton(n, encoding='ISO-8859-1'):
+        '''
+        the given string as a native string in the given encoding
+        '''
+        # In Python 3, the native string type is unicode
+        if isinstance(n, bytes):
+            return n.decode(encoding)
+        return n
+else:
+    import re
+
+    def n2b(n, encoding='ISO-8859-1'):
+        '''the given native string as a byte string in the given encoding'''
+        # In Python 2, the native string type is bytes. Assume it's already
+        # in the given encoding, which for ISO-8859-1 is almost always what
+        # was intended.
+        return n
+
+    def n2u(n, encoding='ISO-8859-1'):
+        '''
+        the given native string as a unicode string with the given encoding
+        '''
+        # In Python 2, the native string type is bytes.
+        # First, check for the special encoding 'escape'. The test suite uses
+        # this
+        # to signal that it wants to pass a string with embedded \unnnn
+        # escapes, but without having to prefix it with u'' for Python 2, but
+        # no prefix for Python 3.
+        if encoding == 'escape':
+            return unicode(re.sub(
+                r'\\u([0-9a-zA-Z]{4})',
+               lambda m: unichr(int(m.group(1), 16)),
+               n.decode('ISO-8859-1')
+            ))
+        # assume it's already in the given encoding, which for ISO-8859-1 is
+        # almost always what was intended.
+        return n.decode(encoding)
+
+    def ton(n, encoding='ISO-8859-1'):
+        '''return the given string as a native string in the given encoding'''
+        # in Python 2, the native string type is bytes.
+        if isinstance(n, unicode):
+            return n.encode(encoding)
+        return n

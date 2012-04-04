@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''active twoq mixins'''
 
+from copy import copy
 from collections import deque
 from contextlib import contextmanager
 
@@ -29,12 +30,10 @@ class BaseQMixin(ThingsMixin):
 
     def __repr__(self):
         getr_, list_ = lambda x: getattr(self, x), list
-        return (
-            '<{}.{}([IN: {}({}) => WORK: {}({}) => UTIL: {}({}) => '
-            'OUT: {}: ({})]) at {}'
-        ).format(
+        return self._repr(
             self.__module__,
             clsname(self),
+            self.current_mode.upper(),
             self._INQ,
             list_(getr_(self._INQ)),
             self._WORKQ,
@@ -45,6 +44,15 @@ class BaseQMixin(ThingsMixin):
             list_(getr_(self._OUTQ)),
             id(self),
         )
+
+    ###########################################################################
+    ## snapshots ##############################################################
+    ###########################################################################
+
+    def snapshot(self):
+        '''take snapshot of incoming'''
+        self._snapshots.append(copy(getattr(self, self._INQ)))
+        return self
 
     ###########################################################################
     ## thing length ###########################################################
@@ -112,6 +120,10 @@ class BaseQMixin(ThingsMixin):
         self.outgoing.clear()
         return self
 
+    def ssclear(self):
+        self._snapshots.clear()
+        return self
+
     ###########################################################################
     ## extend #################################################################
     ###########################################################################
@@ -151,7 +163,8 @@ class BaseQMixin(ThingsMixin):
 
     @contextmanager
     def ctx2(self, **kw):
-        '''swap to two-armed context'''
+        '''swap for two-armed context'''
+        self.snapshot()
         self.swap(
             outq=kw.get(self._OUTCFG, self._INVAR), context=self.ctx2(), **kw
         )
@@ -178,7 +191,8 @@ class BaseQMixin(ThingsMixin):
 
     @contextmanager
     def ctx3(self, **kw):
-        '''swap to three-armed context'''
+        '''swap for three-armed context'''
+        self.snapshot()
         self.swap(
             utilq=kw.get(self._WORKCFG, self._WORKVAR), context=self.ctx3, **kw
         )
@@ -205,7 +219,8 @@ class BaseQMixin(ThingsMixin):
 
     @contextmanager
     def ctx4(self, **kw):
-        '''swap to four-armed context'''
+        '''swap for four-armed context'''
+        self.snapshot()
         self.swap(context=self.ctx4, **kw)
         getr_ = lambda x: getattr(self, x)
         outq = getr_(self._OUTQ)
@@ -230,7 +245,8 @@ class BaseQMixin(ThingsMixin):
 
     @contextmanager
     def autoctx(self, **kw):
-        '''swap to auto-synchronizing context'''
+        '''swap for auto-synchronizing context'''
+        self.snapshot()
         self.swap(context=self.autoctx, **kw)
         getr_ = lambda x: getattr(self, x)
         outq = getr_(self._OUTQ)
@@ -257,10 +273,11 @@ class BaseQMixin(ThingsMixin):
         self.reswap()
 
     def ro(self):
-        '''swap to read-only context'''
+        '''switch to read-only mode'''
         with self.ctx3(outq=self._UTILVAR):
             self._xtend(self._iterable)
         with self.ctx1(hard=True, workq=self._UTILVAR):
+            self.current_mode = self._RO
             return self
 
 
