@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq active queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.mapping import MappingMixin as MapMixin
 from thingq.ordering import OrderingMixin as OrderMixin
 from thingq.reducing import ReducingMixin as ReduceMixin

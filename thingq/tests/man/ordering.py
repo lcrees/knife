@@ -38,12 +38,12 @@ class MOrderQMixin(MRandomQMixin):
     def test_group(self,):
         from math import floor
         self._false_true_false(
-            self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).group(),
+            self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby(),
             self.assertListEqual,
             [[1.0, [1.3]], [2.0, [2.1, 2.4]]]
         )
         self._true_true_false(
-            self.qclass(1.3, 2.1, 2.4).group(),
+            self.qclass(1.3, 2.1, 2.4).groupby(),
             self.assertListEqual,
             [[1.3, [1.3]], [2.1, [2.1]], [2.4, [2.4]]],
         )

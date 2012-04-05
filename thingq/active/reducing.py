@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq active reducing queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.reducing import MathMixin, TruthMixin, ReducingMixin
 
 from thingq.active.mixins import AutoResultMixin, ManResultMixin

@@ -29,7 +29,7 @@ class AQMixin(object):
 
     def test_outextend(self):
         self.assertListEqual(
-            self.qclass().outextend([1, 2, 3, 4, 5, 6]).end(),
+            self.qclass().extendout([1, 2, 3, 4, 5, 6]).end(),
             [1, 2, 3, 4, 5, 6],
         )
 
@@ -90,42 +90,42 @@ class AQMixin(object):
 
     def test_tuple_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).tuple_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).tupleout().syncout().out(),
             tuple,
         )
         self.assertTupleEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tuple_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).tupleout().syncout().out(),
             (1, 2, 3, 4, 5, 6),
         )
 
     def test_set_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).set_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).setout().syncout().out(),
             set,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).set_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).setout().syncout().out(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
     def test_deque_wrap(self):
         from collections import deque
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).deque_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).dequeout().syncout().out(),
             deque,
         )
         self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).deque_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).dequeout().syncout().out(),
             deque([1, 2, 3, 4, 5, 6]),
         )
 
     def test_frozenset_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).frozenset_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).fsetout().syncout().out(),
             frozenset,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).frozenset_wrap().syncout().value(),
+            self.qclass(1, 2, 3, 4, 5, 6).fsetout().syncout().out(),
             frozenset([1, 2, 3, 4, 5, 6]),
         )
 
@@ -133,13 +133,13 @@ class AQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dict_wrap().syncout().value(),
+            ).dictout().syncout().out(),
             dict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dict_wrap().syncout().value(),
+            ).dictout().syncout().out(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -148,13 +148,13 @@ class AQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).frozenstuf_wrap().syncout().value(),
+            ).fstufout().syncout().out(),
             frozenstuf,
         )
         self.assertEqual(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).frozenstuf_wrap().syncout().value(),
+            ).fstufout().syncout().out(),
            frozenstuf({'a1': 2, 'a3': 4, 'a5': 6}),
         )
 
@@ -163,13 +163,13 @@ class AQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ordereddict_wrap().syncout().value(),
+            ).odictout().syncout().out(),
             OrderedDict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ordereddict_wrap().syncout().value(),
+            ).odictout().syncout().out(),
             OrderedDict({1: 2, 3: 4, 5: 6}),
         )
 
@@ -178,13 +178,13 @@ class AQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).orderedstuf_wrap().syncout().value(),
+            ).ostufout().syncout().out(),
             orderedstuf,
         )
         self.assertEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).orderedstuf_wrap().syncout().value(),
+            ).ostufout().syncout().out(),
            orderedstuf({1: 2, 3: 4, 5: 6}),
         )
 
@@ -193,12 +193,12 @@ class AQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stuf_wrap().syncout().value(),
+            ).stufout().syncout().out(),
             stuf,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stuf_wrap().syncout().value(),
+            ).stufout().syncout().out(),
            stuf({1: 2, 3: 4, 5: 6}),
         )

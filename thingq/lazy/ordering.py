@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq lazy ordering queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.ordering import RandomMixin, OrderingMixin
 
 from thingq.lazy.mixins import AutoResultMixin, ManResultMixin

@@ -38,7 +38,7 @@ class OrderMixin(local):
 
     '''order mixin'''
 
-    def group(self):
+    def groupby(self):
         '''
         group incoming things, optionally using current call for key function
         '''

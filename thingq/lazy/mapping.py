@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq lazy mapping queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.mapping import DelayMixin, RepeatMixin, MappingMixin
 
 from thingq.lazy.mixins import AutoResultMixin, ManResultMixin

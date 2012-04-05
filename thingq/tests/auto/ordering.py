@@ -28,11 +28,11 @@ class AOrderQMixin(ARandomQMixin):
     def test_group(self,):
         from math import floor
         self.assertEqual(
-        self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).group().end(),
+        self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby().end(),
             [[1.0, [1.3]], [2.0, [2.1, 2.4]]]
         )
         self.assertEqual(
-            self.qclass(1.3, 2.1, 2.4).group().end(),
+            self.qclass(1.3, 2.1, 2.4).groupby().end(),
             [[1.3, [1.3]], [2.1, [2.1]], [2.4, [2.4]]],
         )
 
@@ -63,7 +63,7 @@ class AOrderQMixin(ARandomQMixin):
         )
 
     def test_product(self):
-        foo = self.qclass('ABCD', 'xy').product().value()
+        foo = self.qclass('ABCD', 'xy').product().out()
         self.assertEqual(
             foo,
             [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),

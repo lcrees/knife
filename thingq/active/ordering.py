@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq active ordering queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.ordering import RandomMixin, OrderingMixin
 
 from thingq.active.mixins import AutoResultMixin, ManResultMixin

@@ -115,7 +115,7 @@ class ThingsMixin(local):
         self._CONFIG = kw if kw.get('hard', False) else {}
         # set context
         self._context = kw.get('context', getattr(self, self._DEFAULT_CONTEXT))
-        # clear out outgoing things before extending them?
+        # clear wrap outgoing things before extending them?
         self._clearout = kw.get('clearout', True)
         # 1. incoming things
         self._INQ = kw.get(self._INCFG, self._INVAR)
@@ -214,7 +214,7 @@ class ThingsMixin(local):
         with self.ctx1():
             return self._xtendleft(things)
 
-    def outextend(self, things):
+    def extendout(self, things):
         '''
         extend right side of outgoing things
 
@@ -357,44 +357,44 @@ class ResultsMixin(local):
         self._wrapper = wrapper
         return self
 
-    def tuple_wrap(self):
+    def tupleout(self):
         '''set wrapper to `tuple`'''
         return self.wrap(tuple)
 
-    def set_wrap(self):
+    def setout(self):
         '''set wrapper to `set`'''
         return self.wrap(set)
 
-    def deque_wrap(self):
+    def dequeout(self):
         '''set wrapper to `deque`'''
         return self.wrap(deque)
 
-    def dict_wrap(self):
+    def dictout(self):
         '''set wrapper to `dict`'''
         return self.wrap(dict)
 
-    def frozenset_wrap(self):
+    def fsetout(self):
         '''set wrapper to `frozenset`'''
         return self.wrap(frozenset)
 
-    def frozenstuf_wrap(self):
+    def fstufout(self):
         '''set wrapper to `frozenstuf`'''
         return self.wrap(frozenstuf)
 
-    def ordereddict_wrap(self):
+    def odictout(self):
         '''set wrapper to `OrderedDict`'''
         return self.wrap(OrderedDict)
 
-    def orderedstuf_wrap(self):
+    def ostufout(self):
         '''set wrapper to `orderedstuf`'''
         return self.wrap(orderedstuf)
 
-    def stuf_wrap(self):
+    def stufout(self):
         '''set wrapper to `stuf`'''
         return self.wrap(stuf)
 
-    def list_wrap(self):
+    def listout(self):
         '''clear current wrapper'''
         return self.wrap(list)
 
-    unwrap = list_wrap
+    unwrap = listout

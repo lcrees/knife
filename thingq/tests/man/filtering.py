@@ -22,7 +22,7 @@ class MSliceQMixin(object):
         self.assertFalse(manq.balanced)
         manq.sync()
         self.assertTrue(manq.balanced)
-        self.assertEqual(manq.value(), 5)
+        self.assertEqual(manq.out(), 5)
         self.assertFalse(manq.balanced)
 
     def test_nth(self):
@@ -38,7 +38,7 @@ class MSliceQMixin(object):
         self.assertFalse(manq.balanced)
         manq.sync()
         self.assertTrue(manq.balanced)
-        self.assertEqual(manq.value(), 1)
+        self.assertEqual(manq.out(), 1)
         self.assertFalse(manq.balanced)
 
     def test_initial(self):
@@ -85,7 +85,7 @@ class MCollectQMixin(object):
                 stooges, stoog2, stoog3
             ).tap(
                 lambda x: not x[0].startswith('__'), isclass
-            ).tuple_wrap().members().untap().sync(),
+            ).tupleout().members().untap().sync(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
@@ -106,7 +106,7 @@ class MCollectQMixin(object):
         self._true_true_false(
             self.qclass(stoog3).tap(
                 lambda x: x, isclass
-            ).tuple_wrap().mro().sync().members().untap().sync(),
+            ).tupleout().mro().sync().members().untap().sync(),
             self.assertEqual,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
             ('age', 40), ('name', 'moe'))

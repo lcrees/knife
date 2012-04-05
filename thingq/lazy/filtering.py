@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq lazy filtering queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.filtering import (
     FilteringMixin, CollectMixin, SetMixin, SliceMixin)
 

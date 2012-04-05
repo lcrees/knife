@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''thingq lazy reducing queues'''
 
-from thingq.core import SLOTS
+from thingq.mixins import SLOTS
 from thingq.reducing import MathMixin, TruthMixin, ReducingMixin
 
 from thingq.lazy.mixins import AutoResultMixin, ManResultMixin

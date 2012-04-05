@@ -6,7 +6,7 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from thingq.core import ResultsMixin, ThingsMixin
+from thingq.mixins import ResultsMixin, ThingsMixin
 
 
 class BaseMixin(ThingsMixin):
@@ -74,9 +74,9 @@ class BaseMixin(ThingsMixin):
         getr_ = lambda x: getattr(self, x)
         OUTQ = self._OUTQ
         # extend work things with outgoing things
-        work, out = tee(getr_(OUTQ))
+        work, wrap = tee(getr_(OUTQ))
         setr_(self._WORKQ, work)
-        setr_(OUTQ, out)
+        setr_(OUTQ, wrap)
         yield
         # extend outgoing things with utility things
         util = getr_(self._UTILQ)
@@ -147,10 +147,10 @@ class BaseMixin(ThingsMixin):
         setr_(INQ, inq)
         yield
         # extend incoming things and outgoing things with utility things
-        inq, out = tee(getr_(self._UTILQ))
+        inq, wrap = tee(getr_(self._UTILQ))
         setr_(
             self._OUTQ,
-            out if self._clearout else chain(out, getr_(self._OUTQ)),
+            wrap if self._clearout else chain(wrap, getr_(self._OUTQ)),
         )
         setr_(INQ, inq)
         self._clearworking()
@@ -227,6 +227,8 @@ class BaseMixin(ThingsMixin):
         '''number of incoming things'''
         self.incoming, incoming = tee(self.incoming)
         return len(list(incoming))
+    
+    count = __len__
 
     def countout(self):
         '''number of outgoing things'''
@@ -304,27 +306,27 @@ class EndMixin(ResultsMixin):
         self.unswap()
         out, tell = tee(self.outgoing)
         wrap = self._wrapper
-        out = next(out) if len(wrap(tell)) == 1 else wrap(out)
+        wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
         # clear every last thing
         self.clear()
-        return out
+        return wrap
 
     def snapshot(self):
-        '''snapshot of current outgoing things'''
+        '''snapshot of outgoing things'''
         out, tell, self.outgoing = tee(getattr(self, self._OUTQ), 3)
         wrap = self._wrapper
         return out.pop() if len(wrap(tell)) == 1 else wrap(out)
 
-    def value(self):
+    def out(self):
         '''return outgoing things and clear outgoing things'''
         # swap for default context
         self.unswap()
         out, tell = tee(self.outgoing)
         wrap = self._wrapper
-        out = next(out) if len(wrap(tell)) == 1 else wrap(out)
+        wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
         # clear outgoing things
         self.clearout()
-        return out
+        return wrap
 
 
 class AutoResultMixin(EndMixin, AutoMixin):

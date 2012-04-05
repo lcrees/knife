@@ -57,15 +57,15 @@ class ACollectQMixin(object):
                 name = 'beastly'
                 age = 969
         test = lambda x: not x[0].startswith('__')
-        value = self.qclass(
+        out = self.qclass(
             stooges, stoog2, stoog3
-        ).tap(test, isclass).tuple_wrap().members().untap().end(),
+        ).tap(test, isclass).tupleout().members().untap().end(),
         self.assertEqual(
-            value,
+            out,
             ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
             ('name', 'beastly')))),),
-            value,
+            out,
         )
 
     def test_mro(self):
@@ -80,14 +80,14 @@ class ACollectQMixin(object):
             name = 'curly'
             age = 60
         test = lambda x: not x[0].startswith('__')
-        value = self.qclass(
+        out = self.qclass(
             stoog3
-        ).tap(test, isclass).tuple_wrap().mro().members().untap().end()
+        ).tap(test, isclass).tupleout().mro().members().untap().end()
         self.assertEqual(
-            value,
+            out,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
             ('age', 40), ('name', 'moe')),
-            value,
+            out,
         )
 
     def test_pick(self):

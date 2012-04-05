@@ -58,44 +58,44 @@ class port(object):
     reraise = staticmethod(six.reraise)
 
     @classmethod
-    def isbinary(cls, value):
+    def isbinary(cls, out):
         '''is binary?'''
-        return isinstance(value, cls.BINARY)
+        return isinstance(out, cls.BINARY)
 
     @classmethod
-    def isclass(cls, value):
+    def isclass(cls, out):
         '''is class?'''
-        return isinstance(value, cls.CLASS)
+        return isinstance(out, cls.CLASS)
 
     @classmethod
-    def iscall(cls, value):
+    def iscall(cls, out):
         '''is callable?'''
-        return six.callable(value)
+        return six.callable(out)
 
     @classmethod
-    def isgtemax(cls, value):
+    def isgtemax(cls, out):
         '''greater than max size?'''
-        return value > cls.MAXSIZE
+        return out > cls.MAXSIZE
 
     @classmethod
-    def isinteger(cls, value):
+    def isinteger(cls, out):
         '''is integer?'''
-        return isinstance(value, cls.INTEGER)
+        return isinstance(out, cls.INTEGER)
 
     @classmethod
-    def isltemax(cls, value):
+    def isltemax(cls, out):
         '''less than max size?'''
-        return value < cls.MAXSIZE
+        return out < cls.MAXSIZE
 
     @classmethod
-    def isstring(cls, value):
+    def isstring(cls, out):
         '''is string'''
-        return isinstance(value, cls.STRING)
+        return isinstance(out, cls.STRING)
 
     @classmethod
-    def isunicode(cls, value):
+    def isunicode(cls, out):
         '''is text?'''
-        return isinstance(value, cls.UNICODE)
+        return isinstance(out, cls.UNICODE)
 
     @staticmethod
     def printf(*args, **kw):
