@@ -17,28 +17,27 @@ class CollectMixin(local):
 
     def members(self):
         '''extract object members from incoming things'''
-        def extract(truth, subcall, transform, iterable):
-            def members():
-                f, s, t, i = truth, subcall, transform, iterable
-                d, w, g, e = dir, extract, getattr, AttributeError
-                test = lambda x: x.startswith('__') or x.startswith('mro')
-                for k in filterfalse(test, d(i)):
-                    try:
-                        v = g(i, k)
-                    except e:
-                        pass
+        call_, alt_, wrap_ = self._call, self._alt, self._wrapper
+        def members(truth, iterable): #@IgnorePep8
+            f, s, t, i = truth, alt_, wrap_, iterable
+            d, w, g, e = dir, extract, getattr, AttributeError
+            test = lambda x: x.startswith('__') or x.startswith('mro')
+            for k in filterfalse(test, d(i)):
+                try:
+                    v = g(i, k)
+                except e:
+                    pass
+                else:
+                    if s(v):
+                        yield k, t(w(f, v))
                     else:
-                        if s(v):
-                            yield k, t(w(f, s, t, v))
-                        else:
-                            yield k, v
-            for member in ifilter(truth, members()):
+                        yield k, v
+        def extract(truth, iterable, ifilter_=ifilter, members_=members):
+            for member in ifilter_(truth, members_(truth, iterable)):
                 yield member
         with self._context():
-            walk_ = extract
-            call_, alt_, wrap_ = self._call, self._alt, self._wrapper
             return self._xtend(ichain(imap(
-                lambda x: walk_(call_, alt_, wrap_, x), self._iterable,
+                lambda x: extract(call_, x), self._iterable,
             )))
 
     def mro(self):
