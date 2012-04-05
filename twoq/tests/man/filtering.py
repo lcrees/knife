@@ -84,8 +84,8 @@ class MCollectQMixin(object):
             self.qclass(
                 stooges, stoog2, stoog3
             ).tap(
-                lambda x: not x[0].startswith('__')
-            ).alt(isclass).wrap(tuple).extract().untap().sync(),
+                lambda x: not x[0].startswith('__'), isclass
+            ).tuple_wrap().members().untap().sync(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),

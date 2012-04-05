@@ -92,7 +92,7 @@ class MMapQMixin(MDelayQMixin, MRepeatQMixin):
         from stuf import stuf
         thing = self.qclass(
             ('a', 1), ('b', 2), ('c', 3)
-        ).reup().factory(stuf).map().shift().end()
+        ).reup().tap(stuf, factory=True).map().sync().end()
         self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
 
     def test_each(self):

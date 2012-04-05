@@ -39,7 +39,7 @@ class ThingsMixin(local):
         ## context defaults ###################################################
         #######################################################################
         # preferred context
-        self._context = self._default_context
+        self._context = getattr(self, self._DEFAULT_CONTEXT)
         # default context settings
         self._CONFIG = {}
         # 1. default incoming things
@@ -88,7 +88,7 @@ class ThingsMixin(local):
     def rw(self):
         '''switch to read/write mode'''
         self.current_mode = self._RW
-        return self._uclear().unswap()
+        return self._clearu().unswap()
 
     ###########################################################################
     ## context things #EE######################################################
@@ -112,11 +112,11 @@ class ThingsMixin(local):
         # savepoint
         savepoint = kw.pop('savepoint', True)
         if savepoint:
-            self.savepoint()
+            self._savepoint()
         # keep context-specific settings between context swaps
         self._CONFIG = kw if kw.get('hard', False) else {}
         # set context
-        self._context = kw.get('context', getattr(self, self._default_context))
+        self._context = kw.get('context', getattr(self, self._DEFAULT_CONTEXT))
         # clear out outgoing things before extending them?
         self._clearout = kw.get('clearout', True)
         # 1. incoming things
@@ -146,22 +146,28 @@ class ThingsMixin(local):
         self.reswap()
 
     ###########################################################################
-    ## savepoint for things ###################################################
+    ## savepoint for things ##################################################
     ###########################################################################
 
     def _original(self):
         '''preserve original incoming things'''
-        self.savepoint()
+        self._savepoint()
         # preserve from savepoint stack
         self._start = self._savepoints.pop()
         return self
 
-    def undo(self, index=0):
+    def undo(self, index=0, everything=False):
         '''
         revert to previous savepoint
 
-        @param savepoint: index of savepoint (default: 0)
+        @param index: index of savepoint (default: 0)
+        @param everything: undo everything and return things to original state
         '''
+        if everything:
+            self.clear()._clearsp()
+            self.incoming = self._start
+            self._original()
+            return self
         self.clear()
         if not index:
             self.incoming = self._savepoints.pop()
@@ -169,14 +175,7 @@ class ThingsMixin(local):
             self._savepoints.reverse()
             self.incoming = self._savepoints[index]
             self._savepoints.reverse()
-        return self.savepoint()
-
-    def rollback(self):
-        '''revert to original things'''
-        self.clear()._ssclear()
-        self.incoming = self._start
-        self._original()
-        return self
+        return self._savepoint()
 
     ###########################################################################
     ## rotate things ##########################################################
@@ -192,7 +191,7 @@ class ThingsMixin(local):
         with self.autoctx(inq=self._OUTVAR, outq=self._INVAR):
             return self._xtend(self._iterable)
 
-    def outsync(self):
+    def syncout(self):
         '''shift incoming things to outgoing things'''
         with self.autoctx():
             return self._xtend(self._iterable)
@@ -313,20 +312,20 @@ class ThingsMixin(local):
     @property
     def balanced(self):
         '''queues are balanced?'''
-        return self.outcount() == self.__len__()
+        return self.countout() == self.__len__()
 
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################
 
-    def _ssclear(self):
+    def _clearsp(self):
         '''clear savepoints'''
         self._savepoints.clear()
         return self
 
     def clear(self):
         '''clear anything'''
-        return self.untap().unwrap().outclear().inclear()._wclear()._uclear()
+        return self.untap().unwrap().clearout().clearin()._clearw()._clearu()
 
 
 class ResultsMixin(local):

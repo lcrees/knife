@@ -15,7 +15,7 @@ class TestAutoQ(
 ):
 
     def setUp(self):
-        from twoq.lazy.queuing import autoq
+        from twoq.lazy.core import autoq
         self.qclass = autoq
 
 

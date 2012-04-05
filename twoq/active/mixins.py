@@ -15,7 +15,7 @@ class BaseMixin(ThingsMixin):
 
     '''base active things'''
 
-    def __init__(self, *things):
+    def __init__(self, *things, **kw):
         try:
             incoming = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:
@@ -155,7 +155,7 @@ class BaseMixin(ThingsMixin):
     ## savepoint for things ###################################################
     ###########################################################################
 
-    def savepoint(self):
+    def _savepoint(self):
         '''take savepoint of incoming things'''
         self._savepoints.append(copy(getattr(self, self._INQ)))
         return self
@@ -166,7 +166,7 @@ class BaseMixin(ThingsMixin):
 
     def __iter__(self):
         '''yield outgoing things, clearing outgoing things as it iterates'''
-        return self._iterexcept(getattr(self, self._OUTQ), IndexError)
+        return self._iterexcept(self._OUTQ)
 
     @property
     def _iterable(self):
@@ -263,7 +263,7 @@ class BaseMixin(ThingsMixin):
             id(self),
         )
 
-    def outcount(self):
+    def countout(self):
         '''number of outgoing things'''
         return len(self.outgoing)
 
@@ -271,22 +271,22 @@ class BaseMixin(ThingsMixin):
     ## clear things ###########################################################
     ###########################################################################
 
-    def _uclear(self):
+    def _clearu(self):
         '''clear utility things'''
         self._util.clear()
         return self
 
-    def _wclear(self):
+    def _clearw(self):
         '''clear work things'''
         self._work.clear()
         return self
 
-    def inclear(self):
+    def clearin(self):
         '''clear incoming things'''
         self.incoming.clear()
         return self
 
-    def outclear(self):
+    def clearout(self):
         '''clear outgoing things'''
         self.outgoing.clear()
         return self
@@ -296,14 +296,14 @@ class AutoMixin(BaseMixin):
 
     '''auto-balancing queue mixin'''
 
-    _default_context = 'autoctx'
+    _DEFAULT_CONTEXT = 'autoctx'
 
 
 class ManMixin(BaseMixin):
 
     '''manually balanced queue mixin'''
 
-    _default_context = 'ctx4'
+    _DEFAULT_CONTEXT = 'ctx4'
 
 
 class EndMixin(ResultsMixin):
@@ -317,7 +317,7 @@ class EndMixin(ResultsMixin):
         wrap, outgoing = self._wrapper, self.outgoing
         out = self.outgoing.pop() if len(outgoing) == 1 else wrap(outgoing)
         # clear every last thing
-        self.clear()._ssclear()
+        self.clear()._clearsp()
         return out
 
     def snapshot(self):
@@ -332,7 +332,7 @@ class EndMixin(ResultsMixin):
         wrap, outgoing = self._wrapper, self.outgoing
         out = self.outgoing.pop() if len(outgoing) == 1 else wrap(outgoing)
         # clear outgoing things
-        self.outclear()
+        self.clearout()
         return out
 
 

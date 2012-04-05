@@ -15,7 +15,7 @@ install_requires = list(l.strip() for l in open(
 
 setup(
     name='twoq',
-    version='0.4.14',
+    version='0.5.0',
     description='iterator chaining, underscored by a two-headed queue',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='queue generator utility iterator functional programming',

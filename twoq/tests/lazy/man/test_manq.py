@@ -15,7 +15,7 @@ class TestManQ(
 ):
 
     def setUp(self):
-        from twoq.lazy.queuing import manq
+        from twoq.lazy.core import manq
         self.qclass = manq
 
 

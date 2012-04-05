@@ -59,7 +59,7 @@ class ACollectQMixin(object):
         test = lambda x: not x[0].startswith('__')
         value = self.qclass(
             stooges, stoog2, stoog3
-        ).tap(test).alt(isclass).wrap(tuple).extract().untap().end(),
+        ).tap(test, isclass).tuple_wrap().members().untap().end(),
         self.assertEqual(
             value,
             ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),

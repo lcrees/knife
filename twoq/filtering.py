@@ -75,11 +75,12 @@ class CollectMixin(local):
                 pass
 
     def members(self):
-        '''collect object members from incoming things'''
+        '''extract object members from incoming things'''
         with self._context():
-            mfilter, call = self._mfilter, self._call
+            walk_ = self._extract
+            call_, alt_, wrap_ = self._call, self._alt, self._wrapper
             return self._xtend(ichain(imap(
-                lambda x: mfilter(call, x), self._iterable,
+                lambda x: walk_(call_, alt_, wrap_, x), self._iterable,
             )))
 
     def mro(self):

@@ -5,7 +5,7 @@ from time import sleep
 from copy import deepcopy
 from threading import local
 from operator import methodcaller
-from itertools import starmap, tee, repeat
+from itertools import starmap, repeat
 
 from twoq.support import imap, ichain, items, xrange
 
@@ -102,11 +102,6 @@ class RepeatMixin(local):
         '''copy each incoming thing'''
         with self._context():
             return self._xtend(imap(deepcopy, self._iterable))
-
-    def padnone(self):
-        '''repeat incoming things and then `None` indefinitely'''
-        with self._context():
-            return self._iter(tee(self._iterable, repeat(None)))
 
     def range(self, start, stop=0, step=1):
         '''
