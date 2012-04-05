@@ -103,12 +103,6 @@ class AReduceQMixin(AMathQMixin, ATruthQMixin):
             self.qclass([[1, [2], [3, [[4]]]]]).flatten().end(), [1, 2, 3, 4],
         )
 
-    def test_merge(self):
-        self.assertEqual(
-            self.qclass([4, 5, 6], [1, 2, 3]).merge().end(),
-            [1, 2, 3, 4, 5, 6],
-        )
-
     def test_pairwise(self):
         self.assertEqual(
             self.qclass(

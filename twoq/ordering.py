@@ -61,6 +61,15 @@ class OrderMixin(local):
                 zip_longest(fillvalue=fill, *[iter(self._iterable)] * n)
             )
 
+    def product(self, n=1):
+        '''
+        nested for each loops repeated `n` times
+
+        @param n: number of repetitions (default: 1)
+        '''
+        with self._context():
+            return self._xtend(product(*self._iterable, repeat=n))
+
     def reverse(self):
         '''reverse order of incoming things'''
         with self._context():
@@ -73,15 +82,6 @@ class OrderMixin(local):
         call_ = self._call
         with self._context():
             return self._xtend(sorted(self._iterable, key=call_))
-
-    def product(self, n=1):
-        '''
-        nested for each loops repeated `n` times
-
-        @param n: number of repetitions (default: 1)
-        '''
-        with self._context():
-            return self._xtend(product(*self._iterable, repeat=n))
 
 
 class OrderingMixin(OrderMixin, RandomMixin):

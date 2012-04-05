@@ -147,13 +147,6 @@ class MReduceQMixin(MMathQMixin, MTruthQMixin):
             [1, 2, 3, 4],
         )
 
-    def test_merge(self):
-        self._false_true_false(
-            self.qclass([4, 5, 6], [1, 2, 3]).merge(),
-            self.assertEqual,
-            [1, 2, 3, 4, 5, 6],
-        )
-
     def test_pairwise(self):
         self._false_true_false(
             self.qclass(

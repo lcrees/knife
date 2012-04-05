@@ -2,7 +2,6 @@
 '''twoq reducing mixins'''
 
 from math import fsum
-from heapq import merge
 from threading import local
 from collections import Iterable
 from functools import partial, reduce
@@ -16,24 +15,14 @@ class MathMixin(local):
 
     '''math mixin'''
 
-    @classmethod
-    def _average(cls, iterable):
-        '''average of `iterable`'''
-        i1, i2 = tee(iterable)
-        return truediv(sum(i1, 0.0), len(list(i2)))
-
-    @classmethod
-    def _median(cls, iterable):
-        '''median of `iterable`'''
-        i = list(sorted(iterable))
-        e = truediv(len(i) - 1, 2)
-        p = int(e)
-        return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
-
     def average(self):
         '''average of all incoming things'''
+        def average(iterable):
+            '''average of `iterable`'''
+            i1, i2 = tee(iterable)
+            return truediv(sum(i1, 0.0), len(list(i2)))
         with self._context():
-            return self._append(self._average(self._iterable))
+            return self._append(average(self._iterable))
 
     def fsum(self):
         '''add incoming things together'''
@@ -50,8 +39,14 @@ class MathMixin(local):
 
     def median(self):
         '''median of all incoming things'''
+        def median(iterable):
+            '''median of `iterable`'''
+            i = list(sorted(iterable))
+            e = truediv(len(i) - 1, 2)
+            p = int(e)
+            return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
         with self._context():
-            return self._append(self._median(self._iterable))
+            return self._append(median(self._iterable))
 
     def min(self):
         '''find minimum thing in incoming things using call as key function'''
@@ -132,43 +127,18 @@ class ReduceMixin(local):
 
     '''reduce mixin'''
 
-    @classmethod
-    def _roundrobin(cls, iterable):
-        '''
-        interleave things in iterable into one thing
-
-        @param iterable: an iterable
-        '''
-        islice_, next_, cycle_ = islice, next, cycle
-        nexts_ = cycle_(partial(next_, iter(i)) for i in iterable)
-        pending = len(tee(iterable, 1))
-        while pending:
-            try:
-                for nextz in nexts_:
-                    yield nextz()
-            except StopIteration:
-                pending -= 1
-                nexts_ = cycle_(islice_(nexts_, pending))
-
-    @classmethod
-    def _smash(cls, iterable):
-        '''
-        flatten deeply nested iterable
-
-        @param iterable: an iterable
-        '''
-        isstring_, Iterable_, smash_ = isstring, Iterable, cls._smash
-        for i in iterable:
-            if isinstance(i, Iterable_) and not isstring_(i):
-                for j in smash_(i):
-                    yield j
-            else:
-                yield i
-
-    def merge(self):
-        '''flatten nested but ordered incoming things'''
+    def flatten(self):
+        '''flatten deeply nested incoming things'''
+        def smash(iterable):
+            isstring_, Iterable_, smash_ = isstring, Iterable, smash
+            for i in iterable:
+                if isinstance(i, Iterable_) and not isstring_(i):
+                    for j in smash_(i):
+                        yield j
+                else:
+                    yield i
         with self._context():
-            return self._xtend(merge(*self._iterable))
+            return self._xtend(smash(self._iterable))
 
     def pairwise(self):
         '''every two incoming things as a tuple'''
@@ -208,13 +178,19 @@ class ReduceMixin(local):
 
     def roundrobin(self):
         '''interleave incoming things into one thing'''
+        def roundrobin(iterable):
+            islice_, next_, cycle_ = islice, next, cycle
+            nexts_ = cycle_(partial(next_, iter(i)) for i in iterable)
+            pending = len(tee(iterable, 1))
+            while pending:
+                try:
+                    for nextz in nexts_:
+                        yield nextz()
+                except StopIteration:
+                    pending -= 1
+                    nexts_ = cycle_(islice_(nexts_, pending))
         with self._context():
-            return self._xtend(self._roundrobin(self._iterable))
-
-    def flatten(self):
-        '''flatten deeply nested incoming things'''
-        with self._context():
-            return self._xtend(self._smash(self._iterable))
+            return self._xtend(roundrobin(self._iterable))
 
     def zip(self):
         '''

@@ -15,67 +15,27 @@ class CollectMixin(local):
 
     '''collecting mixin'''
 
-    @classmethod
-    def _extract(cls, truth, subcall, transform, iterable):
-        '''
-        collect members of things
-
-        @param call: "Truth" filter
-        @param truth: second "Truth" filter
-        @param iterable: an iterable
-        '''
-        def members():
-            f, s, t, i = truth, subcall, transform, iterable
-            d, w, g, e = dir, cls._extract, getattr, AttributeError
-            test = lambda x: x.startswith('__') or x.startswith('mro')
-            for k in filterfalse(test, d(i)):
-                try:
-                    v = g(i, k)
-                except e:
-                    pass
-                else:
-                    if s(v):
-                        yield k, t(w(f, s, t, v))
-                    else:
-                        yield k, v
-        for member in ifilter(truth, members()):
-            yield member
-
-    @staticmethod
-    def _pick(names, iterable):
-        '''
-        collect attributes of things in iterable
-
-        @param names: sequence of names
-        @param iterable: an iterable
-        '''
-        attrfind = attrgetter(*names)
-        for thing in iterable:
-            try:
-                yield attrfind(thing)
-            except AttributeError:
-                pass
-
-    @staticmethod
-    def _pluck(keys, iterable, _itemgetter=itemgetter):
-        '''
-        collect values of things in iterable
-
-        @param keys: sequence of keys
-        @param iterable: an iterable
-        '''
-        itemfind = _itemgetter(*keys)
-        IndexError_, KeyError_, TypeError_ = IndexError, KeyError, TypeError
-        for thing in iterable:
-            try:
-                yield itemfind(thing)
-            except (IndexError_, KeyError_, TypeError_):
-                pass
-
     def members(self):
         '''extract object members from incoming things'''
+        def extract(truth, subcall, transform, iterable):
+            def members():
+                f, s, t, i = truth, subcall, transform, iterable
+                d, w, g, e = dir, extract, getattr, AttributeError
+                test = lambda x: x.startswith('__') or x.startswith('mro')
+                for k in filterfalse(test, d(i)):
+                    try:
+                        v = g(i, k)
+                    except e:
+                        pass
+                    else:
+                        if s(v):
+                            yield k, t(w(f, s, t, v))
+                        else:
+                            yield k, v
+            for member in ifilter(truth, members()):
+                yield member
         with self._context():
-            walk_ = self._extract
+            walk_ = extract
             call_, alt_, wrap_ = self._call, self._alt, self._wrapper
             return self._xtend(ichain(imap(
                 lambda x: walk_(call_, alt_, wrap_, x), self._iterable,
@@ -88,35 +48,45 @@ class CollectMixin(local):
 
     def pick(self, *names):
         '''collect object attributes from incoming things by their `*names`'''
+        def pick(names, iterable):
+            '''
+            collect attributes of things in iterable
+    
+            @param names: sequence of names
+            @param iterable: an iterable
+            '''
+            attrfind = attrgetter(*names)
+            for thing in iterable:
+                try:
+                    yield attrfind(thing)
+                except AttributeError:
+                    pass
         with self._context():
-            return self._xtend(self._pick(names, self._iterable))
+            return self._xtend(pick(names, self._iterable))
 
     def pluck(self, *keys):
         '''collect object items from incoming things by item `*keys`'''
+        def pluck(keys, iterable, _itemgetter=itemgetter):
+            '''
+            collect values of things in iterable
+    
+            @param keys: sequence of keys
+            @param iterable: an iterable
+            '''
+            itemfind = _itemgetter(*keys)
+            IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
+            for thing in iterable:
+                try:
+                    yield itemfind(thing)
+                except (IndexErr_, KeyErr_, TypeErr_):
+                    pass
         with self._context():
-            return self._xtend(self._pluck(keys, self._iterable))
+            return self._xtend(pluck(keys, self._iterable))
 
 
 class SetMixin(local):
 
     '''set and uniqueness mixin'''
-
-    @classmethod
-    def _unique(cls, iterable, key=None):
-        '''
-        unique things in in iterable
-
-        @param iterable: an iterable
-        @param key: determine uniqueness filter
-        '''
-        seen = set()
-        seen_add_ = seen.add
-        key_ = key
-        for element in iterable:
-            k = key_(element)
-            if k not in seen:
-                seen_add_(k)
-                yield element
 
     def difference(self):
         '''difference between incoming things'''
@@ -172,8 +142,16 @@ class SetMixin(local):
         list unique incoming things, preserving order and remember all incoming
         things ever seen
         '''
+        def unique(iterable, key=None):
+            seen = set()
+            seen_add_, key_ = seen.add, key
+            for element in iterable:
+                k = key_(element)
+                if k not in seen:
+                    seen_add_(k)
+                    yield element
         with self._context():
-            return self._iter(self._unique(self._iterable, self._call))
+            return self._iter(unique(self._iterable, self._call))
 
 
 class SliceMixin(local):
