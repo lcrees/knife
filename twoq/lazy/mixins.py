@@ -16,11 +16,7 @@ class BaseMixin(ThingsMixin):
     '''base lazy things'''
 
     def __init__(self, *things, **kw):
-
-        try:
-            incoming = iter([things[0]]) if len(things) == 1 else iter(things)
-        except TypeError:
-            incoming = iter([things])
+        incoming = iter([things[0]]) if len(things) == 1 else iter(things)
         super(BaseMixin, self).__init__(incoming, iter([]))
         # work things
         self._work = iter([])
@@ -217,7 +213,9 @@ class BaseMixin(ThingsMixin):
 
     def _append(self, things):
         '''append `things` to work things'''
-        return self.__buildchain(iter([things]))
+        UTILQ = self._UTILQ
+        setattr(self, UTILQ, chain(getattr(self, UTILQ), iter([things])))
+        return self
 
     def _appendleft(self, things):
         '''append `things` to left side of work things'''

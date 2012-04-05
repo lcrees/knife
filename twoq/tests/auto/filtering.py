@@ -68,6 +68,29 @@ class ACollectQMixin(object):
             value,
         )
 
+    def test_mro(self):
+        from inspect import isclass
+        class stooges: #@IgnorePep8
+            name = 'moe'
+            age = 40
+        class stoog2(stooges): #@IgnorePep8
+            name = 'larry'
+            age = 50
+        class stoog3(stoog2): #@IgnorePep8
+            name = 'curly'
+            age = 60
+        test = lambda x: not x[0].startswith('__')
+        value = self.qclass(
+            stoog3
+        ).tap(test, isclass).tuple_wrap().mro().members().untap().end(),
+        self.assertEqual(
+            value,
+            ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
+            ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
+            ('name', 'beastly')))),),
+            value,
+        )
+
     def test_pick(self):
         from stuf import stuf
         stooges = [

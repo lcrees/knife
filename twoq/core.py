@@ -6,6 +6,7 @@ from collections import deque
 from contextlib import contextmanager
 
 from stuf.utils import OrderedDict
+from stuf.six import binaries, texts, b, u
 from stuf.core import stuf, frozenstuf, orderedstuf
 
 from twoq.support import n2u, n2b
@@ -131,11 +132,11 @@ class ThingsMixin(local):
 
     def reswap(self):
         '''swap for preferred context'''
-        return self.swap(**self._CONFIG)
+        return self.swap(savepoint=False, **self._CONFIG)
 
     def unswap(self):
         '''swap for current default context'''
-        return self.swap()
+        return self.swap(savepoint=False)
 
     @contextmanager
     def ctx1(self, **kw):
@@ -183,17 +184,17 @@ class ThingsMixin(local):
 
     def reup(self):
         '''put incoming things in incoming things as one incoming thing'''
-        with self.ctx2():
+        with self.ctx2(savepoint=False):
             return self._append(list(self._iterable))
 
     def sync(self):
         '''shift outgoing things to incoming things'''
-        with self.autoctx(inq=self._OUTVAR, outq=self._INVAR):
+        with self.autoctx(inq=self._OUTVAR, outq=self._INVAR, savepoint=False):
             return self._xtend(self._iterable)
 
     def syncout(self):
         '''shift incoming things to outgoing things'''
-        with self.autoctx():
+        with self.autoctx(savepoint=False):
             return self._xtend(self._iterable)
 
     ###########################################################################
@@ -369,9 +370,11 @@ class ResultsMixin(local):
         '''set wrapper to `set`'''
         return self.wrap(set)
 
-    def byte_wrap(self, encoding='ISO-8859-1'):
+    def byte_wrap(self, encoding='ISO-8859-1', join=b('')):
         '''set wrapper to `bytes` with given `encoding`'''
-        return self.wrap(lambda x: n2b(x, encoding))
+        return self.wrap(lambda x: n2b(
+            join.join(binaries(i) for i in x), encoding)
+        )
 
     def deque_wrap(self):
         '''set wrapper to `deque`'''
@@ -401,9 +404,11 @@ class ResultsMixin(local):
         '''set wrapper to `stuf`'''
         return self.wrap(stuf)
 
-    def unicode_wrap(self, encoding='utf-8'):
+    def unicode_wrap(self, encoding='utf-8', join=u('')):
         '''set wrapper to `unicode` with given `encoding`'''
-        return self.wrap(lambda x: n2u(x, encoding))
+        return self.wrap(
+            lambda x: n2u(join.join(texts(i) for i in x), encoding)
+        )
 
     def list_wrap(self):
         '''clear current wrapper'''

@@ -19,7 +19,7 @@ class BaseMixin(ThingsMixin):
         try:
             incoming = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:
-            incoming = deque([things])
+            incoming = deque(iter([things]))
         super(BaseMixin, self).__init__(incoming, deque())
         # set iterator
         self._iterator = self._iterexcept

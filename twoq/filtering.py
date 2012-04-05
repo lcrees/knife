@@ -38,9 +38,7 @@ class CollectMixin(local):
                         yield k, t(w(f, s, t, v))
                     else:
                         yield k, v
-        for member in ifilter(
-            truth, members(),
-        ):
+        for member in ifilter(truth, members()):
             yield member
 
     @staticmethod
