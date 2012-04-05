@@ -210,13 +210,11 @@ class ReduceMixin(local):
         '''interleave incoming things into one thing'''
         with self._context():
             return self._xtend(self._roundrobin(self._iterable))
-        
-    def smash(self):
+
+    def flatten(self):
         '''flatten deeply nested incoming things'''
         with self._context():
             return self._xtend(self._smash(self._iterable))
-
-    flatten = smash
 
     def zip(self):
         '''

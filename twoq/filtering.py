@@ -4,10 +4,9 @@
 from inspect import getmro
 from threading import local
 from functools import reduce
+from collections import deque
 from itertools import tee, islice
 from operator import attrgetter, itemgetter, truth
-
-from stuf.utils import getcls
 
 from twoq.support import ifilter, ichain, imap, filterfalse
 
@@ -44,27 +43,6 @@ class CollectMixin(local):
         ):
             yield member
 
-    @classmethod
-    def _mfilter(cls, call, iterable):
-        '''
-        filter members of things
-
-        @param call: "Truth" filter
-        @param iterable: an iterable
-        '''
-        def members(): #@IgnorePep8
-            itrbl, get_, AttributeError_ = iterable, getattr, AttributeError
-            test = lambda x: x.startswith('__') or x.startswith('mro')
-            for key in filterfalse(test, dir(iterable)):
-                try:
-                    thing = get_(itrbl, key)
-                except AttributeError_:
-                    pass
-                else:
-                    yield key, thing
-        for i in ifilter(call, members()):
-            yield i
-
     @staticmethod
     def _pick(names, iterable):
         '''
@@ -96,26 +74,6 @@ class CollectMixin(local):
             except (IndexError_, KeyError_, TypeError_):
                 pass
 
-    def deepmembers(self):
-        '''collect object members from incoming things and their bases'''
-        _mf, mro = self._mfilter, getmro
-        _mz = lambda x: _mf(self._call, x)
-        def memfilters(thing, mz=_mz, gc=getcls, ci=ichain, mro=mro): #@IgnorePep8
-            return ci(imap(mz, ci([mro((gc(thing))), [thing]])))
-        with self._context():
-            return self._xtend(
-                ichain(imap(memfilters, self._iterable))
-            )
-
-    def extract(self):
-        '''extract object members from incoming things'''
-        with self._context():
-            walk_ = self._extract
-            call_, alt_, wrap_ = self._call, self._alt, self._wrapper
-            return self._xtend(ichain(imap(
-                lambda x: walk_(call_, alt_, wrap_, x), self._iterable,
-            )))
-
     def members(self):
         '''collect object members from incoming things'''
         with self._context():
@@ -127,7 +85,7 @@ class CollectMixin(local):
     def mro(self):
         '''extract ancestors of things by method resolution order'''
         with self._context():
-            return self._extend(getmro(i) for i in self._iterable)
+            return self._xtend(getmro(i) for i in self._iterable)
 
     def pick(self, *names):
         '''collect object attributes from incoming things by their `*names`'''
@@ -223,6 +181,17 @@ class SliceMixin(local):
 
     '''slicing mixin'''
 
+    def first(self):
+        '''first incoming thing'''
+        with self._context():
+            return self._append(next(self._iterable))
+
+    def last(self):
+        '''last incoming thing'''
+        with self._context():
+            i1, _ = tee(self._iterable)
+            return self._append(deque(i1, maxlen=1).pop())
+
     def nth(self, n, default=None):
         '''
         `nth` incoming thing or default thing
@@ -240,6 +209,18 @@ class SliceMixin(local):
         with self._context():
             i1, i2 = tee(self._iterable)
             return self._xtend(islice(i1, len(list(i2)) - 1))
+
+    def partition(self):
+        '''
+        split incoming things into `True` and `False` things based on results
+        of call
+        '''
+        list_, call_ = list, self._call
+        with self._context():
+            falsy, truey = tee(self._iterable)
+            return self._xtend(iter([
+                list_(filterfalse(call_, falsy)), list_(ifilter(call_, truey)),
+            ]))
 
     def rest(self):
         '''all incoming things except the first thing'''
@@ -286,18 +267,6 @@ class FilterMixin(local):
             return self._append(
                 next(ifilter(self._call, self._iterable))
             )
-
-    def partition(self):
-        '''
-        split incoming things into `True` and `False` things based on results
-        of call
-        '''
-        list_, call_ = list, self._call
-        with self._context():
-            falsy, truey = tee(self._iterable)
-            return self._xtend(iter([
-                list_(filterfalse(call_, falsy)), list_(ifilter(call_, truey)),
-            ]))
 
     def reject(self):
         '''incoming things for which call is `False`'''

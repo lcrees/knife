@@ -33,35 +33,7 @@ class MRandomQMixin(object):
         self.assertTrue(manq.balanced)
 
 
-class MCombineQMixin(object):
-
-#    def test_combinations(self):
-#        self._false_true_false(
-#            self.qclass('ABCD').combinations(2),
-#            self.assertListEqual,
-#            [('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'C'), ('B', 'D'),
-#            ('C', 'D')],
-#        )
-#
-#    def test_permutations(self):
-#        self._false_true_false(
-#            self.qclass('ABCD').permutations(2),
-#            self.assertListEqual,
-#            [('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'A'), ('B', 'C'),
-#            ('B', 'D'), ('C', 'A'), ('C', 'B'), ('C', 'D'), ('D', 'A'),
-#            ('D', 'B'), ('D', 'C')]
-#        )
-
-    def test_product(self):
-        self._false_true_false(
-            self.qclass('ABCD', 'xy').product(),
-            self.assertListEqual,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')]
-        )
-
-
-class MOrderQMixin(MRandomQMixin, MCombineQMixin):
+class MOrderQMixin(MRandomQMixin):
 
     def test_group(self,):
         from math import floor
@@ -103,6 +75,14 @@ class MOrderQMixin(MRandomQMixin, MCombineQMixin):
             self.qclass(4, 6, 65, 3, 63, 2,  4).sort(),
           self.assertListEqual,
             [2, 3, 4, 4, 6, 63, 65],
+        )
+
+    def test_product(self):
+        self._false_true_false(
+            self.qclass('ABCD', 'xy').product(),
+            self.assertListEqual,
+            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
+            ('C', 'y'), ('D', 'x'), ('D', 'y')]
         )
 
 

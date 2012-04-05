@@ -2,169 +2,51 @@
 '''active twoq mixins'''
 
 from copy import copy
+from itertools import repeat
 from collections import deque
 from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from twoq.queuing import ThingsMixin, ResultMixin
+from twoq.core import ThingsMixin, ResultsMixin
 
 
-__all__ = ('AutoQMixin', 'ManQMixin', 'AutoResultMixin', 'ManResultMixin')
-
-
-class BaseQMixin(ThingsMixin):
+class BaseMixin(ThingsMixin):
 
     '''base active things'''
 
     def __init__(self, *things):
-        deque_ = deque
-        incoming = deque_(things[0]) if len(things) == 1 else deque_(things)
-        super(BaseQMixin, self).__init__(incoming, deque_())
+        try:
+            incoming = deque(things[0]) if len(things) == 1 else deque(things)
+        except TypeError:
+            incoming = deque([things])
+        super(BaseMixin, self).__init__(incoming, deque())
         # set iterator
         self._iterator = self._iterexcept
         # work things
-        self._work = deque_()
+        self._work = deque()
         # utility things
-        self._util = deque_()
-
-    def __repr__(self):
-        getr_, list_ = lambda x: getattr(self, x), list
-        return self._repr(
-            self.__module__,
-            clsname(self),
-            self.current_mode.upper(),
-            self._INQ,
-            list_(getr_(self._INQ)),
-            self._WORKQ,
-            list_(getr_(self._WORKQ)),
-            self._UTILQ,
-            list_(getr_(self._UTILQ)),
-            self._OUTQ,
-            list_(getr_(self._OUTQ)),
-            id(self),
-        )
+        self._util = deque()
 
     ###########################################################################
-    ## snapshots ##############################################################
+    ## mode things ############################################################
     ###########################################################################
 
-    def snapshot(self):
-        '''take snapshot of incoming'''
-        self._snapshots.append(copy(getattr(self, self._INQ)))
-        return self
+    def ro(self):
+        '''switch to read-only mode'''
+        with self.ctx3(outq=self._UTILVAR, savepoint=False):
+            self._xtend(self._iterable)
+        with self.ctx1(hard=True, workq=self._UTILVAR, savepoint=False):
+            self.current_mode = self._RO
+            return self
 
     ###########################################################################
-    ## thing length ###########################################################
-    ###########################################################################
-
-    def __len__(self):
-        '''number of incoming things'''
-        return len(self.incoming)
-
-    def outcount(self):
-        '''number of outgoing things'''
-        return len(self.outgoing)
-
-    ###########################################################################
-    ## iterators ##############################################################
-    ###########################################################################
-
-    def __iter__(self):
-        '''yield outgoing things, clearing outgoing things as it iterates'''
-        return self.iterexcept(self.outgoing.popleft, IndexError)
-
-    @property
-    def _iterable(self):
-        '''iterable'''
-        return self._iterator(self._WORKQ)
-
-    def _iterexcept(self, attr='_UTILQ'):
-        '''
-        iterator broken on exception
-
-        @param attr: things to iterate over
-        '''
-        return self.iterexcept(getattr(self, attr).popleft, IndexError)
-
-    def _breakcount(self, attr='_UTILQ'):
-        '''
-        breakcount iterator
-
-        @param attr: things to iterate over
-        '''
-        dq = getattr(self, attr)
-        return self.breakcount(dq.popleft, len(dq), IndexError,)
-
-    ###########################################################################
-    ## clear things ###########################################################
-    ###########################################################################
-
-    def _uclear(self):
-        '''clear utility things'''
-        self._util.clear()
-        return self
-
-    def _wclear(self):
-        '''clear work things'''
-        self._work.clear()
-        return self
-
-    def inclear(self):
-        '''clear incoming things'''
-        self.incoming.clear()
-        return self
-
-    def outclear(self):
-        '''clear outgoing things'''
-        self.outgoing.clear()
-        return self
-
-    def ssclear(self):
-        self._snapshots.clear()
-        return self
-
-    ###########################################################################
-    ## extend #################################################################
-    ###########################################################################
-
-    def _xtend(self, things):
-        '''extend utility things with `things` wrapped'''
-        getattr(self, self._UTILQ).extend(things)
-        return self
-
-    def _xtendleft(self, things):
-        '''extend left side of utility things with `things`'''
-        getattr(self, self._UTILQ).extendleft(things)
-        return self
-
-    def _iter(self, things):
-        '''extend work things with `things` wrapped in iterator'''
-        getattr(self, self._UTILQ).extend(iter(things))
-        return self
-
-    ###########################################################################
-    ## append #################################################################
-    ###########################################################################
-
-    def _append(self, things):
-        '''append `things` to utility things'''
-        getattr(self, self._UTILQ).append(things)
-        return self
-
-    def _appendleft(self, things):
-        '''append `things` to left side of utility things'''
-        getattr(self, self._UTILQ).appendleft(things)
-        return self
-
-    ###########################################################################
-    ## context rotation #######################################################
+    ## context things #######################################################
     ###########################################################################
 
     @contextmanager
     def ctx2(self, **kw):
         '''swap for two-armed context'''
-        self.snapshot()
         self.swap(
             outq=kw.get(self._OUTCFG, self._INVAR), context=self.ctx2(), **kw
         )
@@ -192,7 +74,6 @@ class BaseQMixin(ThingsMixin):
     @contextmanager
     def ctx3(self, **kw):
         '''swap for three-armed context'''
-        self.snapshot()
         self.swap(
             utilq=kw.get(self._WORKCFG, self._WORKVAR), context=self.ctx3, **kw
         )
@@ -220,7 +101,6 @@ class BaseQMixin(ThingsMixin):
     @contextmanager
     def ctx4(self, **kw):
         '''swap for four-armed context'''
-        self.snapshot()
         self.swap(context=self.ctx4, **kw)
         getr_ = lambda x: getattr(self, x)
         outq = getr_(self._OUTQ)
@@ -246,7 +126,6 @@ class BaseQMixin(ThingsMixin):
     @contextmanager
     def autoctx(self, **kw):
         '''swap for auto-synchronizing context'''
-        self.snapshot()
         self.swap(context=self.autoctx, **kw)
         getr_ = lambda x: getattr(self, x)
         outq = getr_(self._OUTQ)
@@ -272,30 +151,162 @@ class BaseQMixin(ThingsMixin):
         # return to global context
         self.reswap()
 
-    def ro(self):
-        '''switch to read-only mode'''
-        with self.ctx3(outq=self._UTILVAR):
-            self._xtend(self._iterable)
-        with self.ctx1(hard=True, workq=self._UTILVAR):
-            self.current_mode = self._RO
-            return self
+    ###########################################################################
+    ## savepoint for things ###################################################
+    ###########################################################################
+
+    def savepoint(self):
+        '''take savepoint of incoming things'''
+        self._savepoints.append(copy(getattr(self, self._INQ)))
+        return self
+
+    ###########################################################################
+    ## iterate things #########################################################
+    ###########################################################################
+
+    def __iter__(self):
+        '''yield outgoing things, clearing outgoing things as it iterates'''
+        return self._iterexcept(getattr(self, self._OUTQ), IndexError)
+
+    @property
+    def _iterable(self):
+        '''iterable'''
+        return self._iterator(self._WORKQ)
+
+    def _breakcount(self, attr='_UTILQ'):
+        '''
+        breakcount iterator
+
+        @param attr: things to iterate over
+        '''
+        dq = getattr(self, attr)
+        length = len(dq)
+        call = dq.popleft
+        for i in repeat(None, length):  # @UnusedVariable
+            try:
+                yield call()
+            except IndexError:
+                pass
+
+    def _iterexcept(self, attr='_UTILQ'):
+        '''
+        call a function repeatedly until an exception is raised
+
+        Converts a call-until-exception interface to an iterator interface.
+        Like `iter(call, sentinel)` but uses an exception instead of a sentinel
+        to end the loop.
+
+        Raymond Hettinger, Python Cookbook recipe # 577155
+        '''
+        call = getattr(self, attr).popleft
+        try:
+            while 1:
+                yield call()
+        except IndexError:
+            pass
+
+    ###########################################################################
+    ## extend things ##########################################################
+    ###########################################################################
+
+    def _xtend(self, things):
+        '''extend utility things with `things` wrapped'''
+        getattr(self, self._UTILQ).extend(things)
+        return self
+
+    def _xtendleft(self, things):
+        '''extend left side of utility things with `things`'''
+        getattr(self, self._UTILQ).extendleft(things)
+        return self
+
+    def _iter(self, things):
+        '''extend work things with `things` wrapped in iterator'''
+        getattr(self, self._UTILQ).extend(iter(things))
+        return self
+
+    ###########################################################################
+    ## append things ##########################################################
+    ###########################################################################
+
+    def _append(self, things):
+        '''append `things` to utility things'''
+        getattr(self, self._UTILQ).append(things)
+        return self
+
+    def _appendleft(self, things):
+        '''append `things` to left side of utility things'''
+        getattr(self, self._UTILQ).appendleft(things)
+        return self
+
+    ###########################################################################
+    ## know things ############################################################
+    ###########################################################################
+
+    def __len__(self):
+        '''number of incoming things'''
+        return len(self.incoming)
+
+    def __repr__(self):
+        getr_, list_ = lambda x: getattr(self, x), list
+        return self._repr(
+            self.__module__,
+            clsname(self),
+            self.current_mode.upper(),
+            self._INQ,
+            list_(getr_(self._INQ)),
+            self._WORKQ,
+            list_(getr_(self._WORKQ)),
+            self._UTILQ,
+            list_(getr_(self._UTILQ)),
+            self._OUTQ,
+            list_(getr_(self._OUTQ)),
+            id(self),
+        )
+
+    def outcount(self):
+        '''number of outgoing things'''
+        return len(self.outgoing)
+
+    ###########################################################################
+    ## clear things ###########################################################
+    ###########################################################################
+
+    def _uclear(self):
+        '''clear utility things'''
+        self._util.clear()
+        return self
+
+    def _wclear(self):
+        '''clear work things'''
+        self._work.clear()
+        return self
+
+    def inclear(self):
+        '''clear incoming things'''
+        self.incoming.clear()
+        return self
+
+    def outclear(self):
+        '''clear outgoing things'''
+        self.outgoing.clear()
+        return self
 
 
-class AutoQMixin(BaseQMixin):
+class AutoMixin(BaseMixin):
 
     '''auto-balancing queue mixin'''
 
     _default_context = 'autoctx'
 
 
-class ManQMixin(BaseQMixin):
+class ManMixin(BaseMixin):
 
     '''manually balanced queue mixin'''
 
     _default_context = 'ctx4'
 
 
-class EndMixin(ResultMixin):
+class EndMixin(ResultsMixin):
 
     '''result things mixin'''
 
@@ -306,8 +317,13 @@ class EndMixin(ResultMixin):
         wrap, outgoing = self._wrapper, self.outgoing
         out = self.outgoing.pop() if len(outgoing) == 1 else wrap(outgoing)
         # clear every last thing
-        self.clear()
+        self.clear()._ssclear()
         return out
+
+    def snapshot(self):
+        '''snapshot of current outgoing things'''
+        out = copy(getattr(self, self._OUTQ))
+        return out.pop() if len(out) == 1 else self._wrapper(out)
 
     def value(self):
         '''return outgoing things and clear outgoing things'''
@@ -320,11 +336,11 @@ class EndMixin(ResultMixin):
         return out
 
 
-class AutoResultMixin(AutoQMixin, EndMixin):
+class AutoResultMixin(AutoMixin, EndMixin):
 
     '''auto-balancing manipulation things (with results extractor) mixin'''
 
 
-class ManResultMixin(ManQMixin, EndMixin):
+class ManResultMixin(ManMixin, EndMixin):
 
     '''manually balanced things (with results extractor) mixin'''

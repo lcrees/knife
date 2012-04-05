@@ -21,12 +21,5 @@ class TestManRandomQ(Manning, MQMixin, MRandomQMixin):
         self.qclass = mrandomq
 
 
-class TestManPermutationQ(Manning, MQMixin, MCombineQMixin):
-
-    def setUp(self):
-        from twoq.lazy.ordering import mcombineq
-        self.qclass = mcombineq
-
-
 if __name__ == '__main__':
     unittest.main()

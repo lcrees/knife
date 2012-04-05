@@ -6,23 +6,25 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from twoq.queuing import ResultMixin, ThingsMixin
+from twoq.core import ResultsMixin, ThingsMixin
 
-__all__ = ('AutoQMixin', 'ManQMixin', 'AutoResultMixin', 'ManResultMixin')
+__all__ = ('AutoMixin', 'ManMixin', 'AutoResultMixin', 'ManResultMixin')
 
 
-class BaseQMixin(ThingsMixin):
+class BaseMixin(ThingsMixin):
 
     '''base lazy things'''
 
     def __init__(self, *things):
-        iter_ = iter
-        incoming = iter_([things[0]]) if len(things) == 1 else iter_(things)
-        super(BaseQMixin, self).__init__(incoming, iter_([]))
+        try:
+            incoming = iter([things[0]]) if len(things) == 1 else iter(things)
+        except TypeError:
+            incoming = iter([things])
+        super(BaseMixin, self).__init__(incoming, iter([]))
         # work things
-        self._work = iter_([])
+        self._work = iter([])
         # utility things
-        self._util = iter_([])
+        self._util = iter([])
 
     def __repr__(self):
         list_, tee_ = list, tee
@@ -55,10 +57,10 @@ class BaseQMixin(ThingsMixin):
     ## snapshots ##############################################################
     ###########################################################################
 
-    def snapshot(self):
-        '''take snapshot of incoming'''
-        snapshot, self.incoming = tee(getattr(self, self._INQ))
-        self._snapshots.append(snapshot)
+    def savepoint(self):
+        '''take savepoint of incoming'''
+        savepoint, self.incoming = tee(getattr(self, self._INQ))
+        self._savepoints.append(savepoint)
         return self
 
     ###########################################################################
@@ -178,7 +180,6 @@ class BaseQMixin(ThingsMixin):
     @contextmanager
     def ctx2(self, **kw):
         '''swap for two-armed context'''
-        self.snapshot()
         self.swap(
             context=self.ctx2, outq=kw.get(self._OUTCFG, self._INVAR), **kw
         )._clearwork()
@@ -203,7 +204,6 @@ class BaseQMixin(ThingsMixin):
     @contextmanager
     def ctx3(self, **kw):
         '''swap for three-armed context'''
-        self.snapshot()
         self.swap(
             utilq=kw.get(self._WORKCFG, self._WORKVAR), context=self.ctx3, **kw
         )._clearwork()
@@ -272,34 +272,34 @@ class BaseQMixin(ThingsMixin):
 
     def ro(self):
         '''switch to read-only mode'''
-        with self.ctx3(outq=self._UTILVAR):
+        with self.ctx3(outq=self._UTILVAR, savepoint=False):
             self._xreplace(self._iterable)
-        with self.ctx1(hard=True, workq=self._UTILVAR):
+        with self.ctx1(hard=True, workq=self._UTILVAR, savepoint=False):
             self.current_mode = self._RO
             return self
 
 
-class AutoQMixin(BaseQMixin):
+class AutoMixin(BaseMixin):
 
     '''auto-balancing things mixin'''
 
     _default_context = 'autoctx'
 
 
-class ManQMixin(BaseQMixin):
+class ManMixin(BaseMixin):
 
     '''manually balanced things mixin'''
 
     _default_context = 'ctx4'
 
 
-class EndMixin(ResultMixin):
+class EndMixin(ResultsMixin):
 
     '''result things mixin'''
 
     def end(self):
         '''return outgoing things then clear out everything'''
-        # return to default context
+        # swap for default context
         self.unswap()
         out, tell = tee(self.outgoing)
         wrap = self._wrapper
@@ -308,9 +308,15 @@ class EndMixin(ResultMixin):
         self.clear()
         return out
 
+    def snapshot(self):
+        '''snapshot of current outgoing things'''
+        out, tell, self.outgoing = tee(getattr(self, self._OUTQ), 3)
+        wrap = self._wrapper
+        return out.pop() if len(wrap(tell)) == 1 else wrap(out)
+
     def value(self):
         '''return outgoing things and clear outgoing things'''
-        # return to default context
+        # swap for default context
         self.unswap()
         out, tell = tee(self.outgoing)
         wrap = self._wrapper
@@ -320,11 +326,11 @@ class EndMixin(ResultMixin):
         return out
 
 
-class AutoResultMixin(EndMixin, AutoQMixin):
+class AutoResultMixin(EndMixin, AutoMixin):
 
     '''auto-balancing things (with results extraction) mixin'''
 
 
-class ManResultMixin(EndMixin, ManQMixin):
+class ManResultMixin(EndMixin, ManMixin):
 
     '''manually balanced things (with results extraction) mixin'''

@@ -21,38 +21,7 @@ class ARandomQMixin(object):
         )
 
 
-class ACombineQMixin(object):
-
-#    def test_combinations(self):
-#        foo = self.qclass('ABCD').combinations(2).value(),
-#        self.assertEqual(
-#            foo[0],
-#            [('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'C'), ('B', 'D'),
-#            ('C', 'D')],
-#            foo,
-#        )
-#
-#    def test_permutations(self):
-#        foo = self.qclass('ABCD').permutations(2).value()
-#        self.assertEqual(
-#            foo[0],
-#            [('A', 'B'), ('A', 'C'), ('A', 'D'), ('B', 'A'), ('B', 'C'),
-#            ('B', 'D'), ('C', 'A'), ('C', 'B'), ('C', 'D'), ('D', 'A'),
-#            ('D', 'B'), ('D', 'C')],
-#            foo,
-#        )
-
-    def test_product(self):
-        foo = self.qclass('ABCD', 'xy').product().value()
-        self.assertEqual(
-            foo,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')],
-            foo,
-        )
-
-
-class AOrderQMixin(ARandomQMixin, ACombineQMixin):
+class AOrderQMixin(ARandomQMixin):
 
     '''combination mixin'''
 
@@ -91,6 +60,15 @@ class AOrderQMixin(ARandomQMixin, ACombineQMixin):
         self.assertEqual(
             self.qclass(4, 6, 65, 3, 63, 2, 4).sort().end(),
             [2, 3, 4, 4, 6, 63, 65],
+        )
+
+    def test_product(self):
+        foo = self.qclass('ABCD', 'xy').product().value()
+        self.assertEqual(
+            foo,
+            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
+            ('C', 'y'), ('D', 'x'), ('D', 'y')],
+            foo,
         )
 
 

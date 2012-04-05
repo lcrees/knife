@@ -77,7 +77,7 @@ class AMapQMixin(ADelayQMixin, ARepeatQMixin):
         self.assertDictEqual(
             self.qclass(
                 ('a', 1), ('b', 2), ('c', 3)
-            ).reup().factory(stuf).map().end(),
+            ).reup().tap(stuf, factory=True).map().end(),
             stuf(a=1, b=2, c=3),
         )
 

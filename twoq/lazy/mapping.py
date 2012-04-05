@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''twoq lazy mapping queues'''
 
-from twoq.queuing import SLOTS
+from twoq.core import SLOTS
 from twoq.mapping import DelayMixin, RepeatMixin, MappingMixin
 
 from twoq.lazy.mixins import AutoResultMixin, ManResultMixin

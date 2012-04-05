@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''twoq lazy queues'''
 
-from twoq.queuing import SLOTS
+from twoq.core import SLOTS
 from twoq.mapping import MappingMixin as MapMixin
 from twoq.ordering import OrderingMixin as OrderMixin
 from twoq.reducing import ReducingMixin as ReduceMixin

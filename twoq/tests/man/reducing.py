@@ -122,7 +122,7 @@ class MTruthQMixin(object):
             self.assertEqual,
             1,
         )
-        
+
     def test_uncommon(self):
         self._false_true_false(
             self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon(),
@@ -140,9 +140,9 @@ class MTruthQMixin(object):
 
 class MReduceQMixin(MMathQMixin, MTruthQMixin):
 
-    def test_smash(self):
+    def test_flatten(self):
         self._false_true_false(
-            self.qclass([[1, [2], [3, [[4]]]]]).smash(),
+            self.qclass([[1, [2], [3, [[4]]]]]).flatten(),
             self.assertEqual,
             [1, 2, 3, 4],
         )

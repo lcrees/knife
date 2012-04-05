@@ -32,29 +32,17 @@ class ASliceQMixin(object):
     def test_takeback(self):
         self.assertEqual(self.qclass(5, 4, 3, 2, 1).snatch(2).end(), [2, 1])
 
+    def test_partition(self):
+        self.assertEqual(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(
+                lambda x: x % 2 == 0
+            ).partition().end(), [[1, 3, 5], [2, 4, 6]]
+        )
+
 
 class ACollectQMixin(object):
 
     def test_members(self):
-        class stooges:
-            name = 'moe'
-            age = 40
-        class stoog2: #@IgnorePep8
-            name = 'larry'
-            age = 50
-        class stoog3: #@IgnorePep8
-            name = 'curly'
-            age = 60
-        test = lambda x: not x[0].startswith('__')
-        self.assertEqual(
-            self.qclass(
-                stooges, stoog2, stoog3
-            ).tap(test).members().detap().end(),
-            [('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
-            ('age', 60), ('name', 'curly')],
-        )
-
-    def test_extract(self):
         from inspect import isclass
         class stooges: #@IgnorePep8
             name = 'moe'
@@ -71,55 +59,13 @@ class ACollectQMixin(object):
         test = lambda x: not x[0].startswith('__')
         value = self.qclass(
             stooges, stoog2, stoog3
-        ).tap(test).alt(isclass).wrap(tuple).extract().detap().end(),
+        ).tap(test).alt(isclass).wrap(tuple).extract().untap().end(),
         self.assertEqual(
             value,
             ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
             ('name', 'beastly')))),),
             value,
-        )
-
-    def test_deepmembers(self):
-        class stooges:
-            name = 'moe'
-            age = 40
-            def boo(self):#@IgnorePep8
-                return 'boo'
-            def foo(self):#@IgnorePep8
-                return 'foo'
-        class stoog2: #@IgnorePep8
-            name = 'larry'
-            age = 50
-            def boo(self):#@IgnorePep8
-                return 'boo'
-            def foo(self):#@IgnorePep8
-                return 'foo'
-        class stoog3: #@IgnorePep8
-            name = 'curly'
-            age = 60
-            def boo(self):#@IgnorePep8
-                return 'boo'
-            def foo(self):#@IgnorePep8
-                return 'foo'
-        test = lambda x: not x[0].startswith('__')
-        self.assertSequenceEqual(
-            self.qclass(
-                stooges, stoog2, stoog3
-            ).tap(test).deepmembers().sync().end(),
-            [('age', 40), ('boo', stooges.boo), ('foo', stooges.foo),
-            ('name', 'moe'), ('age', 50), ('boo', stoog2.boo),
-            ('foo', stoog2.foo), ('name', 'larry'), ('age', 60),
-            ('boo', stoog3.boo), ('foo', stoog3.foo), ('name', 'curly')],
-        )
-        from stuf.six import callable
-        test = lambda x: not x[0].startswith('_') and callable(x[1])
-        self.assertSequenceEqual(
-            self.qclass(
-                stooges, stoog2, stoog3
-            ).tap(test).deepmembers().sync().end(),
-            [('boo', stooges.boo), ('foo', stooges.foo), ('boo', stoog2.boo),
-            ('foo', stoog2.foo), ('boo', stoog3.boo), ('foo', stoog3.foo)],
         )
 
     def test_pick(self):
@@ -222,13 +168,6 @@ class AFilterQMixin(ACollectQMixin, ASetQMixin, ASliceQMixin):
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
             ).reject().end(), [1, 3, 5]
-        )
-
-    def test_partition(self):
-        self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(
-                lambda x: x % 2 == 0
-            ).partition().end(), [[1, 3, 5], [2, 4, 6]]
         )
 
     def test_compact(self):

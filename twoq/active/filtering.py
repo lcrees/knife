@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''twoq active filtering queues'''
 
-from twoq.queuing import SLOTS
+from twoq.core import SLOTS
 from twoq.filtering import (
     FilteringMixin, CollectMixin, SetMixin, SliceMixin)
 

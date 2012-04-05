@@ -74,11 +74,6 @@ class OrderMixin(local):
         with self._context():
             return self._xtend(sorted(self._iterable, key=call_))
 
-
-class CombineMixin(local):
-
-    '''combination mixin'''
-
     def product(self, n=1):
         '''
         nested for each loops repeated `n` times
@@ -89,6 +84,6 @@ class CombineMixin(local):
             return self._xtend(product(*self._iterable, repeat=n))
 
 
-class OrderingMixin(OrderMixin, RandomMixin, CombineMixin):
+class OrderingMixin(OrderMixin, RandomMixin):
 
     '''ordering mixin'''

@@ -19,12 +19,5 @@ class TestAutoRandomQ(unittest.TestCase, AQMixin, ARandomQMixin):
         from twoq.lazy.ordering import randomq
         self.qclass = randomq
 
-
-class TestAutoPermutationQ(unittest.TestCase, AQMixin, ACombineQMixin):
-
-    def setUp(self):
-        from twoq.lazy.ordering import combineq
-        self.qclass = combineq
-
 if __name__ == '__main__':
     unittest.main()

@@ -98,9 +98,9 @@ class ATruthQMixin(object):
 
 class AReduceQMixin(AMathQMixin, ATruthQMixin):
 
-    def test_smash(self):
+    def test_flatten(self):
         self.assertEqual(
-            self.qclass([[1, [2], [3, [[4]]]]]).smash().end(), [1, 2, 3, 4],
+            self.qclass([[1, [2], [3, [[4]]]]]).flatten().end(), [1, 2, 3, 4],
         )
 
     def test_merge(self):

@@ -65,16 +65,8 @@ class MQMixin(object):
         q = self.qclass(1, 2, 3, 4, 5, 6).outshift().inclear().shift()
         self.assertEqual(list(q.incoming), list(q.outgoing))
 
-    def test_inshift(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).outshift().sync()
-        self.assertEqual(list(q.incoming), list(q.outgoing))
-
     def test_outsync(self):
         q = self.qclass(1, 2, 3, 4, 5, 6).outshift()
-        self.assertEqual(list(q.incoming), list(q.outgoing))
-
-    def test_outshift(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).outsync()
         self.assertEqual(list(q.incoming), list(q.outgoing))
 
     ###########################################################################

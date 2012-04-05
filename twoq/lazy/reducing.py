@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''twoq lazy reducing queues'''
 
-from twoq.queuing import SLOTS
+from twoq.core import SLOTS
 from twoq.reducing import MathMixin, TruthMixin, ReducingMixin
 
 from twoq.lazy.mixins import AutoResultMixin, ManResultMixin

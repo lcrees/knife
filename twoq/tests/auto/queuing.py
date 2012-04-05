@@ -43,8 +43,8 @@ class AQMixin(object):
         autoq = self.qclass().append('foo').outsync()
         self.assertEqual(autoq.end(), 'foo')
 
-    def test_appendleft(self):
-        autoq = self.qclass().appendleft('foo').outsync()
+    def test_prepend(self):
+        autoq = self.qclass().prepend('foo').outsync()
         self.assertEqual(autoq.end(), 'foo')
 
     def test_inclear(self):
@@ -63,16 +63,8 @@ class AQMixin(object):
         q = self.qclass([1, 2, 3, 4, 5, 6]).outshift().inclear().shift()
         self.assertListEqual(list(q.incoming), list(q.outgoing))
 
-    def test_inshift(self):
-        q = self.qclass([1, 2, 3, 4, 5, 6]).outshift().sync()
-        self.assertListEqual(list(q.incoming), list(q.outgoing))
-
     def test_outsync(self):
         q = self.qclass([1, 2, 3, 4, 5, 6]).outshift()
-        self.assertListEqual(list(q.incoming), list(q.outgoing))
-
-    def test_outshift(self):
-        q = self.qclass([1, 2, 3, 4, 5, 6]).outsync()
         self.assertListEqual(list(q.incoming), list(q.outgoing))
 
     ##########################################################################
