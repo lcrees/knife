@@ -106,9 +106,10 @@ class MCollectQMixin(object):
         self._true_true_false(
             self.qclass(stoog3).tap(
                 lambda x: x, isclass
-            ).tuple_wrap().mro().members().untap().sync(),
+            ).tuple_wrap().mro().sync().members().untap().sync(),
             self.assertEqual,
-            (('age', 60), ('name', 'curly'))
+            (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
+            ('age', 40), ('name', 'moe'))
         )
 
     def test_pick(self):

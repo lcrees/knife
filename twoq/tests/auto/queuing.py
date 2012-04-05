@@ -88,28 +88,6 @@ class AQMixin(object):
             [1, 2, 3, 4, 5, 6],
         )
 
-    def test_unicode_wrap(self):
-        from stuf.six import texts, u
-        self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).unicode_wrap().syncout().value(),
-            texts,
-        )
-        self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).unicode_wrap().syncout().value(),
-            u('123456'),
-        )
-
-    def test_byte_wrap(self):
-        from stuf.six import binaries, b
-        self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).byte_wrap().syncout().value(),
-            binaries,
-        )
-        self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).byte_wrap().syncout().value(),
-            b('123456'),
-        )
-
     def test_tuple_wrap(self):
         self.assertIsInstance(
             self.qclass(1, 2, 3, 4, 5, 6).tuple_wrap().syncout().value(),

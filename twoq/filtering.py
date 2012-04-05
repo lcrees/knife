@@ -84,7 +84,7 @@ class CollectMixin(local):
     def mro(self):
         '''extract ancestors of things by method resolution order'''
         with self._context():
-            return self._xtend(getmro(i) for i in self._iterable)
+            return self._xtend(ichain(getmro(i) for i in self._iterable))
 
     def pick(self, *names):
         '''collect object attributes from incoming things by their `*names`'''

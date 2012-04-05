@@ -6,10 +6,7 @@ from collections import deque
 from contextlib import contextmanager
 
 from stuf.utils import OrderedDict
-from stuf.six import binaries, texts, b, u
 from stuf.core import stuf, frozenstuf, orderedstuf
-
-from twoq.support import n2u, n2b
 
 SLOTS = [
     '_work', 'outgoing', '_util', 'incoming', '_call', '_alt', '_wrapper',
@@ -173,9 +170,7 @@ class ThingsMixin(local):
         if not index:
             self.incoming = self._savepoints.pop()
         else:
-            self._savepoints.reverse()
-            self.incoming = self._savepoints[index]
-            self._savepoints.reverse()
+            self.incoming = deque(reversed(self._savepoints))[index]
         return self._savepoint()
 
     ###########################################################################
@@ -370,12 +365,6 @@ class ResultsMixin(local):
         '''set wrapper to `set`'''
         return self.wrap(set)
 
-    def byte_wrap(self, encoding='ISO-8859-1', join=b('')):
-        '''set wrapper to `bytes` with given `encoding`'''
-        return self.wrap(lambda x: n2b(
-            join.join(binaries(i) for i in x), encoding)
-        )
-
     def deque_wrap(self):
         '''set wrapper to `deque`'''
         return self.wrap(deque)
@@ -403,12 +392,6 @@ class ResultsMixin(local):
     def stuf_wrap(self):
         '''set wrapper to `stuf`'''
         return self.wrap(stuf)
-
-    def unicode_wrap(self, encoding='utf-8', join=u('')):
-        '''set wrapper to `unicode` with given `encoding`'''
-        return self.wrap(
-            lambda x: n2u(join.join(texts(i) for i in x), encoding)
-        )
 
     def list_wrap(self):
         '''clear current wrapper'''

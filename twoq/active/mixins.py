@@ -19,7 +19,8 @@ class BaseMixin(ThingsMixin):
         try:
             incoming = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:
-            incoming = deque(iter([things]))
+            incoming = deque()
+            incoming.extend(things)
         super(BaseMixin, self).__init__(incoming, deque())
         # set iterator
         self._iterator = self._iterexcept
@@ -183,10 +184,7 @@ class BaseMixin(ThingsMixin):
         length = len(dq)
         call = dq.popleft
         for i in repeat(None, length):  # @UnusedVariable
-            try:
-                yield call()
-            except IndexError:
-                pass
+            yield call()
 
     def _iterexcept(self, attr='_UTILQ'):
         '''
