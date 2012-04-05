@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-'''setup for twoq'''
+'''setup for thingq'''
 
 from os import getcwd
 from os.path import join
@@ -14,7 +14,7 @@ install_requires = list(l.strip() for l in open(
 ).readlines())
 
 setup(
-    name='twoq',
+    name='thingq',
     version='0.5.0',
     description='iterator chaining, underscored by a two-headed queue',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
@@ -22,11 +22,11 @@ setup(
     license='BSD',
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
-    url='https://bitbucket.org/lcrees/twoq',
+    url='https://bitbucket.org/lcrees/thingq',
     packages=[
         l.strip() for l in open(join(getcwd(), 'packages'), 'r').readlines()
     ],
-    test_suite='twoq.tests',
+    test_suite='thingq.tests',
     zip_safe=False,
     install_requires=install_requires,
     classifiers=[

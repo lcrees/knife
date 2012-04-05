@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+from thingq.support import unittest
+#pylint: disable-msg=w0614,w0401
+from thingq.tests.man.reducing import *  # @UnusedWildImport
+from thingq.tests.man.manning import Manning
+from thingq.tests.man.queuing import MQMixin
+
+
+class TestManReduceQ(Manning, MQMixin, MReduceQMixin):
+
+    def setUp(self):
+        from thingq.active.reducing import mreduceq
+        self.qclass = mreduceq
+
+
+class TestManMathQ(Manning, MQMixin, MMathQMixin):
+
+    def setUp(self):
+        from thingq.active.reducing import mmathq
+        self.qclass = mmathq
+
+
+class TestManTruthQ(Manning, MQMixin, MTruthQMixin):
+
+    def setUp(self):
+        from thingq.active.reducing import mtruthq
+        self.qclass = mtruthq
+
+
+if __name__ == '__main__':
+    unittest.main()
