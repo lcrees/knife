@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# thingpipe documentation build configuration file, created by
+# tube documentation build configuration file, created by
 # sphinx-quickstart on Mon Mar 19 15:41:40 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'thingpipe'
+project = u'tube'
 copyright = u'2012, L. C. Rees'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'thingpipedoc'
+htmlhelp_basename = 'tubedoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'thingpipe.tex', u'thingpipe Documentation',
+  ('index', 'tube.tex', u'tube Documentation',
    u'L. C. Rees', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'thingpipe', u'thingpipe Documentation',
+    ('index', 'tube', u'tube Documentation',
      [u'L. C. Rees'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'thingpipe', u'thingpipe Documentation',
-   u'L. C. Rees', 'thingpipe', 'One line description of project.',
+  ('index', 'tube', u'tube Documentation',
+   u'L. C. Rees', 'tube', 'One line description of project.',
    'Miscellaneous'),
 ]
 

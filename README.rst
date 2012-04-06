@@ -1,7 +1,7 @@
-*thingpipe* chains iterators together using a double-headed input and output queue,
+*tube* chains iterators together using a double-headed input and output queue,
 that can be shifted or synced as needed.
 
-*thingpipe* exposes some useful features buried in the standard library and 
+*tube* exposes some useful features buried in the standard library and 
 includes some Python 2 <-> 3 compatibility aids.
 
-Mirrored on https://github.com/kwarterthieves/thingpipe/
+Mirrored on https://github.com/kwarterthieves/tube/

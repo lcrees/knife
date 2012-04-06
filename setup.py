@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-'''setup for thingpipe'''
+'''setup for tube'''
 
 from os import getcwd
 from os.path import join
@@ -14,7 +14,7 @@ install_requires = list(l.strip() for l in open(
 ).readlines())
 
 setup(
-    name='thingpipe',
+    name='tube',
     version='0.5.0',
     description='Things go in. Things happen. Things go out. Vaguely inspired'
         ' by underscore.js',
@@ -23,9 +23,9 @@ setup(
     license='BSD',
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
-    url='https://bitbucket.org/lcrees/thingpipe',
-    packages=['thingpipe'],
-    test_suite='thingpipe.tests',
+    url='https://bitbucket.org/lcrees/tube',
+    packages=['tube'],
+    test_suite='tube.tests',
     zip_safe=False,
     install_requires=install_requires,
     classifiers=[
