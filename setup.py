@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-'''setup for thingq'''
+'''setup for thingpipe'''
 
 from os import getcwd
 from os.path import join
@@ -14,23 +14,22 @@ install_requires = list(l.strip() for l in open(
 ).readlines())
 
 setup(
-    name='thingq',
+    name='thingpipe',
     version='0.5.0',
-    description='iterator chaining, underscored by a two-headed queue',
+    description='Things go in. Things happen. Things go out. Vaguely inspired'
+        ' by underscore.js',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
-    keywords='queue generator utility iterator functional programming',
+    keywords='pipe flow ETL iterator functional fluent chaining',
     license='BSD',
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
-    url='https://bitbucket.org/lcrees/thingq',
-    packages=[
-        l.strip() for l in open(join(getcwd(), 'packages'), 'r').readlines()
-    ],
-    test_suite='thingq.tests',
+    url='https://bitbucket.org/lcrees/thingpipe',
+    packages=['thingpipe'],
+    test_suite='thingpipe.tests',
     zip_safe=False,
     install_requires=install_requires,
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',

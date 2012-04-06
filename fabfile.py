@@ -1,4 +1,4 @@
-'''thingq fabfile'''
+'''thingpipe fabfile'''
 
 from fabric.api import prompt, local, settings, env
 
@@ -11,12 +11,12 @@ def _test(val):
 
 
 def tox():
-    '''test thingq'''
+    '''test thingpipe'''
     local('tox')
 
 
 def tox_recreate():
-    '''recreate thingq test env'''
+    '''recreate thingpipe test env'''
     prompt(
         'Enter testenv: [py26, py27, py32]',
         'testenv',
@@ -26,7 +26,7 @@ def tox_recreate():
 
 
 def release():
-    '''release thingq'''
+    '''release thingpipe'''
     local('hg update pu')
     local('hg update next')
     local('hg merge pu; hg ci -m automerge')
@@ -39,14 +39,14 @@ def release():
     prompt('Enter tag: ', 'tag')
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/thingq')
-        local('hg push git+ssh://git@github.com:kwarterthieves/thingq.git')
+        local('hg push ssh://hg@bitbucket.org/lcrees/thingpipe')
+        local('hg push git+ssh://git@github.com:kwarterthieves/thingpipe.git')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')
 
 
 def release_next():
-    '''release thingq from next branch'''
+    '''release thingpipe from next branch'''
     local('hg update maint')
     local('hg merge default; hg ci -m automerge')
     local('hg update default')
@@ -56,7 +56,7 @@ def release_next():
     prompt('Enter tag: ', 'tag')
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/thingq')
-        local('hg push git+ssh://git@github.com:kwarterthieves/thingq.git')
+        local('hg push ssh://hg@bitbucket.org/lcrees/thingpipe')
+        local('hg push git+ssh://git@github.com:kwarterthieves/thingpipe.git')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')

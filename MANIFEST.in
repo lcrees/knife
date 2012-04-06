@@ -3,4 +3,4 @@ include MANIFEST.in
 include README.rst
 include packages
 include requirements.txt
-recursive-include thingq *.py
+recursive-include thingpipe *.py
