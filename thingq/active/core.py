@@ -73,14 +73,18 @@ class msliceq(ManResultMixin, SliceMixin):
     __slots__ = SLOTS
 
 
-class filterq(AutoResultMixin, FilterMixin):
+class filterq(
+    AutoResultMixin, FilterMixin, CollectMixin, SetMixin, SliceMixin
+):
 
     '''auto-balanced filter queue'''
 
     __slots__ = SLOTS
 
 
-class mfilterq(ManResultMixin, FilterMixin):
+class mfilterq(
+    ManResultMixin, FilterMixin, CollectMixin, SetMixin, SliceMixin,
+):
 
     '''manually balanced filtering queue'''
 
@@ -101,14 +105,14 @@ class mrepeatq(ManResultMixin, RepeatMixin):
     __slots__ = SLOTS
 
 
-class mapq(AutoResultMixin, MapMixin):
+class mapq(AutoResultMixin, RepeatMixin, MapMixin):
 
     '''auto-balanced mapping queue'''
 
     __slots__ = SLOTS
 
 
-class mmapq(ManResultMixin, MapMixin):
+class mmapq(ManResultMixin, RepeatMixin, MapMixin):
 
     '''manually balanced mapping queue'''
 
@@ -129,14 +133,14 @@ class mrandomq(ManResultMixin, RandomMixin):
     __slots__ = SLOTS
 
 
-class orderq(AutoResultMixin, OrderMixin):
+class orderq(AutoResultMixin, OrderMixin, RandomMixin):
 
     '''auto-balanced ordering queue'''
 
     __slots__ = SLOTS
 
 
-class morderq(ManResultMixin, OrderMixin):
+class morderq(ManResultMixin, OrderMixin, RandomMixin):
 
     '''manually balanced order queue'''
 
@@ -171,14 +175,14 @@ class mtruthq(ManResultMixin, TruthMixin):
     __slots__ = SLOTS
 
 
-class reduceq(AutoResultMixin, ReduceMixin):
+class reduceq(AutoResultMixin, MathMixin, TruthMixin, ReduceMixin):
 
     '''auto-balancing reduce queue'''
 
     __slots__ = SLOTS
 
 
-class mreduceq(ManResultMixin, ReduceMixin):
+class mreduceq(ManResultMixin, MathMixin, TruthMixin, ReduceMixin):
 
     '''manually balanced reduce queue'''
 

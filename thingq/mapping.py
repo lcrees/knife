@@ -95,7 +95,8 @@ class MapMixin(local):
         if wait:
             def invoke(x, wait=0):
                 sleep(wait)
-                return invoke(x)
+                results = caller(x)
+                return x if results is None else results
         with self._context():
             return self._xtend(imap(invoke, self._iterable))
 
@@ -117,7 +118,8 @@ class MapMixin(local):
             def delay_map(x, wait=None, caller=None):
                 sleep(wait)
                 return caller(x)
-            call_ = lambda x: delay_map(x, wait, call_)
+            call = self._call
+            call_ = lambda x: delay_map(x, wait, call)
         with self._context():
             return self._xtend(imap(call_, self._iterable))
 
