@@ -37,6 +37,27 @@ class ARepeatQMixin(object):
         self.assertFalse(newlist[1] is testlist[1])
         self.assertListEqual(newlist[1], testlist[1])
 
+    def test_permutations(self):
+        self.assertEqual(
+            self.qclass(40, 50, 60).permutations(2).end(),
+            [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
+        )
+
+    def test_combination(self):
+        self.assertEqual(
+            self.qclass(40, 50, 60).combinations(2).end(),
+            [(40, 50), (40, 60), (50, 60)],
+        )
+
+    def test_product(self):
+        foo = self.qclass('ABCD', 'xy').product().out()
+        self.assertEqual(
+            foo,
+            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
+            ('C', 'y'), ('D', 'x'), ('D', 'y')],
+            foo,
+        )
+
 
 class AMapQMixin(ARepeatQMixin):
 

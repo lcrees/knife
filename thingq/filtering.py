@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 '''thingq filtering mixins'''
 
+import re
 from inspect import getmro
 from threading import local
 from functools import reduce
 from collections import deque
+from json import dumps, loads
 from itertools import tee, islice
+from htmlentitydefs import name2codepoint
+from xml.sax.saxutils import escape, unescape
 from operator import attrgetter, itemgetter, truth
 
-from thingq.support import ifilter, ichain, imap, filterfalse
+from thingq.support import (
+    ifilter, ichain, imap, filterfalse, tounicode, tobytes)
 
 
 class CollectMixin(local):
@@ -255,3 +260,142 @@ class FilterMixin(local):
             return self._xtend(
                 filterfalse(lambda y: y in things, self._iterable)
             )
+    
+    def ascii(self, errors='strict'):
+        '''
+        encode each incoming thing as ascii string (regardless of type)
+
+        @param errors: error handling (default: 'strict')
+        '''
+        with self._context():
+            return self._xtend(imap(
+                lambda x: tobytes(x, 'ascii', errors), self._iterable,
+            ))
+    
+    def bytes(self, encoding='utf-8', errors='strict'):
+        '''
+        encode each incoming thing as byte string (regardless of type)
+
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        with self._context():
+            return self._xtend(imap(
+                lambda x: tobytes(x, encoding, errors), self._iterable,
+            ))
+
+    def unicode(self, encoding='utf-8', errors='strict'):
+        '''
+        decode each incoming thing as unicode string (regardless of type)
+
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        with self._context():
+            return self._xtend(imap(
+                lambda x: tounicode(x, encoding, errors), self._iterable,
+            ))
+    
+    def match(self, pattern, flags=0):
+        '''
+        look for pattern among incoming strings
+        
+        @param pattern: search pattern 
+        '''
+        search = re.compile(pattern, flags)
+        def find(x):
+            return True if search.search(x) else False
+        with self._context():
+            return self._xtend(imap(find, self._iterable))
+        
+    def extract(self, pattern, flags=0):
+        '''
+        look for pattern among incoming strings
+        
+        @param pattern: search pattern 
+        '''
+        search = re.compile(pattern, flags)
+        def find(x):
+            results = search.search(x)
+            if not results:
+                return None, None
+            # extract any named results
+            named = results.groupdict()
+            # extract any positional arguments
+            positions = tuple(i for i in search.groups() if i not in named)
+            return positions, named
+        with self._context():
+            return self._xtend(ifilter(
+                lambda x, y: x is not None and y is not None,  
+                imap(find, self._iterable),
+            ))
+
+    def sub(self, pattern, repl, flags=0, count=0):
+        '''
+        replace strings matching pattern with replacement
+        
+        @param pattern: search pattern 
+        @param repl: replacement string
+        '''
+        search = re.compile(pattern, flags)
+        def find(x):
+            return search.sub(repl, x, count)
+        with self._context():
+            return self._xtend(imap(find, self._iterable))
+
+    def htmlescape(self):
+        '''escape HTML (&, <, >, ", and ')'''
+        with self._context():
+            return self._xtend(imap(
+                lambda x: escape(x, {'"':"&quot;", "'":'&#39;'}),
+                self._iterable,
+            ))
+
+    def htmlunescape(self):
+        '''
+        unescape HTML
+        
+        from -> John J. Lee 
+        http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
+        '''
+        def unescape_charref(ref): 
+            name = ref[2:-1] 
+            base = 10 
+            if name.startswith("x"): 
+                name = name[1:] 
+                base = 16 
+            return unichr(int(name, base)) 
+        def replace_entities(match): 
+            ent = match.group() 
+            if ent[1] == "#": 
+                return unescape_charref(ent) 
+            repl = name2codepoint.get(ent[1:-1]) 
+            if repl is not None: 
+                repl = unichr(repl) 
+            else: 
+                repl = ent 
+            return repl 
+        def unescape(data): 
+            return re.sub(r"&#?[A-Za-z0-9]+?;", replace_entities, data) 
+        with self._context():
+            return self._xtend(imap(unescape, self._iterable)) 
+
+    def jsunescape(self):
+        '''javascript/json unescape each incoming things'''
+        with self._context():
+            return self._xtend(imap(loads, self._iterable))
+
+    def jsescape(self):
+        '''javascript/json unescape each incoming things'''
+        with self._context():
+            return self._xtend(imap(dumps, self._iterable))
+
+    def xmlunescape(self):
+        '''xml unexcape each incoming things'''
+        with self._context():
+            return self._xtend(imap(unescape, self._iterable))
+
+    def xmlescape(self):
+        '''xml excape each incoming things'''
+        with self._context():
+            return self._xtend(imap(escape, self._iterable))

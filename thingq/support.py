@@ -103,8 +103,24 @@ class port(object):
         return six.printf(*args, **kw)
 
 
+isbinary = port.isbinary
 isstring = port.isstring
 isunicode = port.isunicode
+texts = six.texts
+
+
+def tounicode(thing, encoding='utf-8', errors='strict'):
+    return (
+        thing.decode(encoding, errors) if isbinary(thing) else
+        texts(texts(thing).encode(encoding, errors), encoding, errors)
+    )
+
+
+def tobytes(thing, encoding='utf-8', errors='strict'):
+    return (
+        texts(thing).encode(encoding, errors) if not isbinary(thing) else thing
+    )
+
 
 import sys
 if not sys.version_info[0] == 2 and sys.version_info[1] < 7:

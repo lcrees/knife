@@ -7,8 +7,8 @@ from functools import partial, reduce
 from operator import contains, truediv
 from itertools import cycle, tee, islice
 
-from stuf.six import strings
-from thingq.support import Counter, imap, zip, ichain
+from stuf.six import strings, u
+from thingq.support import Counter, imap, zip, ichain, tounicode
 
 
 class MathMixin(local):
@@ -138,21 +138,37 @@ class ReduceMixin(local):
     def flatten(self):
         '''flatten deeply nested incoming things'''
         def smash(iterable):
-            smash_ = smash
+            smash_, strings_, isinst_ = smash, strings, isinstance
             for item in iterable:
                 try:
-                    if isinstance(item, strings):
+                    # don't recur over strings
+                    if isinst_(item, strings_):
                         yield item
                     else:
+                        # do recur over other things
                         for j in smash_(item):
                             yield j
                 except TypeError:
+                    # does not recur
                     yield item
         with self._context():
             return self._xtend(smash(self._iterable))
 
+    def join(self, sep=u(''), encoding='utf-8', errors='strict'):
+        '''
+        join incoming things into one unicode string (regardless of type)
+
+        @param sep: join separator (default: '')
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        with self._context():
+            return self._append(tounicode(sep.join(imap(
+                tounicode, self._iterable,
+            )), encoding, errors))
+
     def pairwise(self):
-        '''every two incoming things as a tuple'''
+        '''every two incoming things as a `tuple`'''
         with self._context():
             i1, i2 = tee(self._iterable)
             next(i2, None)
@@ -160,8 +176,8 @@ class ReduceMixin(local):
 
     def reduce(self, initial=None):
         '''
-        reduce incoming things to one thing using call (from left side of
-        incoming things)
+        reduce incoming things to one thing using current callable (from left
+        side of incoming things)
 
         @param initial: initial thing (default: None)
         '''
@@ -173,7 +189,7 @@ class ReduceMixin(local):
     def reduce_right(self, initial=None):
         '''
         reduce incoming things to one thing from right side of incoming things
-        using call
+        using current callable
 
         @param initial: initial thing (default: None)
         '''

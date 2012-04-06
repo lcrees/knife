@@ -77,14 +77,6 @@ class MOrderQMixin(MRandomQMixin):
             [2, 3, 4, 4, 6, 63, 65],
         )
 
-    def test_product(self):
-        self._false_true_false(
-            self.qclass('ABCD', 'xy').product(),
-            self.assertListEqual,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')]
-        )
-
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([
     name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']

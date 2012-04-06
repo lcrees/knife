@@ -129,10 +129,8 @@ class BaseMixin(ThingsMixin):
         '''swap for auto-synchronizing context'''
         self.swap(context=self.autoctx, **kw)
         getr_ = lambda x: getattr(self, x)
-        outq = getr_(self._OUTQ)
-        utilq = getr_(self._UTILQ)
-        workq = getr_(self._WORKQ)
-        inq = getr_(self._INQ)
+        inq, workq = getr_(self._INQ), getr_(self._WORKQ)
+        utilq,  outq = getr_(self._UTILQ), getr_(self._OUTQ)
         # clear work things
         workq.clear()
         # extend work things with incoming things
@@ -177,8 +175,7 @@ class BaseMixin(ThingsMixin):
         @param attr: things to iterate over
         '''
         dq = getattr(self, attr)
-        length = len(dq)
-        call = dq.popleft
+        length, call = len(dq), dq.popleft
         for i in repeat(None, length):  # @UnusedVariable
             yield call()
 
@@ -324,7 +321,7 @@ class EndMixin(ResultsMixin):
 
     def snapshot(self):
         '''snapshot of current outgoing things'''
-        wrap = copy(getattr(self, self._OUTQ))
+        wrap = copy(self.outgoing)
         return wrap.pop() if len(wrap) == 1 else self._wrapper(wrap)
 
     def out(self):
@@ -332,7 +329,7 @@ class EndMixin(ResultsMixin):
         # return to default context
         self.unswap()
         wrap, outgoing = self._wrapper, self.outgoing
-        wrap = self.outgoing.pop() if len(outgoing) == 1 else wrap(outgoing)
+        wrap = outgoing.pop() if len(outgoing) == 1 else wrap(outgoing)
         # clear outgoing things
         self.clearout()
         return wrap

@@ -153,6 +153,14 @@ class MReduceQMixin(MMathQMixin, MTruthQMixin):
             self.assertEqual,
             [1, 2, 3, 4],
         )
+        
+    def test_join(self):
+        from stuf.six import u, b
+        self._false_true_false(
+            self.qclass([1], True, b('thing'), None, (1,)).join(u(', ')),
+            self.assertEqual,
+            u('[1], True, thing, None, (1,)')
+        )
 
     def test_pairwise(self):
         self._false_true_false(

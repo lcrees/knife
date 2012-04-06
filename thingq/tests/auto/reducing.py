@@ -108,6 +108,13 @@ class AReduceQMixin(AMathQMixin, ATruthQMixin):
         self.assertEqual(
             self.qclass([[1, [2], [3, [[4]]]]]).flatten().end(), [1, 2, 3, 4],
         )
+        
+    def test_join(self):
+        from stuf.six import u, b
+        self.assertEqual(
+            self.qclass([1], True, b('thing'), None, (1,)).join(u(', ')).end(),
+            u('[1], True, thing, None, (1,)')
+        )
 
     def test_pairwise(self):
         self.assertEqual(

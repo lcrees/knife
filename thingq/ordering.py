@@ -2,7 +2,7 @@
 '''thingq ordering mixins'''
 
 from threading import local
-from itertools import product, groupby
+from itertools import groupby
 from random import choice, shuffle, sample
 
 from thingq.support import zip_longest, imap
@@ -59,16 +59,7 @@ class OrderMixin(local):
         with self._context():
             return self._xtend(
                 zip_longest(fillvalue=fill, *[iter(self._iterable)] * n)
-            )
-
-    def product(self, n=1):
-        '''
-        nested for each loops repeated `n` times
-
-        @param n: number of repetitions (default: 1)
-        '''
-        with self._context():
-            return self._xtend(product(*self._iterable, repeat=n))
+            )  
 
     def reverse(self):
         '''reverse order of incoming things'''

@@ -5,7 +5,7 @@ from time import sleep
 from copy import deepcopy
 from threading import local
 from operator import methodcaller
-from itertools import starmap, repeat
+from itertools import starmap, repeat, product, combinations, permutations
 
 from thingq.support import imap, ichain, items, xrange
 
@@ -14,10 +14,37 @@ class RepeatMixin(local):
 
     '''repetition mixin'''
 
+    def combinations(self, n):
+        '''
+        repeat every combination for `n` of incoming things
+
+        @param n: number of repetitions
+        '''
+        with self._context():
+            return self._xtend(combinations(self._iterable, n))
+
     def copy(self):
         '''copy each incoming thing'''
         with self._context():
             return self._xtend(imap(deepcopy, self._iterable))
+
+    def product(self, n=1):
+        '''
+        nested for each loops repeated `n` times
+
+        @param n: number of repetitions (default: 1)
+        '''
+        with self._context():
+            return self._xtend(product(*self._iterable, repeat=n))
+
+    def permutations(self, n):
+        '''
+        repeat every permutation for every `n` of incoming things
+
+        @param n: length of thing to permutate
+        '''
+        with self._context():
+            return self._xtend(permutations(self._iterable, n))
 
     def range(self, start, stop=0, step=1):
         '''
@@ -75,7 +102,7 @@ class MapMixin(local):
             de = delay_each
             call_ = lambda x, y: de(x, y, wait, call)
         else:
-            
+
             call_ = lambda x, y: call(*x, **y)
         with self._context():
             return self._xtend(starmap(call_, self._iterable))

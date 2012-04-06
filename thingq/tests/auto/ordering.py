@@ -62,15 +62,6 @@ class AOrderQMixin(ARandomQMixin):
             [2, 3, 4, 4, 6, 63, 65],
         )
 
-    def test_product(self):
-        foo = self.qclass('ABCD', 'xy').product().out()
-        self.assertEqual(
-            foo,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')],
-            foo,
-        )
-
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([
     name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']
