@@ -165,10 +165,6 @@ class BaseMixin(ThingsMixin):
     ## iterate things #########################################################
     ###########################################################################
 
-    def __iter__(self):
-        '''yield outgoing things, clearing outgoing things as it iterates'''
-        return self._iterexcept(self._OUTQ)
-
     @property
     def _iterable(self):
         '''iterable'''
@@ -309,6 +305,12 @@ class ManMixin(BaseMixin):
 class EndMixin(ResultsMixin):
 
     '''result things mixin'''
+    
+    def __iter__(self):
+        '''yield outgoing things, clearing outgoing things as it iterates'''
+        return self._iterexcept(self._OUTQ)
+    
+    results = __iter__
 
     def end(self):
         '''return outgoing things then clear wrap everything'''

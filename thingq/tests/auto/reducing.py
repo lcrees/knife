@@ -37,11 +37,6 @@ class AMathQMixin(object):
         self.assertEqual(self.qclass(4, 5, 7, 2, 1).median().end(), 4)
         self.assertEqual(self.qclass(4, 5, 7, 2, 1, 8).median().end(), 4.5)
 
-    def test_mode(self):
-        self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).mode().end(), 11,
-        )
-
     def test_statrange(self):
         self.assertEqual(self.qclass(3, 5, 7, 3, 11).statrange().end(), 8)
 
@@ -84,6 +79,11 @@ class ATruthQMixin(object):
             self.qclass(None, 0, 'yes', False).tap(bool).quantify().end(), 1,
         )
 
+    def test_common(self):
+        self.assertEqual(
+            self.qclass(11, 3, 5, 11, 7, 3, 11).common().end(), 11,
+        )
+
     def test_uncommon(self):
         self.assertEqual(
             self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon().end(), 7,
@@ -97,6 +97,12 @@ class ATruthQMixin(object):
 
 
 class AReduceQMixin(AMathQMixin, ATruthQMixin):
+    
+    def test_concat(self):
+        self.assertEqual(
+            self.qclass([1, 2], [5, [3, 4]]).concat().end(),
+            [1, 2, 5, [3, 4]],
+        )   
 
     def test_flatten(self):
         self.assertEqual(

@@ -10,62 +10,6 @@ from itertools import starmap, repeat
 from thingq.support import imap, ichain, items, xrange
 
 
-class DelayMixin(local):
-
-    '''delayed map mixin'''
-
-    def delay_each(self, wait):
-        '''
-        invoke call with passed arguments, keywords in incoming things after
-        delay `wait`
-
-        @param wait: time in seconds
-        '''
-        def delay_each(x, y, wait=0, caller=None):
-            sleep(wait)
-            return caller(*x, **y)
-        with self._context():
-            de, call = delay_each, self._call
-            return self._xtend(starmap(
-                lambda x, y: de(x, y, wait, call), self._iterable,
-            ))
-
-    def delay_invoke(self, name, wait):
-        '''
-        invoke method `name` on each incoming thing with passed arguments,
-        keywords after delay `wait` but return incoming thing instead if method
-        returns `None`
-
-        @param name: name of method
-        @param wait: time in seconds
-        '''
-        def delay_invoke(x, wait=0, caller=None):
-            sleep(wait)
-            results = caller(x)
-            return x if results is None else results
-        with self._context():
-            di, mc = delay_invoke, methodcaller
-            args, kw = self._args, self._kw
-            return self._xtend(imap(
-                lambda x: di(x, wait, mc(name, *args, **kw)), self._iterable,
-            ))
-
-    def delay_map(self, wait):
-        '''
-        invoke call on each incoming thing after delay `wait`
-
-        @param wait: time in seconds
-        '''
-        def delay_map(x, wait=None, caller=None):
-            sleep(wait)
-            return caller(x)
-        with self._context():
-            dm, call = delay_map, self._call
-            return self._xtend(imap(
-                lambda x: dm(x, wait, call), self._iterable,
-            ))
-
-
 class RepeatMixin(local):
 
     '''repetition mixin'''
@@ -117,30 +61,43 @@ class MapMixin(local):
 
     '''mapping mixin'''
 
-    def each(self):
-        '''invoke call with passed arguments, keywords in incoming things'''
-        with self._context():
-            return self._xtend(starmap(
-                lambda x, y: self._call(*x, **y), self._iterable,
-            ))
+    def each(self, wait=0):
+        '''
+        invoke call with passed arguments, keywords in incoming things
 
-    def invoke(self, name):
+        @param wait: time in seconds (default: 0)
+        '''
+        call = self._call
+        if wait:
+            def delay_each(x, y, wait=0, caller=None):
+                sleep(wait)
+                return caller(*x, **y)
+            de = delay_each
+            call_ = lambda x, y: de(x, y, wait, call)
+        else:
+            
+            call_ = lambda x, y: call(*x, **y)
+        with self._context():
+            return self._xtend(starmap(call_, self._iterable))
+
+    def invoke(self, name, wait=0):
         '''
         invoke method `name` on each incoming thing with passed arguments,
         keywords but return incoming thing instead if method returns `None`
 
         @param name: name of method
+        @param wait: time in seconds (default: 0)
         '''
-        def invoke(thing, caller=None):
+        caller = methodcaller(name, *self._args, **self._kw)
+        def invoke(thing):
             results = caller(thing)
             return thing if results is None else results
+        if wait:
+            def invoke(x, wait=0):
+                sleep(wait)
+                return invoke(x)
         with self._context():
-            return self._xtend(imap(
-                lambda x: invoke(
-                    x, caller=methodcaller(name, *self._args, **self._kw)
-                ),
-                self._iterable
-            ))
+            return self._xtend(imap(invoke, self._iterable))
 
     def items(self):
         '''invoke call on each mapping to get key, value pairs'''
@@ -149,17 +106,22 @@ class MapMixin(local):
                 self._call, ichain(imap(items, self._iterable))
             ))
 
-    def map(self):
-        '''invoke call on each incoming thing'''
+    def map(self, wait=0):
+        '''
+        invoke call on each incoming thing
+        
+        @param wait: time in seconds (default: 0)
+        '''
+        call_ = self._call
+        if wait:
+            def delay_map(x, wait=None, caller=None):
+                sleep(wait)
+                return caller(x)
+            call_ = lambda x: delay_map(x, wait, call_)
         with self._context():
-            return self._xtend(imap(self._call, self._iterable))
+            return self._xtend(imap(call_, self._iterable))
 
     def starmap(self):
         '''invoke call on each sequence of incoming things'''
         with self._context():
             return self._xtend(starmap(self._call, self._iterable))
-
-
-class MappingMixin(DelayMixin, RepeatMixin, MapMixin):
-
-    '''mapping mixin'''

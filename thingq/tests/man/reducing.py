@@ -55,13 +55,6 @@ class MMathQMixin(object):
             self.qclass(1, 2, 3).sum(1), self.assertEqual, 7,
         )
 
-    def test_mode(self):
-        self._false_true_false(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).mode(),
-            self.assertEqual,
-            11,
-        )
-
     def test_median(self):
         self._false_true_false(
             self.qclass(4, 5, 7, 2, 1).median(), self.assertEqual, 4,
@@ -106,6 +99,13 @@ class MTruthQMixin(object):
             self.assertTrue,
         )
 
+    def test_common(self):
+        self._false_true_false(
+            self.qclass(11, 3, 5, 11, 7, 3, 11).common(),
+            self.assertEqual,
+            11,
+        )
+
     def test_include(self):
         self._false_true_false(
             self.qclass(1, 2, 3).contains(3), self.assertTrue,
@@ -139,6 +139,13 @@ class MTruthQMixin(object):
 
 
 class MReduceQMixin(MMathQMixin, MTruthQMixin):
+    
+    def test_concat(self):
+        self._false_true_false(
+            self.qclass([1, 2], [5, [3, 4]]).concat(),
+            self.assertEqual,
+            [1, 2, 5, [3, 4]],
+        )        
 
     def test_flatten(self):
         self._false_true_false(

@@ -82,8 +82,3 @@ class OrderMixin(local):
         call_ = self._call
         with self._context():
             return self._xtend(sorted(self._iterable, key=call_))
-
-
-class OrderingMixin(OrderMixin, RandomMixin):
-
-    '''ordering mixin'''

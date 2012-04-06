@@ -51,9 +51,9 @@ class ThingsMixin(local):
         # clear outgoing things before extending/appending to them?
         self._clearout = True
         #######################################################################
-        ## snapshotting defaults ##############################################
+        ## savepoint defaults #################################################
         #######################################################################
-        # number of savepoints to keep (default: 5)
+        # number of savepoints to retain (default: 5)
         maxlen = kw.pop('savepoints', 5)
         # create stack for savepoint things
         self._savepoints = deque(maxlen=maxlen) if maxlen is not None else None
@@ -86,6 +86,7 @@ class ThingsMixin(local):
     def rw(self):
         '''switch to read/write mode'''
         self.current_mode = self._RW
+        # clear utility queue
         return self._clearu().unswap()
 
     ###########################################################################
@@ -115,7 +116,7 @@ class ThingsMixin(local):
         self._CONFIG = kw if kw.get('hard', False) else {}
         # set context
         self._context = kw.get('context', getattr(self, self._DEFAULT_CONTEXT))
-        # clear wrap outgoing things before extending them?
+        # clear outgoing things before extending them?
         self._clearout = kw.get('clearout', True)
         # 1. incoming things
         self._INQ = kw.get(self._INCFG, self._INVAR)
@@ -128,11 +129,11 @@ class ThingsMixin(local):
         return self
 
     def reswap(self):
-        '''swap for preferred context'''
+        '''swap for current default context'''
         return self.swap(savepoint=False, **self._CONFIG)
 
     def unswap(self):
-        '''swap for current default context'''
+        '''swap for preferred context'''
         return self.swap(savepoint=False)
 
     @contextmanager
@@ -162,13 +163,18 @@ class ThingsMixin(local):
         @param everything: undo everything and return things to original state
         '''
         if everything:
+            # clear everything plus savepoints
             self.clear()._clearsp()
+            # restore original incoming things
             self.incoming = self._start
+            # take new snapshot for incoming things
             self._original()
             return self
         self.clear()
+        # by default use most recent savepoint
         if not index:
             self.incoming = self._savepoints.pop()
+        # if specified, use savepoint at specific index
         else:
             self.incoming = deque(reversed(self._savepoints))[index]
         return self._savepoint()
@@ -329,7 +335,7 @@ class ResultsMixin(local):
     '''result of things mixin'''
 
     ###########################################################################
-    ## outgoing things export #################################################
+    ## export outgoing things #################################################
     ###########################################################################
 
     def peek(self):
@@ -339,10 +345,6 @@ class ResultsMixin(local):
         results = out[0] if len(out) == 1 else out
         self.rw()
         return results
-
-    def results(self):
-        '''yield outgoing things, clearing outgoing things as it iterates'''
-        return self.__iter__()
 
     ###########################################################################
     ## wrap outgoing things ###################################################

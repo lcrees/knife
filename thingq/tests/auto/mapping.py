@@ -38,39 +38,7 @@ class ARepeatQMixin(object):
         self.assertListEqual(newlist[1], testlist[1])
 
 
-class ADelayQMixin(object):
-
-    def test_delay_each(self):
-        def test(*args, **kw):
-            return sum(args) * kw['a']
-        self.assertEqual(
-            self.qclass(
-                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).delay_each(0.0001).end(),
-            [6, 10, 14],
-        )
-
-    def test_delay_map(self):
-        self.assertEqual(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).delay_map(0.0001).end(),
-            [3, 6, 9],
-        )
-
-    def test_delay_invoke(self):
-        self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1])
-            .args(1).delay_invoke('index', 0.0001).end(),
-            [1, 2],
-        )
-        self.assertEqual(
-            self.qclass(
-                [5, 1, 7], [3, 2, 1]
-            ).delay_invoke('sort', 0.0001).end(),
-            [[1, 5, 7], [1, 2, 3]],
-        )
-
-
-class AMapQMixin(ADelayQMixin, ARepeatQMixin):
+class AMapQMixin(ARepeatQMixin):
 
     def test_factory(self):
         from stuf import stuf
@@ -90,10 +58,20 @@ class AMapQMixin(ADelayQMixin, ARepeatQMixin):
             ).tap(test).each().end(),
             [6, 10, 14],
         )
+        self.assertEqual(
+            self.qclass(
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).tap(test).each(0.0001).end(),
+            [6, 10, 14],
+        )
 
     def test_map(self):
         self.assertEqual(
             self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
+        )
+        self.assertEqual(
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map(0.0001).end(),
+            [3, 6, 9],
         )
 
     def test_starmap(self):
@@ -119,7 +97,15 @@ class AMapQMixin(ADelayQMixin, ARepeatQMixin):
             self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort').end(),
             [[1, 5, 7], [1, 2, 3]],
         )
-
+        self.assertEqual(
+            self.qclass([5, 1, 7], [3, 2, 1])
+            .args(1).invoke('index', 0.0001).end(),
+            [1, 2],
+        )
+        self.assertEqual(
+            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001).end(),
+            [[1, 5, 7], [1, 2, 3]],
+        )
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([
     name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']

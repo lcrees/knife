@@ -255,8 +255,3 @@ class FilterMixin(local):
             return self._xtend(
                 filterfalse(lambda y: y in things, self._iterable)
             )
-
-
-class FilteringMixin(CollectMixin, SetMixin, SliceMixin, FilterMixin):
-
-    '''filtering mixin'''

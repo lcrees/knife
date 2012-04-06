@@ -51,42 +51,7 @@ class MRepeatQMixin(object):
         self.assertTrue(manq.balanced)
 
 
-class MDelayQMixin(object):
-
-    def test_delay_each(self):
-        def test(*args, **kw):
-            return sum(args) * kw['a']
-        self._true_true_false(
-            self.qclass(
-                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).delay_each(0.0001),
-            self.assertEqual,
-            [6, 10, 14],
-        )
-
-    def test_delay_map(self):
-        self._true_true_false(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).delay_map(0.0001),
-            self.assertEqual,
-            [3, 6, 9],
-        )
-
-    def test_delay_invoke(self):
-        self._true_true_false(
-            self.qclass(
-                [5, 1, 7], [3, 2, 1]
-            ).args(1).delay_invoke('index', 0.0001),
-            self.assertEqual,
-            [1, 2],
-        )
-        self._true_true_false(
-            self.qclass([5, 1, 7], [3, 2, 1]).delay_invoke('sort', 0.0001),
-            self.assertEqual,
-            [[1, 5, 7], [1, 2, 3]],
-        )
-
-
-class MMapQMixin(MDelayQMixin, MRepeatQMixin):
+class MMapQMixin(MRepeatQMixin):
 
     def test_factory(self):
         from stuf import stuf
@@ -105,10 +70,22 @@ class MMapQMixin(MDelayQMixin, MRepeatQMixin):
             self.assertEqual,
             [6, 10, 14],
         )
+        self._true_true_false(
+            self.qclass(
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).tap(test).each(0.0001),
+            self.assertEqual,
+            [6, 10, 14],
+        )
 
     def test_map(self):
         self._true_true_false(
             self.qclass(1, 2, 3).tap(lambda x: x * 3).map(),
+            self.assertEqual,
+            [3, 6, 9],
+        )
+        self._true_true_false(
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map(0.0001),
             self.assertEqual,
             [3, 6, 9],
         )
@@ -141,6 +118,18 @@ class MMapQMixin(MDelayQMixin, MRepeatQMixin):
             self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort'),
             self.assertEqual,
             [[1, 5, 7], [1, 2, 3]]
+        )
+        self._true_true_false(
+            self.qclass(
+                [5, 1, 7], [3, 2, 1]
+            ).args(1).invoke('index', 0.0001),
+            self.assertEqual,
+            [1, 2],
+        )
+        self._true_true_false(
+            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001),
+            self.assertEqual,
+            [[1, 5, 7], [1, 2, 3]],
         )
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([

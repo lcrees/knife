@@ -3,12 +3,12 @@
 
 from math import fsum
 from threading import local
-from collections import Iterable
 from functools import partial, reduce
 from operator import contains, truediv
 from itertools import cycle, tee, islice
 
-from thingq.support import Counter, isstring, imap, zip
+from stuf.six import strings
+from thingq.support import Counter, imap, zip, ichain
 
 
 class MathMixin(local):
@@ -16,31 +16,29 @@ class MathMixin(local):
     '''math mixin'''
 
     def average(self):
-        '''average of all incoming things'''
+        '''average value of incoming things'''
         def average(iterable):
-            '''average of `iterable`'''
             i1, i2 = tee(iterable)
             return truediv(sum(i1, 0.0), len(list(i2)))
         with self._context():
             return self._append(average(self._iterable))
 
     def fsum(self):
-        '''add incoming things together'''
+        '''add incoming things together (if floats)'''
         with self._context():
             return self._append(fsum(self._iterable))
 
     def max(self):
         '''
-        find maximum thing in incoming things, optionally using current
-        call as key function
+        find maximum value among incoming things using current callable as key
+        function
         '''
         with self._context():
             return self._append(max(self._iterable, key=self._call))
 
     def median(self):
-        '''median of all incoming things'''
+        '''median value of incoming things'''
         def median(iterable):
-            '''median of `iterable`'''
             i = list(sorted(iterable))
             e = truediv(len(i) - 1, 2)
             p = int(e)
@@ -49,32 +47,28 @@ class MathMixin(local):
             return self._append(median(self._iterable))
 
     def min(self):
-        '''find minimum thing in incoming things using call as key function'''
+        '''
+        find minimum value among incoming things using current callable as key
+        function
+        '''
         with self._context():
             return self._append(min(self._iterable, key=self._call))
 
     def minmax(self):
-        '''minimum and maximum things among all incoming things'''
+        '''minimum and maximum values among incoming things'''
         with self._context():
             i1, i2 = tee(self._iterable)
             return self._xtend(iter([min(i1), max(i2)]))
 
-    def mode(self):
-        '''mode of all incoming things'''
-        with self._context():
-            return self._append(
-                Counter(self._iterable).most_common(1)[0][0]
-            )
-
     def statrange(self):
-        '''statistical range of all incoming things'''
+        '''statistical range of incoming things'''
         with self._context():
             iterz = list(sorted(self._iterable))
             return self._append(iterz[-1] - iterz[0])
 
     def sum(self, start=0):
         '''
-        add all incoming things together
+        total incoming things together
 
         @param start: starting number (default: 0)
         '''
@@ -96,6 +90,13 @@ class TruthMixin(local):
         with self._context():
             return self._append(any(imap(self._call, self._iterable)))
 
+    def common(self):
+        '''mode value of incoming things'''
+        with self._context():
+            return self._append(
+                Counter(self._iterable).most_common(1)[0][0]
+            )
+
     def contains(self, thing):
         '''
         if `thing` is found in incoming things
@@ -111,7 +112,9 @@ class TruthMixin(local):
             return self._append(Counter(self._iterable).most_common())
 
     def quantify(self):
-        '''how many times call is `True` for incoming things'''
+        '''
+        how many times current callable returns `True` for incoming things
+        '''
         with self._context():
             return self._append(sum(imap(self._call, self._iterable)))
 
@@ -127,16 +130,24 @@ class ReduceMixin(local):
 
     '''reduce mixin'''
 
+    def concat(self):
+        '''concatenate all incoming things together'''
+        with self._context():
+            return self._xtend(ichain(self._iterable))
+
     def flatten(self):
         '''flatten deeply nested incoming things'''
         def smash(iterable):
-            isstring_, Iterable_, smash_ = isstring, Iterable, smash
-            for i in iterable:
-                if isinstance(i, Iterable_) and not isstring_(i):
-                    for j in smash_(i):
-                        yield j
-                else:
-                    yield i
+            smash_ = smash
+            for item in iterable:
+                try:
+                    if isinstance(item, strings):
+                        yield item
+                    else:
+                        for j in smash_(item):
+                            yield j
+                except TypeError:
+                    yield item
         with self._context():
             return self._xtend(smash(self._iterable))
 
@@ -199,8 +210,3 @@ class ReduceMixin(local):
         '''
         with self._context():
             return self._xtend(zip(*self._iterable))
-
-
-class ReducingMixin(MathMixin, TruthMixin, ReduceMixin):
-
-    '''reducing mixin'''

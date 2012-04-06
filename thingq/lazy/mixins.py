@@ -162,7 +162,7 @@ class BaseMixin(ThingsMixin):
     ###########################################################################
 
     def _savepoint(self):
-        '''take savepoint of incoming'''
+        '''make savepoint of incoming things'''
         savepoint, self.incoming = tee(getattr(self, self._INQ))
         self._savepoints.append(savepoint)
         return self
@@ -170,10 +170,6 @@ class BaseMixin(ThingsMixin):
     ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
-
-    def __iter__(self):
-        '''yield outgoing things, clearing outgoing things as it iterates'''
-        return getattr(self, self._OUTQ)
 
     @property
     def _iterable(self):
@@ -299,6 +295,12 @@ class ManMixin(BaseMixin):
 class EndMixin(ResultsMixin):
 
     '''result things mixin'''
+    
+    def __iter__(self):
+        '''yield outgoing things, clearing outgoing things as it iterates'''
+        return getattr(self, self._OUTQ)
+    
+    results = __iter__
 
     def end(self):
         '''return outgoing things then clear out everything'''
