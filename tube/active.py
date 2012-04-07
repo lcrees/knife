@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-'''actively evaluated tubes'''
+'''actively evaluated tubing'''
 
-from copy import copy
 from itertools import repeat
 from collections import deque
 from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from tube.changing import OutMixin
-from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
+from tube.base import SLOTS, TubeMixin, OutflowMixin
 from tube.ordering import RandomMixin, OrderMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
 from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
@@ -18,7 +16,7 @@ from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
 
 class ActiveMixin(TubeMixin):
 
-    '''base active tubing'''
+    '''active tubing'''
 
     def __init__(self, *things, **kw):
         try:
@@ -29,48 +27,40 @@ class ActiveMixin(TubeMixin):
         super(ActiveMixin, self).__init__(inflow, deque())
         # set iterator
         self._iterator = self._iterexcept
-        # work things
+        # work pool
         self._work = deque()
-        # utility things
+        # holding pool
         self._util = deque()
 
     ###########################################################################
     ## mode things ############################################################
     ###########################################################################
 
-    def condition(self):
-        '''switch to condition mode'''
-        with self.flow3(outflow=self._UTILVAR, keep=False):
-            self._xtend(self._iterable)
-        with self.flow1(hard=True, workq=self._UTILVAR, keep=False):
-            self.channel = self._COND
-            return self
-
     def query(self):
         '''flow to query mode'''
-        with self.flow3(outflow=self._UTILVAR, keep=False):
+        with self._flow3(outflow=self._HOLDVAR, keep=False):
             self._xtend(self._iterable)
-        with self.flow1(hard=True, workq=self._UTILVAR, keep=False):
+        with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
             self.channel = self._QUERY
             return self
 
     ###########################################################################
-    ## flow things #######################################################
+    ## flow things ############################################################
     ###########################################################################
 
     @contextmanager
-    def flow2(self, **kw):
-        '''two-step flow'''
+    def _flow2(self, **kw):
+        '''switch to manually balanced two-stage flow'''
         self.flow(
-            outflow=kw.get(self._OUTCFG, self._INVAR), flow=self.flow2(), **kw
+            flow=self._flow2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
         )
         getr_ = lambda x: getattr(self, x)
         outflow = getr_(self._OUT)
-        utilq = getr_(self._UTIL)
+        utilq = getr_(self._HOLD)
         workq = getr_(self._WORK)
-        # clear all work things
+        # clear all work pool
         workq.clear()
-        # extend work things with outflow
+        # extend work pool with outflow
         workq.extend(outflow)
         # flow iterator
         self._iterator = self._breakcount
@@ -78,26 +68,26 @@ class ActiveMixin(TubeMixin):
         # clear outflow if so configured
         if self._buildup:
             outflow.clear()
-        # extend outflow with utility things
+        # extend outflow with holding pool
         outflow.extend(utilq)
-        # clear utility things
+        # clear holding pool
         utilq.clear()
-        # return to global flow
-        self.reflow()
+        # revert to current flow
+        self._reflow()
 
     @contextmanager
-    def flow3(self, **kw):
-        '''flow to three-armed flow'''
+    def _flow3(self, **kw):
+        '''switch to manually balanced three-stage flow'''
         self.flow(
-            utilq=kw.get(self._WORKCFG, self._WORKVAR), flow=self.flow3, **kw
+            utilq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
         )
         getr_ = lambda x: getattr(self, x)
         outflow = getr_(self._OUT)
-        utilq = getr_(self._UTIL)
+        utilq = getr_(self._HOLD)
         workq = getr_(self._WORK)
-        # clear work things
+        # clear work pool
         workq.clear()
-        # extend work things with inflow
+        # extend work pool with inflow
         workq.extend(getr_(self._IN))
         # flow iterators
         self._iterator = self._breakcount
@@ -105,24 +95,24 @@ class ActiveMixin(TubeMixin):
         # clear outflow if so configured
         if self._buildup:
             outflow.clear()
-        # extend outflow with utility things
+        # extend outflow with holding pool
         outflow.extend(utilq)
-        # clear utility things
+        # clear holding pool
         utilq.clear()
-        # return to global flow
-        self.reflow()
+        # revert to current flow
+        self._reflow()
 
     @contextmanager
-    def flow4(self, **kw):
-        '''flow to four-armed flow'''
-        self.flow(flow=self.flow4, **kw)
+    def _flow4(self, **kw):
+        '''switch to manually balanced four-stage flow'''
+        self.flow(flow=self._flow4, **kw)
         getr_ = lambda x: getattr(self, x)
         outflow = getr_(self._OUT)
-        utilq = getr_(self._UTIL)
+        utilq = getr_(self._HOLD)
         workq = getr_(self._WORK)
-        # clear work things
+        # clear work pool
         workq.clear()
-        # extend work things with inflow
+        # extend work pool with inflow
         workq.extend(getr_(self._IN))
         # flow iterators
         self._iterator = self._iterexcept
@@ -130,23 +120,23 @@ class ActiveMixin(TubeMixin):
         # clear outflow if so configured
         if self._buildup:
             outflow.clear()
-        # extend outflow with utility things
+        # extend outflow with holding pool
         outflow.extend(utilq)
-        # clear utility things
+        # clear holding pool
         utilq.clear()
         # return to global flow
-        self.reflow()
+        self._reflow()
 
     @contextmanager
-    def autoflow(self, **kw):
-        '''flow to auto-synchronizing flow'''
-        self.flow(flow=self.autoflow, **kw)
+    def _autoflow(self, **kw):
+        '''switch to automatically balanced four-stage flow'''
+        self.flow(flow=self._autoflow, **kw)
         getr_ = lambda x: getattr(self, x)
         inflow, workq = getr_(self._IN), getr_(self._WORK)
-        utilq,  outflow = getr_(self._UTIL), getr_(self._OUT)
-        # clear work things
+        utilq,  outflow = getr_(self._HOLD), getr_(self._OUT)
+        # clear work pool
         workq.clear()
-        # extend work things with inflow
+        # extend work pool with inflow
         workq.extend(inflow)
         # flow iterators
         self._iterator = self._iterexcept
@@ -158,29 +148,25 @@ class ActiveMixin(TubeMixin):
         # clear inflow
         inflow.clear()
         inflow.extend(utilq)
-        # clear utility things
+        # clear holding pool
         utilq.clear()
         # return to global flow
-        self.reflow()
+        self._reflow()
 
     ###########################################################################
     ## savepoint for things ###################################################
     ###########################################################################
 
     @staticmethod
-    def _clone(self, iterable, num=2, copy_=copy):
-        return iterable if num == 1 else copy_(iterable), iterable
+    def _clone(self, iterable, n=2, deque_=deque):
+        '''clone an iterable'''
+        return iterable, iterable if n == 1 else deque_(iterable), iterable
 
     ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
 
-    @property
-    def _iterable(self):
-        '''iterable'''
-        return self._iterator(self._WORK)
-
-    def _breakcount(self, attr='_UTIL'):
+    def _breakcount(self, attr='_HOLD', repeat_=repeat):
         '''
         breakcount iterator
 
@@ -191,9 +177,9 @@ class ActiveMixin(TubeMixin):
         for i in repeat(None, length):  # @UnusedVariable
             yield call()
 
-    def _iterexcept(self, attr='_UTIL'):
+    def _iterexcept(self, attr='_HOLD'):
         '''
-        call a function repeatedly until an exception is raised
+        invoke callable until exception is raised
 
         Converts a call-until-exception interface to an iterator interface.
         Like `iter(call, sentinel)` but uses an exception instead of a sentinel
@@ -208,23 +194,28 @@ class ActiveMixin(TubeMixin):
         except IndexError:
             pass
 
+    @property
+    def _iterable(self):
+        '''iterable'''
+        return self._iterator(self._WORK)
+
     ###########################################################################
     ## extend things ##########################################################
     ###########################################################################
 
     def _xtend(self, things):
-        '''extend utility things with `things` wrapped'''
-        getattr(self, self._UTIL).extend(things)
+        '''extend holding pool with `things`'''
+        getattr(self, self._HOLD).extend(things)
         return self
 
     def _xtendleft(self, things):
-        '''extend left side of utility things with `things`'''
-        getattr(self, self._UTIL).extendleft(things)
+        '''extend before of holding pool with `things`'''
+        getattr(self, self._HOLD).extendleft(things)
         return self
 
     def _iter(self, things):
-        '''extend work things with `things` wrapped in iterator'''
-        getattr(self, self._UTIL).extend(iter(things))
+        '''extend work pool with `things` wrapped in iterator'''
+        getattr(self, self._HOLD).extend(iter(things))
         return self
 
     ###########################################################################
@@ -232,13 +223,13 @@ class ActiveMixin(TubeMixin):
     ###########################################################################
 
     def _append(self, things):
-        '''append `things` to utility things'''
-        getattr(self, self._UTIL).append(things)
+        '''append `things` to holding pool'''
+        getattr(self, self._HOLD).append(things)
         return self
 
     def _appendleft(self, things):
-        '''append `things` to left side of utility things'''
-        getattr(self, self._UTIL).appendleft(things)
+        '''append `things` before things already in holding pool'''
+        getattr(self, self._HOLD).appendleft(things)
         return self
 
     ###########################################################################
@@ -246,26 +237,24 @@ class ActiveMixin(TubeMixin):
     ###########################################################################
 
     def __repr__(self):
-        getr_, list_ = lambda x: getattr(self, x), list
         return self._repr(
             self.__module__,
             clsname(self),
-            self.channel.upper(),
             self._IN,
-            list_(getr_(self._IN)),
+            list(getattr(self, self._IN)),
             self._WORK,
-            list_(getr_(self._WORK)),
-            self._UTIL,
-            list_(getr_(self._UTIL)),
+            list(getattr(self, self._WORK)),
+            self._HOLD,
+            list(getattr(self, self._HOLD)),
             self._OUT,
-            list_(getr_(self._OUT)),
-            id(self),
+            list(getattr(self, self._OUT)),
+            self.channel,
         )
 
     def __len__(self):
         '''number of inflow'''
         return len(self.inflow)
-    
+
     count = __len__
 
     def countout(self):
@@ -277,12 +266,12 @@ class ActiveMixin(TubeMixin):
     ###########################################################################
 
     def _clearu(self):
-        '''clear utility things'''
+        '''clear holding pool'''
         self._util.clear()
         return self
 
     def _clearw(self):
-        '''clear work things'''
+        '''clear work pool'''
         self._work.clear()
         return self
 
@@ -297,19 +286,17 @@ class ActiveMixin(TubeMixin):
         return self
 
 
-class ExitMixin(ActiveMixin):
+class OutputMixin(ActiveMixin, OutflowMixin):
 
-    '''tubing with results extractor mixin'''
-    
+    '''lazy output tubing mixin'''
+
     def __iter__(self):
         '''yield outflow, clearing outflow as it iterates'''
         return self._iterexcept(self._OUT)
-    
-    results = __iter__
 
     def end(self):
-        '''return outflow then clear wrap everything'''
-        # return to default flow
+        '''return outflow and clear out everything'''
+        # revert to default flow
         self.unflow()
         wrap, outflow = self._wrapper, self.outflow
         wrap = self.outflow.pop() if len(outflow) == 1 else wrap(outflow)
@@ -319,23 +306,22 @@ class ExitMixin(ActiveMixin):
 
     def snapshot(self):
         '''snapshot of current outflow'''
-        wrap = copy(self.outflow)
-        return wrap.pop() if len(wrap) == 1 else self._wrapper(wrap)
+        out = deque(self.outflow)
+        return out.pop() if len(out) == 1 else self._wrapper(out)
 
     def out(self):
-        '''return outflow and clear outflow'''
-        # return to default flow
+        '''clear outflow and return outgoing things'''
         self.unflow()
         wrap, outflow = self._wrapper, self.outflow
         wrap = outflow.pop() if len(outflow) == 1 else wrap(outflow)
-        # clear outflow
+        # clear outgoing things
         self.clearout()
         return wrap
 
 
 class activetube(
-    ExitMixin, OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    ExtractMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
+    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
+    SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
 ):
 
     '''active tubing'''
@@ -343,70 +329,70 @@ class activetube(
     __slots__ = SLOTS
 
 
-class collecttube(OutMixin, ExtractMixin):
+class collecttube(OutflowMixin, ExtractMixin):
 
     '''collecting tubing'''
 
     __slots__ = SLOTS
 
 
-class slicetube(OutMixin, SliceMixin):
+class slicetube(OutflowMixin, SliceMixin):
 
     '''slice tubing'''
 
     __slots__ = SLOTS
 
 
-class filtertube(OutMixin, FilterMixin, ExtractMixin, SliceMixin):
+class filtertube(OutflowMixin, FilterMixin, ExtractMixin, SliceMixin):
 
     '''filter tubing'''
 
     __slots__ = SLOTS
 
 
-class repeattube(OutMixin, RepeatMixin):
+class repeattube(OutflowMixin, RepeatMixin):
 
     '''repeat tubing'''
 
     __slots__ = SLOTS
 
 
-class maptube(OutMixin, RepeatMixin, MapMixin):
+class maptube(OutflowMixin, RepeatMixin, MapMixin):
 
     '''mapping tubing'''
 
     __slots__ = SLOTS
 
 
-class randomtube(OutMixin, RandomMixin):
+class randomtube(OutflowMixin, RandomMixin):
 
     '''randomizing tubing'''
 
     __slots__ = SLOTS
 
 
-class sorttube(OutMixin, OrderMixin, RandomMixin):
+class sorttube(OutflowMixin, OrderMixin, RandomMixin):
 
     '''ordering tubing'''
 
     __slots__ = SLOTS
 
 
-class mathtube(OutMixin, MathMixin):
+class mathtube(OutflowMixin, MathMixin):
 
     '''math tubing'''
 
     __slots__ = SLOTS
 
 
-class truthtube(OutMixin, TruthMixin):
+class truthtube(OutflowMixin, TruthMixin):
 
     '''truth tubing'''
 
     __slots__ = SLOTS
 
 
-class reducetube(OutMixin, MathMixin, TruthMixin, ReduceMixin):
+class reducetube(OutflowMixin, MathMixin, TruthMixin, ReduceMixin):
 
     '''reduce tubing'''
 
