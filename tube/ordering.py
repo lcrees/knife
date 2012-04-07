@@ -8,7 +8,7 @@ from random import choice, shuffle, sample
 from tube.compat import zip_longest, imap
 
 
-class BaseRandom(local):
+class RandomMixin(local):
 
     '''base random'''
 
@@ -17,8 +17,10 @@ class BaseRandom(local):
         return choice_(list_(iterable))
 
     @staticmethod
-    def _sample(iterable, n, sample_=sample, list_=list):
-        return sample_(list_(iterable), n)
+    def _sample(n, sample_=sample, list_=list):
+        def sample__(iterable):
+            return sample_(list_(iterable), n)
+        return sample__
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
@@ -26,15 +28,10 @@ class BaseRandom(local):
         shuffle(iterable)
         return iterable
 
-
-class BaseRandomMixin(local):
-
-    '''base random mixin'''
-
     def choice(self):
         '''random choice of/from inflow'''
         with self._flow():
-            return self._append(self._choice(self._iterable))
+            return self._append(self._choice)
 
     def sample(self, n):
         '''
@@ -43,50 +40,48 @@ class BaseRandomMixin(local):
         @param n: number of inflow
         '''
         with self._flow():
-            return self._xtend(self._sample(self._iterable, n))
+            return self._xtend(self._sample(n))
 
     def shuffle(self):
         '''randomly order inflow'''
         with self._flow():
-            return self._xtend(self._shuffle(self._iterable))
+            return self._xtend(self._shuffle)
 
 
-class RandomMixin(BaseRandom, BaseRandomMixin):
+class OrderMixin(local):
 
-    '''random mixin'''
-
-
-class BaseOrder(local):
-
-    '''base order'''
+    '''order mixin'''
 
     @staticmethod
-    def _groupby(iterable, key, imap_=imap, list_=list, groupby_=groupby):
-        return imap(lambda x: [x[0], list_(x[1])], groupby_(iterable, key))
+    def _groupby(key, imap_=imap, tuple_=tuple, groupby_=groupby):
+        def grouper(x):
+            return (x[0], tuple_(x[1]))
+        def groupby__(iterable): #@IgnorePep8
+            return imap(grouper, groupby_(iterable, key))
+        return groupby__
 
     @staticmethod
-    def _grouper(iterable, n, fill, zip_longest_=zip_longest, iter_=iter):
-        return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)  
+    def _grouper(n, fill, zip_longest_=zip_longest, iter_=iter):
+        def grouper__(iterable):
+            return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)
+        return grouper__
 
     @staticmethod
     def _reverse(iterable, list_=list, reversed_=reversed):
         return reversed_(list_(iterable))
 
     @staticmethod
-    def _sort(iterable, key, sorted_=sorted):
-        return sorted_(iterable, key=key)
-
-
-class BaseOrderMixin(local):
-
-    '''order mixin'''
+    def _sort(key, sorted_=sorted):
+        def sort__(iterable):
+            return sorted_(iterable, key=key)
+        return sort__
 
     def groupby(self):
         '''
         group inflow, optionally using current call for key function
         '''
         with self._flow():
-            return self._xtend(self._groupby(self._iterable, self._identity))
+            return self._xtend(self._groupby(self._identity))
 
     def grouper(self, n, fill=None):
         '''
@@ -97,21 +92,16 @@ class BaseOrderMixin(local):
         @param fill: fill thing (default: None)
         '''
         with self._flow():
-            return self._xtend(self._grouper(self._iterable, n, fill)) 
+            return self._xtend(self._grouper(n, fill))
 
     def reverse(self):
         '''reverse order of inflow'''
         with self._flow():
-            return self._xtend(self._reversed(self._iterable))
+            return self._xtend(self._reversed)
 
     def sort(self):
         '''
         sort inflow, optionally using current call as key function
         '''
         with self._flow():
-            return self._xtend(self._sort(self._iterable, self._identity))
-        
-
-class OrderMixin(BaseOrder, BaseOrderMixin):
-
-    '''order mixin'''
+            return self._xtend(self._sort(self._identity))

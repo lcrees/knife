@@ -8,12 +8,12 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from tube.change import StringMixin
+from tube.changing import OutMixin
 from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
-from tube.order import RandomMixin, OrderMixin
+from tube.ordering import RandomMixin, OrderMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
-from tube.filtering import FilterMixin, ExtractMixin, SetMixin, SliceMixin
+from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
 
 
 class ActiveMixin(TubeMixin):
@@ -297,7 +297,7 @@ class ActiveMixin(TubeMixin):
         return self
 
 
-class OutMixin(ActiveMixin):
+class ExitMixin(ActiveMixin):
 
     '''tubing with results extractor mixin'''
     
@@ -334,9 +334,8 @@ class OutMixin(ActiveMixin):
 
 
 class activetube(
-    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
-    SetMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
-    StringMixin,
+    ExitMixin, OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
+    ExtractMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
 ):
 
     '''active tubing'''
@@ -351,13 +350,6 @@ class collecttube(OutMixin, ExtractMixin):
     __slots__ = SLOTS
 
 
-class settube(OutMixin, SetMixin):
-
-    '''set tubing'''
-
-    __slots__ = SLOTS
-
-
 class slicetube(OutMixin, SliceMixin):
 
     '''slice tubing'''
@@ -365,7 +357,7 @@ class slicetube(OutMixin, SliceMixin):
     __slots__ = SLOTS
 
 
-class filtertube(OutMixin, FilterMixin, ExtractMixin, SetMixin, SliceMixin):
+class filtertube(OutMixin, FilterMixin, ExtractMixin, SliceMixin):
 
     '''filter tubing'''
 
@@ -417,19 +409,5 @@ class truthtube(OutMixin, TruthMixin):
 class reducetube(OutMixin, MathMixin, TruthMixin, ReduceMixin):
 
     '''reduce tubing'''
-
-    __slots__ = SLOTS
-
-
-class stringtube(OutMixin, StringMixin):
-
-    '''string transformation tubing'''
-
-    __slots__ = SLOTS
-
-
-class transformtube(OutMixin, StringMixin):
-
-    '''transformation tubing'''
 
     __slots__ = SLOTS

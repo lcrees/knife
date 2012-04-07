@@ -15,11 +15,6 @@ from stuf.core import stuf, frozenstuf, orderedstuf
 from tube.compat import tounicode, tobytes
 
 
-class StringMixin(local):
-
-    '''filters mixin'''
-
-
 class OutMixin(local):
 
     '''tube exit mixin'''
@@ -155,8 +150,3 @@ class OutMixin(local):
         return self.wrap(list)
 
     unwrap = listout
-
-
-class ExitMixin(StringMixin, OutMixin):
-    
-    '''exit mixin'''

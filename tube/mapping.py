@@ -11,41 +11,46 @@ from stuf.six import keys, values, items
 from tube.compat import imap, ichain, xrange
 
 
-class BaseRepeat(local):
+class RepeatMixin(local):
 
-    '''base repetition'''
+    '''repetition mixin'''
 
     @staticmethod
-    def _combinations(iterable, n, combinations_=combinations):
-        return combinations_(iterable, n)
+    def _combinations(n, combinations_=combinations):
+        def combinations__(iterable):
+            return combinations_(iterable, n)
+        return combinations__
 
     @staticmethod
     def _copy(iterable, deepcopy_=deepcopy, imap_=imap):
         return imap_(deepcopy_, iterable)
 
     @staticmethod
-    def _product(iterable, n=1, product_=product):
-        return product_(*iterable, repeat=n)
+    def _product(n=1, product_=product):
+        def product__(iterable):
+            return product_(*iterable, repeat=n)
+        return product__
 
     @staticmethod
-    def _permutations(iterable, n, permutations_=permutations):
-        return permutations_(iterable, n)
+    def _permutations(n, permutations_=permutations):
+        def permutations__(iterable):
+            return permutations_(iterable, n)
+        return permutations__
 
     @staticmethod
-    def _repeat(iterable, n, repeat_=repeat, tuple_=tuple):
-        return repeat_(tuple_(iterable), n)
+    def _repeat(n, repeat_=repeat, tuple_=tuple):
+        def repeat__(iterable):
+            return repeat_(tuple_(iterable), n)
+        return repeat__
 
     @staticmethod
-    def _times(call, iterable, n=None, r=repeat, l=list, s=starmap):
-        return (
-            s(call, r(l(iterable))) if n is None
-            else s(call, r(l(iterable), n))
-        )
-
-
-class BaseRepeatMixin(local):
-
-    '''repetition mixin'''
+    def _times(call, n=None, r=repeat, l=list, s=starmap):
+        def times__(iterable):
+            return (
+                s(call, r(l(iterable))) if n is None
+                else s(call, r(l(iterable), n))
+            )
+        return times__
 
     def combinations(self, n):
         '''
@@ -54,12 +59,12 @@ class BaseRepeatMixin(local):
         @param n: number of repetitions
         '''
         with self._flow():
-            return self._xtend(self._combinations(self._iterable, n))
+            return self._xtend(self._combinations(n))
 
     def copy(self):
         '''copy each inflow thing'''
         with self._flow():
-            return self._xtend(self._copy(self._iterable))
+            return self._xtend(self._copy)
 
     def product(self, n=1):
         '''
@@ -68,7 +73,7 @@ class BaseRepeatMixin(local):
         @param n: number of repetitions (default: 1)
         '''
         with self._flow():
-            return self._xtend(self._product(self._iterable, n))
+            return self._xtend(self._product(n))
 
     def permutations(self, n):
         '''
@@ -77,7 +82,7 @@ class BaseRepeatMixin(local):
         @param n: length of thing to permutate
         '''
         with self._flow():
-            return self._xtend(self._permutations(self._iterable, n))
+            return self._xtend(self._permutations(n))
 
     def range(self, start, stop=0, step=1):
         '''
@@ -99,7 +104,7 @@ class BaseRepeatMixin(local):
         @param n: number of times to repeat
         '''
         with self._flow():
-            return self._xtend(self._repeat(self._iterable, n))
+            return self._xtend(self._repeat(n))
 
     def times(self, n=None):
         '''
@@ -108,20 +113,15 @@ class BaseRepeatMixin(local):
         @param n: repeat call n times on inflow (default: None)
         '''
         with self._flow():
-            return self._xtend(self._times(self._call, self._iterable, n))
+            return self._xtend(self._times(self._call, n))
 
 
-class RepeatMixin(BaseRepeat, BaseRepeatMixin):
-
-    '''repetition mixin'''
-
-
-class BaseMap(local):
+class MapMixin(local):
 
     '''mapping mixin'''
 
     @staticmethod
-    def _each(call, iterable, wait, starmap_=starmap, sleep_=sleep):
+    def _each(call, wait, starmap_=starmap, sleep_=sleep):
         if wait:
             def delay_each(x, y, wait=wait, caller=call):
                 sleep_(wait)
@@ -129,10 +129,12 @@ class BaseMap(local):
             call_ = delay_each
         else:
             call_ = lambda x, y: call(*x, **y)
-        return starmap_(call_, iterable)
+        def each__(iterable):
+            return starmap_(call_, iterable)
+        return each__
 
     @staticmethod
-    def _invoke(name, iterable, args, wait=0, mc=methodcaller, sleep=sleep):
+    def _invoke(name, args, wait, mc=methodcaller, sleep=sleep, m=imap):
         caller = mc(name, *args[0], **args[1])
         if wait:
             def invoke(x, wait=0):
@@ -143,44 +145,51 @@ class BaseMap(local):
             def invoke(thing):
                 results = caller(thing)
                 return thing if results is None else results
-        return imap(invoke, iterable)
+        def invoke__(iterable):
+            return m(invoke, iterable)
+        return invoke__
 
     @staticmethod
-    def _items(call, iterable, m=imap, c=ichain, i=items, s=starmap):
-        return s(call, c(m(i, iterable)))
+    def _items(call, m=imap, c=ichain, i=items, s=starmap):
+        def items__(iterable):
+            return s(call, c(m(i, iterable)))
+        return items__
 
     @staticmethod
-    def _keys(call, iterable, m=imap, c=ichain, k=keys, s=starmap):
-        return s(call, c(m(k, iterable)))
+    def _keys(call, m=imap, c=ichain, k=keys, s=starmap):
+        def keys__(iterable):
+            return s(call, c(m(k, iterable)))
+        return keys__
 
     @staticmethod
-    def _map(call, iterable, wait=0, sleep_=sleep, imap_=imap):
+    def _map(call, wait, sleep_=sleep, imap_=imap):
         if wait:
             def call_(x, wait=wait, caller=call):
                 sleep_(wait)
                 return caller(x)
         else:
             call_ = call
-        return imap_(call_, iterable)
+        def map__(iterable):
+            return imap_(call_, iterable)
+        return map__
 
     @staticmethod
-    def _starmap(call, iterable, wait=0, sleep_=sleep, starmap_=starmap):
+    def _starmap(call, wait=0, sleep_=sleep, starmap_=starmap):
         if wait:
             def call_(x, wait=wait, caller=call):
                 sleep_(wait)
                 return caller(x)
         else:
             call_ = call
-        return starmap_(call_, iterable)
+        def starmap__(iterable):
+            return starmap_(call_, iterable)
+        return starmap__
 
     @staticmethod
-    def _values(call, iterable, m=imap, c=ichain, v=values, s=starmap):
-        return s(call, c(m(v, iterable)))
-
-
-class BaseMapMixin(local):
-
-    '''mapping mixin'''
+    def _values(call, m=imap, c=ichain, v=values, s=starmap):
+        def values__(iterable):
+            return s(call, c(m(v, iterable)))
+        return values__
 
     def each(self, wait=0):
         '''
@@ -189,7 +198,7 @@ class BaseMapMixin(local):
         @param wait: time in seconds (default: 0)
         '''
         with self._flow():
-            return self._xtend(self._each(self._call, self._iterable, wait))
+            return self._xtend(self._each(self._call, wait))
 
     def invoke(self, name, wait=0):
         '''
@@ -200,19 +209,19 @@ class BaseMapMixin(local):
         @param wait: time in seconds (default: 0)
         '''
         with self._flow():
-            return self._xtend(self._invoke(
-                name, self._iterable, (self._args, self._kw), wait, 
-            ))
+            return self._xtend(
+                self._invoke(name, (self._args, self._kw), wait)
+            )
 
     def items(self):
         '''invoke call on each mapping to get key, value pairs'''
         with self._flow():
-            return self._xtend(self._items(self._call, self._iterable))
+            return self._xtend(self._items(self._call))
 
     def keys(self):
         '''invoke call on each mapping to get keys'''
         with self._flow():
-            return self._xtend(self._keys(self._call, self._iterable))
+            return self._xtend(self._keys(self._call))
 
     def map(self, wait=0):
         '''
@@ -221,7 +230,7 @@ class BaseMapMixin(local):
         @param wait: time in seconds (default: 0)
         '''
         with self._flow():
-            return self._xtend(self._map(self._call, self._iterable, wait))
+            return self._xtend(self._map(self._call, wait))
 
     def starmap(self, wait=0):
         '''
@@ -230,14 +239,9 @@ class BaseMapMixin(local):
         @param wait: time in seconds (default: 0)
         '''
         with self._flow():
-            return self._xtend(self._starmap(self._call, self._iterable, wait))
+            return self._xtend(self._starmap(self._call, wait))
 
     def values(self):
         '''invoke call on each mapping to get values'''
         with self._flow():
-            return self._xtend(self._values(self._call, self._iterable))
-
-
-class MapMixin(BaseMap, BaseMapMixin):
-
-    '''mapping mixin'''
+            return self._xtend(self._values(self._call))

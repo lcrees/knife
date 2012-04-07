@@ -12,28 +12,32 @@ from operator import attrgetter, itemgetter, truth
 from tube.compat import ifilter, ichain, imap, filterfalse
 
 
-class BaseExtract(local):
+class ExtractMixin(local):
 
     '''collecting mixin'''
 
     @staticmethod
-    def _attributes(iterable, names, _attrgetter=attrgetter):
+    def _attributes(names, _attrgetter=attrgetter):
         attrfind = _attrgetter(*names)
-        for thing in iterable:
-            try:
-                yield attrfind(thing)
-            except AttributeError:
-                pass
+        def attributes__(iterable, get=attrfind): #@IgnorePep8
+            for thing in iterable:
+                try:
+                    yield get(thing)
+                except AttributeError:
+                    pass
+        return attributes__
 
     @staticmethod
-    def _pluck(iterable, keys, _itemgetter=itemgetter):
+    def _pluck(keys, _itemgetter=itemgetter):
         itemfind = _itemgetter(*keys)
-        IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
-        for thing in iterable:
-            try:
-                yield itemfind(thing)
-            except (IndexErr_, KeyErr_, TypeErr_):
-                pass
+        def pluck__(iterable, get=itemfind): #@IgnorePep8
+            for thing in iterable:
+                IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
+                try:
+                    yield get(thing)
+                except (IndexErr_, KeyErr_, TypeErr_):
+                    pass
+        return pluck__
 
     @staticmethod
     def _members(call, alt, wrap, iterable, imap=imap, ifilter=ifilter):
@@ -51,13 +55,16 @@ class BaseExtract(local):
         def extract(truth, iterable):
             for member in ifilter(truth, members(truth, iterable)):
                 yield member
-        return ichain(imap(lambda x: extract(call, x), iterable))
+        def members__(iterable):
+            return ichain(imap(lambda x: extract(call, x), iterable))
+        return members__
 
     @staticmethod
     def _mro(iterable, ichain_=ichain, imap_=imap, getmro_=getmro):
         return ichain_(imap_(getmro_, iterable))
 
-    def _extract(self, pattern, flags=0, *things):
+    @staticmethod
+    def _extract(pattern, flags=0, *things):
         search = compile(pattern, flags).search
         def find(x):
             results = search(x)
@@ -68,35 +75,32 @@ class BaseExtract(local):
             # extract any positional arguments
             positions = tuple(i for i in results.groups() if i not in named)
             return positions, named
-        with self._flow():
-            return self._xtend(ifilter(
-                lambda x, y: truth(x and y), imap(find, self._iterable),
-            ))
-            
-
-class BaseExtractMixin(local):
-
-    '''collecting mixin'''
+        def extract__(iterable):
+            return ifilter(
+                lambda x, y: truth(x and y), imap(find, iterable),
+            )
 
     def attributes(self, *names):
         '''extract object attributes from inflow by their `*names`'''
         with self._flow():
-            return self._iter(self._attributes(self._iterable, names))
+            return self._iter(self._attributes(names))
 
     def pluck(self, *keys):
         '''extract object items from inflow by item `*keys`'''
         with self._flow():
-            return self._iter(self._pluck(self._iterable, keys))
+            return self._iter(self._pluck(keys))
 
     def members(self):
         '''extract object members from inflow'''
         with self._flow():
-            return self._xtend(self._truth, self._iterable)
+            return self._xtend(
+                self._members(self._truth, self._alt, self._wrap),
+            )
 
     def mro(self):
         '''extract ancestors of things by method resolution order'''
         with self._flow():
-            return self._xtend(self._iterable)
+            return self._xtend(self._mro)
 
     def extract(self, pattern, flags=0, *things):
         '''
@@ -105,71 +109,70 @@ class BaseExtractMixin(local):
         @param pattern: search pattern 
         '''
         with self._flow():
-            return self._xtend(self._extract(self._iterable, pattern))
-            
-
-class ExtractMixin(BaseExtract, BaseExtractMixin):
-
-    '''collecting mixin'''
+            return self._xtend(self._extract(pattern, flags, things))
 
 
-class BaseFilter(local):
+class FilterMixin(local):
 
-    '''base set'''
+    '''filtering mixin'''
 
     @staticmethod
-    def _filter(truth, iterable, pattern, flags, things, f=ifilter, c=compile):
+    def _filter(truth, pattern, flags, things, f=ifilter, c=compile):
         if pattern is not None:
             call = c(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
             call = truth
-        return f(call, iterable)
+        def filter__(iterable):
+            return f(call, iterable)
+        return filter__
 
     @staticmethod
-    def _find(truth, iterable, pattern, flags, things):
+    def _find(truth, pattern, flags, things):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
             call = truth
-        return next(ifilter(call, iterable))
+        def find__(iterable):
+            return next(ifilter(call, iterable))
+        return find__
         
     @classmethod
-    def _partition(cls, truth, iterable, pattern, flags, things, l=list):
+    def _partition(cls, truth, pattern, flags, things, l=list):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
             call = truth
-        falsy, truey = cls._clone(iterable)
-        return iter((
-            l(ifilter(call, truey)), l(filterfalse(call, falsy)),
-        ))
+        def partition__(iterable):
+            falsy, truey = cls._clone(iterable)
+            return iter((
+                l(ifilter(call, truey)), l(filterfalse(call, falsy)),
+            ))
+        return partition__
 
     @classmethod
-    def _replace(iterable, pattern, new, count=0, flags=0):
+    def _replace(pattern, new, count=0, flags=0):
         sub = compile(pattern, flags).sub
-        return imap(lambda x: sub(new, x, count), iterable)
+        def replace__(iterable):
+            return imap(lambda x: sub(new, x, count), iterable)
+        return replace__
 
-    def _filterfalse(self, pattern=None, flags=0, *things):
-        '''strip things from inflow'''
+    @staticmethod
+    def _filterfalse(truth, pattern=None, flags=0, *things):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
-            call = self._call if self._call is not None else truth
-        with self._flow():
-            return self._xtend(filterfalse(call, self._iterable))
-
-
-class BaseFilterMixin(local):
-
-    '''base set'''
+            call = truth
+        def filterfalse__(iterable):
+            return filterfalse(call, iterable)
+        return filterfalse__
 
     def filter(self, pattern=None, flags=0, *things):
         '''
@@ -177,16 +180,14 @@ class BaseFilterMixin(local):
         
         @param pattern: search pattern expression (default: None)
         '''
-        return self._xtend(self._filter(
-            self._truth, self._iterable, pattern, flags, things,
-        ))
+        return self._xtend(self._filter(self._truth, pattern, flags, things))
 
     def find(self, pattern=None, flags=0, *things):
         '''first inflow thing for which current callable returns `True`'''
         with self._flow():
-            return self._append(self._find(
-                self._truth, self._iterable, pattern, flags, things,
-            ))
+            return self._append(
+                self._find(self._truth, pattern, flags, things)
+            )
         
     def partition(self, pattern=None, flags=0, *things):
         '''
@@ -195,7 +196,7 @@ class BaseFilterMixin(local):
         '''
         with self._flow():
             return self._xtend(self._partition(
-                self._truth, self._iterable, pattern, flags, things,
+                self._truth, pattern, flags, things,
             ))
 
     def replace(self, pattern, new, count=0, flags=0):
@@ -206,40 +207,60 @@ class BaseFilterMixin(local):
         @param new: replacement string
         '''
         with self._flow():
-            return self._xtend(self._partition(
-                self._iterable, pattern, new, count, flags,
-            ))
+            return self._xtend(self._replace(pattern, new, count, flags))
 
     def filterfalse(self, pattern=None, flags=0, *things):
         '''strip things from inflow'''
         return self._xtend(self._filterfalse(
-            self._truth, self._iterable, pattern, flags, things,
+            self._truth, pattern, flags, things,
         ))
-        
-class FilterMixin(BaseFilter, BaseFilterMixin):
-
-    '''base filtering mixin'''
 
 
-class BaseSlice(local):
+class SliceMixin(local):
 
     '''slicing mixin'''
     
     @staticmethod
-    def _difference(iterable, symmetric, reduce_=reduce, set_=set):
-        test = (
-            lambda x, y: set_(x).difference(y) if symmetric else
-            lambda x, y: set_(x).symmetric_difference(y)
-        )
-        return reduce_(test, iterable)
+    def _difference(symmetric, reduce_=reduce, set_=set):
+        if symmetric:
+            test = lambda x, y: set_(x).symmetric_difference(y)
+        else:
+            test = lambda x, y: set_(x).difference(y)
+        def difference__(iterable):
+            return reduce_(test, iterable)
+        return difference__
+    
+    @staticmethod
+    def _first(iterable, n, islice_=islice, next_=next):
+        def first__(iterable):
+            return islice_(iterable, n) if n else next_(iterable)
+        return first__
 
     @staticmethod
     def _disjointed(iterable, set_=set, reduce_=reduce):
         return reduce_(lambda x, y: set_(x).isdisjoint(y), iterable)
 
+    @classmethod
+    def _initial(cls, iterable, islice_=islice, len_=len, list_=list):
+        i1, i2 = cls._clone(iterable)
+        return islice_(i1, len_(list_(i2)) - 1)
+
     @staticmethod
     def _intersection(iterable, set_=set, reduce_=reduce):
         return reduce_(lambda x, y: set_(x).intersection(y), iterable)
+
+    @classmethod
+    def _last(cls, iterable, n, s=islice, d=deque, ln=len, l=list):
+        def last__(iterable):
+            i1, i2 = cls._clone(iterable)
+            return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()
+        return last__
+
+    @staticmethod
+    def _nth(n, default, islice_=islice, next_=next):
+        def nth__(iterable):
+            return next_(islice_(iterable, n, None), default)
+        return nth__
 
     @staticmethod
     def _subset(iterable, set_=set, reduce_=reduce):
@@ -249,48 +270,40 @@ class BaseSlice(local):
     @staticmethod
     def _superset(iterable, set_=set, reduce_=reduce):
         return reduce_(lambda x, y: set_(x).issuperset(y), iterable)
+    
+    @staticmethod
+    def _rest(iterable, _islice=islice):
+        return _islice(iterable, 1, None)
 
     @staticmethod
     def _union(iterable, set_=set, reduce_=reduce):
         return reduce_(lambda x, y: set_(x).union(y), iterable)
 
     @staticmethod
-    def _unique(iterable, key, set_=set):
-        seen = set_()
-        seen_add_, key_ = seen.add, key
-        for element in iterable:
-            k = key_(element)
-            if k not in seen:
-                seen_add_(k)
-                yield element
+    def _unique(key, set_=set):
+        def unique__(iterable):
+            seen = set_()
+            seen_add_, key_ = seen.add, key
+            for element in iterable:
+                k = key_(element)
+                if k not in seen:
+                    seen_add_(k)
+                    yield element
+        return unique__
+    
+    def difference(self, symmetric=False):
+        '''
+        difference between inflow
+        
+        @param symmetric: use symmetric difference
+        '''
+        with self._flow():
+            return self._xtend(self._difference(symmetric))
 
-
-    @staticmethod
-    def _first(iterable, n, islice_=islice, next_=next):
-        return islice_(iterable, n) if n else next_(iterable)
-
-    @classmethod
-    def _last(cls, iterable, n, s=islice, d=deque, ln=len, l=list):
-        i1, i2 = cls._clone(iterable)
-        return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()
-
-    @staticmethod
-    def _nth(iterable, n, default, islice_=islice, next_=next):
-        return next_(islice_(iterable, n, None), default)
-
-    @classmethod
-    def _initial(cls, iterable, islice_=islice, len_=len, list_=list):
-        i1, i2 = cls._clone(iterable)
-        return islice_(i1, len_(list_(i2)) - 1)
-
-    @staticmethod
-    def _rest(iterable, _islice=islice):
-        return _islice(iterable, 1, None)
-
-
-class BaseSliceMixin(local):
-
-    '''slicing mixin'''
+    def disjointed(self):
+        '''disjoint between inflow'''
+        with self._flow():
+            return self._xtend(self._disjointed)
 
     def first(self, n=0):
         '''
@@ -299,10 +312,18 @@ class BaseSliceMixin(local):
         @param n: number of things (default: 0)
         '''
         with self._flow():
-            return (
-                self._xtend(self._first(self._iterable, n)) if n
-                else self._append(self._first(self._iterable))
-            )
+            first = self._first
+            return self._xtend(first(n)) if n else self._append(first())
+            
+    def initial(self):
+        '''all inflow except the last thing'''
+        with self._flow():
+            return self._xtend(self._initial)
+
+    def intersection(self):
+        '''intersection between inflow'''
+        with self._flow():
+            return self._xtend(self._intersection)
 
     def last(self, n=0):
         '''
@@ -311,10 +332,8 @@ class BaseSliceMixin(local):
         @param n: number of things (default: 0)
         '''
         with self._flow():
-            return (
-                self._xtend(self._last(self._iterable, n)) if n
-                else self._append(self._last(self._iterable))
-            )
+            last = self._last
+            return self._xtend(last(n)) if n else self._append(last(n))
 
     def nth(self, n, default=None):
         '''
@@ -324,51 +343,27 @@ class BaseSliceMixin(local):
         @param default: default thing (default: None)
         '''
         with self._flow():
-            return self._append(self._nth(self._iterable, n, default))
-
-    def initial(self):
-        '''all inflow except the last thing'''
-        with self._flow():
-            return self._xtend(self._initial(self._iterable))
+            return self._append(self._nth(n, default))
 
     def rest(self):
         '''all inflow except the first thing'''
         with self._flow():
-            return self._xtend(self._rest(self._iterable))
-        
-    def difference(self, symmetric=False):
-        '''
-        difference between inflow
-        
-        @param symmetric: use symmetric difference
-        '''
-        with self._flow():
-            return self._xtend(self._difference(self._iterable, symmetric))
-
-    def disjointed(self):
-        '''disjoint between inflow'''
-        with self._flow():
-            return self._xtend(self._disjointed(self._iterable))
-
-    def intersection(self):
-        '''intersection between inflow'''
-        with self._flow():
-            return self._xtend(self._intersection(self._iterable))
+            return self._xtend(self._rest)
 
     def subset(self):
         '''inflow that are subsets of inflow'''
         with self._flow():
-            return self._xtend(self._subset(self._iterable))
+            return self._xtend(self._subset)
 
     def superset(self):
         '''inflow that are supersets of inflow'''
         with self._flow():
-            return self._xtend(self._superset(self._iterable))
+            return self._xtend(self._superset)
 
     def union(self):
         '''union between inflow'''
         with self._flow():
-            return self._xtend(self._union(self._iterable))
+            return self._xtend(self._union)
 
     def unique(self):
         '''
@@ -376,9 +371,4 @@ class BaseSliceMixin(local):
         ever seen
         '''
         with self._flow():
-            return self._iter(self._unique(self._iterable, self._call))
-
-
-class SliceMixin(BaseSlice, BaseSliceMixin):
-
-    '''slicing mixin'''
+            return self._iter(self._unique(self._identity))
