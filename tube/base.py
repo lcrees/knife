@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 '''base mixins'''
 
-from threading import local
 from operator import truth
+from threading import local
 from collections import deque
 from contextlib import contextmanager
 
 SLOTS = [
-    '_work', 'outflow', '_util', 'inflow', '_call', '_alt', '_wrapper',
-    '_args', '_kw', '_buildup', '_flow', '_CTXCFG', '_IN', '_WORK',
-    '_UTIL', '_OUT', '_iterator', 'channel', '_sps', '_original',
-    '_condition'
+    '_work', 'outflow', '_util', 'inflow', '_call', '_alt', '_wrapper', '_kw',
+    '_args', '_buildup', '_flow', '_CTXCFG', '_IN', '_WORK', '_UTIL', '_OUT',
+    '_iterator', 'channel', '_sps', '_original', '_condition', '_baseline',
 ]
 
 
@@ -34,7 +33,7 @@ class TubeMixin(local):
         # condition
         self._condition = None
         #######################################################################
-        ## flow defaults ###################################################
+        ## flow defaults ######################################################
         #######################################################################
         # preferred flow
         self._flow = getattr(self, self._DEFAULT_CONTEXT)
@@ -53,13 +52,14 @@ class TubeMixin(local):
         #######################################################################
         ## savepoint defaults #################################################
         #######################################################################
+        self._original = self._baseline = None
         # number of savepoints to retain (default: 5)
         maxlen = kw.pop('savepoints', 5)
         # create stack for savepoint things
         self._sps = deque(maxlen=maxlen) if maxlen is not None else None
         # savepoint of original inflow
         if self._sps is not None:
-            self.rebase()
+            self.rebase(True)
         #######################################################################
         ## callable defaults ##################################################
         #######################################################################
@@ -75,21 +75,30 @@ class TubeMixin(local):
         self._kw = {}
 
     ###########################################################################
-    ## mode things ############################################################
+    ## channel things #########################################################
     ###########################################################################
 
-    # change mode
+    # change channel
     _CHANGE = 'CHANGE'
-    # query mode
+    # query channel
     _QUERY = 'QUERY'
-    # condition mode
+    # condition channel
     _COND = 'CONDITION'
 
     def change(self):
-        '''flow to change mode'''
+        '''flow to change channeling'''
         self.channel = self._CHANGE
-        # clear utility tube
-        return self._clearu().unflow()
+        return self.self.clear().undo(rebase=True).unflow()
+
+    def condition(self):
+        '''switch to condition channeling'''
+        self.channel = self._COND
+        return self.baseline().flow(hard=True, savepoint=False)
+
+    def query(self):
+        '''switch to query channeling'''
+        self.channel = self._QUERY
+        return self.baseline().flow()
 
     ###########################################################################
     ## flow things #EE######################################################
@@ -150,26 +159,43 @@ class TubeMixin(local):
     ## savepoint for things ##################################################
     ###########################################################################
 
-    def rebase(self):
-        '''preserve baseline for inflow'''
-        self._savepoint()
-        self._original = self._sps.pop()
+    def _savepoint(self):
+        '''take savepoint of inflow'''
+        self._sps.append(self._clone(getattr(self, self._IN)))
         return self
 
-    def undo(self, index=0, everything=False):
+    def baseline(self, original):
+        '''preserve a rebase for inflow'''
+        self._savepoint()
+        self._baseline = self._sps[-1]
+        return self
+
+    def rebase(self, original=False):
+        '''preserve a rebase for inflow'''
+        self._savepoint()
+        self._baseline = self._sps.pop()
+        if original:
+            self._original = self._baseline
+        return self
+
+    def undo(self, index=0, original=False, baseline=False):
         '''
         revert to previous savepoint
 
         @param index: index of savepoint (default: 0)
         @param everything: undo everything and return things to original state
         '''
-        if everything:
+        if original:
             # clear everything plus savepoints
             self.clear()._clearsp()
             # restore original inflow
             self.inflow = self._original
-            # take new snapshot for inflow
-            self.rebase()
+            return self
+        elif baseline:
+            # clear everything plus savepoints
+            self.clear()._clearsp()
+            # restore original inflow
+            self.inflow = self._baseline
             return self
         self.clear()
         # use most recent savepoint by default
@@ -308,11 +334,11 @@ class TubeMixin(local):
 
     def untap(self):
         '''clear current callable'''
-        # reset postition arguments
+        # reset position arguments
         self._args = ()
         # reset keyword arguments
         self._kw = {}
-        # reset current callable (default is identity)
+        # reset current callable
         self._call = None
         # reset alternative callable
         self._alt = None
@@ -354,16 +380,3 @@ class TubeMixin(local):
     def clear(self):
         '''clear out everything'''
         return self.untap().unwrap().clearout().clearin()._clearw()._clearu()
-
-
-class ExitMixin(local):
-
-    '''tube exit mixin'''
-
-    def peek(self):
-        '''results from query flow'''
-        self.query()
-        out = self._wrapper(self._util)
-        results = out[0] if len(out) == 1 else out
-        self.change()
-        return results

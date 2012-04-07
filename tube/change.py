@@ -9,52 +9,29 @@ from htmlentitydefs import name2codepoint
 from json.encoder import encode_basestring
 from xml.sax.saxutils import escape, unescape
 
-from stuf.six import u
 from stuf.utils import OrderedDict
 from stuf.core import stuf, frozenstuf, orderedstuf
 
-from tube.compat import imap, tounicode, tobytes
+from tube.compat import tounicode, tobytes
 
 
 class StringMixin(local):
 
     '''filters mixin'''
 
-    def ascii(self, errors='strict'):
-        '''
-        encode each inflow thing as ascii string (regardless of type)
 
-        @param errors: error handling (default: 'strict')
-        '''
-        with self._flow():
-            return self._xtend(imap(
-                lambda x: tobytes(x, 'ascii', errors), self._iterable,
-            ))
-    
-    def bytes(self, encoding='utf-8', errors='strict'):
-        '''
-        encode each inflow thing as byte string (regardless of type)
+class OutMixin(local):
 
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
-        '''
-        with self._flow():
-            return self._xtend(imap(
-                lambda x: tobytes(x, encoding, errors), self._iterable,
-            ))
+    '''tube exit mixin'''
 
-    def htmlescape(self):
-        '''escape HTML (&, <, >, ", and ')'''
-        with self._flow():
-            return self._xtend(imap(
-                lambda x: escape(x, {'"':"&quot;", "'":'&#39;'}),
-                self._iterable,
-            ))
+    def _html(self):
+        return self.wrap(lambda x: escape(x, {'"':"&quot;", "'":'&#39;'}))
 
-    def htmlunescape(self):
+    def _js(self):
+        return self.wrap(encode_basestring)
+
+    def _unhtml(self):
         '''
-        unescape HTML
-        
         from -> John J. Lee 
         http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
         '''
@@ -73,63 +50,60 @@ class StringMixin(local):
             return unichr(repl) if repl is not None else ent 
         def unescape(data): 
             return re.sub(r'&#?[A-Za-z0-9]+?;', replace_entities, data) 
-        with self._flow():
-            return self._xtend(imap(unescape, self._iterable)) 
+        return self.wrap(unescape)
 
-    def join(self, sep=u(''), encoding='utf-8', errors='strict'):
+    @staticmethod
+    def _unjs(self):
+        return self.wraps(loads)
+
+    @staticmethod
+    def _unxml(self):
+        return unescape
+
+    @staticmethod
+    def _xml(self):
+        return escape
+
+    def reup(self):
+        '''put inflow in inflow as one inflow thing'''
+        with self.flow2(keep=False):
+            return self._append(list(self._iterable))
+
+    def asciiout(self, errors='strict'):
         '''
-        join inflow into one unicode string (regardless of type)
+        encode each inflow thing as ascii string (regardless of type)
 
-        @param sep: join separator (default: '')
+        @param errors: error handling (default: 'strict')
+        '''
+        return self.wrap(lambda x: tobytes(x, 'ascii', errors))
+    
+    def bytesout(self, encoding='utf-8', errors='strict'):
+        '''
+        encode each inflow thing as byte string (regardless of type)
+
         @param encoding: encoding for things (default: 'utf-8')
         @param errors: error handling (default: 'strict')
         '''
-        with self._flow():
-            return self._append(tounicode(sep.join(imap(
-                tounicode, self._iterable,
-            )), encoding, errors))
+        return self.wrap(lambda x: tobytes(x, encoding, errors))
 
-    def jsescape(self):
-        '''javascript/json escape each inflow string'''
-        with self._flow():
-            return self._xtend(imap(encode_basestring, self._iterable))
+    def escapeout(self, format='html'):
+        '''escape inflow'''
+        return self.wrap(getattr(self, format))
 
-    def jsunescape(self):
-        '''javascript/json unescape each inflow string'''
-        with self._flow():
-            return self._xtend(imap(loads, self._iterable))
+    def unescapeout(self, format='html'):
+        '''
+        unescape inflow stings
+        '''
+        return self.wrap(getattr(self, 'un' + format))
 
-    def unicode(self, encoding='utf-8', errors='strict'):
+    def unicodeout(self, encoding='utf-8', errors='strict'):
         '''
         decode each inflow thing as unicode string (regardless of type)
 
         @param encoding: encoding for things (default: 'utf-8')
         @param errors: error handling (default: 'strict')
         '''
-        with self._flow():
-            return self._xtend(imap(
-                lambda x: tounicode(x, encoding, errors), self._iterable,
-            ))
-
-    def xmlescape(self):
-        '''xml excape each inflow string'''
-        with self._flow():
-            return self._xtend(imap(escape, self._iterable))
-
-    def xmlunescape(self):
-        '''xml unescape each inflow string'''
-        with self._flow():
-            return self._xtend(imap(unescape, self._iterable))
-
-
-class ExitMixin(local):
-
-    '''tube exit mixin'''
-
-    def reup(self):
-        '''put inflow in inflow as one inflow thing'''
-        with self.flow2(keep=False):
-            return self._append(list(self._iterable))
+        return self.wrapper(lambda x: tounicode(x, encoding, errors))
 
     def wrap(self, wrapper):
         '''
@@ -181,3 +155,8 @@ class ExitMixin(local):
         return self.wrap(list)
 
     unwrap = listout
+
+
+class ExitMixin(StringMixin, OutMixin):
+    
+    '''exit mixin'''

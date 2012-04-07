@@ -9,9 +9,9 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from tube.change import StringMixin
+from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
 from tube.order import RandomMixin, OrderMixin
-from tube.base import SLOTS, TubeMixin, ExitMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
 from tube.filtering import FilterMixin, ExtractMixin, SetMixin, SliceMixin
 
@@ -167,10 +167,9 @@ class ActiveMixin(TubeMixin):
     ## savepoint for things ###################################################
     ###########################################################################
 
-    def _savepoint(self):
-        '''take savepoint of inflow'''
-        self._sps.append(copy(getattr(self, self._IN)))
-        return self
+    @staticmethod
+    def _clone(self, iterable, num=2, copy_=copy):
+        return iterable if num == 1 else copy_(iterable), iterable
 
     ###########################################################################
     ## iterate things #########################################################
@@ -298,7 +297,7 @@ class ActiveMixin(TubeMixin):
         return self
 
 
-class OutMixin(ActiveMixin, ExitMixin):
+class OutMixin(ActiveMixin):
 
     '''tubing with results extractor mixin'''
     
@@ -335,9 +334,9 @@ class OutMixin(ActiveMixin, ExitMixin):
 
 
 class activetube(
-    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    ExtractMixin, SetMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin,
-    RandomMixin, StringMixin,
+    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
+    SetMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
+    StringMixin,
 ):
 
     '''active tubing'''

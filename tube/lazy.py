@@ -7,9 +7,9 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from tube.change import StringMixin
+from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
 from tube.order import RandomMixin, OrderMixin
-from tube.base import SLOTS, ExitMixin, TubeMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
 from tube.filtering import FilterMixin, ExtractMixin, SetMixin, SliceMixin
 
@@ -166,11 +166,9 @@ class LazyMixin(TubeMixin):
     ## savepoint for things ###################################################
     ###########################################################################
 
-    def _savepoint(self):
-        '''make savepoint of inflow'''
-        savepoint, self.inflow = tee(getattr(self, self._IN))
-        self._sps.append(savepoint)
-        return self
+    @staticmethod
+    def _clone(self, iterable, num=2, tee_=tee):
+        return tee_(iterable, num)
 
     ###########################################################################
     ## iterate things #########################################################
@@ -187,8 +185,7 @@ class LazyMixin(TubeMixin):
 
     def _xtend(self, thing):
         '''build chain'''
-        UTILQ = self._UTIL
-        setattr(self, UTILQ, chain(thing, getattr(self, UTILQ)))
+        setattr(self, self._UTIL, chain(thing, getattr(self, self._UTIL)))
         return self
 
     __buildchain = _xtend
@@ -283,7 +280,7 @@ class LazyMixin(TubeMixin):
         return self
 
 
-class EndMixin(ExitMixin):
+class EndMixin(LazyMixin):
 
     '''result things mixin'''
     
@@ -328,9 +325,9 @@ class OutMixin(EndMixin, LazyMixin):
 
 
 class lazytube(
-    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    ExtractMixin, SetMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin,
-    RandomMixin, StringMixin,
+    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
+    SetMixin, SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
+    StringMixin,
 ):
 
     '''tubing with results'''
