@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
 '''base mixins'''
 
-import re
-from json import loads
 from operator import truth
 from threading import local
 from collections import deque
 from contextlib import contextmanager
-from htmlentitydefs import name2codepoint
-from json.encoder import encode_basestring
-from xml.sax.saxutils import escape, unescape
 
-from stuf.utils import OrderedDict
-from stuf.core import stuf, frozenstuf, orderedstuf
-
-from tube.compat import tounicode, tobytes, imap
+from tube.compat import imap
 
 SLOTS = [
     '_work', 'outflow', '_util', 'inflow', '_call', '_alt', '_wrapper', '_kw',
@@ -41,9 +33,7 @@ class TubeMixin(local):
         self._channel = self._CHANGE
         # condition
         self._eval = None
-        #######################################################################
         ## flow defaults ######################################################
-        #######################################################################
         # preferred flow
         self._flow = getattr(self, self._DEFAULT_CONTEXT)
         # default flow configuration
@@ -58,20 +48,16 @@ class TubeMixin(local):
         self._OUT = self._OUTVAR
         # clear outflow pool before adding things to it?
         self._buildup = True
-        #######################################################################
         ## snapshot defaults ##################################################
-        #######################################################################
         self._original = self._baseline = None
         # maximum number of savepoints to keep at any one time (default: 5)
         maxlen = kw.pop('savepoints', 5)
         # create pool for snapshots
-        self._sps = deque(maxlen=maxlen) if maxlen is not None else None
+        self._sps = deque(maxlen=maxlen) if maxlen is not None else maxlen
         # take snapshot of original inflow
         if self._sps is not None:
             self.snapshot(original=True)
-        #######################################################################
         ## callable defaults ##################################################
-        #######################################################################
         # current callable
         self._call = None
         # current alternate callable
@@ -180,6 +166,43 @@ class TubeMixin(local):
         self._reflow()
 
     ###########################################################################
+    ## balance things #########################################################
+    ###########################################################################
+
+    # automatically balance inflow with outflow
+    _DEFAULT_CONTEXT = _AUTO = '_autoflow'
+    # manually balance inflow with outflow
+    _MANUAL = '_flow4'
+
+    @classmethod
+    def auto(cls):
+        '''automatically balance inflow with outflow'''
+        cls._DEFAULT_CONTEXT = cls._AUTO
+        return cls
+
+    @classmethod
+    def manual(cls):
+        '''manually balance inflow with outflow'''
+        cls._DEFAULT_CONTEXT = cls._MANUAL
+        return cls
+
+    def balance(self, reverse=True):
+        '''balance by shifting outflow to inflow'''
+        if reverse:
+            # balance by shifting inflow to outflow
+            with self._autoflow(keep=False):
+                return self._many(self._iterable)
+        with self._autoflow(
+            inflow=self._OUTVAR, outflow=self._INVAR, keep=False
+        ):
+            return self._many(self._iterable)
+
+    @property
+    def balanced(self):
+        '''if inflow and outflow are in balance'''
+        return self.countout() == self.__len__()
+
+    ###########################################################################
     ## snapshot things ###################################################
     ###########################################################################
 
@@ -233,84 +256,6 @@ class TubeMixin(local):
         return self
 
     ###########################################################################
-    ## balance things #########################################################
-    ###########################################################################
-
-    # automatically balance inflow with outflow
-    _DEFAULT_CONTEXT = _AUTO = '_autoflow'
-    # manually balance inflow with outflow
-    _MANUAL = 'ctx4'
-
-    @classmethod
-    def auto(cls):
-        '''automatically balance inflow with outflow'''
-        cls._DEFAULT_CONTEXT = cls._AUTO
-        return cls
-
-    @classmethod
-    def manual(cls):
-        '''manually balance inflow with outflow'''
-        cls._DEFAULT_CONTEXT = cls._MANUAL
-        return cls
-
-    def balance(self):
-        '''balance by shifting outflow to inflow'''
-        with self._autoflow(
-            inflow=self._OUTVAR, outflow=self._INVAR, keep=False
-        ):
-            return self._many(self._iterable)
-
-    def rebalance(self):
-        '''balance by shifting inflow to outflow'''
-        with self._autoflow(keep=False):
-            return self._many(self._iterable)
-
-    @property
-    def balanced(self):
-        '''if inflow and outflow are in balance'''
-        return self.countout() == self.__len__()
-
-    ###########################################################################
-    ## inflow things ##########################################################
-    ###########################################################################
-
-    def extend(self, things):
-        '''
-        put many things after the current inflow
-
-        @param thing: some things
-        '''
-        with self._flow1():
-            return self._many(things)
-
-    def extendleft(self, things):
-        '''
-        extend before inflow
-
-        @param thing: some things
-        '''
-        with self._flow1():
-            return self._xtendleft(things)
-
-    def append(self, thing):
-        '''
-        append after current inflow
-
-        @param thing: one thing
-        '''
-        with self._flow1():
-            return self._one(thing)
-
-    def appendleft(self, thing):
-        '''
-        append before current inflow
-
-        @param thing: some thing
-        '''
-        with self._flow1():
-            return self._appendleft(thing)
-
-    ###########################################################################
     ## call things ############################################################
     ###########################################################################
 
@@ -324,7 +269,7 @@ class TubeMixin(local):
         '''substitute truth operator if no current callable is set'''
         return self._call if self._call is not None else truth
 
-    def args(self, *args, **kw):
+    def arguments(self, *args, **kw):
         '''set arguments for current or alternative callable'''
         # set position arguments
         self._args = args
@@ -376,6 +321,46 @@ class TubeMixin(local):
         return self
 
     ###########################################################################
+    ## inflow things ##########################################################
+    ###########################################################################
+
+    def extend(self, things):
+        '''
+        put many things after the current inflow
+
+        @param thing: some things
+        '''
+        with self._flow1():
+            return self._many(things)
+
+    def extendleft(self, things):
+        '''
+        extend before inflow
+
+        @param thing: some things
+        '''
+        with self._flow1():
+            return self._xtendleft(things)
+
+    def append(self, thing):
+        '''
+        append after current inflow
+
+        @param thing: one thing
+        '''
+        with self._flow1():
+            return self._one(thing)
+
+    def appendleft(self, thing):
+        '''
+        append before current inflow
+
+        @param thing: some thing
+        '''
+        with self._flow1():
+            return self._appendleft(thing)
+
+    ###########################################################################
     ## know things ############################################################
     ###########################################################################
 
@@ -403,143 +388,4 @@ class TubeMixin(local):
 
     def clear(self):
         '''clear out everything'''
-        return self.untap().unwrap().clearout().clearin()._clearw()._clearu()
-
-
-class OutflowMixin(local):
-
-    '''tube output mixin'''
-
-    def _html(self):
-        return self.wrap(lambda x: escape(x, {'"': "&quot;", "'": '&#39;'}))
-
-    def _js(self):
-        return self.wrap(encode_basestring)
-
-    def _unhtml(self):
-        '''
-        from -> John J. Lee
-        http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
-        '''
-        def unescape_charref(ref):
-            name = ref[2:-1]
-            base = 10
-            if name.startswith("x"):
-                name = name[1:]
-                base = 16
-            return unichr(int(name, base))
-
-        def replace_entities(match):
-            ent = match.group()
-            if ent[1] == "#":
-                return unescape_charref(ent)
-            repl = name2codepoint.get(ent[1:-1])
-            return unichr(repl) if repl is not None else ent
-
-        def unescape(data):
-            return re.sub(r'&#?[A-Za-z0-9]+?;', replace_entities, data)
-        return self.wrap(unescape)
-
-    @staticmethod
-    def _unjs(self):
-        return self.wraps(loads)
-
-    @staticmethod
-    def _unxml(self):
-        return unescape
-
-    @staticmethod
-    def _xml(self):
-        return escape
-
-    def asciiout(self, errors='strict'):
-        '''
-        encode each inflow thing as ascii string (regardless of type)
-
-        @param errors: error handling (default: 'strict')
-        '''
-        return self.wrap(lambda x: tobytes(x, 'ascii', errors))
-
-    def bytesout(self, encoding='utf-8', errors='strict'):
-        '''
-        encode each inflow thing as byte string (regardless of type)
-
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
-        '''
-        return self.wrap(lambda x: tobytes(x, encoding, errors))
-
-    def dequeout(self):
-        '''set wrapper to `deque`'''
-        return self.wrap(deque)
-
-    def dictout(self):
-        '''set wrapper to `dict`'''
-        return self.wrap(dict)
-
-    def escapeout(self, format='html'):
-        '''escape inflow'''
-        return self.wrap(getattr(self, format))
-
-    def fsetout(self):
-        '''set wrapper to `frozenset`'''
-        return self.wrap(frozenset)
-
-    def fstufout(self):
-        '''set wrapper to `frozenstuf`'''
-        return self.wrap(frozenstuf)
-
-    def listout(self):
-        '''clear current wrapper'''
-        return self.wrap(list)
-
-    unwrap = listout
-
-    def odictout(self):
-        '''set wrapper to `OrderedDict`'''
-        return self.wrap(OrderedDict)
-
-    def ostufout(self):
-        '''set wrapper to `orderedstuf`'''
-        return self.wrap(orderedstuf)
-
-    def stufout(self):
-        '''set wrapper to `stuf`'''
-        return self.wrap(stuf)
-
-    def reup(self):
-        '''put inflow in inflow as one inflow thing'''
-        with self._flow2(keep=False):
-            return self._one(list(self._iterable))
-
-    def setout(self):
-        '''set wrapper to `set`'''
-        return self.wrap(set)
-
-    def tupleout(self):
-        '''set wrapper to `tuple`'''
-        return self.wrap(tuple)
-
-    def unescapeout(self, format='html'):
-        '''
-        unescape inflow stings
-        '''
-        return self.wrap(getattr(self, 'un' + format))
-
-    def unicodeout(self, encoding='utf-8', errors='strict'):
-        '''
-        decode each inflow thing as unicode string (regardless of type)
-
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
-        '''
-        return self.wrapper(lambda x: tounicode(x, encoding, errors))
-
-    def wrap(self, wrapper):
-        '''
-        wrapper for outflow
-
-        @param wrapper: an iterator class
-        '''
-        self._wrapper = wrapper
-        return self
+        return self.untap().unwrap().clearout().clearin()._clearw()._clearh()

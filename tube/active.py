@@ -7,8 +7,9 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
+from tube.output import OutflowMixin
+from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
-from tube.base import SLOTS, TubeMixin, OutflowMixin
 from tube.ordering import RandomMixin, OrderMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
 from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
@@ -16,7 +17,7 @@ from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
 
 class ActiveMixin(TubeMixin):
 
-    '''active tubing'''
+    '''active tubing mixin'''
 
     def __init__(self, *things, **kw):
         try:
@@ -24,7 +25,7 @@ class ActiveMixin(TubeMixin):
         except TypeError:
             inflow = deque()
             inflow.extend(things)
-        super(ActiveMixin, self).__init__(inflow, deque())
+        super(ActiveMixin, self).__init__(inflow, deque(), **kw)
         # set iterator
         self._iterator = self._iterexcept
         # work pool
@@ -159,7 +160,7 @@ class ActiveMixin(TubeMixin):
 
     @staticmethod
     def _clone(self, iterable, n=2, deque_=deque):
-        '''clone an iterable'''
+        '''clone iterable'''
         return iterable, iterable if n == 1 else deque_(iterable), iterable
 
     ###########################################################################
@@ -203,7 +204,7 @@ class ActiveMixin(TubeMixin):
     ## extend things ##########################################################
     ###########################################################################
 
-    def _many(self, things):
+    def _xtend(self, things):
         '''extend holding pool with `things`'''
         getattr(self, self._HOLD).extend(things)
         return self
@@ -222,7 +223,7 @@ class ActiveMixin(TubeMixin):
     ## append things ##########################################################
     ###########################################################################
 
-    def _one(self, things):
+    def _append(self, things):
         '''append `things` to holding pool'''
         getattr(self, self._HOLD).append(things)
         return self
@@ -265,7 +266,7 @@ class ActiveMixin(TubeMixin):
     ## clear things ###########################################################
     ###########################################################################
 
-    def _clearu(self):
+    def _clearh(self):
         '''clear holding pool'''
         self._util.clear()
         return self
@@ -304,7 +305,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         self.clear()._clearsp()
         return wrap
 
-    def snapshot(self):
+    def peek(self):
         '''snapshot of current outflow'''
         out = deque(self.outflow)
         return out.pop() if len(out) == 1 else self._wrapper(out)
@@ -329,70 +330,70 @@ class activetube(
     __slots__ = SLOTS
 
 
-class collecttube(OutflowMixin, ExtractMixin):
+class collecttube(OutputMixin, ExtractMixin):
 
     '''collecting tubing'''
 
     __slots__ = SLOTS
 
 
-class slicetube(OutflowMixin, SliceMixin):
+class slicetube(OutputMixin, SliceMixin):
 
     '''slice tubing'''
 
     __slots__ = SLOTS
 
 
-class filtertube(OutflowMixin, FilterMixin, ExtractMixin, SliceMixin):
+class filtertube(OutputMixin, FilterMixin):
 
     '''filter tubing'''
 
     __slots__ = SLOTS
 
 
-class repeattube(OutflowMixin, RepeatMixin):
+class repeattube(OutputMixin, RepeatMixin):
 
     '''repeat tubing'''
 
     __slots__ = SLOTS
 
 
-class maptube(OutflowMixin, RepeatMixin, MapMixin):
+class maptube(OutputMixin, MapMixin):
 
     '''mapping tubing'''
 
     __slots__ = SLOTS
 
 
-class randomtube(OutflowMixin, RandomMixin):
+class randomtube(OutputMixin, RandomMixin):
 
     '''randomizing tubing'''
 
     __slots__ = SLOTS
 
 
-class sorttube(OutflowMixin, OrderMixin, RandomMixin):
+class ordertube(OutputMixin, OrderMixin):
 
     '''ordering tubing'''
 
     __slots__ = SLOTS
 
 
-class mathtube(OutflowMixin, MathMixin):
+class mathtube(OutputMixin, MathMixin):
 
     '''math tubing'''
 
     __slots__ = SLOTS
 
 
-class truthtube(OutflowMixin, TruthMixin):
+class truthtube(OutputMixin, TruthMixin):
 
     '''truth tubing'''
 
     __slots__ = SLOTS
 
 
-class reducetube(OutflowMixin, MathMixin, TruthMixin, ReduceMixin):
+class reducetube(OutputMixin, ReduceMixin):
 
     '''reduce tubing'''
 

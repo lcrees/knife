@@ -6,8 +6,9 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
+from tube.output import OutflowMixin
+from tube.base import SLOTS, TubeMixin
 from tube.mapping import RepeatMixin, MapMixin
-from tube.base import SLOTS, TubeMixin, OutflowMixin
 from tube.ordering import RandomMixin, OrderMixin
 from tube.reducing import MathMixin, TruthMixin, ReduceMixin
 from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
@@ -15,11 +16,11 @@ from tube.filtering import FilterMixin, ExtractMixin, SliceMixin
 
 class LazyMixin(TubeMixin):
 
-    '''lazy tubing'''
+    '''lazy tubing mixin'''
 
     def __init__(self, *things, **kw):
         inflow = iter([things[0]]) if len(things) == 1 else iter(things)
-        super(LazyMixin, self).__init__(inflow, iter([]))
+        super(LazyMixin, self).__init__(inflow, iter([]), **kw)
         # work pool
         self._work = iter([])
         # holding pool
@@ -43,7 +44,7 @@ class LazyMixin(TubeMixin):
 
     @contextmanager
     def _flow2(self, **kw):
-        '''switch to manual two-stage flow'''
+        '''switch to manually balanced two-stage flow'''
         self.flow(
             flow=self._flow2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
         )._clearworking()
@@ -67,7 +68,7 @@ class LazyMixin(TubeMixin):
 
     @contextmanager
     def _flow3(self, **kw):
-        '''switch to manual three-stage flow'''
+        '''switch to manually balanced three-stage flow'''
         self.flow(
             utilq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
         )._clearworking()
@@ -91,7 +92,7 @@ class LazyMixin(TubeMixin):
 
     @contextmanager
     def _flow4(self, **kw):
-        '''switch to manual four-stage flow'''
+        '''switch to manually balanced four-stage flow'''
         self.flow(flow=self._flow4, **kw)._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
@@ -113,7 +114,7 @@ class LazyMixin(TubeMixin):
 
     @contextmanager
     def _autoflow(self, **kw):
-        '''switch to auto-balanced four-stage flow'''
+        '''switch to automatically balanced four-stage flow'''
         self.flow(flow=self._autoflow, **kw)._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
@@ -139,9 +140,9 @@ class LazyMixin(TubeMixin):
     ###########################################################################
 
     @staticmethod
-    def _clone(self, iterable, num=2, tee_=tee):
-        '''clone an iterable'''
-        return tee_(iterable, num)
+    def _clone(self, iterable, n=2, tee_=tee):
+        '''clone iterable'''
+        return tee_(iterable, n)
 
     ###########################################################################
     ## iterate things #########################################################
@@ -248,7 +249,7 @@ class LazyMixin(TubeMixin):
         setr_(self._HOLD, iter_([]))
         return self
 
-    def _clearu(self):
+    def _clearh(self):
         '''clear holding pool'''
         delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter([]))
@@ -292,7 +293,7 @@ class OutputMixin(LazyMixin, OutflowMixin):
         self.clear()._clearsp()
         return wrap
 
-    def snapshot(self):
+    def peek(self):
         '''snapshot of current outflow'''
         out, tell, self.outflow = tee(getattr(self, self._OUT), 3)
         wrap = self._wrapper
@@ -320,70 +321,70 @@ class lazytube(
     __slots__ = SLOTS
 
 
-class collecttube(OutflowMixin, ExtractMixin):
+class collecttube(OutputMixin, ExtractMixin):
 
     '''collecting tubing'''
 
     __slots__ = SLOTS
 
 
-class slicetube(OutflowMixin, SliceMixin):
+class slicetube(OutputMixin, SliceMixin):
 
     '''slice tubing'''
 
     __slots__ = SLOTS
 
 
-class filtertube(OutflowMixin, FilterMixin, ExtractMixin, SliceMixin):
+class filtertube(OutputMixin, FilterMixin):
 
     '''filter tubing'''
 
     __slots__ = SLOTS
 
 
-class repeattube(OutflowMixin, RepeatMixin):
+class repeattube(OutputMixin, RepeatMixin):
 
     '''repeat tubing'''
 
     __slots__ = SLOTS
 
 
-class maptube(OutflowMixin, RepeatMixin, MapMixin):
+class maptube(OutputMixin, MapMixin):
 
     '''mapping tubing'''
 
     __slots__ = SLOTS
 
 
-class randomtube(OutflowMixin, RandomMixin):
+class randomtube(OutputMixin, RandomMixin):
 
     '''randomizing tubing'''
 
     __slots__ = SLOTS
 
 
-class sorttube(OutflowMixin, OrderMixin, RandomMixin):
+class ordertube(OutputMixin, OrderMixin):
 
     '''ordering tubing'''
 
     __slots__ = SLOTS
 
 
-class mathtube(OutflowMixin, MathMixin):
+class mathtube(OutputMixin, MathMixin):
 
     '''math tubing'''
 
     __slots__ = SLOTS
 
 
-class truthtube(OutflowMixin, TruthMixin):
+class truthtube(OutputMixin, TruthMixin):
 
     '''truth tubing'''
 
     __slots__ = SLOTS
 
 
-class reducetube(OutflowMixin, MathMixin, TruthMixin, ReduceMixin):
+class reducetube(OutputMixin, ReduceMixin):
 
     '''reduce tubing'''
 
