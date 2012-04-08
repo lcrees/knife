@@ -31,7 +31,7 @@ class ActiveMixin(KnifeMixin):
         # work pool
         self._work = deque()
         # holding pool
-        self._util = deque()
+        self._hold = deque()
 
     ###########################################################################
     ## mode things ############################################################
@@ -57,7 +57,7 @@ class ActiveMixin(KnifeMixin):
         )
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        utilq = getr_(self._HOLD)
+        holdq = getr_(self._HOLD)
         workq = getr_(self._WORK)
         # clear all work pool
         workq.clear()
@@ -70,9 +70,9 @@ class ActiveMixin(KnifeMixin):
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(utilq)
+        output.extend(holdq)
         # clear holding pool
-        utilq.clear()
+        holdq.clear()
         # revert to current flow
         self._reflow()
 
@@ -80,11 +80,11 @@ class ActiveMixin(KnifeMixin):
     def _flow3(self, **kw):
         '''switch to manually balanced three-stage flow'''
         self.flow(
-            utilq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+            holdq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
         )
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        utilq = getr_(self._HOLD)
+        holdq = getr_(self._HOLD)
         workq = getr_(self._WORK)
         # clear work pool
         workq.clear()
@@ -97,9 +97,9 @@ class ActiveMixin(KnifeMixin):
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(utilq)
+        output.extend(holdq)
         # clear holding pool
-        utilq.clear()
+        holdq.clear()
         # revert to current flow
         self._reflow()
 
@@ -109,7 +109,7 @@ class ActiveMixin(KnifeMixin):
         self.flow(flow=self._flow4, **kw)
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        utilq = getr_(self._HOLD)
+        holdq = getr_(self._HOLD)
         workq = getr_(self._WORK)
         # clear work pool
         workq.clear()
@@ -122,9 +122,9 @@ class ActiveMixin(KnifeMixin):
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(utilq)
+        output.extend(holdq)
         # clear holding pool
-        utilq.clear()
+        holdq.clear()
         # return to global flow
         self._reflow()
 
@@ -134,7 +134,7 @@ class ActiveMixin(KnifeMixin):
         self.flow(flow=self._autoflow, **kw)
         getr_ = lambda x: getattr(self, x)
         incoming, workq = getr_(self._IN), getr_(self._WORK)
-        utilq,  output = getr_(self._HOLD), getr_(self._OUT)
+        holdq,  output = getr_(self._HOLD), getr_(self._OUT)
         # clear work pool
         workq.clear()
         # extend work pool with incoming
@@ -145,12 +145,12 @@ class ActiveMixin(KnifeMixin):
         # clear output if so configured
         if self._buildup:
             output.clear()
-        output.extend(utilq)
+        output.extend(holdq)
         # clear incoming
         incoming.clear()
-        incoming.extend(utilq)
+        incoming.extend(holdq)
         # clear holding pool
-        utilq.clear()
+        holdq.clear()
         # return to global flow
         self._reflow()
 
@@ -159,7 +159,7 @@ class ActiveMixin(KnifeMixin):
     ###########################################################################
 
     @staticmethod
-    def _clone(self, iterable, n=2, deque_=deque):
+    def _clone(iterable, n=2, deque_=deque):
         '''clone iterable'''
         return iterable, iterable if n == 1 else deque_(iterable), iterable
 
@@ -175,7 +175,7 @@ class ActiveMixin(KnifeMixin):
         '''
         dq = getattr(self, attr)
         length, call = len(dq), dq.popleft
-        for i in repeat(None, length):  # @UnusedVariable
+        for i in repeat_(None, length):  # @UnusedVariable
             yield call()
 
     def _iterexcept(self, attr='_HOLD'):
@@ -268,7 +268,7 @@ class ActiveMixin(KnifeMixin):
 
     def _clearh(self):
         '''clear holding pool'''
-        self._util.clear()
+        self._hold.clear()
         return self
 
     def _clearw(self):

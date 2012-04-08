@@ -2,7 +2,7 @@
 '''knife support'''
 
 try:
-    import __builtins__ as builtins
+    import __builtin__ as builtins
 except ImportError:
     import builtins
 from itertools import (
@@ -16,7 +16,7 @@ except ImportError:
 from stuf import six
 # pylint: disable-msg=f0401,w0611
 from stuf.six.moves import (
-    map, filterfalse, filter, zip, zip_longest, xrange)  # @UnresolvedImport @UnusedImport @IgnorePep8
+    map, filterfalse, filter, zip, zip_longest)  # @UnresolvedImport @UnusedImport @IgnorePep8
 # pylint: enable-msg=f0401
 
 iall = builtins.all
@@ -28,7 +28,6 @@ ifilterfalse = filterfalse
 imap = map
 imax = builtins.max
 imin = builtins.min
-irange = xrange
 isum = builtins.sum
 items = six.items
 izip = zip

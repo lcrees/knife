@@ -54,12 +54,12 @@ class ReduceMixin(local):
                     return reduce_(lambda x, y: call(y, x), iterable, initial)
                 return reduceright
         if initial is None:
-            def reduce(iterable):
+            def _reduce(iterable):
                 return reduce_(call, iterable)
         else:
-            def reduce(iterable):
+            def _reduce(iterable):
                 return reduce_(call, iterable, initial)
-        return reduce
+        return _reduce
 
     @classmethod
     def _roundrobin(cls, itrble, i=iter, n=next, s=islice, c=cycle, p=partial):
@@ -129,7 +129,7 @@ class SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
-    def _first(iterable, n, islice_=islice, next_=next):
+    def _first(n, islice_=islice, next_=next):
         def first(iterable):
             return islice_(iterable, n) if n else next_(iterable)
         return first
@@ -139,7 +139,7 @@ class SliceMixin(local):
         def grouper(x):
             return (x[0], tuple_(x[1]))
         def groupby__(iterable): #@IgnorePep8
-            return imap(grouper, groupby_(iterable, key))
+            return imap_(grouper, groupby_(iterable, key))
         return groupby__
 
     @classmethod
@@ -148,7 +148,7 @@ class SliceMixin(local):
         return islice_(i1, len_(list_(i2)) - 1)
 
     @classmethod
-    def _last(cls, iterable, n, s=islice, d=deque, ln=len, l=list):
+    def _last(cls, n, s=islice, d=deque, ln=len, l=list):
         def last(iterable):
             i1, i2 = cls._clone(iterable)
             return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()

@@ -25,7 +25,8 @@ class OutflowMixin(local):
     def _js(self):
         return self.wrap(encode_basestring)
 
-    def _unhtml(self):
+    @staticmethod
+    def _unhtml():
         '''
         from -> John J. Lee
         http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
@@ -37,28 +38,26 @@ class OutflowMixin(local):
                 name = name[1:]
                 base = 16
             return unichr(int(name, base))
-
-        def replace_entities(match):
+        def replace_entities(match): #@IgnorePep8
             ent = match.group()
             if ent[1] == "#":
                 return unescape_charref(ent)
             repl = name2codepoint.get(ent[1:-1])
             return unichr(repl) if repl is not None else ent
-
-        def unescape(data):
+        def unescape_(data): #@IgnorePep8
             return re.sub(r'&#?[A-Za-z0-9]+?;', replace_entities, data)
-        return self.wrap(unescape)
+        return unescape_
 
     @staticmethod
-    def _unjs(self):
-        return self.wraps(loads)
+    def _unjs():
+        return loads
 
     @staticmethod
-    def _unxml(self):
+    def _unxml():
         return unescape
 
     @staticmethod
-    def _xml(self):
+    def _xml():
         return escape
 
     def asciiout(self, errors='strict'):

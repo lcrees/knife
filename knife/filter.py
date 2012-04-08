@@ -28,7 +28,7 @@ class ExtractMixin(local):
         return attributes
 
     @staticmethod
-    def _extract(pattern, flags=0, *things):
+    def _extract(pattern, flags=0):
         search = compile(pattern, flags).search
         def find(x): #@IgnorePep8
             results = search(x)
@@ -58,23 +58,23 @@ class ExtractMixin(local):
         return keys
 
     @staticmethod
-    def _members(call, alt, wrap, iterable, imap=imap, ifilter=ifilter):
-        def members(truth, iterable):
-            f, s, t, i = truth, alt, wrap, iterable
+    def _members(call, alt, wrap, imap_=imap, ifilter_=ifilter):
+        def members(truth_, iterable):
+            f, s, t, i = truth_, alt, wrap, iterable
             d, w, g, e = dir, extract, getattr, AttributeError
             test = lambda x: x.startswith('__') or x.startswith('mro')
-            for k in filterfalse(test, d(i)):
+            for k in ifilterfalse(test, d(i)):
                 try:
                     v = g(i, k)
                 except e:
                     pass
                 else:
                     yield k, t(w(f, v)) if s(v) else k, v
-        def extract(truth, iterable): #@IgnorePep8
-            for member in ifilter(truth, members(truth, iterable)):
+        def extract(truth_, iterable): #@IgnorePep8
+            for member in ifilter_(truth, members(truth_, iterable)):
                 yield member
         def members_(iterable): #@IgnorePep8
-            return ichain(imap(lambda x: extract(call, x), iterable))
+            return ichain(imap_(lambda x: extract(call, x), iterable))
         return members_
 
     @staticmethod
@@ -104,14 +104,14 @@ class ExtractMixin(local):
         with self._flow():
             return self._iter(self._attributes(names))
 
-    def extract(self, pattern, flags=0, *things):
+    def extract(self, pattern, flags=0):
         '''
         extract patterns from incoming strings
 
         @param pattern: search pattern
         '''
         with self._flow():
-            return self._multi(self._extract(pattern, flags, things))
+            return self._multi(self._extract(pattern, flags))
 
     def items(self):
         '''invoke call on each mapping to get key, value pairs'''
@@ -151,37 +151,37 @@ class FilterMixin(local):
     '''filtering mixin'''
 
     @staticmethod
-    def _filter(truth, pattern, flags, things, f=ifilter, c=compile):
+    def _filter(truth_, pattern, flags, things, f=ifilter, c=compile):
         if pattern is not None:
             call = c(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
-            call = truth
+            call = truth_
         def filter(iterable): #@IgnorePep8
             return f(call, iterable)
         return filter
 
     @staticmethod
-    def _filterfalse(truth, pattern, flags, things, ffalse_=ifilterfalse):
+    def _filterfalse(truth_, pattern, flags, things, ffalse_=ifilterfalse):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
-            call = truth
+            call = truth_
         def filterfalse(iterable): #@IgnorePep8
             return ffalse_(call, iterable)
         return filterfalse
 
     @staticmethod
-    def _find(truth, pattern, flags, things):
+    def _find(truth_, pattern, flags, things):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
-            call = truth
+            call = truth_
         def find(iterable): #@IgnorePep8
             return next(ifilter(call, iterable))
         return find
@@ -190,7 +190,7 @@ class FilterMixin(local):
     def _replace(pattern, new, count, flags, imap_=imap):
         sub = compile(pattern, flags).sub
         def replace(iterable): #@IgnorePep8
-            return imap(lambda x: sub(new, x, count), iterable)
+            return imap_(lambda x: sub(new, x, count), iterable)
         return replace
 
     @staticmethod
@@ -212,13 +212,13 @@ class FilterMixin(local):
         return reduce_(lambda x, y: set_(x).intersection(y), iterable)
 
     @classmethod
-    def _partition(cls, truth, pattern, flags, things, l=list):
+    def _partition(cls, truth_, pattern, flags, things, l=list):
         if pattern is not None:
             call = compile(pattern, flags).search
         elif things:
             call = lambda y: y in things
         else:
-            call = truth
+            call = truth_
         def partition(iterable): #@IgnorePep8
             falsy, truey = cls._clone(iterable)
             return iter((

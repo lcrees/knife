@@ -19,10 +19,10 @@ class StatsMixin(local):
         return t(s(i1, 0.0), n(list(i2)))
 
     @classmethod
-    def _max(key, max=imax):
-        def max(iterable):
-            return max(iterable, key=key)
-        return max
+    def _max(key, imax_=imax):
+        def max_(iterable):
+            return imax_(iterable, key=key)
+        return max_
 
     @staticmethod
     def _median(iterable, s=sorted, l=list, d=truediv, i=int, n=len):
@@ -42,10 +42,10 @@ class StatsMixin(local):
         return i1[-1] - i1[0]
 
     @classmethod
-    def _min(key, min=imin):
-        def min(iterable):
-            return min(iterable, key=key)
-        return min
+    def _min(key, imin_=imin):
+        def min_(iterable):
+            return imin_(iterable, key=key)
+        return min_
 
     @staticmethod
     def _sum(start, floats, sum=isum, fsum_=fsum):
@@ -131,9 +131,9 @@ class TruthMixin(local):
         )
 
     @staticmethod
-    def _quantify(call, map=imap, sum=isum):
+    def _quantify(call, imap_=imap, sum=isum):
         def quantify(iterable):
-            return sum(map(call, iterable))
+            return sum(imap_(call, iterable))
         return quantify
 
     def all(self):
@@ -178,14 +178,14 @@ class OrderMixin(local):
         return choice_(list_(iterable))
 
     @staticmethod
-    def _sample(n, sample_=sample, list_=list):
-        def sample(iterable):
-            return sample_(list_(iterable), n)
-        return sample
+    def _sample(n, _sample=sample, list_=list):
+        def sample_(iterable):
+            return _sample(list_(iterable), n)
+        return sample_
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
-        iterable = list(iterable)
+        iterable = list_(iterable)
         shuffle_(iterable)
         return iterable
 

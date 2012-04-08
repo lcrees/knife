@@ -24,7 +24,7 @@ class LazyMixin(KnifeMixin):
         # work pool
         self._work = iter([])
         # holding pool
-        self._util = iter([])
+        self._hold = iter([])
 
     ###########################################################################
     ## mode things ############################################################
@@ -57,10 +57,10 @@ class LazyMixin(KnifeMixin):
         setr_(outflow, wrap)
         yield
         # extend outgoing with holding pool
-        util = getr_(self._HOLD)
+        hold = getr_(self._HOLD)
         setr_(
             outflow,
-            util if self._buildup else chain(util, getr_(outflow)),
+            hold if self._buildup else chain(hold, getr_(outflow)),
         )
         self._clearworking()
         # return to global flow
@@ -70,7 +70,7 @@ class LazyMixin(KnifeMixin):
     def _flow3(self, **kw):
         '''switch to manually balanced three-stage flow'''
         self.flow(
-            utilq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+            holdq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
         )._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
@@ -81,10 +81,10 @@ class LazyMixin(KnifeMixin):
         setr_(INQ, incoming)
         yield
         # extend outgoing with holding pool
-        util = getr_(self._HOLD)
+        hold = getr_(self._HOLD)
         setr_(
             self._OUT,
-            util if self._buildup else chain(util, getr_(self._OUT)),
+            hold if self._buildup else chain(hold, getr_(self._OUT)),
         )
         self._clearworking()
         # revert to current flow
@@ -103,10 +103,10 @@ class LazyMixin(KnifeMixin):
         setr_(INQ, incoming)
         yield
         # extend outgoing with holding pool
-        util = getr_(self._HOLD)
+        hold = getr_(self._HOLD)
         setr_(
             self._OUT,
-            util if self._buildup else chain(util, getr_(self._OUT)),
+            hold if self._buildup else chain(hold, getr_(self._OUT)),
         )
         self._clearworking()
         # return to global flow
@@ -204,8 +204,8 @@ class LazyMixin(KnifeMixin):
         setr_(self._OUT, out1)
         work1, work2 = tee_(getr_(self._WORK))
         setr_(self._WORK, work1)
-        util1, util2 = tee_(getr_(self._HOLD))
-        setr_(self._HOLD, util1)
+        hold1, hold2 = tee_(getr_(self._HOLD))
+        setr_(self._HOLD, hold1)
         return self._repr(
             self.__module__,
             clsname(self),
@@ -214,7 +214,7 @@ class LazyMixin(KnifeMixin):
             self._WORK,
             list_(work2),
             self._HOLD,
-            list_(util2),
+            list_(hold2),
             self._OUT,
             list_(out2),
             self._channel,

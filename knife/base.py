@@ -9,10 +9,10 @@ from contextlib import contextmanager
 from knife.compat import imap
 
 SLOTS = [
-    '_work', 'outgoing', '_util', 'incoming', '_call', '_alt', '_wrapper',
-    '_args', '_buildup', '_flow', '_FLOWCFG', '_IN', '_WORK', '_HOLD', '_OUT',
-    '_iterator', '_channel', '_sps', '_original', '_eval', '_baseline', '_kw',
-    '_mode',
+     '_IN', 'incoming', '_WORK', '_work', '_HOLD', '_hold', '_OUT', 'outgoing',
+     '_buildup',  '_mode', '_FLOWCFG',  '_flow', '_eval', '_channel',
+     '_call', '_alt', '_wrapper', '_args', '_kw', '_iterator',
+     '_sps', '_original',  '_baseline',
 ]
 
 
@@ -31,9 +31,9 @@ class KnifeMixin(local):
         self.incoming = incoming
         self.outgoing = outflow
         # preferred channel
-        self._channel = self._CHANGE
+        self._channel = self._DEFAULT_CHANNEL
         # mode
-        self._mode = self._SINGLE
+        self._mode = self._DEFAULT_CHANNEL
         # condition
         self._eval = None
         ## flow defaults ######################################################
@@ -67,7 +67,7 @@ class KnifeMixin(local):
         self._alt = None
         # iterable outgoing wrapper
         self._wrapper = list
-        # postition arguments
+        # position arguments
         self._args = ()
         # keyword arguments
         self._kw = {}
@@ -104,7 +104,7 @@ class KnifeMixin(local):
     ###########################################################################
 
     # change _channel
-    _CHANGE = 'CHANGE'
+    _CHANGE = _DEFAULT_CHANNEL = 'CHANGE'
     # query _channel
     _QUERY = 'QUERY'
     # condition _channel
@@ -136,8 +136,8 @@ class KnifeMixin(local):
     _WORKCFG = 'work'
     _WORKVAR = '_work'
     # 3. holding things
-    _HOLDCFG = 'util'
-    _HOLDVAR = '_util'
+    _HOLDCFG = 'hold'
+    _HOLDVAR = '_hold'
     # 4. outgoing
     _OUTCFG = 'outgoing'
     _OUTVAR = 'outgoing'
@@ -175,7 +175,7 @@ class KnifeMixin(local):
     def _flow1(self, **kw):
         '''switch to one-step flow'''
         q = kw.pop(self._WORKCFG, self._INVAR)
-        self.flow(work=q, util=q, flow=self._flow1, **kw)
+        self.flow(work=q, hold=q, flow=self._flow1, **kw)
         yield
         self._reflow()
 
@@ -229,10 +229,10 @@ class KnifeMixin(local):
         @param original: make this snapshot original version (default: False)
         '''
         snapshot = self._clone(getattr(self, self._IN))[0]
-        # make snapshot baseline snapshot
+        # make this snapshot baseline snapshot
         if self._channel == self._CHANGE or baseline:
             self._baseline = snapshot
-        # make snapshot original snapshot
+        # make this snapshot original snapshot
         if original:
             self._original = snapshot
         # put snapshot at beginning of snapshot queue
@@ -243,7 +243,7 @@ class KnifeMixin(local):
         '''
         Revert incoming to previous incoming state.
 
-        @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc.
+        @param snapshot: snapshot to revert to e.g. 1, 2, 3... (default: 0)
         @param baseline: return incoming to baseline version (default: False)
         @param original: return incoming to original version (default: False)
         '''
@@ -296,9 +296,9 @@ class KnifeMixin(local):
         '''
         set current callable
 
-        @param call: a callable
-        @param alt: an alternative callable (default: None)
-        @param factor: call is a factory? (default: False)
+        @param call: callable
+        @param alt: alternative callable (default: None)
+        @param factor: if call is a factory (default: False)
         '''
         # reset postition arguments
         self._args = ()
@@ -306,9 +306,9 @@ class KnifeMixin(local):
         self._kw = {}
         # set factory for building current callable
         if factory:
-            def factory(*args, **kw):
+            def factory_(*args, **kw):
                 return call(*args, **kw)
-            self._call = factory
+            self._call = factory_
         else:
             # set current callable
             self._call = call
@@ -339,7 +339,7 @@ class KnifeMixin(local):
         @param thing: some things
         '''
         with self._flow1():
-            return self._multi(things)
+            return self._xtend(things)
 
     def extendleft(self, things):
         '''
@@ -357,7 +357,7 @@ class KnifeMixin(local):
         @param thing: one thing
         '''
         with self._flow1():
-            return self._single(thing)
+            return self._append(thing)
 
     def appendleft(self, thing):
         '''
