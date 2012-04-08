@@ -54,7 +54,7 @@ class MQMixin(object):
 
     def test_outclear(self):
         self.assertEqual(
-            len(list(self.qclass([1, 2, 5, 6]).clearout().outflow)), 0
+            len(list(self.qclass([1, 2, 5, 6]).clearout().outgoing)), 0
         )
 
     ###########################################################################
@@ -76,11 +76,11 @@ class MQMixin(object):
 
     def test_insync(self):
         q = self.qclass(1, 2, 3, 4, 5, 6).balance(reverse=True).clearin().balance()
-        self.assertEqual(list(q.incoming), list(q.outflow))
+        self.assertEqual(list(q.incoming), list(q.outgoing))
 
     def test_outsync(self):
         q = self.qclass(1, 2, 3, 4, 5, 6).balance(reverse=True)
-        self.assertEqual(list(q.incoming), list(q.outflow))
+        self.assertEqual(list(q.incoming), list(q.outgoing))
 
     ###########################################################################
     ## queue information ######################################################

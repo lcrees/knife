@@ -64,13 +64,6 @@ class TestAutoOrderQ(unittest.TestCase, AQMixin, AOrderQMixin):
         self.qclass = orderknife
 
 
-class TestAutoRandomQ(unittest.TestCase, AQMixin, ARandomQMixin):
-
-    def setUp(self):
-        from knife.lazy import randomknife
-        self.qclass = randomknife
-
-
 class TestAutoReduceQ(unittest.TestCase, AQMixin, AReduceQMixin):
 
     def setUp(self):

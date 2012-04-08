@@ -8,14 +8,14 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from knife.output import OutflowMixin
-from knife.base import SLOTS, TubeMixin
-from knife.mapping import RepeatMixin, MapMixin
-from knife.ordering import RandomMixin, OrderMixin
-from knife.reducing import MathMixin, TruthMixin, ReduceMixin
-from knife.filtering import FilterMixin, ExtractMixin, SliceMixin
+from knife.base import SLOTS, KnifeMixin
+from knife.map import RepeatMixin, MapMixin
+from knife.reduce import SliceMixin, ReduceMixin
+from knife.filter import FilterMixin, ExtractMixin
+from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
-class ActiveMixin(TubeMixin):
+class ActiveMixin(KnifeMixin):
 
     '''active knife mixin'''
 
@@ -322,7 +322,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
 
 class activeknife(
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
-    SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
+    SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
 ):
 
     '''active knife'''
@@ -365,13 +365,6 @@ class mapknife(OutputMixin, MapMixin):
     __slots__ = SLOTS
 
 
-class randomknife(OutputMixin, RandomMixin):
-
-    '''randomizing knife'''
-
-    __slots__ = SLOTS
-
-
 class orderknife(OutputMixin, OrderMixin):
 
     '''ordering knife'''
@@ -379,7 +372,7 @@ class orderknife(OutputMixin, OrderMixin):
     __slots__ = SLOTS
 
 
-class mathknife(OutputMixin, MathMixin):
+class mathknife(OutputMixin, StatsMixin):
 
     '''mathing knife'''
 

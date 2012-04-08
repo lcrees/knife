@@ -7,14 +7,14 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from knife.output import OutflowMixin
-from knife.base import SLOTS, TubeMixin
-from knife.mapping import RepeatMixin, MapMixin
-from knife.ordering import RandomMixin, OrderMixin
-from knife.reducing import MathMixin, TruthMixin, ReduceMixin
-from knife.filtering import FilterMixin, ExtractMixin, SliceMixin
+from knife.base import SLOTS, KnifeMixin
+from knife.map import RepeatMixin, MapMixin
+from knife.reduce import SliceMixin, ReduceMixin
+from knife.filter import FilterMixin, ExtractMixin
+from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
-class LazyMixin(TubeMixin):
+class LazyMixin(KnifeMixin):
 
     '''lazy knife mixin'''
 
@@ -51,12 +51,12 @@ class LazyMixin(TubeMixin):
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
         outflow = self._OUT
-        # extend work pool with outflow
+        # extend work pool with outgoing
         work, wrap = tee(getr_(outflow))
         setr_(self._WORK, work)
         setr_(outflow, wrap)
         yield
-        # extend outflow with holding pool
+        # extend outgoing with holding pool
         util = getr_(self._HOLD)
         setr_(
             outflow,
@@ -80,7 +80,7 @@ class LazyMixin(TubeMixin):
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend outflow with holding pool
+        # extend outgoing with holding pool
         util = getr_(self._HOLD)
         setr_(
             self._OUT,
@@ -102,7 +102,7 @@ class LazyMixin(TubeMixin):
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend outflow with holding pool
+        # extend outgoing with holding pool
         util = getr_(self._HOLD)
         setr_(
             self._OUT,
@@ -124,7 +124,7 @@ class LazyMixin(TubeMixin):
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend incoming and outflow with holding pool
+        # extend incoming and outgoing with holding pool
         incoming, wrap = tee(getr_(self._HOLD))
         setr_(
             self._OUT,
@@ -228,8 +228,8 @@ class LazyMixin(TubeMixin):
     count = __len__
 
     def countout(self):
-        '''number of outflow'''
-        self.outflow, outflow = tee(self.outflow)
+        '''number of outgoing'''
+        self.outgoing, outflow = tee(self.outgoing)
         return len(list(outflow))
 
     ###########################################################################
@@ -268,7 +268,7 @@ class LazyMixin(TubeMixin):
         return self
 
     def clearout(self):
-        '''clear outflow'''
+        '''clear outgoing'''
         delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
@@ -279,14 +279,14 @@ class OutputMixin(LazyMixin, OutflowMixin):
     '''active output knife mixin'''
 
     def __iter__(self):
-        '''yield outflow, clearing outflow as it iterates'''
+        '''yield outgoing, clearing outgoing as it iterates'''
         return getattr(self, self._OUT)
 
     def end(self):
-        '''return outflow and clear out everything'''
+        '''return outgoing and clear out everything'''
         # revert to default flow
         self.unflow()
-        out, tell = tee(self.outflow)
+        out, tell = tee(self.outgoing)
         wrap = self._wrapper
         wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
         # clear every last thing
@@ -294,26 +294,26 @@ class OutputMixin(LazyMixin, OutflowMixin):
         return wrap
 
     def peek(self):
-        '''snapshot of current outflow'''
-        out, tell, self.outflow = tee(getattr(self, self._OUT), 3)
+        '''snapshot of current outgoing'''
+        out, tell, self.outgoing = tee(getattr(self, self._OUT), 3)
         wrap = self._wrapper
         return wrap(out).pop() if len(wrap(tell)) == 1 else wrap(out)
 
     def out(self):
-        '''return outflow and clear outflow'''
+        '''return outgoing and clear outgoing'''
         # revert to default flow
         self.unflow()
-        out, tell = tee(self.outflow)
+        out, tell = tee(self.outgoing)
         wrap = self._wrapper
         wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
-        # clear outflow
+        # clear outgoing
         self.clearout()
         return wrap
 
 
 class lazyknife(
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
-    SliceMixin, TruthMixin, MathMixin, RepeatMixin, RandomMixin,
+    SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
 ):
 
     '''lazy knife'''
@@ -356,13 +356,6 @@ class mapknife(OutputMixin, MapMixin):
     __slots__ = SLOTS
 
 
-class randomknife(OutputMixin, RandomMixin):
-
-    '''randomizing knife'''
-
-    __slots__ = SLOTS
-
-
 class orderknife(OutputMixin, OrderMixin):
 
     '''ordering knife'''
@@ -370,7 +363,7 @@ class orderknife(OutputMixin, OrderMixin):
     __slots__ = SLOTS
 
 
-class mathknife(OutputMixin, MathMixin):
+class mathknife(OutputMixin, StatsMixin):
 
     '''math knife'''
 

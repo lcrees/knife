@@ -63,13 +63,6 @@ class TestManOrderQ(Manning, MQMixin, MOrderQMixin):
         self.qclass = orderknife.manual()
 
 
-class TestManRandomQ(Manning, MQMixin, MRandomQMixin):
-
-    def setUp(self):
-        from knife.active import randomknife
-        self.qclass = randomknife.manual()
-
-
 class TestManReduceQ(Manning, MQMixin, MReduceQMixin):
 
     def setUp(self):

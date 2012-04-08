@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''base mixins'''
+'''base knife mixins'''
 
 from operator import truth
 from threading import local
@@ -9,13 +9,13 @@ from contextlib import contextmanager
 from knife.compat import imap
 
 SLOTS = [
-    '_work', 'outflow', '_util', 'incoming', '_call', '_alt', '_wrapper',
+    '_work', 'outgoing', '_util', 'incoming', '_call', '_alt', '_wrapper',
     '_args', '_buildup', '_flow', '_FLOWCFG', '_IN', '_WORK', '_HOLD', '_OUT',
     '_iterator', '_channel', '_sps', '_original', '_eval', '_baseline', '_kw',
 ]
 
 
-class TubeMixin(local):
+class KnifeMixin(local):
 
     '''knives mixin'''
 
@@ -24,11 +24,11 @@ class TubeMixin(local):
         init
 
         @param incoming: incoming
-        @param outflow: outflow
+        @param outgoing: outgoing
         '''
-        super(TubeMixin, self).__init__()
+        super(KnifeMixin, self).__init__()
         self.incoming = incoming
-        self.outflow = outflow
+        self.outgoing = outflow
         # preferred _channel
         self._channel = self._CHANGE
         # condition
@@ -44,9 +44,9 @@ class TubeMixin(local):
         self._WORK = self._WORKVAR
         # 3. default holding pool
         self._HOLD = self._HOLDVAR
-        # 4. default outflow pool
+        # 4. default outgoing pool
         self._OUT = self._OUTVAR
-        # clear outflow pool before adding things to it?
+        # clear outgoing pool before adding things to it?
         self._buildup = True
         ## snapshot defaults ##################################################
         self._original = self._baseline = None
@@ -62,7 +62,7 @@ class TubeMixin(local):
         self._call = None
         # current alternate callable
         self._alt = None
-        # iterable outflow wrapper
+        # iterable outgoing wrapper
         self._wrapper = list
         # postition arguments
         self._args = ()
@@ -124,9 +124,9 @@ class TubeMixin(local):
     # 3. holding things
     _HOLDCFG = 'util'
     _HOLDVAR = '_util'
-    # 4. outflow
-    _OUTCFG = 'outflow'
-    _OUTVAR = 'outflow'
+    # 4. outgoing
+    _OUTCFG = 'outgoing'
+    _OUTVAR = 'outgoing'
 
     def flow(self, **kw):
         '''switch flow'''
@@ -137,7 +137,7 @@ class TubeMixin(local):
         self._FLOWCFG = kw if kw.get('hard', False) else {}
         # set flow
         self._flow = kw.get('flow', getattr(self, self._DEFAULT_CONTEXT))
-        # clear outflow before extending them?
+        # clear outgoing before extending them?
         self._buildup = kw.get('clearout', True)
         # 1. incoming
         self._IN = kw.get(self._INCFG, self._INVAR)
@@ -145,7 +145,7 @@ class TubeMixin(local):
         self._WORK = kw.get(self._WORKCFG, self._WORKVAR)
         # 3. holding things
         self._HOLD = kw.get(self._HOLDCFG, self._HOLDVAR)
-        # 4. outflow
+        # 4. outgoing
         self._OUT = kw.get(self._OUTCFG, self._OUTVAR)
         return self
 
@@ -169,27 +169,27 @@ class TubeMixin(local):
     ## balance things #########################################################
     ###########################################################################
 
-    # automatically balance incoming with outflow
+    # automatically balance incoming with outgoing
     _DEFAULT_CONTEXT = _AUTO = '_autoflow'
-    # manually balance incoming with outflow
+    # manually balance incoming with outgoing
     _MANUAL = '_flow4'
 
     @classmethod
     def auto(cls):
-        '''automatically balance incoming with outflow'''
+        '''automatically balance incoming with outgoing'''
         cls._DEFAULT_CONTEXT = cls._AUTO
         return cls
 
     @classmethod
     def manual(cls):
-        '''manually balance incoming with outflow'''
+        '''manually balance incoming with outgoing'''
         cls._DEFAULT_CONTEXT = cls._MANUAL
         return cls
 
     def balance(self, reverse=True):
-        '''balance by shifting outflow to incoming'''
+        '''balance by shifting outgoing to incoming'''
         if reverse:
-            # balance by shifting incoming to outflow
+            # balance by shifting incoming to outgoing
             with self._autoflow(keep=False):
                 return self._many(self._iterable)
         with self._autoflow(
@@ -199,7 +199,7 @@ class TubeMixin(local):
 
     @property
     def balanced(self):
-        '''if incoming and outflow are in balance'''
+        '''if incoming and outgoing are in balance'''
         return self.countout() == self.__len__()
 
     ###########################################################################
@@ -365,9 +365,7 @@ class TubeMixin(local):
     ###########################################################################
 
     def __bool__(self):
-        return (
-            self._eval if self._eval is not None else self.__len__()
-        )
+        return (self._eval if self._eval is not None else self.__len__())
 
     @staticmethod
     def _repr(*args):
