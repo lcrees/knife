@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 '''tube support'''
 
-from itertools import chain
+try:
+    import __builtins__ as builtins
+except ImportError:
+    import builtins
+from itertools import (
+    starmap, repeat, product, combinations, permutations, chain)
+from operator import contains
 try:
     import unittest2 as unittest
 except ImportError:
@@ -13,11 +19,27 @@ from stuf.six.moves import (
     map, filterfalse, filter, zip, zip_longest, xrange)  # @UnresolvedImport @UnusedImport @IgnorePep8
 # pylint: enable-msg=f0401
 
-items = six.items
+iall = builtins.all
+iany = builtins.any
 ichain = chain.from_iterable
-range = xrange
-imap = map
+icontains = contains
 ifilter = filter
+ifilterfalse = filterfalse
+imap = map
+imax = builtins.max
+imin = builtins.min
+irange = xrange
+isum = builtins.sum
+items = six.items
+izip = zip
+istarmap = starmap
+irepeat = repeat
+iproduct = product
+icombinations = combinations
+ipermutations = permutations
+iitems = six.items
+ivalues = six.values
+ikeys = six.keys
 
 
 class port(object):

@@ -14,12 +14,12 @@ from xml.sax.saxutils import escape, unescape
 from stuf.utils import OrderedDict
 from stuf.core import stuf, frozenstuf, orderedstuf
 
-from tube.compat import tounicode, tobytes
+from tube.compat import tounicode, tobytes, imap
 
 SLOTS = [
     '_work', 'outflow', '_util', 'inflow', '_call', '_alt', '_wrapper', '_kw',
     '_args', '_buildup', '_flow', '_FLOWCFG', '_IN', '_WORK', '_HOLD', '_OUT',
-    '_iterator', 'channel', '_sps', '_original', '_eval', '_baseline',
+    '_iterator', '_channel', '_sps', '_original', '_eval', '_baseline',
 ]
 
 
@@ -37,8 +37,8 @@ class TubeMixin(local):
         super(TubeMixin, self).__init__()
         self.inflow = inflow
         self.outflow = outflow
-        # preferred channel
-        self.channel = self._CHANGE
+        # preferred _channel
+        self._channel = self._CHANGE
         # condition
         self._eval = None
         #######################################################################
@@ -87,27 +87,43 @@ class TubeMixin(local):
     ## channel things #########################################################
     ###########################################################################
 
-    # change channel
+    # change _channel
     _CHANGE = 'CHANGE'
-    # query channel
+    # query _channel
     _QUERY = 'QUERY'
-    # condition channel
+    # condition _channel
     _COND = 'CONDITION'
 
     def change(self):
         '''switch to change channeling'''
-        self.channel = self._CHANGE
+        self._channel = self._CHANGE
         return self.clear().undo().unflow()
 
     def condition(self):
         '''switch to condition channeling'''
-        self.channel = self._COND
+        self._channel = self._COND
         return self.baseline().flow(hard=True, savepoint=False)
 
     def query(self):
         '''switch to query channeling'''
-        self.channel = self._QUERY
+        self._channel = self._QUERY
         return self.baseline().flow()
+
+    ###########################################################################
+    ## flow things ############################################################
+    ###########################################################################
+
+    def _one(self, call, _imap=imap):
+        if self._ONE:
+            return self._append(call(self._iterable))
+        elif self._MANY:
+            return self._xtend(imap(call, self._iterable))
+
+    def _many(self, call, _imap=imap):
+        if self._ONE:
+            return self._xtend(call(self._iterable))
+        elif self._MANY:
+            return self._xtend(imap(call, self._iterable))
 
     ###########################################################################
     ## flow things ############################################################
@@ -169,14 +185,14 @@ class TubeMixin(local):
 
     def snapshot(self, baseline=False, original=False):
         '''
-        Take snapshot of current inflow state
+        Take snapshot of current inflow state.
 
         @param baseline: make this snapshot baseline version (default: False)
         @param original: make this snapshot original version (default: False)
         '''
         snapshot = self._clone(getattr(self, self._IN))[0]
         # make snapshot baseline snapshot
-        if self.channel == self._CHANGE or baseline:
+        if self._channel == self._CHANGE or baseline:
             self._baseline = snapshot
         # make snapshot original snapshot
         if original:
@@ -187,7 +203,7 @@ class TubeMixin(local):
 
     def undo(self, snapshot=0, baseline=False, original=False):
         '''
-        revert to previous snapshot
+        Revert inflow to previous inflow state.
 
         @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc.
         @param baseline: return inflow to baseline version (default: False)
@@ -238,36 +254,36 @@ class TubeMixin(local):
         return cls
 
     def balance(self):
-        '''shift outflow to inflow'''
+        '''balance by shifting outflow to inflow'''
         with self._autoflow(
             inflow=self._OUTVAR, outflow=self._INVAR, keep=False
         ):
-            return self._xtend(self._iterable)
+            return self._many(self._iterable)
 
-    def balanceout(self):
-        '''shift inflow to outflow'''
+    def rebalance(self):
+        '''balance by shifting inflow to outflow'''
         with self._autoflow(keep=False):
-            return self._xtend(self._iterable)
+            return self._many(self._iterable)
 
     @property
     def balanced(self):
-        '''whether inflow and outflow are in balance'''
+        '''if inflow and outflow are in balance'''
         return self.countout() == self.__len__()
 
     ###########################################################################
-    ## extend inflow ##########################################################
+    ## inflow things ##########################################################
     ###########################################################################
 
     def extend(self, things):
         '''
-        extend after inflow
+        put many things after the current inflow
 
         @param thing: some things
         '''
         with self._flow1():
-            return self._xtend(things)
+            return self._many(things)
 
-    def prextend(self, things):
+    def extendleft(self, things):
         '''
         extend before inflow
 
@@ -276,22 +292,18 @@ class TubeMixin(local):
         with self._flow1():
             return self._xtendleft(things)
 
-    ###########################################################################
-    ## append inflow ##########################################################
-    ###########################################################################
-
     def append(self, thing):
         '''
-        append after inflow
+        append after current inflow
 
-        @param thing: some thing
+        @param thing: one thing
         '''
         with self._flow1():
-            return self._append(thing)
+            return self._one(thing)
 
-    def prepend(self, thing):
+    def appendleft(self, thing):
         '''
-        append before inflow
+        append before current inflow
 
         @param thing: some thing
         '''
@@ -498,7 +510,7 @@ class OutflowMixin(local):
     def reup(self):
         '''put inflow in inflow as one inflow thing'''
         with self._flow2(keep=False):
-            return self._append(list(self._iterable))
+            return self._one(list(self._iterable))
 
     def setout(self):
         '''set wrapper to `set`'''

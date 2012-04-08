@@ -8,7 +8,9 @@ from functools import partial, reduce
 from operator import contains, truediv
 
 from stuf.six import strings, u
-from tube.compat import Counter, imap, zip, ichain, tounicode
+from tube.compat import (
+    Counter, imap, izip, ichain, tounicode, iall, iany, imax, imin, isum,
+    icontains)
 
 
 class MathMixin(local):
@@ -20,46 +22,16 @@ class MathMixin(local):
         i1, i2 = cls._clone(iterable)
         return t(s(i1, 0.0), n(list(i2)))
 
-    @staticmethod
-    def _median(iterable, s=sorted, l=list, d=truediv, i=int, n=len):
-        i = l(s(iterable))
-        e = d(n(i) - 1, 2)
-        p = i(e)
-        return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
-
-    @classmethod
-    def _min(iterable, key, min_=min):
-        def min__(iterable):
-            return min_(iterable, key=key)
-        return min__
-
-    @classmethod
-    def _minmax(cls, iterable, iter_=iter, min_=min, max_=max):
-        i1, i2 = cls._clone(iterable)
-        return iter_((min_(i1), max_(i2)))
-
-    @classmethod
-    def _max(iterable, key, max_=max):
-        def max__(iterable):
-            return max_(iterable, key=key)
-        return max__
-
-    @staticmethod
-    def _sum(iterable, start, floats, sum_=sum, fsum_=fsum):
-        summer = lambda x: sum_(x, start) if not floats else fsum_(iterable)
-        def sum__(iterable):
-            return summer(iterable)
-        return sum__
-
-    @staticmethod
-    def _statrange(iterable, list_=list, sorted_=sorted):
-        i1 = list_(sorted_(iterable))
-        return i1[-1] - i1[0]
-
     def average(self):
         '''average value of inflow'''
         with self._flow():
-            return self._append(self._average)
+            return self._one(self._average)
+
+    @classmethod
+    def _max(key, max=imax):
+        def max(iterable):
+            return max(iterable, key=key)
+        return max
 
     def max(self):
         '''
@@ -67,12 +39,25 @@ class MathMixin(local):
         function
         '''
         with self._flow():
-            return self._append(self._max(self._identity))
+            return self._one(self._max(self._identity))
+
+    @staticmethod
+    def _median(iterable, s=sorted, l=list, d=truediv, i=int, n=len):
+        i = l(s(iterable))
+        e = d(n(i) - 1, 2)
+        p = i(e)
+        return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
 
     def median(self):
         '''median value of inflow'''
         with self._flow():
-            return self._append(self._median)
+            return self._one(self._median)
+
+    @classmethod
+    def _min(key, min=imin):
+        def min(iterable):
+            return min(iterable, key=key)
+        return min
 
     def min(self):
         '''
@@ -80,17 +65,34 @@ class MathMixin(local):
         function
         '''
         with self._flow():
-            return self._append(self._min(self._identity))
+            return self._one(self._min(self._identity))
+
+    @classmethod
+    def _minmax(cls, iterable, iter_=iter, min=imin, max=imax):
+        i1, i2 = cls._clone(iterable)
+        return iter_((min(i1), max(i2)))
 
     def minmax(self):
         '''minimum and maximum values among inflow'''
         with self._flow():
-            return self._xtend(self._minmax)
+            return self._many(self._minmax)
+
+    @staticmethod
+    def _statrange(iterable, list_=list, sorted_=sorted):
+        i1 = list_(sorted_(iterable))
+        return i1[-1] - i1[0]
 
     def statrange(self):
         '''statistical range of inflow'''
         with self._flow():
-            return self._append(self._statrange)
+            return self._one(self._statrange)
+
+    @staticmethod
+    def _sum(start, floats, sum=isum, fsum_=fsum):
+        summer = lambda x: sum(x, start) if not floats else fsum_
+        def sum_(iterable): #@IgnorePep8
+            return summer(iterable)
+        return sum_
 
     def sum(self, start=0, floats=False):
         '''
@@ -100,7 +102,7 @@ class MathMixin(local):
         @param floats: inflow are floats (default: False)
         '''
         with self._flow():
-            return self._append(self._sum(start, floats))
+            return self._one(self._sum(start, floats))
 
 
 class ReduceMixin(local):
@@ -110,6 +112,11 @@ class ReduceMixin(local):
     @staticmethod
     def _concat(iterable, ichain_=ichain):
         return ichain_(iterable)
+
+    def concat(self):
+        '''concatenate inflow together'''
+        with self._flow():
+            return self._many(self._concat)
 
     @classmethod
     def _flatten(cls, iterable, strings_=strings, isinstance_=isinstance):
@@ -127,40 +134,81 @@ class ReduceMixin(local):
                 # does not recur
                 yield item
 
+    def flatten(self):
+        '''flatten nested inflow'''
+        with self._flow():
+            return self._many(self._flatten)
+
     @staticmethod
     def _join(sep, encoding, errors, imap_=imap, tounicode_=tounicode):
-        def join__(iterable):
+        def join(iterable):
             return tounicode(
                 sep.join(imap_(tounicode_, iterable)), encoding, errors,
             )
-        return join__
+        return join
+
+    def join(self, sep=u(''), encoding='utf-8', errors='strict'):
+        '''
+        join inflow into one unicode string (regardless of type)
+
+        @param sep: join separator (default: '')
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        with self._flow():
+            return self._one(self._join(sep, encoding, errors))
 
     @classmethod
-    def _pairwise(cls, iterable, next_=next, zip_=zip):
+    def _pairwise(cls, iterable, next_=next, zip_=izip):
         i1, i2 = cls._clone(iterable)
         next_(i2, None)
         return zip_(i1, i2)
 
+    def pairwise(self):
+        '''every two inflow as a `tuple`'''
+        with self._flow():
+            return self._many(self._pairwise)
+
     @staticmethod
     def _reduce(call, initial, reduce_=reduce):
         if initial is None:
-            def reduce__(iterable):
+            def reduce(iterable):
                 return reduce_(call, iterable)
         else:
-            def reduce__(iterable):
+            def reduce(iterable):
                 return reduce_(call, iterable, initial)
-        return reduce__
+        return reduce
+
+    def reduce(self, initial=None):
+        '''
+        reduce inflow to one thing using current callable (from left
+        side of inflow)
+
+        @param initial: initial thing (default: None)
+        '''
+        with self._flow():
+            return self._one(self._reduce(self._call, initial))
 
     @staticmethod
     def _reduceright(call, initial, reduce_=reduce):
         if initial is None:
-            def reduceright__(iterable):
+            def reduceright(iterable):
                 return reduce_(lambda x, y: call(y, x), iterable)
-            return reduceright__
+            return reduceright
         else:
-            def reduceright__(iterable):
+            def reduceright(iterable):
                 return reduce_(lambda x, y: call(y, x), iterable, initial)
-        return reduceright__
+        return reduceright
+
+    def reduceright(self, initial=None):
+        '''
+        reduce inflow to one thing from right side of inflow
+        using current callable
+
+        @param initial: initial thing (default: None)
+        '''
+        with self._flow():
+            return self._one(self._reduceright(self._call, initial))
 
     @classmethod
     def _roundrobin(cls, itrble, i=iter, n=next, s=islice, c=cycle, p=partial):
@@ -175,60 +223,14 @@ class ReduceMixin(local):
                 pending -= 1
                 nexts = c(s(nexts, pending))
 
-    @staticmethod
-    def _zip(iterable, zip_=zip):
-        return zip_(*iterable)
-
-    def concat(self):
-        '''concatenate inflow together'''
-        with self._flow():
-            return self._xtend(self._concat)
-
-    def flatten(self):
-        '''flatten nested inflow'''
-        with self._flow():
-            return self._xtend(self._flatten)
-
-    def join(self, sep=u(''), encoding='utf-8', errors='strict'):
-        '''
-        join inflow into one unicode string (regardless of type)
-
-        @param sep: join separator (default: '')
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
-        '''
-        with self._flow():
-            return self._append(self._join(sep, encoding, errors))
-
-    def pairwise(self):
-        '''every two inflow as a `tuple`'''
-        with self._flow():
-            return self._xtend(self._pairwise)
-
-    def reduce(self, initial=None):
-        '''
-        reduce inflow to one thing using current callable (from left
-        side of inflow)
-
-        @param initial: initial thing (default: None)
-        '''
-        with self._flow():
-            return self._append(self._reduce(self._call, initial))
-
-    def reduceright(self, initial=None):
-        '''
-        reduce inflow to one thing from right side of inflow
-        using current callable
-
-        @param initial: initial thing (default: None)
-        '''
-        with self._flow():
-            return self._append(self._reduceright(self._call, initial))
-
     def roundrobin(self):
         '''interleave inflow into one thing'''
         with self._flow():
-            return self._xtend(self._roundrobin)
+            return self._many(self._roundrobin)
+
+    @staticmethod
+    def _zip(iterable, zip_=izip):
+        return zip_(*iterable)
 
     def zip(self):
         '''
@@ -236,63 +238,49 @@ class ReduceMixin(local):
         position
         '''
         with self._flow():
-            return self._xtend(self._zip)
+            return self._many(self._zip)
 
 
 class TruthMixin(local):
 
     '''truth mixin'''
-    
-    @staticmethod
-    def _all(truth, all_=all, imap_=imap):
-        def all__(iterable):
-            return all_(imap_(truth, iterable))
-        return all__
-    
-    @staticmethod
-    def _any(truth, any_=any, imap_=imap):
-        def any__(iterable):
-            return any_(imap_(truth, iterable))
-        return any__
-    
-    @staticmethod
-    def _common(iterable, counter=Counter):
-        return counter(iterable).most_common(1)[0][0]
-    
-    @staticmethod
-    def _contains(thing, contains_=contains):
-        def contains__(iterable):
-            return contains_(iterable, thing)
-        return contains__
 
     @staticmethod
-    def _frequency(iterable, counter=Counter):
-        return Counter(iterable).most_common()
-    
-    @staticmethod
-    def _quantify(call, imap_=imap, sum_=sum):
-        def quantify__(iterable):
-            return sum_(imap_(call, iterable))
-        return quantify__
-    
-    @staticmethod
-    def _uncommon(iterable, counter=Counter):
-        return counter(iterable).most_common()[:-2:-1][0][0]
+    def _all(truth, all_=iall, imap_=imap):
+        def all(iterable):
+            return all_(imap_(truth, iterable))
+        return all
 
     def all(self):
         '''if `all` inflow are `True`'''
         with self._flow():
-            return self._append(self._all(self._truth))
+            return self._one(self._all(self._truth))
+
+    @staticmethod
+    def _any(truth, any_=iany, imap_=imap):
+        def any(iterable):
+            return any_(imap_(truth, iterable))
+        return any
 
     def any(self):
         '''if `any` inflow are `True`'''
         with self._flow():
-            return self._append(self._any(self._truth))
+            return self._one(self._any(self._truth))
+
+    @staticmethod
+    def _common(iterable, counter=Counter):
+        return counter(iterable).most_common(1)[0][0]
 
     def common(self):
         '''mode value of inflow'''
         with self._flow():
-            return self._append(self._common)
+            return self._one(self._common)
+
+    @staticmethod
+    def _contains(thing, contains_=icontains):
+        def contains(iterable):
+            return contains_(iterable, thing)
+        return contains
 
     def contains(self, thing):
         '''
@@ -301,21 +289,35 @@ class TruthMixin(local):
         @param thing: some thing
         '''
         with self._flow():
-            return self._append(self._contains(thing))
+            return self._one(self._contains(thing))
+
+    @staticmethod
+    def _frequency(iterable, counter=Counter):
+        return counter(iterable).most_common()
 
     def frequency(self):
         '''frequency of each inflow thing'''
         with self._flow():
-            return self._append(self._frequency)
+            return self._one(self._frequency)
+
+    @staticmethod
+    def _quantify(call, map=imap, sum=isum):
+        def quantify(iterable):
+            return sum(map(call, iterable))
+        return quantify
 
     def quantify(self):
         '''
         how many times current callable returns `True` for inflow
         '''
         with self._flow():
-            return self._append(self._quantify(self._truth))
+            return self._one(self._quantify(self._truth))
+
+    @staticmethod
+    def _uncommon(iterable, counter=Counter):
+        return counter(iterable).most_common()[:-2:-1][0][0]
 
     def uncommon(self):
         '''least common inflow thing'''
         with self._flow():
-            return self._append(self._uncommon)
+            return self._one(self._uncommon)

@@ -34,7 +34,7 @@ class LazyMixin(TubeMixin):
         with self._flow3(outflow=self._HOLDVAR, keep=False):
             self._xreplace(self._iterable)
         with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
-            self.channel = self._QUERY
+            self._channel = self._QUERY
             return self
 
     ###########################################################################
@@ -161,11 +161,9 @@ class LazyMixin(TubeMixin):
         setattr(self, self._HOLD, chain(things, getattr(self, self._HOLD)))
         return self
 
-    __xtend = _xtend
-
     def _xtendleft(self, things):
         '''extend before of holding pool with `things`'''
-        return self.__xtend(reversed(things))
+        return self._xtend(reversed(things))
 
     def _xreplace(self, things):
         '''replace holding pool with `things`'''
@@ -174,7 +172,7 @@ class LazyMixin(TubeMixin):
 
     def _iter(self, things):
         '''extend work pool with `things` wrapped in iterator'''
-        return self.__xtend(iter(things))
+        return self._xtend(iter(things))
 
     ###########################################################################
     ## append things ##########################################################
@@ -189,7 +187,7 @@ class LazyMixin(TubeMixin):
 
     def _appendleft(self, things):
         '''append `things` before of holding pool'''
-        return self.__xtend(iter([things]))
+        return self._xtend(iter([things]))
 
     ###########################################################################
     ## know things ############################################################
@@ -218,7 +216,7 @@ class LazyMixin(TubeMixin):
             list_(util2),
             self._OUT,
             list_(out2),
-            self.channel,
+            self._channel,
         )
 
     def __len__(self):

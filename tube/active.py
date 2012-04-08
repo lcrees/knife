@@ -39,9 +39,9 @@ class ActiveMixin(TubeMixin):
     def query(self):
         '''flow to query mode'''
         with self._flow3(outflow=self._HOLDVAR, keep=False):
-            self._xtend(self._iterable)
+            self._many(self._iterable)
         with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
-            self.channel = self._QUERY
+            self._channel = self._QUERY
             return self
 
     ###########################################################################
@@ -203,7 +203,7 @@ class ActiveMixin(TubeMixin):
     ## extend things ##########################################################
     ###########################################################################
 
-    def _xtend(self, things):
+    def _many(self, things):
         '''extend holding pool with `things`'''
         getattr(self, self._HOLD).extend(things)
         return self
@@ -222,7 +222,7 @@ class ActiveMixin(TubeMixin):
     ## append things ##########################################################
     ###########################################################################
 
-    def _append(self, things):
+    def _one(self, things):
         '''append `things` to holding pool'''
         getattr(self, self._HOLD).append(things)
         return self
@@ -248,7 +248,7 @@ class ActiveMixin(TubeMixin):
             list(getattr(self, self._HOLD)),
             self._OUT,
             list(getattr(self, self._OUT)),
-            self.channel,
+            self._channel,
         )
 
     def __len__(self):
