@@ -22,7 +22,7 @@ class MMathQMixin(object):
         self.assertFalse(manknife.balanced)
         manknife.balance()
         self.assertTrue(manknife.balanced)
-        self.assertEqual(stuf(manknife.end()), stuf(name='curly', age=60))
+        self.assertEqual(stuf(manknife.close()), stuf(name='curly', age=60))
         self.assertTrue(manknife.balanced)
 
     def test_min(self):

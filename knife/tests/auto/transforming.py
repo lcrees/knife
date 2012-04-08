@@ -11,7 +11,7 @@ class AStringQMixin(object):
     def test_join(self):
         from stuf.six import u, b
         self.assertEqual(
-            self.qclass([1], True, b('thing'), None, (1,)).join(u(', ')).end(),
+            self.qclass([1], True, b('thing'), None, (1,)).join(u(', ')).close(),
             u('[1], True, thing, None, (1,)')
         )
 
@@ -20,7 +20,7 @@ class AStringQMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).ascii().end(),
+            ).ascii().close(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
 
@@ -29,7 +29,7 @@ class AStringQMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't',  b('i'), u('g'), None, (1,)
-            ).bytes().end(),
+            ).bytes().close(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
 
@@ -38,7 +38,7 @@ class AStringQMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).unicode().end(),
+            ).unicode().close(),
             [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
         )
 

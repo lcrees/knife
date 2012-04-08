@@ -12,6 +12,7 @@ SLOTS = [
     '_work', 'outgoing', '_util', 'incoming', '_call', '_alt', '_wrapper',
     '_args', '_buildup', '_flow', '_FLOWCFG', '_IN', '_WORK', '_HOLD', '_OUT',
     '_iterator', '_channel', '_sps', '_original', '_eval', '_baseline', '_kw',
+    '_mode',
 ]
 
 
@@ -29,8 +30,10 @@ class KnifeMixin(local):
         super(KnifeMixin, self).__init__()
         self.incoming = incoming
         self.outgoing = outflow
-        # preferred _channel
+        # preferred channel
         self._channel = self._CHANGE
+        # mode
+        self._mode = self._SINGLE
         # condition
         self._eval = None
         ## flow defaults ######################################################
@@ -70,6 +73,33 @@ class KnifeMixin(local):
         self._kw = {}
 
     ###########################################################################
+    ## mode things ############################################################
+    ###########################################################################
+
+    _SINGLE = _DEFAULT_MODE = 'single'
+    _MULTIPLE = 'multiple'
+
+    def _single(self, call, _imap=imap):
+        if self._mode == self._SINGLE:
+            return self._append(call(self._iterable))
+        elif self._mode == self._MULTIPLE:
+            return self._xtend(imap(call, self._iterable))
+
+    def _multi(self, call, _imap=imap):
+        if self._mode == self._SINGLE:
+            return self._xtend(call(self._iterable))
+        elif self._mode == self._MULTIPLE:
+            return self._xtend(imap(call, self._iterable))
+
+    def single(self):
+        self._mode = self._SINGLE
+        return self
+
+    def multiple(self):
+        self._mode = self._MULTIPLE
+        return self
+
+    ###########################################################################
     ## channel things #########################################################
     ###########################################################################
 
@@ -94,22 +124,6 @@ class KnifeMixin(local):
         '''switch to query channeling'''
         self._channel = self._QUERY
         return self.baseline().flow()
-
-    ###########################################################################
-    ## flow things ############################################################
-    ###########################################################################
-
-    def _one(self, call, _imap=imap):
-        if self._ONE:
-            return self._append(call(self._iterable))
-        elif self._MANY:
-            return self._xtend(imap(call, self._iterable))
-
-    def _many(self, call, _imap=imap):
-        if self._ONE:
-            return self._xtend(call(self._iterable))
-        elif self._MANY:
-            return self._xtend(imap(call, self._iterable))
 
     ###########################################################################
     ## flow things ############################################################
@@ -190,12 +204,13 @@ class KnifeMixin(local):
         '''balance by shifting outgoing to incoming'''
         if reverse:
             # balance by shifting incoming to outgoing
-            with self._autoflow(keep=False):
-                return self._many(self._iterable)
+            with self._autoflow(snapshot=False, keep=False):
+                return self._multi(self._iterable)
         with self._autoflow(
-            incoming=self._OUTVAR, outflow=self._INVAR, keep=False
+            incoming=self._OUTVAR, outflow=self._INVAR, keep=False,
+            snapshot=False,
         ):
-            return self._many(self._iterable)
+            return self._multi(self._iterable)
 
     @property
     def balanced(self):
@@ -313,13 +328,6 @@ class KnifeMixin(local):
         self._alt = None
         return self
 
-    def when(self, call=None, alt=None):
-        if self:
-            self._call = call if call is not None else self._call
-        else:
-            self._call = alt if alt is not None else self._alt
-        return self
-
     ###########################################################################
     ## incoming things ########################################################
     ###########################################################################
@@ -331,7 +339,7 @@ class KnifeMixin(local):
         @param thing: some things
         '''
         with self._flow1():
-            return self._many(things)
+            return self._multi(things)
 
     def extendleft(self, things):
         '''
@@ -349,7 +357,7 @@ class KnifeMixin(local):
         @param thing: one thing
         '''
         with self._flow1():
-            return self._one(thing)
+            return self._single(thing)
 
     def appendleft(self, thing):
         '''

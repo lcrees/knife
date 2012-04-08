@@ -282,7 +282,7 @@ class OutputMixin(LazyMixin, OutflowMixin):
         '''yield outgoing, clearing outgoing as it iterates'''
         return getattr(self, self._OUT)
 
-    def end(self):
+    def close(self):
         '''return outgoing and clear out everything'''
         # revert to default flow
         self.unflow()
@@ -308,6 +308,8 @@ class OutputMixin(LazyMixin, OutflowMixin):
         wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
         # clear outgoing
         self.clearout()
+        if self._channel == self._QUERY:
+            self.baseline()
         return wrap
 
 

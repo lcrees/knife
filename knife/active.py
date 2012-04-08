@@ -40,7 +40,7 @@ class ActiveMixin(KnifeMixin):
     def query(self):
         '''flow to query mode'''
         with self._flow3(output=self._HOLDVAR, keep=False):
-            self._many(self._iterable)
+            self._multi(self._iterable)
         with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
             self._channel = self._QUERY
             return self
@@ -184,7 +184,7 @@ class ActiveMixin(KnifeMixin):
 
         Converts a call-until-exception interface to an iterator interface.
         Like `iter(call, sentinel)` but uses an exception instead of a sentinel
-        to end the loop.
+        to close the loop.
 
         Raymond Hettinger, Python Cookbook recipe # 577155
         '''
@@ -295,7 +295,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         '''yield output, clearing output as it iterates'''
         return self._iterexcept(self._OUT)
 
-    def end(self):
+    def close(self):
         '''return output and clear out everything'''
         # revert to default flow
         self.unflow()
@@ -306,7 +306,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         return wrap
 
     def peek(self):
-        '''snapshot of current output'''
+        '''peek into current output'''
         out = deque(self.output)
         return out.pop() if len(out) == 1 else self._wrapper(out)
 
@@ -317,6 +317,8 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         wrap = output.pop() if len(output) == 1 else wrap(output)
         # clear outgoing things
         self.clearout()
+        if self._channel == self._QUERY:
+            self.baseline()
         return wrap
 
 

@@ -18,34 +18,34 @@ class AQMixin(object):
         initial = self.qclass(1, 2, 3, 4, 5, 6)
         self.assertListEqual(initial.peek(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 6)
-        self.assertListEqual(initial.balance(reverse=True).end(), [1, 2, 3, 4, 5, 6])
+        self.assertListEqual(initial.balance(reverse=True).close(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertListEqual(
-            self.qclass().extend([1, 2, 3, 4, 5, 6]).balance(reverse=True).end(),
+            self.qclass().extend([1, 2, 3, 4, 5, 6]).balance(reverse=True).close(),
             [1, 2, 3, 4, 5, 6],
         )
 
     def test_outextend(self):
         self.assertListEqual(
-            self.qclass().extendout([1, 2, 3, 4, 5, 6]).end(),
+            self.qclass().extendout([1, 2, 3, 4, 5, 6]).close(),
             [1, 2, 3, 4, 5, 6],
         )
 
     def test_extendleft(self):
         self.assertListEqual(
-            self.qclass().extendleft([1, 2, 3, 4, 5, 6]).balance(reverse=True).end(),
+            self.qclass().extendleft([1, 2, 3, 4, 5, 6]).balance(reverse=True).close(),
             [6, 5, 4, 3, 2, 1]
         )
 
     def test_append(self):
         autoknife = self.qclass().append('foo').balance(reverse=True)
-        self.assertEqual(autoknife.end(), 'foo')
+        self.assertEqual(autoknife.close(), 'foo')
 
     def test_prepend(self):
         autoknife = self.qclass().prepend('foo').balance(reverse=True)
-        self.assertEqual(autoknife.end(), 'foo')
+        self.assertEqual(autoknife.close(), 'foo')
 
     def test_inclear(self):
         self.assertEqual(len(list(self.qclass([1, 2, 5, 6]).clearin())), 0)
@@ -68,7 +68,7 @@ class AQMixin(object):
         queue.append(1).append(2).undo().balance(reverse=True)
         self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.undo(everything=True).balance(reverse=True)
-        self.assertListEqual(queue.balance(reverse=True).end(), [1, 2, 3])
+        self.assertListEqual(queue.balance(reverse=True).close(), [1, 2, 3])
 
     def test_insync(self):
         q = self.qclass([1, 2, 3, 4, 5, 6]).balance(reverse=True).clearin().balance()

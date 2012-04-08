@@ -81,12 +81,12 @@ class ReduceMixin(local):
     def concat(self):
         '''concatenate incoming together'''
         with self._flow():
-            return self._many(self._concat)
+            return self._multi(self._concat)
 
     def flatten(self):
         '''flatten nested incoming'''
         with self._flow():
-            return self._many(self._flatten)
+            return self._multi(self._flatten)
 
     def join(self, sep=u(''), encoding='utf-8', errors='strict'):
         '''
@@ -97,7 +97,7 @@ class ReduceMixin(local):
         @param errors: error handling (default: 'strict')
         '''
         with self._flow():
-            return self._one(self._join(sep, encoding, errors))
+            return self._single(self._join(sep, encoding, errors))
 
     def reduce(self, initial=None, reverse=False):
         '''
@@ -108,12 +108,12 @@ class ReduceMixin(local):
         @param reverse: reduce from right side of incoming things
         '''
         with self._flow():
-            return self._one(self._reduce(self._call, initial, reverse))
+            return self._single(self._reduce(self._call, initial, reverse))
 
     def roundrobin(self):
         '''interleave incoming into one thing'''
         with self._flow():
-            return self._many(self._roundrobin)
+            return self._multi(self._roundrobin)
 
     def zip(self):
         '''
@@ -121,7 +121,7 @@ class ReduceMixin(local):
         position
         '''
         with self._flow():
-            return self._many(self._zip)
+            return self._multi(self._zip)
 
 
 class SliceMixin(local):
@@ -172,19 +172,19 @@ class SliceMixin(local):
         '''
         with self._flow():
             first = self._first
-            return self._many(first(n)) if n else self._one(first())
+            return self._multi(first(n)) if n else self._single(first())
 
     def groupby(self):
         '''
         group incoming, optionally using current call for key function
         '''
         with self._flow():
-            return self._many(self._groupby(self._identity))
+            return self._multi(self._groupby(self._identity))
 
     def initial(self):
         '''all incoming except the last thing'''
         with self._flow():
-            return self._many(self._initial)
+            return self._multi(self._initial)
 
     def last(self, n=0):
         '''
@@ -194,7 +194,7 @@ class SliceMixin(local):
         '''
         with self._flow():
             last = self._last
-            return self._many(last(n)) if n else self._one(last(n))
+            return self._multi(last(n)) if n else self._single(last(n))
 
     def nth(self, n, default=None):
         '''
@@ -204,12 +204,12 @@ class SliceMixin(local):
         @param default: default thing (default: None)
         '''
         with self._flow():
-            return self._one(self._nth(n, default))
+            return self._single(self._nth(n, default))
 
     def rest(self):
         '''all incoming except the first thing'''
         with self._flow():
-            return self._many(self._rest)
+            return self._multi(self._rest)
 
     @staticmethod
     def _split(n, fill, zip_longest_=zip_longest, iter_=iter):
@@ -226,4 +226,4 @@ class SliceMixin(local):
         @param fill: fill thing (default: None)
         '''
         with self._flow():
-            return self._many(self._split(n, fill))
+            return self._multi(self._split(n, fill))

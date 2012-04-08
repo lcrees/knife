@@ -9,13 +9,13 @@ from knife.compat import port
 class ARepeatQMixin(object):
 
     def test_range(self):
-        self.assertEqual(self.qclass().range(3).end(), [0, 1, 2])
-        self.assertEqual(self.qclass().range(1, 3).end(), [1, 2])
-        self.assertEqual(self.qclass().range(1, 3, 2).end(), 1)
+        self.assertEqual(self.qclass().range(3).close(), [0, 1, 2])
+        self.assertEqual(self.qclass().range(1, 3).close(), [1, 2])
+        self.assertEqual(self.qclass().range(1, 3, 2).close(), 1)
 
     def test_repeat(self):
         self.assertEqual(
-            self.qclass(40, 50, 60).repeat(3).end(),
+            self.qclass(40, 50, 60).repeat(3).close(),
             [(40, 50, 60), (40, 50, 60), (40, 50, 60)],
         )
 
@@ -23,13 +23,13 @@ class ARepeatQMixin(object):
         def test(*args):
             return list(args)
         self.assertEqual(
-            self.qclass(40, 50, 60).tap(test).times(3).end(),
+            self.qclass(40, 50, 60).tap(test).times(3).close(),
             [[40, 50, 60], [40, 50, 60], [40, 50, 60]],
         )
 
     def test_copy(self):
         testlist = [[1, [2, 3]], [4, [5, 6]]]
-        newlist = self.qclass(testlist).copy().end()
+        newlist = self.qclass(testlist).copy().close()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
@@ -39,13 +39,13 @@ class ARepeatQMixin(object):
 
     def test_permutations(self):
         self.assertEqual(
-            self.qclass(40, 50, 60).permutations(2).end(),
+            self.qclass(40, 50, 60).permutations(2).close(),
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
 
     def test_combination(self):
         self.assertEqual(
-            self.qclass(40, 50, 60).combinations(2).end(),
+            self.qclass(40, 50, 60).combinations(2).close(),
             [(40, 50), (40, 60), (50, 60)],
         )
 
@@ -66,7 +66,7 @@ class AMapQMixin(ARepeatQMixin):
         self.assertDictEqual(
             self.qclass(
                 ('a', 1), ('b', 2), ('c', 3)
-            ).reup().tap(stuf, factory=True).map().end(),
+            ).reup().tap(stuf, factory=True).map().close(),
             stuf(a=1, b=2, c=3),
         )
 
@@ -76,22 +76,22 @@ class AMapQMixin(ARepeatQMixin):
         self.assertEqual(
             self.qclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).each().end(),
+            ).tap(test).each().close(),
             [6, 10, 14],
         )
         self.assertEqual(
             self.qclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).each(0.0001).end(),
+            ).tap(test).each(0.0001).close(),
             [6, 10, 14],
         )
 
     def test_map(self):
         self.assertEqual(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().close(), [3, 6, 9],
         )
         self.assertEqual(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).map(0.0001).end(),
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map(0.0001).close(),
             [3, 6, 9],
         )
 
@@ -99,32 +99,32 @@ class AMapQMixin(ARepeatQMixin):
         self.assertEqual(
             self.qclass(
                 (1, 2), (2, 3), (3, 4)
-            ).tap(lambda x, y: x * y).starmap().end(), [2, 6, 12],
+            ).tap(lambda x, y: x * y).starmap().close(), [2, 6, 12],
         )
 
     def test_items(self):
         self.assertEqual(
             self.qclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).tap(lambda x, y: x * y).items().end(), [2, 6, 12, 2, 6, 12],
+            ).tap(lambda x, y: x * y).items().close(), [2, 6, 12, 2, 6, 12],
         )
 
     def test_invoke(self):
         self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1]).args(1).invoke('index').end(),
+            self.qclass([5, 1, 7], [3, 2, 1]).args(1).invoke('index').close(),
             [1, 2],
         )
         self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort').end(),
+            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort').close(),
             [[1, 5, 7], [1, 2, 3]],
         )
         self.assertEqual(
             self.qclass([5, 1, 7], [3, 2, 1])
-            .args(1).invoke('index', 0.0001).end(),
+            .args(1).invoke('index', 0.0001).close(),
             [1, 2],
         )
         self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001).end(),
+            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001).close(),
             [[1, 5, 7], [1, 2, 3]],
         )
 

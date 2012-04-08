@@ -57,12 +57,12 @@ class RepeatMixin(local):
         @param n: number of repetitions
         '''
         with self._flow():
-            return self._many(self._combinations(n))
+            return self._multi(self._combinations(n))
 
     def copy(self):
         '''copy each incoming thing'''
         with self._flow():
-            return self._many(self._copy)
+            return self._multi(self._copy)
 
     def product(self, n=1):
         '''
@@ -71,7 +71,7 @@ class RepeatMixin(local):
         @param n: number of repetitions (default: 1)
         '''
         with self._flow():
-            return self._many(self._product(n))
+            return self._multi(self._product(n))
 
     def permutations(self, n):
         '''
@@ -80,7 +80,7 @@ class RepeatMixin(local):
         @param n: length of thing to permutate
         '''
         with self._flow():
-            return self._many(self._permutations(n))
+            return self._multi(self._permutations(n))
 
     def repeat(self, n):
         '''
@@ -89,7 +89,7 @@ class RepeatMixin(local):
         @param n: number of times to repeat
         '''
         with self._flow():
-            return self._many(self._repeat(n))
+            return self._multi(self._repeat(n))
 
     def times(self, n=None):
         '''
@@ -98,7 +98,7 @@ class RepeatMixin(local):
         @param n: repeat call n times on incoming (default: None)
         '''
         with self._flow():
-            return self._many(self._times(self._call, n))
+            return self._multi(self._times(self._call, n))
 
 
 class MapMixin(local):
@@ -137,7 +137,7 @@ class MapMixin(local):
 
         '''
         with self._flow():
-            return self._many(
+            return self._multi(
                 self._invoke(name, (self._args, self._kw))
             )
 
@@ -146,7 +146,7 @@ class MapMixin(local):
         invoke call on each incoming thing
         '''
         with self._flow():
-            return self._many(self._map(self._call))
+            return self._multi(self._map(self._call))
 
     def starmap(self, wildcard=False):
         '''
@@ -154,4 +154,4 @@ class MapMixin(local):
         invoke call with passed arguments, keywords in incoming
         '''
         with self._flow():
-            return self._many(self._starmap(self._call, wildcard))
+            return self._multi(self._starmap(self._call, wildcard))

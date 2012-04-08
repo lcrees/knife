@@ -55,7 +55,7 @@ class MRepeatQMixin(object):
         self.assertTrue(manknife.balanced)
         manknife.balance()
         self.assertTrue(manknife.balanced)
-        newlist = manknife.end()
+        newlist = manknife.close()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
@@ -79,7 +79,7 @@ class MMapQMixin(MRepeatQMixin):
         from stuf import stuf
         thing = self.qclass(
             ('a', 1), ('b', 2), ('c', 3)
-        ).reup().tap(stuf, factory=True).map().balance().end()
+        ).reup().tap(stuf, factory=True).map().balance().close()
         self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
 
     def test_each(self):
