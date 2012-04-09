@@ -162,6 +162,10 @@ class KnifeMixin(local):
     ## things in flow #########################################################
     ###########################################################################
 
+    # automatically rebalance inflow with outflow
+    _DEFAULT_FLOW = _AUTO = '_autoflow'
+    # manually rebalance inflow with outflow
+    _MANUAL = '_flow4'
     # 1. stage for incoming things which flows to =>
     _INCFG = 'inflow'
     _INVAR = '_inflow'
@@ -212,19 +216,10 @@ class KnifeMixin(local):
         yield
         self._reflow()
 
-    ###########################################################################
-    ## things in balance ######################################################
-    ###########################################################################
-
-    # automatically rebalance inflow with outflow
-    _DEFAULT_CONTEXT = _AUTO = '_autoflow'
-    # manually rebalance inflow with outflow
-    _MANUAL = '_flow4'
-
     @classmethod
     def as_auto(cls):
         '''Context where inflow is automatically rebalanced outflow.'''
-        cls._DEFAULT_CONTEXT = cls._AUTO
+        cls._DEFAULT_FLOW = cls._AUTO
         return cls
 
     @classmethod
@@ -257,7 +252,7 @@ class KnifeMixin(local):
 
     @property
     def balanced(self):
-        '''Determine if inflow and outflow are in balance'''
+        '''Determine if inflow and outflow are in rebalance'''
         return self.countout() == self.__len__()
 
     ###########################################################################

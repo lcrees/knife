@@ -6,18 +6,7 @@ from inspect import ismodule
 from knife.compat import port
 
 
-class MRepeatQMixin(object):
-
-    def test_range(self):
-        self._false_true_false(
-            self.qclass().range(3), self.assertEqual, [0, 1, 2]
-        )
-        self._false_true_false(
-            self.qclass().range(1, 3), self.assertEqual, [1, 2],
-        )
-        self._false_true_false(
-            self.qclass().range(1, 3, 2), self.assertEqual, 1,
-        )
+class MRepeatMixin(object):
 
     def test_repeat(self):
         self._true_true_false(
@@ -55,7 +44,7 @@ class MRepeatQMixin(object):
         self.assertTrue(manknife.balanced)
         manknife.rebalance()
         self.assertTrue(manknife.balanced)
-        newlist = manknife.close()
+        newlist = manknife.end()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
@@ -73,61 +62,31 @@ class MRepeatQMixin(object):
         )
 
 
-class MMapQMixin(MRepeatQMixin):
+class MMapMixin(object):
 
-    def test_factory(self):
-        from stuf import stuf
-        thing = self.qclass(
-            ('a', 1), ('b', 2), ('c', 3)
-        ).reup().tap(stuf, factory=True).map().rebalance().close()
-        self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
-
-    def test_each(self):
+    def test_map(self):
+        # test each
         def test(*args, **kw):
             return sum(args) * kw['a']
         self._true_true_false(
             self.qclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).each(),
-            self.assertEqual,
-            [6, 10, 14],
-        )
-        self._true_true_false(
-            self.qclass(
-                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).each(0.0001),
+            ).tap(test).map(kwargs=True),
             self.assertEqual,
             [6, 10, 14],
         )
 
-    def test_map(self):
         self._true_true_false(
             self.qclass(1, 2, 3).tap(lambda x: x * 3).map(),
             self.assertEqual,
             [3, 6, 9],
         )
         self._true_true_false(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).map(0.0001),
-            self.assertEqual,
-            [3, 6, 9],
-        )
-
-    def test_starmap(self):
-        self._true_true_false(
             self.qclass(
                 (1, 2), (2, 3), (3, 4)
-            ).tap(lambda x, y: x * y).starmap(),
+            ).tap(lambda x, y: x * y).map(args=True),
             self.assertEqual,
             [2, 6, 12],
-        )
-
-    def test_items(self):
-        self._false_true_false(
-            self.qclass(
-                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).tap(lambda x, y: x * y).items(),
-            self.assertEqual,
-            [2, 6, 12, 2, 6, 12],
         )
 
     def test_invoke(self):

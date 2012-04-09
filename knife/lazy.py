@@ -10,7 +10,7 @@ from knife.output import OutflowMixin
 from knife.base import SLOTS, KnifeMixin
 from knife.map import RepeatMixin, MapMixin
 from knife.reduce import SliceMixin, ReduceMixin
-from knife.filter import FilterMixin, ExtractMixin
+from knife.filter import FilterMixin, CollectMixin
 from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
@@ -263,16 +263,16 @@ class OutputMixin(LazyMixin, OutflowMixin):
         '''Yield outgoing things, clearing outflow as it goes.'''
         return getattr(self, self._OUT)
 
-    def close(self):
+    def end(self):
         '''Return outgoing things and clear out everything.'''
         self._unflow()
         outflow, tell = tee(self._outflow)
         wrap = self._wrapper
-        value = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
+        results = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
         # clear every last thing
         self.clear()._clearsp()
         self._baseline = self._original = None
-        return value
+        return results
 
     def preview(self):
         '''Take a peek at the current state of outgoing things.'''
@@ -280,22 +280,22 @@ class OutputMixin(LazyMixin, OutflowMixin):
         wrap = self._wrapper
         return outflow.pop() if len(wrap(tell)) == 1 else wrap(outflow)
 
-    def value(self):
+    def results(self):
         '''Return outgoing things and clear outflow.'''
         self._unflow()
         outflow, tell = tee(self._outflow)
         wrap = self._wrapper
-        value = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
+        results = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
         # clear outflow
         self.clearout()
         # restore baseline if in query context
         if self._context == self._QUERY:
             self.undo(baseline=True)
-        return value
+        return results
 
 
 class lazyknife(
-    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
+    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, CollectMixin,
     SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
 ):
 
@@ -304,7 +304,7 @@ class lazyknife(
     __slots__ = SLOTS
 
 
-class collectknife(OutputMixin, ExtractMixin):
+class collectknife(OutputMixin, CollectMixin):
 
     '''collecting knife'''
 

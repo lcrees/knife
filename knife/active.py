@@ -11,7 +11,7 @@ from knife.output import OutflowMixin
 from knife.base import SLOTS, KnifeMixin
 from knife.map import RepeatMixin, MapMixin
 from knife.reduce import SliceMixin, ReduceMixin
-from knife.filter import FilterMixin, ExtractMixin
+from knife.filter import FilterMixin, CollectMixin
 from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
@@ -281,7 +281,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         '''Yield outgoing things, clearing outflow as it goes.'''
         return self._iterexcept(self._OUT)
 
-    def close(self):
+    def end(self):
         '''Return outgoing things and clear out everything.'''
         self._unflow()
         wrap, outflow = self._wrapper, self._outflow
@@ -295,7 +295,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         outflow, wrap = deque(self._outflow), self._wrapper
         return outflow.pop() if len(outflow) == 1 else wrap(outflow)
 
-    def value(self):
+    def results(self):
         '''Return outgoing things and clear outflow.'''
         self._unflow()
         wrap, outflow = self._wrapper, self._outflow
@@ -309,7 +309,7 @@ class OutputMixin(ActiveMixin, OutflowMixin):
 
 
 class activeknife(
-    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, ExtractMixin,
+    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, CollectMixin,
     SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
 ):
 
@@ -318,7 +318,7 @@ class activeknife(
     __slots__ = SLOTS
 
 
-class collectknife(OutputMixin, ExtractMixin):
+class collectknife(OutputMixin, CollectMixin):
 
     '''collecting knife'''
 

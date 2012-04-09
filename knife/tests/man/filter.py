@@ -6,65 +6,7 @@ from inspect import ismodule
 from knife.compat import port
 
 
-class MSliceQMixin(object):
-
-    def test_partition(self):
-        self._false_true_false(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).tap(lambda x: x % 2 == 0).partition(),
-            self.assertEqual,
-            [[1, 3, 5], [2, 4, 6]],
-        )
-
-    def test_first(self):
-        manknife = self.qclass(5, 4, 3, 2, 1).first()
-        self.assertFalse(manknife.balanced)
-        manknife.balance()
-        self.assertTrue(manknife.balanced)
-        self.assertEqual(manknife.out(), 5)
-        self.assertFalse(manknife.balanced)
-
-    def test_nth(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).nth(2), self.assertEqual, 3,
-        )
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).nth(10, 11), self.assertEqual, 11,
-        )
-
-    def test_last(self):
-        manknife = self.qclass(5, 4, 3, 2, 1).last()
-        self.assertFalse(manknife.balanced)
-        manknife.balance()
-        self.assertTrue(manknife.balanced)
-        self.assertEqual(manknife.out(), 1)
-        self.assertFalse(manknife.balanced)
-
-    def test_initial(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).initial(),
-            self.assertEqual,
-            [5, 4, 3, 2],
-        )
-
-    def test_rest(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).rest(), self.assertEqual, [4, 3, 2, 1],
-        )
-
-    def test_take(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).take(2), self.assertEqual, [5, 4],
-        )
-
-    def test_takeback(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).snatch(2), self.assertEqual, [2, 1],
-        )
-
-
-class MCollectQMixin(object):
+class MCollectMixin(object):
 
     def test_members(self):
         from inspect import isclass
@@ -85,7 +27,7 @@ class MCollectQMixin(object):
                 stooges, stoog2, stoog3
             ).tap(
                 lambda x: not x[0].startswith('__'), isclass
-            ).tupleout().members().untap().balance(),
+            ).tuplevalue().members().untap().rebalance(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
@@ -106,7 +48,7 @@ class MCollectQMixin(object):
         self._true_true_false(
             self.qclass(stoog3).tap(
                 lambda x: x, isclass
-            ).tupleout().mro().balance().members().untap().balance(),
+            ).tuplevalue().mro().rebalance().members().untap().rebalance(),
             self.assertEqual,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
             ('age', 40), ('name', 'moe'))
@@ -169,8 +111,52 @@ class MCollectQMixin(object):
             [],
         )
 
+    def test_items(self):
+        self._false_true_false(
+            self.qclass(
+                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+            ).tap(lambda x, y: x * y).items(),
+            self.assertEqual,
+            [2, 6, 12, 2, 6, 12],
+        )
 
-class MSetQMixin(object):
+
+class MFilterMixin(object):
+
+    def test_filter(self):
+        self._false_true_false(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).filter(),
+            self.assertEqual,
+            [2, 4, 6],
+        )
+
+    def test_find(self):
+        self._false_true_false(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).find(),
+            self.assertEqual,
+            2,
+        )
+
+    def test_reject(self):
+        self._false_true_false(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).reject(),
+            self.assertEqual,
+            [1, 3, 5],
+        )
+
+    def test_compact(self):
+        self._false_true_false(
+            self.qclass(0, 1, False, 2, '', 3).compact(),
+            self.assertEqual,
+            [1, 2, 3],
+        )
+
+    def test_without(self):
+        self._false_true_false(
+            self.qclass(1, 2, 1, 0, 3, 1, 4).without(0, 1),
+            self.assertEqual,
+            [2, 3, 4],
+        )
 
     def test_difference(self):
         self._false_true_false(
@@ -230,44 +216,6 @@ class MSetQMixin(object):
             self.qclass(1, 2, 1, 3, 1, 4).tap(round).unique(),
             self.assertEqual,
             [1, 2, 3, 4],
-        )
-
-
-class MFilterQMixin(MCollectQMixin, MSetQMixin, MSliceQMixin):
-
-    def test_filter(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).filter(),
-            self.assertEqual,
-            [2, 4, 6],
-        )
-
-    def test_find(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).find(),
-            self.assertEqual,
-            2,
-        )
-
-    def test_reject(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).reject(),
-            self.assertEqual,
-            [1, 3, 5],
-        )
-
-    def test_compact(self):
-        self._false_true_false(
-            self.qclass(0, 1, False, 2, '', 3).compact(),
-            self.assertEqual,
-            [1, 2, 3],
-        )
-
-    def test_without(self):
-        self._false_true_false(
-            self.qclass(1, 2, 1, 0, 3, 1, 4).without(0, 1),
-            self.assertEqual,
-            [2, 3, 4],
         )
 
 

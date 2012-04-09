@@ -1,41 +1,38 @@
 # -*- coding: utf-8 -*-
 '''manual balancing test mixins'''
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+from knife.compat import unittest
 
 
 class Manning(unittest.TestCase):
 
     def _false_true_false(self, manknife, expr, comp=None):
         self.assertFalse(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         if comp is not None:
-            expr(manknife.out(), comp)
+            expr(manknife.results(), comp)
         else:
-            expr(manknife.out())
+            expr(manknife.results())
         self.assertFalse(manknife.balanced)
 
     def _true_true_false(self, manknife, expr, comp=None):
         self.assertTrue(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         if comp is not None:
-            out = manknife.out()
+            out = manknife.results()
             expr(out, comp, out)
         else:
-            expr(manknife.out())
+            expr(manknife.results())
         self.assertFalse(manknife.balanced)
 
     def _false_true_true(self, manknife, expr, comp=None):
         self.assertFalse(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         if comp is not None:
-            expr(manknife.out(), comp)
+            expr(manknife.results(), comp)
         else:
-            expr(manknife.out())
+            expr(manknife.results())
         self.assertTrue(manknife.balanced)

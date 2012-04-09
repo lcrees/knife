@@ -65,7 +65,7 @@ class ReduceMixin(local):
     def _roundrobin(cls, itrble, i=iter, n=next, s=islice, c=cycle, p=partial):
         work, measure = cls._clone(itrble)
         nexts = c(p(n, i(item)) for item in work)
-        pending = len(measure)
+        pending = len(list(measure))
         while pending:
             try:
                 for nextz in nexts:
@@ -110,7 +110,7 @@ class ReduceMixin(local):
         with self._flow():
             return self._one(self._reduce(self._call, initial, reverse))
 
-    def roundrobin(self):
+    def weave(self):
         '''interleave incoming into one thing'''
         with self._flow():
             return self._many(self._roundrobin)
@@ -164,6 +164,12 @@ class SliceMixin(local):
     def _rest(iterable, _islice=islice):
         return _islice(iterable, 1, None)
 
+    @staticmethod
+    def _split(n, fill, zip_longest_=zip_longest, iter_=iter):
+        def grouper(iterable):
+            return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)
+        return grouper
+
     def first(self, n=0):
         '''
         first `n` things of incoming or just the first thing
@@ -210,12 +216,6 @@ class SliceMixin(local):
         '''all incoming except the first thing'''
         with self._flow():
             return self._many(self._rest)
-
-    @staticmethod
-    def _split(n, fill, zip_longest_=zip_longest, iter_=iter):
-        def grouper(iterable):
-            return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)
-        return grouper
 
     def split(self, n, fill=None):
         '''

@@ -8,45 +8,55 @@ class MQMixin(object):
     ## queue manipulation #####################################################
     ###########################################################################
 
+    def test_factory(self):
+        from stuf import stuf
+        self.assertDictEqual(
+            self.qclass(
+                ('a', 1), ('b', 2), ('c', 3)
+            ).reup().tap(stuf, factory=True).map().end(),
+            stuf(a=1, b=2, c=3),
+        )
+
     def test_repr(self):
         from stuf.six import strings
         self.assertIsInstance(
             self.qclass([1, 2, 3, 4, 5, 6]).__repr__(), strings,
         )
 
-    def test_peek(self):
+    def test_preview(self):
         initial = self.qclass(1, 2, 3, 4, 5, 6)
-        self.assertListEqual(initial.peek(), [1, 2, 3, 4, 5, 6])
+        self.assertListEqual(initial.preview(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 6)
-        self.assertListEqual(initial.rebalance(reverse=True).close(), [1, 2, 3, 4, 5, 6])
+        self.assertListEqual(
+            initial.rebalance(reverse=True).end(), [1, 2, 3, 4, 5, 6]
+        )
         self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertListEqual(
-            self.qclass().extend([1, 2, 3, 4, 5, 6]).rebalance(reverse=True).close(),
+            self.qclass().extend(
+                [1, 2, 3, 4, 5, 6]
+            ).rebalance(reverse=True).end(),
             [1, 2, 3, 4, 5, 6],
         )
 
-    def test_outextend(self):
+    def test_extendfront(self):
         self.assertListEqual(
-            self.qclass().extendout([1, 2, 3, 4, 5, 6]).close(),
-            [1, 2, 3, 4, 5, 6],
-        )
-
-    def test_extendleft(self):
-        self.assertListEqual(
-            self.qclass().extendleft([1, 2, 3, 4, 5, 6]).rebalance(reverse=True).close(),
+            self.qclass().extendfront(
+                [1, 2, 3, 4, 5, 6]
+            ).rebalance(reverse=True).end(),
             [6, 5, 4, 3, 2, 1]
         )
 
     def test_append(self):
         self.assertEqual(
-            self.qclass().append('foo').rebalance(reverse=True).close(), 'foo'
+            self.qclass().append('foo').rebalance(reverse=True).end(), 'foo'
         )
 
-    def test_prepend(self):
+    def test_appendfront(self):
         self.assertEqual(
-            self.qclass().prepend('foo').rebalance(reverse=True).close(), 'foo'
+            self.qclass().appendfront('foo').rebalance(reverse=True).end(),
+            'foo'
         )
 
     def test_inclear(self):
@@ -54,7 +64,7 @@ class MQMixin(object):
 
     def test_outclear(self):
         self.assertEqual(
-            len(list(self.qclass([1, 2, 5, 6]).clearout()._outflow)), 0
+            len(list(self.qclass([1, 2, 5, 6]).clearvalue()._outflow)), 0
         )
 
     ###########################################################################
@@ -62,9 +72,11 @@ class MQMixin(object):
     ###########################################################################
 
     def test_undo(self):
-        queue = self.qclass(1, 2, 3).extendleft([1, 2, 3, 4, 5, 6]).rebalance(reverse=True)
+        queue = self.qclass(1, 2, 3).extendfront(
+            [1, 2, 3, 4, 5, 6]
+        ).rebalance(reverse=True)
         self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
-        self.assertListEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo().rebalance(reverse=True)
         self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).append(2).undo().rebalance(reverse=True)
@@ -72,10 +84,12 @@ class MQMixin(object):
         queue.append(1).append(2).undo(2).rebalance(reverse=True)
         self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.undo(everything=True).rebalance(reverse=True)
-        self.assertListEqual(queue.rebalance(reverse=True).close(), [1, 2, 3])
+        self.assertListEqual(queue.rebalance(reverse=True).end(), [1, 2, 3])
 
     def test_insync(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).rebalance(reverse=True).clearin().rebalance()
+        q = self.qclass(1, 2, 3, 4, 5, 6).rebalance(
+            reverse=True
+        ).clearin().rebalance()
         self.assertEqual(list(q._inflow), list(q._outflow))
 
     def test_outsync(self):
@@ -88,48 +102,66 @@ class MQMixin(object):
 
     def test_results(self):
         self.assertListEqual(
-            list(self.qclass(1, 2, 3, 4, 5, 6).rebalance(reverse=True).results()),
+            list(self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).rebalance(reverse=True).results()),
             [1, 2, 3, 4, 5, 6]
         )
 
     def test_tuple_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).tuplevalue().rebalance(reverse=True).results(),
             tuple,
         )
         self.assertTupleEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).tuplevalue().rebalance(reverse=True).results(),
             (1, 2, 3, 4, 5, 6),
         )
 
     def test_set_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).setvalue().rebalance(reverse=True).results(),
             set,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).setvalue().rebalance(reverse=True).results(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
     def test_deque_wrap(self):
         from collections import deque
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).dequevalue().rebalance(reverse=True).results(),
             deque,
         )
         self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).dequevalue().rebalance(reverse=True).results(),
             deque([1, 2, 3, 4, 5, 6]),
         )
 
     def test_frozenset_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).fsetvalue().rebalance(reverse=True).results(),
             frozenset,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).value(),
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).fsetvalue().rebalance(reverse=True).results(),
             frozenset([1, 2, 3, 4, 5, 6]),
         )
 
@@ -137,13 +169,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictout().rebalance(reverse=True).value(),
+            ).dictvalue().rebalance(reverse=True).results(),
             dict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictout().rebalance(reverse=True).value(),
+            ).dictvalue().rebalance(reverse=True).results(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -152,13 +184,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufout().rebalance(reverse=True).value(),
+            ).fstufvalue().rebalance(reverse=True).results(),
             frozenstuf,
         )
         self.assertEqual(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufout().rebalance(reverse=True).value(),
+            ).fstufvalue().rebalance(reverse=True).results(),
            frozenstuf({'a1': 2, 'a3': 4, 'a5': 6}),
         )
 
@@ -167,13 +199,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictout().rebalance(reverse=True).value(),
+            ).odictvalue().rebalance(reverse=True).results(),
             OrderedDict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictout().rebalance(reverse=True).value(),
+            ).odictvalue().rebalance(reverse=True).results(),
             OrderedDict({1: 2, 3: 4, 5: 6}),
         )
 
@@ -182,13 +214,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufout().rebalance(reverse=True).value(),
+            ).ostufvalue().rebalance(reverse=True).results(),
             orderedstuf,
         )
         self.assertEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufout().rebalance(reverse=True).value(),
+            ).ostufvalue().rebalance(reverse=True).results(),
            orderedstuf({1: 2, 3: 4, 5: 6}),
         )
 
@@ -197,12 +229,38 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufout().rebalance(reverse=True).value(),
+            ).stufvalue().rebalance(reverse=True).results(),
             stuf,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufout().rebalance(reverse=True).value(),
+            ).stufvalue().rebalance(reverse=True).results(),
            stuf({1: 2, 3: 4, 5: 6}),
+        )
+
+    def test_ascii(self):
+        from stuf.six import u, b
+        self._true_true_false(
+            self.qclass([1], True, r't', b('i'), u('g'), None, (1,)).ascii(),
+            self.assertEqual,
+            [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
+        )
+
+    def test_bytes(self):
+        from stuf.six import u, b
+        self._true_true_false(
+            self.qclass([1], True, r't', b('i'), u('g'), None, (1,)).bytes(),
+            self.assertEqual,
+            [
+        b('[1]'), b('True'), b('t'), b('i'),  b('g'), b('None'), b('(1,)')
+            ]
+        )
+
+    def test_unicode(self):
+        from stuf.six import u, b
+        self._true_true_false(
+            self.qclass([1], True, r't', b('i'), u('g'), None, (1,)).unicode(),
+            self.assertEqual,
+            [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
         )

@@ -12,7 +12,7 @@ from knife.compat import (
     ifilter, ichain, imap, ifilterfalse, ivalues, iitems, ikeys, istarmap)
 
 
-class ExtractMixin(local):
+class CollectMixin(local):
 
     '''collecting mixin'''
 
@@ -127,7 +127,7 @@ class ExtractMixin(local):
         '''extract object members from incoming'''
         with self._flow():
             return self._many(
-                self._members(self._test, self._alt, self._wrap),
+                self._members(self._test, self._alt, self._wrapper),
             )
 
     def mro(self):

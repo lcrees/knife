@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-'''reduce test mixins'''
+'''ordering test mixins'''
 
 from inspect import ismodule
 
 from knife.compat import port
 
 
-class MMathQMixin(object):
+class MMathMixin(object):
 
     def test_max(self):
         self._false_true_false(
@@ -22,7 +22,7 @@ class MMathQMixin(object):
         self.assertFalse(manknife.balanced)
         manknife.rebalance()
         self.assertTrue(manknife.balanced)
-        self.assertEqual(stuf(manknife.close()), stuf(name='curly', age=60))
+        self.assertEqual(stuf(manknife.end()), stuf(name='curly', age=60))
         self.assertTrue(manknife.balanced)
 
     def test_min(self):
@@ -54,6 +54,13 @@ class MMathQMixin(object):
         self._false_true_false(
             self.qclass(1, 2, 3).sum(1), self.assertEqual, 7,
         )
+        self._false_true_false(
+            self.qclass(
+                .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
+            ).sum(float=True),
+            self.assertEqual,
+            1.0,
+        )
 
     def test_median(self):
         self._false_true_false(
@@ -61,13 +68,6 @@ class MMathQMixin(object):
         )
         self._false_true_false(
             self.qclass(4, 5, 7, 2, 1, 8).median(), self.assertEqual, 4.5,
-        )
-
-    def test_fsum(self):
-        self._false_true_false(
-            self.qclass(.1, .1, .1, .1, .1, .1, .1, .1, .1, .1).fsum(),
-            self.assertEqual,
-            1.0,
         )
 
     def test_average(self):
@@ -85,7 +85,7 @@ class MMathQMixin(object):
         )
 
 
-class MTruthQMixin(object):
+class MTruthMixin(object):
 
     def test_all(self):
         self._false_true_false(
@@ -97,18 +97,6 @@ class MTruthQMixin(object):
         self._false_true_false(
             self.qclass(None, 0, 'yes', False).tap(bool).any(),
             self.assertTrue,
-        )
-
-    def test_common(self):
-        self._false_true_false(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).common(),
-            self.assertEqual,
-            11,
-        )
-
-    def test_include(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3).contains(3), self.assertTrue,
         )
 
     def test_quantify(self):
@@ -123,92 +111,85 @@ class MTruthQMixin(object):
             1,
         )
 
-    def test_uncommon(self):
-        self._false_true_false(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon(),
-            self.assertEqual,
-            7,
-        )
-
     def test_frequency(self):
         self._false_true_false(
             self.qclass(11, 3, 5, 11, 7, 3, 11).frequency(),
             self.assertEqual,
             [(11, 3), (3, 2), (5, 1), (7, 1)],
         )
-
-
-class MReduceQMixin(MMathQMixin, MTruthQMixin):
-    
-    def test_concat(self):
+        # most common
         self._false_true_false(
-            self.qclass([1, 2], [5, [3, 4]]).concat(),
+            self.qclass(11, 3, 5, 11, 7, 3, 11).common(),
             self.assertEqual,
-            [1, 2, 5, [3, 4]],
-        )        
-
-    def test_flatten(self):
-        self._false_true_false(
-            self.qclass([[1, [2], [3, [[4]]]]]).flatten(),
-            self.assertEqual,
-            [1, 2, 3, 4],
+            11,
         )
-
-    def test_pairwise(self):
+        # least common
         self._false_true_false(
-            self.qclass(
-                'moe', 30, True, 'larry', 40, False, 'curly', 50, 1, 1,
-            ).pairwise(),
-            self.assertEqual,
-            [('moe', 30), (30, True), (True, 'larry'), ('larry', 40),
-            (40, False), (False, 'curly'), ('curly', 50), (50, 1), (1, 1)]
-        )
-
-    def test_reduce(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3).tap(lambda x, y: x + y).reduce(),
-            self.assertEqual,
-            6,
-        )
-        self._false_true_false(
-            self.qclass(1, 2, 3).tap(lambda x, y: x + y).reduce(1),
+            self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon(),
             self.assertEqual,
             7,
         )
 
-    def test_reduceright(self):
-        self._false_true_false(
-            self.qclass([0, 1], [2, 3], [4, 5]).tap(
-                lambda x, y: x + y
-            ).reduceright(),
-            self.assertEqual,
-             [4, 5, 2, 3, 0, 1],
-        )
-        self._false_true_false(
-            self.qclass([0, 1], [2, 3], [4, 5]).tap(
-                lambda x, y: x + y
-            ).reduceright([0, 0]),
-            self.assertEqual,
-            [4, 5, 2, 3, 0, 1, 0, 0],
-        )
 
-    def test_roundrobin(self):
-        self._false_true_false(
-            self.qclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).roundrobin(),
-            self.assertEqual,
-            ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
-        )
+class MOrderMixin(object):
 
-    def test_zip(self):
+    def test_choice(self):
+        manknife = self.qclass(1, 2, 3, 4, 5, 6).choice()
+        self.assertFalse(manknife.balanced)
+        manknife.rebalance()
+        self.assertTrue(manknife.balanced)
+        manknife.end()
+        self.assertTrue(manknife.balanced)
+
+    def test_sample(self):
+        manknife = self.qclass(1, 2, 3, 4, 5, 6).sample(3)
+        self.assertFalse(manknife.balanced)
+        manknife.rebalance()
+        self.assertTrue(manknife.balanced)
+        manknife.end()
+        self.assertTrue(manknife.balanced)
+
+    def test_shuffle(self):
+        manknife = self.qclass(1, 2, 3, 4, 5, 6).shuffle()
+        self.assertTrue(manknife.balanced)
+        manknife.rebalance()
+        self.assertTrue(manknife.balanced)
+        manknife.end()
+        self.assertTrue(manknife.balanced)
+
+    def test_group(self,):
+        from math import floor
+        self._false_true_false(
+            self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby(),
+            self.assertListEqual,
+            [[1.0, [1.3]], [2.0, [2.1, 2.4]]]
+        )
         self._true_true_false(
-            self.qclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
-            ).zip(),
-            self.assertEqual,
-            [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
+            self.qclass(1.3, 2.1, 2.4).groupby(),
+            self.assertListEqual,
+            [[1.3, [1.3]], [2.1, [2.1]], [2.4, [2.4]]],
         )
+
+    def test_reverse(self):
+        self._true_true_false(
+            self.qclass(5, 4, 3, 2, 1).reverse(),
+            self.assertEqual,
+            [1, 2, 3, 4, 5],
+        )
+
+    def test_sort(self):
+        from math import sin
+        self._true_true_false(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: sin(x)).sort(),
+           self.assertListEqual,
+            [5, 4, 6, 3, 1, 2],
+        )
+        self._true_true_false(
+            self.qclass(4, 6, 65, 3, 63, 2, 4).sort(),
+          self.assertListEqual,
+            [2, 3, 4, 4, 6, 63, 65],
+        )
+
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([
     name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']

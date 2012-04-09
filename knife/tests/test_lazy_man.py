@@ -3,86 +3,85 @@
 
 from knife.compat import unittest
 
-from knife.tests.man.mapping import *  # @UnusedWildImport
-from knife.tests.man.ordering import *  # @UnusedWildImport
-from knife.tests.man.reducing import *  # @UnusedWildImport
-from knife.tests.man.filtering import *  # @UnusedWildImport
-from knife.tests.man.transforming import *  # @UnusedWildImport
+from knife.tests.man.map import *  # @UnusedWildImport
+from knife.tests.man.analyze import *  # @UnusedWildImport
+from knife.tests.man.reduce import *  # @UnusedWildImport
+from knife.tests.man.filter import *  # @UnusedWildImport
 from knife.tests.man.manning import Manning
-from knife.tests.man.queuing import MQMixin
+from knife.tests.man.base import MQMixin
 
 
 class TestManQ(
-    Manning, MQMixin, MFilterQMixin, MMapQMixin, MReduceQMixin, MOrderQMixin,
+    Manning, MQMixin, MFilterMixin, MMapMixin, MReduceMixin, MOrderMixin,
 ):
 
     def setUp(self):
         from knife.lazy import lazyknife
-        self.qclass = lazyknife.manual()
+        self.qclass = lazyknife.as_manual()
 
 
-class TestManFilterQ(Manning, MFilterQMixin):
+class TestManFilterQ(Manning, MFilterMixin):
 
     def setUp(self):
         self.maxDiff = None
         from knife.lazy import filterknife
-        self.qclass = filterknife.manual()
+        self.qclass = filterknife.as_manual()
 
 
-class TestManSliceQ(Manning, MQMixin, MSliceQMixin):
+class TestManSliceQ(Manning, MQMixin, MSliceMixin):
 
     def setUp(self):
         from knife.lazy import sliceknife
-        self.qclass = sliceknife.manual()
+        self.qclass = sliceknife.as_manual()
 
 
-class TestManCollectQ(Manning, MQMixin, MCollectQMixin):
+class TestManCollectQ(Manning, MQMixin, MCollectMixin):
 
     def setUp(self):
         from knife.lazy import collectknife
-        self.qclass = collectknife.manual()
+        self.qclass = collectknife.as_manual()
 
 
-class TestManMap(Manning, MQMixin, MMapQMixin):
+class TestManMap(Manning, MQMixin, MMapMixin):
 
     def setUp(self):
         from knife.lazy import mapknife
-        self.qclass = mapknife.manual()
+        self.qclass = mapknife.as_manual()
 
 
-class TestManRepeatQ(Manning, MQMixin, MRepeatQMixin):
+class TestManRepeatQ(Manning, MQMixin, MRepeatMixin):
 
     def setUp(self):
         from knife.lazy import repeatknife
-        self.qclass = repeatknife.manual()
+        self.qclass = repeatknife.as_manual()
 
 
-class TestManOrderQ(Manning, MQMixin, MOrderQMixin):
+class TestManOrderQ(Manning, MQMixin, MOrderMixin):
 
     def setUp(self):
         from knife.lazy import orderknife
-        self.qclass = orderknife.manual()
+        self.qclass = orderknife.as_manual()
 
 
-class TestManReduceQ(Manning, MQMixin, MReduceQMixin):
+class TestManReduceQ(Manning, MQMixin, MReduceMixin):
 
     def setUp(self):
         from knife.lazy import reduceknife
-        self.qclass = reduceknife.manual()
+        self.qclass = reduceknife.as_manual()
 
 
-class TestManMathQ(Manning, MQMixin, MMathQMixin):
+class TestManMathQ(Manning, MQMixin, MMathMixin):
 
     def setUp(self):
         from knife.lazy import mathknife
-        self.qclass = mathknife.manual()
+        self.qclass = mathknife.as_manual()
 
 
-class TestManTruthQ(Manning, MQMixin, MTruthQMixin):
+class TestManTruthQ(Manning, MQMixin, MTruthMixin):
 
     def setUp(self):
         from knife.lazy import truthknife
-        self.qclass = truthknife.manual()
+        self.qclass = truthknife.as_manual()
 
 if __name__ == '__main__':
     unittest.main()
