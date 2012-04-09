@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''actively evaluated knives'''
+'''actively evaluating knives'''
 
 from itertools import repeat
 from collections import deque
@@ -20,175 +20,146 @@ class ActiveMixin(KnifeMixin):
     '''active knife mixin'''
 
     def __init__(self, *things, **kw):
+        '''
+        init
+
+        @param *things: wannabe incoming things
+        '''
+        # if just one thing, put it in inflow or put everything in inflow
         try:
-            input = deque(things[0]) if len(things) == 1 else deque(things)
+            inflow = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:
-            input = deque()
-            input.extend(things)
-        super(ActiveMixin, self).__init__(input, deque(), **kw)
-        # set iterator
+            # handle non-iterable incoming things with length
+            inflow = deque()
+            inflow.append(things)
+        super(ActiveMixin, self).__init__(inflow, deque(), **kw)
+        # assign default iterator
         self._iterator = self._iterexcept
-        # work pool
+        # work stage
         self._work = deque()
-        # holding pool
+        # holding stage
         self._hold = deque()
 
     ###########################################################################
-    ## mode things ############################################################
-    ###########################################################################
-
-    def as_view(self):
-        '''_as_flow to as_view mode'''
-        with self._flow3(output=self._HOLDVAR, keep=False):
-            self._many(self._iterable)
-        with self._flow1(hard=True, work=self._HOLDVAR, keep=False):
-            self._context = self._QUERY
-            return self
-
-    ###########################################################################
-    ## _as_flow things ############################################################
+    ## flow things ############################################################
     ###########################################################################
 
     @contextmanager
     def _flow2(self, **kw):
-        '''switch to manually balanced two-stage _as_flow'''
+        '''switch to a manually balanced two-stage flow'''
         self._as_flow(
-            _as_flow=self._flow2, output=kw.get(self._OUTCFG, self._INVAR), **kw
-        )
-        getr_ = lambda x: getattr(self, x)
-        output = getr_(self._OUT)
-        hold = getr_(self._HOLD)
-        work = getr_(self._WORK)
-        # clear all work pool
-        work.clear()
-        # extend work pool with output
-        work.extend(output)
-        # _as_flow iterator
+            flow=self._flow2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
+        )._clearworking()
+        outflow = getattr(self, self._OUT)
+        # move outgoing (usually incoming) things up to work stage
+        getattr(self, self._WORK).extend(outflow)
+        # assign flow iterator
         self._iterator = self._breakcount
         yield
-        # clear output if so configured
+        # clear outflow
         if self._buildup:
-            output.clear()
-        # extend output with holding pool
-        output.extend(hold)
-        # clear holding pool
-        hold.clear()
-        # revert to current _as_flow
-        self._reflow()
+            outflow.clear()
+        # move things from holding state to outflow
+        outflow.extend(getattr(self, self._HOLD))
+        # clear work & holding stage & return to current selected flow
+        self._clearworking()._reflow()
 
     @contextmanager
     def _flow3(self, **kw):
-        '''switch to manually balanced three-stage _as_flow'''
+        '''switch to a manually balanced three-stage flow'''
         self._as_flow(
-            hold=kw.get(self._WORKCFG, self._WORKVAR), _as_flow=self._flow3, **kw
-        )
-        getr_ = lambda x: getattr(self, x)
-        output = getr_(self._OUT)
-        hold = getr_(self._HOLD)
-        work = getr_(self._WORK)
-        # clear work pool
-        work.clear()
-        # extend work pool with _inflow
-        work.extend(getr_(self._IN))
-        # _as_flow iterators
+            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+        )._clearworking()
+        # move incoming things up to work stage
+        getattr(self, self._WORK).extend(getattr(self, self._IN))
+        # assign flow iterator
         self._iterator = self._breakcount
         yield
-        # clear output if so configured
+        outflow = getattr(self, self._OUT)
+        # clear outflow
         if self._buildup:
-            output.clear()
-        # extend output with holding pool
-        output.extend(hold)
-        # clear holding pool
-        hold.clear()
-        # revert to current _as_flow
-        self._reflow()
+            outflow.clear()
+        # move things from holding state to outflow
+        outflow.extend(getattr(self, self._HOLD))
+        # clear work, holding stages & return to current selected flow
+        self._clearworking()._reflow()
 
     @contextmanager
     def _flow4(self, **kw):
-        '''switch to manually balanced four-stage _as_flow'''
-        self._as_flow(_as_flow=self._flow4, **kw)
-        getr_ = lambda x: getattr(self, x)
-        output = getr_(self._OUT)
-        hold = getr_(self._HOLD)
-        work = getr_(self._WORK)
-        # clear work pool
-        work.clear()
-        # extend work pool with _inflow
-        work.extend(getr_(self._IN))
-        # _as_flow iterators
+        '''switch to a manually balanced four-stage flow'''
+        self._as_flow(flow=self._flow4, **kw)._clearworking()
+        # move incoming things up to work stage
+        getattr(self, self._WORK).extend(getattr(self, self._IN))
+        # assign flow iterator
         self._iterator = self._iterexcept
         yield
-        # clear output if so configured
+        outflow = getattr(self, self._OUT)
+        # clear outflow
         if self._buildup:
-            output.clear()
-        # extend output with holding pool
-        output.extend(hold)
-        # clear holding pool
-        hold.clear()
-        # return to global _as_flow
-        self._reflow()
+            outflow.clear()
+        # extend outgoing things with holding stage
+        outflow.extend(getattr(self, self._HOLD))
+        # clear work, holding stages & return to current selected flow
+        self._clearworking()._reflow()
 
     @contextmanager
     def _autoflow(self, **kw):
-        '''switch to automatically balanced four-stage _as_flow'''
-        self._as_flow(_as_flow=self._autoflow, **kw)
-        getr_ = lambda x: getattr(self, x)
-        incoming, work = getr_(self._IN), getr_(self._WORK)
-        hold, output = getr_(self._HOLD), getr_(self._OUT)
-        # clear work pool
-        work.clear()
-        # extend work pool with _inflow
-        work.extend(incoming)
-        # _as_flow iterators
+        '''switch to an automatically balanced four-stage flow'''
+        self._as_flow(flow=self._autoflow, **kw)._clearworking()
+        inflow = getattr(self, self._IN)
+        # move incoming things up to work stage
+        getattr(self, self._WORK).extend(inflow)
+        # assign flow iterator
         self._iterator = self._iterexcept
         yield
-        # clear output if so configured
+        outflow = getattr(self, self._OUT)
+        # clear outflow
         if self._buildup:
-            output.clear()
-        output.extend(hold)
-        # clear _inflow
-        incoming.clear()
-        incoming.extend(hold)
-        # clear holding pool
-        hold.clear()
-        # return to global _as_flow
-        self._reflow()
+            outflow.clear()
+        # extend outgoing things with holding stage
+        hold = getattr(self, self._HOLD)
+        outflow.extend(hold)
+        # extend incoming things with holding stage
+        inflow.clear()
+        inflow.extend(hold)
+        # clear work, holding stages & return to current selected flow
+        self._clearworking()._reflow()
 
     ###########################################################################
-    ## savepoint for things ###################################################
+    ## snapshot of things #####################################################
     ###########################################################################
 
     @staticmethod
     def _clone(iterable, n=2, deque_=deque):
-        '''clone iterable'''
+        '''
+        clone an iterable
+
+        @param n: number of clones
+        '''
         return iterable, iterable if n == 1 else deque_(iterable), iterable
 
     ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
 
-    def _breakcount(self, attr='_HOLD', repeat_=repeat):
+    def _breakcount(self, attr='_HOLD', repeat_=repeat, len_=len, g=getattr):
         '''
         breakcount iterator
 
-        @param attr: things to iterate over
+        @param attr: stage to iterate over
         '''
-        dq = getattr(self, attr)
-        length, call = len(dq), dq.popleft
+        dq = g(self, attr)
+        length, call = len_(dq), dq.popleft
         for i in repeat_(None, length):  # @UnusedVariable
             yield call()
 
-    def _iterexcept(self, attr='_HOLD'):
+    def _iterexcept(self, attr='_HOLD', getattr_=getattr):
         '''
-        invoke callable until exception is raised
+        repeatedly invoke callable until IndexError is raised
 
-        Converts a call-until-exception interface to an iterator interface.
-        Like `iter(call, sentinel)` but uses an exception instead of a sentinel
-        to close the loop.
-
-        Raymond Hettinger, Python Cookbook recipe # 577155
+        derived from Raymond Hettinger Python Cookbook recipe # 577155
         '''
-        call = getattr(self, attr).popleft
+        call = getattr_(self, attr).popleft
         try:
             while 1:
                 yield call()
@@ -197,93 +168,108 @@ class ActiveMixin(KnifeMixin):
 
     @property
     def _iterable(self):
-        '''iterable'''
+        '''iterable derived from a stage in the flow'''
         return self._iterator(self._WORK)
 
     ###########################################################################
     ## extend things ##########################################################
     ###########################################################################
 
-    def _xtend(self, things):
-        '''extend holding pool with `things`'''
-        getattr(self, self._HOLD).extend(things)
+    def _xtend(self, things, getattr_=getattr):
+        '''extend the holding stage with `things`'''
+        getattr_(self, self._HOLD).extend(things)
         return self
 
-    def _xtendleft(self, things):
-        '''extend before of holding pool with `things`'''
-        getattr(self, self._HOLD).extendleft(things)
+    def _xtendfront(self, things, getattr_=getattr):
+        '''
+        extend holding stage with `things` placed in front of anything already
+        in the holding stage
+        '''
+        getattr_(self, self._HOLD).extendleft(things)
         return self
 
-    def _iter(self, things):
-        '''extend work pool with `things` wrapped in iterator'''
-        getattr(self, self._HOLD).extend(iter(things))
+    def _iter(self, things, getattr_=getattr, iter_=iter):
+        '''extend the holding stage with `things` wrapped in an iterator'''
+        getattr_(self, self._HOLD).extend(iter_(things))
         return self
 
     ###########################################################################
     ## append things ##########################################################
     ###########################################################################
 
-    def _append(self, things):
-        '''append `things` to holding pool'''
-        getattr(self, self._HOLD).append(things)
+    def _append(self, things, getattr_=getattr):
+        '''append `things` to the holding stage'''
+        getattr_(self, self._HOLD).append(things)
         return self
 
-    def _appendleft(self, things):
-        '''append `things` before things already in holding pool'''
-        getattr(self, self._HOLD).appendleft(things)
+    def _appendfront(self, things, getattr_=getattr):
+        '''
+        append `things` to the holding stage in front of anything already in
+        the holding stage
+        '''
+        getattr_(self, self._HOLD).appendleft(things)
         return self
 
     ###########################################################################
     ## know things ############################################################
     ###########################################################################
 
-    def __repr__(self):
+    def __repr__(self, getattr_=getattr, clsname_=clsname, list_=list):
+        '''object representation'''
         return self._repr(
             self.__module__,
-            clsname(self),
+            clsname_(self),
             self._IN,
-            list(getattr(self, self._IN)),
+            list_(getattr_(self, self._IN)),
             self._WORK,
-            list(getattr(self, self._WORK)),
+            list_(getattr_(self, self._WORK)),
             self._HOLD,
-            list(getattr(self, self._HOLD)),
+            list_(getattr_(self, self._HOLD)),
             self._OUT,
-            list(getattr(self, self._OUT)),
+            list_(getattr_(self, self._OUT)),
             self._context,
         )
 
     def __len__(self):
-        '''number of _inflow'''
+        '''Number of incoming things.'''
         return len(self._inflow)
 
     count = __len__
 
     def countout(self):
-        '''number of output'''
-        return len(self.output)
+        '''Number of outgoing things.'''
+        return len(self._outflow)
 
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################
 
+    def _clearworking(self):
+        '''clear working and holding stages'''
+        # clear work stage
+        self._work.clear()
+        # clear holding stage
+        self._hold.clear()
+        return self
+
     def _clearh(self):
-        '''clear holding pool'''
+        '''Clear holding stage.'''
         self._hold.clear()
         return self
 
     def _clearw(self):
-        '''clear work pool'''
+        '''Clear work stage.'''
         self._work.clear()
         return self
 
     def clearin(self):
-        '''clear _inflow'''
+        '''Clear inflow stage.'''
         self._inflow.clear()
         return self
 
     def clearout(self):
-        '''clear output'''
-        self.output.clear()
+        '''Clear outflow stage.'''
+        self._outflow.clear()
         return self
 
 
@@ -292,34 +278,34 @@ class OutputMixin(ActiveMixin, OutflowMixin):
     '''lazy output knife mixin'''
 
     def __iter__(self):
-        '''yield output, clearing output as it iterates'''
+        '''Yield outgoing things, clearing outflow as it goes.'''
         return self._iterexcept(self._OUT)
 
     def close(self):
-        '''return output and clear out everything'''
-        # revert to default _as_flow
+        '''Return outgoing things and clear out everything.'''
         self._unflow()
-        wrap, output = self._wrapper, self.output
-        wrap = self.output.pop() if len(output) == 1 else wrap(output)
+        wrap, outflow = self._wrapper, self._outflow
+        value = outflow.pop() if len(outflow) == 1 else wrap(outflow)
         # clear every last thing
         self.clear()._clearsp()
-        return wrap
+        return value
 
-    def peek(self):
-        '''peek into current output'''
-        out = deque(self.output)
-        return out.pop() if len(out) == 1 else self._wrapper(out)
+    def preview(self):
+        '''Take a peek at the current state of outgoing things.'''
+        outflow, wrap = deque(self._outflow), self._wrapper
+        return outflow.pop() if len(outflow) == 1 else wrap(outflow)
 
-    def out(self):
-        '''clear output and return outgoing things'''
+    def value(self):
+        '''Return outgoing things and clear outflow.'''
         self._unflow()
-        wrap, output = self._wrapper, self.output
-        wrap = output.pop() if len(output) == 1 else wrap(output)
-        # clear outgoing things
+        wrap, outflow = self._wrapper, self._outflow
+        value = outflow.pop() if len(outflow) == 1 else wrap(outflow)
+        # clear outflow
         self.clearout()
+        # restore baseline if in query context
         if self._context == self._QUERY:
-            self.baseline()
-        return wrap
+            self.undo(baseline=True)
+        return value
 
 
 class activeknife(
@@ -341,21 +327,21 @@ class collectknife(OutputMixin, ExtractMixin):
 
 class sliceknife(OutputMixin, SliceMixin):
 
-    '''slice knife'''
+    '''slicing knife'''
 
     __slots__ = SLOTS
 
 
 class filterknife(OutputMixin, FilterMixin):
 
-    '''filter knife'''
+    '''filtering knife'''
 
     __slots__ = SLOTS
 
 
 class repeatknife(OutputMixin, RepeatMixin):
 
-    '''repeat knife'''
+    '''repeating knife'''
 
     __slots__ = SLOTS
 

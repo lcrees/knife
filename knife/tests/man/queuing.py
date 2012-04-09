@@ -94,42 +94,42 @@ class MQMixin(object):
 
     def test_tuple_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).value(),
             tuple,
         )
         self.assertTupleEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).tupleout().rebalance(reverse=True).value(),
             (1, 2, 3, 4, 5, 6),
         )
 
     def test_set_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).value(),
             set,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).setout().rebalance(reverse=True).value(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
     def test_deque_wrap(self):
         from collections import deque
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).value(),
             deque,
         )
         self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).dequeout().rebalance(reverse=True).value(),
             deque([1, 2, 3, 4, 5, 6]),
         )
 
     def test_frozenset_wrap(self):
         self.assertIsInstance(
-            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).value(),
             frozenset,
         )
         self.assertSetEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).out(),
+            self.qclass(1, 2, 3, 4, 5, 6).fsetout().rebalance(reverse=True).value(),
             frozenset([1, 2, 3, 4, 5, 6]),
         )
 
@@ -137,13 +137,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictout().rebalance(reverse=True).out(),
+            ).dictout().rebalance(reverse=True).value(),
             dict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictout().rebalance(reverse=True).out(),
+            ).dictout().rebalance(reverse=True).value(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -152,13 +152,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufout().rebalance(reverse=True).out(),
+            ).fstufout().rebalance(reverse=True).value(),
             frozenstuf,
         )
         self.assertEqual(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufout().rebalance(reverse=True).out(),
+            ).fstufout().rebalance(reverse=True).value(),
            frozenstuf({'a1': 2, 'a3': 4, 'a5': 6}),
         )
 
@@ -167,13 +167,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictout().rebalance(reverse=True).out(),
+            ).odictout().rebalance(reverse=True).value(),
             OrderedDict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictout().rebalance(reverse=True).out(),
+            ).odictout().rebalance(reverse=True).value(),
             OrderedDict({1: 2, 3: 4, 5: 6}),
         )
 
@@ -182,13 +182,13 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufout().rebalance(reverse=True).out(),
+            ).ostufout().rebalance(reverse=True).value(),
             orderedstuf,
         )
         self.assertEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufout().rebalance(reverse=True).out(),
+            ).ostufout().rebalance(reverse=True).value(),
            orderedstuf({1: 2, 3: 4, 5: 6}),
         )
 
@@ -197,12 +197,12 @@ class MQMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufout().rebalance(reverse=True).out(),
+            ).stufout().rebalance(reverse=True).value(),
             stuf,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufout().rebalance(reverse=True).out(),
+            ).stufout().rebalance(reverse=True).value(),
            stuf({1: 2, 3: 4, 5: 6}),
         )

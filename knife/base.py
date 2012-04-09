@@ -163,7 +163,7 @@ class KnifeMixin(local):
     ###########################################################################
 
     # 1. stage for incoming things which flows to =>
-    _INCFG = '_inflow'
+    _INCFG = 'inflow'
     _INVAR = '_inflow'
     # 2. stage for working on incoming things which flows to =>
     _WORKCFG = 'work'
@@ -176,37 +176,37 @@ class KnifeMixin(local):
     _OUTVAR = '_outflow'
 
     def _as_flow(self, **kw):
-        '''switch between flow contexts'''
-        # retain flow-specific settings between flow context switches
+        '''switch between flows'''
+        # retain flow-specific settings between flow switches
         self._FLOWCFG = kw if kw.get('hard', False) else {}
         # take snapshot
         if kw.get('snapshot', True):
             self.snapshot()
         # set current flow
-        self._flow = kw.get('_as_flow', getattr(self, self._DEFAULT_FLOW))
+        self._flow = kw.get('flow', getattr(self, self._DEFAULT_FLOW))
         # if outflow should be cleared before adding more things to it
         self._buildup = kw.get('keep', True)
-        # 1.set inflow stage
+        # 1. assign inflow stage
         self._IN = kw.get(self._INCFG, self._INVAR)
-        # 2. set work stage
+        # 2. assign work stage
         self._WORK = kw.get(self._WORKCFG, self._WORKVAR)
-        # 3. set holding stage
+        # 3. assign holding stage
         self._HOLD = kw.get(self._HOLDCFG, self._HOLDVAR)
-        # 4. set outflow stage
+        # 4. assign outflow stage
         self._OUT = kw.get(self._OUTCFG, self._OUTVAR)
         return self
 
     def _reflow(self):
-        '''switch to currently selected flow context'''
+        '''switch to currently selected flow'''
         return self._as_flow(keep=False, **self._FLOWCFG)
 
     def _unflow(self):
-        '''switch to default flow context'''
+        '''switch to default flow'''
         return self._as_flow(keep=False)
 
     @contextmanager
     def _flow1(self, **kw):
-        '''switch to one-stage flow context'''
+        '''switch to one-stage flow'''
         q = kw.pop(self._WORKCFG, self._INVAR)
         self._as_flow(work=q, hold=q, flow=self._flow1, **kw)
         yield
@@ -287,7 +287,7 @@ class KnifeMixin(local):
         '''
         Revert incoming things to a previous version within inflow.
 
-        @param snapshot: snapshot to revert to e.g. 1, 2, 3... (default: 0)
+        @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc. (default: 0)
         @param baseline: return inflow to baseline version (default: False)
         @param original: return inflow to original version (default: False)
         '''
@@ -298,12 +298,12 @@ class KnifeMixin(local):
             self._clearsp()
             # clear baseline
             self._baseline = None
-            # restore original _inflow
+            # restore original version of incoming things
             self._inflow = self._clone(self._original)[0]
         elif baseline:
             # clear snapshots
             self._clearsp()
-            # restore baseline _inflow
+            # restore baseline version of incoming things
             self._inflow = self._clone(self._baseline)[0]
         # if specified, use a specific snapshot
         elif snapshot:
@@ -361,8 +361,8 @@ class KnifeMixin(local):
             def factory_(*args, **kw):
                 return call(*args, **kw)
             self._call = factory_
+        # or just assign current callable
         else:
-            # just assign current callable
             self._call = call
         # set any alternative callable
         self._alt = alt
@@ -396,7 +396,7 @@ class KnifeMixin(local):
         with self._flow1():
             return self._xtend(things)
 
-    def extend_before(self, things):
+    def extendfront(self, things):
         '''
         Place many `things` before any incoming `things` already in current
         inflow.
@@ -404,7 +404,7 @@ class KnifeMixin(local):
         @param thing: wannabe incoming things
         '''
         with self._flow1():
-            return self._xtendleft(things)
+            return self._xtendfront(things)
 
     def append(self, thing):
         '''
@@ -416,7 +416,7 @@ class KnifeMixin(local):
         with self._flow1():
             return self._append(thing)
 
-    def append_before(self, thing):
+    def appendfront(self, thing):
         '''
         Place one `thing` before any incoming `things` already in current
         inflow.
@@ -424,19 +424,19 @@ class KnifeMixin(local):
         @param thing: one wannabe incoming thing
         '''
         with self._flow1():
-            return self._appendleft(thing)
+            return self._appendfront(thing)
 
     ###########################################################################
     ## knowing things #########################################################
     ###########################################################################
 
     def __bool__(self):
-        '''Return results of truth contexts or length of inflow.'''
+        '''Return results build while in truth context or length of inflow.'''
         return (self._truth if self._truth is not None else self.__len__())
 
     @staticmethod
     def _repr(*args):
-        '''object representation'''
+        '''Object representation'''
         return (
             '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => '
             'OUT: {8}: ({9})]) <<{10}>>'
@@ -447,11 +447,11 @@ class KnifeMixin(local):
     ###########################################################################
 
     def _clearsp(self):
-        '''clear out snapshots'''
+        '''Clear out snapshots.'''
         self._sps.clear()
         return self
 
     def clear(self):
-        '''clear out everything'''
+        '''Clear out everything.'''
         self._truth = None
         return self.untap().unwrap().clearout().clearin()._clearw()._clearh()

@@ -106,13 +106,13 @@ class MapMixin(local):
     '''mapping mixin'''
 
     @staticmethod
-    def _invoke(name, args, mc=methodcaller, m=imap):
-        caller = mc(name, *args[0], **args[1])
+    def _invoke(name, args, mc_=methodcaller, imap_=imap):
+        caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
             results = caller(thing)
             return thing if results is None else results
         def invoke_(iterable): #@IgnorePep8
-            return m(invoke, iterable)
+            return imap_(invoke, iterable)
         return invoke_
 
     @staticmethod
@@ -123,7 +123,7 @@ class MapMixin(local):
                 return starmap_(call_, iterable)
         else:
             def map(iterable): #@IgnorePep8
-                return imap_(call, iterable)
+                return imap_(call_, iterable)
         return map
 
     def invoke(self, name):
@@ -132,16 +132,19 @@ class MapMixin(local):
         keywords but return incoming thing instead if method returns `None`
 
         @param name: name of method
-
         '''
         with self._flow():
             return self._many(
                 self._invoke(name, (self._args, self._kw))
             )
 
-    def map(self, wildcard=False, args=False, kwargs=False):
+    def map(self, args=False, kwargs=False):
         '''
         invoke call on each incoming thing
+
+        @param args: map each incoming thing as python *args for call
+        @param kwargs: map each incoming thing as python **kwargs for call
         '''
+        args = kwargs if kwargs else args
         with self._flow():
             return self._many(self._map(self._call, args, kwargs))
