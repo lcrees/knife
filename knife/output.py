@@ -118,7 +118,7 @@ class OutflowMixin(local):
     def reup(self):
         '''put incoming in incoming as one incoming thing'''
         with self._flow2(keep=False):
-            return self._single(list(self._iterable))
+            return self._one(list(self._iterable))
 
     def setout(self):
         '''set wrapper to `set`'''
@@ -157,4 +157,4 @@ class OutflowMixin(local):
             self._call = call if call is not None else self._call
         else:
             self._call = alt if alt is not None else self._alt
-        return self.change()
+        return self.as_edit()

@@ -57,7 +57,7 @@ class StatsMixin(local):
     def average(self):
         '''average value of incoming'''
         with self._flow():
-            return self._single(self._average)
+            return self._one(self._average)
 
     def max(self):
         '''
@@ -65,12 +65,12 @@ class StatsMixin(local):
         function
         '''
         with self._flow():
-            return self._single(self._max(self._identity))
+            return self._one(self._max(self._identity))
 
     def median(self):
         '''median value of incoming'''
         with self._flow():
-            return self._single(self._median)
+            return self._one(self._median)
 
     def min(self):
         '''
@@ -78,17 +78,17 @@ class StatsMixin(local):
         function
         '''
         with self._flow():
-            return self._single(self._min(self._identity))
+            return self._one(self._min(self._identity))
 
     def minmax(self):
         '''minimum and maximum values among incoming'''
         with self._flow():
-            return self._multi(self._minmax)
+            return self._many(self._minmax)
 
     def range(self):
         '''statistical range of incoming'''
         with self._flow():
-            return self._single(self._range)
+            return self._one(self._range)
 
     def sum(self, start=0, floats=False):
         '''
@@ -98,7 +98,7 @@ class StatsMixin(local):
         @param floats: incoming are floats (default: False)
         '''
         with self._flow():
-            return self._single(self._sum(start, floats))
+            return self._one(self._sum(start, floats))
 
 
 class TruthMixin(local):
@@ -139,24 +139,24 @@ class TruthMixin(local):
     def all(self):
         '''if `all` incoming are `True`'''
         with self._flow():
-            return self._single(self._all(self._truth))
+            return self._one(self._all(self._test))
 
     def any(self):
         '''if `any` incoming are `True`'''
         with self._flow():
-            return self._single(self._any(self._truth))
+            return self._one(self._any(self._test))
 
     def frequency(self):
         '''frequency of each incoming thing'''
         with self._flow():
-            return self._single(self._frequency)
+            return self._one(self._frequency)
 
     def quantify(self):
         '''
         how many times current callable returns `True` for incoming
         '''
         with self._flow():
-            return self._single(self._quantify(self._truth))
+            return self._one(self._quantify(self._test))
 
 
 class OrderMixin(local):
@@ -192,19 +192,19 @@ class OrderMixin(local):
     def choice(self):
         '''random choice of/from incoming'''
         with self._flow():
-            return self._single(self._choice)
+            return self._one(self._choice)
 
     def reverse(self):
         '''reverse order of incoming'''
         with self._flow():
-            return self._multi(self._reversed)
+            return self._many(self._reversed)
 
     def sort(self):
         '''
         sort incoming, optionally using current call as key function
         '''
         with self._flow():
-            return self._multi(self._sort(self._identity))
+            return self._many(self._sort(self._identity))
 
     def sample(self, n):
         '''
@@ -213,9 +213,9 @@ class OrderMixin(local):
         @param n: number of incoming
         '''
         with self._flow():
-            return self._multi(self._sample(n))
+            return self._many(self._sample(n))
 
     def shuffle(self):
         '''randomly order incoming'''
         with self._flow():
-            return self._multi(self._shuffle)
+            return self._many(self._shuffle)

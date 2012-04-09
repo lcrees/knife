@@ -11,7 +11,7 @@ class MRandomQMixin(object):
     def test_choice(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).choice()
         self.assertFalse(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         manknife.close()
         self.assertTrue(manknife.balanced)
@@ -19,7 +19,7 @@ class MRandomQMixin(object):
     def test_sample(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).sample(3)
         self.assertFalse(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         manknife.close()
         self.assertTrue(manknife.balanced)
@@ -27,7 +27,7 @@ class MRandomQMixin(object):
     def test_shuffle(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).shuffle()
         self.assertTrue(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         manknife.close()
         self.assertTrue(manknife.balanced)

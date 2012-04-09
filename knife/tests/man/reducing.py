@@ -20,7 +20,7 @@ class MMathQMixin(object):
         ]
         manknife = self.qclass(*stooges).tap(lambda x: x.age).max()
         self.assertFalse(manknife.balanced)
-        manknife.balance()
+        manknife.rebalance()
         self.assertTrue(manknife.balanced)
         self.assertEqual(stuf(manknife.close()), stuf(name='curly', age=60))
         self.assertTrue(manknife.balanced)

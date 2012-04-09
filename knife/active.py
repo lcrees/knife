@@ -37,121 +37,121 @@ class ActiveMixin(KnifeMixin):
     ## mode things ############################################################
     ###########################################################################
 
-    def query(self):
-        '''flow to query mode'''
+    def as_view(self):
+        '''_as_flow to as_view mode'''
         with self._flow3(output=self._HOLDVAR, keep=False):
-            self._multi(self._iterable)
-        with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
-            self._channel = self._QUERY
+            self._many(self._iterable)
+        with self._flow1(hard=True, work=self._HOLDVAR, keep=False):
+            self._context = self._QUERY
             return self
 
     ###########################################################################
-    ## flow things ############################################################
+    ## _as_flow things ############################################################
     ###########################################################################
 
     @contextmanager
     def _flow2(self, **kw):
-        '''switch to manually balanced two-stage flow'''
-        self.flow(
-            flow=self._flow2, output=kw.get(self._OUTCFG, self._INVAR), **kw
+        '''switch to manually balanced two-stage _as_flow'''
+        self._as_flow(
+            _as_flow=self._flow2, output=kw.get(self._OUTCFG, self._INVAR), **kw
         )
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        holdq = getr_(self._HOLD)
-        workq = getr_(self._WORK)
+        hold = getr_(self._HOLD)
+        work = getr_(self._WORK)
         # clear all work pool
-        workq.clear()
+        work.clear()
         # extend work pool with output
-        workq.extend(output)
-        # flow iterator
+        work.extend(output)
+        # _as_flow iterator
         self._iterator = self._breakcount
         yield
         # clear output if so configured
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(holdq)
+        output.extend(hold)
         # clear holding pool
-        holdq.clear()
-        # revert to current flow
+        hold.clear()
+        # revert to current _as_flow
         self._reflow()
 
     @contextmanager
     def _flow3(self, **kw):
-        '''switch to manually balanced three-stage flow'''
-        self.flow(
-            holdq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+        '''switch to manually balanced three-stage _as_flow'''
+        self._as_flow(
+            hold=kw.get(self._WORKCFG, self._WORKVAR), _as_flow=self._flow3, **kw
         )
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        holdq = getr_(self._HOLD)
-        workq = getr_(self._WORK)
+        hold = getr_(self._HOLD)
+        work = getr_(self._WORK)
         # clear work pool
-        workq.clear()
-        # extend work pool with incoming
-        workq.extend(getr_(self._IN))
-        # flow iterators
+        work.clear()
+        # extend work pool with _inflow
+        work.extend(getr_(self._IN))
+        # _as_flow iterators
         self._iterator = self._breakcount
         yield
         # clear output if so configured
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(holdq)
+        output.extend(hold)
         # clear holding pool
-        holdq.clear()
-        # revert to current flow
+        hold.clear()
+        # revert to current _as_flow
         self._reflow()
 
     @contextmanager
     def _flow4(self, **kw):
-        '''switch to manually balanced four-stage flow'''
-        self.flow(flow=self._flow4, **kw)
+        '''switch to manually balanced four-stage _as_flow'''
+        self._as_flow(_as_flow=self._flow4, **kw)
         getr_ = lambda x: getattr(self, x)
         output = getr_(self._OUT)
-        holdq = getr_(self._HOLD)
-        workq = getr_(self._WORK)
+        hold = getr_(self._HOLD)
+        work = getr_(self._WORK)
         # clear work pool
-        workq.clear()
-        # extend work pool with incoming
-        workq.extend(getr_(self._IN))
-        # flow iterators
+        work.clear()
+        # extend work pool with _inflow
+        work.extend(getr_(self._IN))
+        # _as_flow iterators
         self._iterator = self._iterexcept
         yield
         # clear output if so configured
         if self._buildup:
             output.clear()
         # extend output with holding pool
-        output.extend(holdq)
+        output.extend(hold)
         # clear holding pool
-        holdq.clear()
-        # return to global flow
+        hold.clear()
+        # return to global _as_flow
         self._reflow()
 
     @contextmanager
     def _autoflow(self, **kw):
-        '''switch to automatically balanced four-stage flow'''
-        self.flow(flow=self._autoflow, **kw)
+        '''switch to automatically balanced four-stage _as_flow'''
+        self._as_flow(_as_flow=self._autoflow, **kw)
         getr_ = lambda x: getattr(self, x)
-        incoming, workq = getr_(self._IN), getr_(self._WORK)
-        holdq,  output = getr_(self._HOLD), getr_(self._OUT)
+        incoming, work = getr_(self._IN), getr_(self._WORK)
+        hold, output = getr_(self._HOLD), getr_(self._OUT)
         # clear work pool
-        workq.clear()
-        # extend work pool with incoming
-        workq.extend(incoming)
-        # flow iterators
+        work.clear()
+        # extend work pool with _inflow
+        work.extend(incoming)
+        # _as_flow iterators
         self._iterator = self._iterexcept
         yield
         # clear output if so configured
         if self._buildup:
             output.clear()
-        output.extend(holdq)
-        # clear incoming
+        output.extend(hold)
+        # clear _inflow
         incoming.clear()
-        incoming.extend(holdq)
+        incoming.extend(hold)
         # clear holding pool
-        holdq.clear()
-        # return to global flow
+        hold.clear()
+        # return to global _as_flow
         self._reflow()
 
     ###########################################################################
@@ -249,12 +249,12 @@ class ActiveMixin(KnifeMixin):
             list(getattr(self, self._HOLD)),
             self._OUT,
             list(getattr(self, self._OUT)),
-            self._channel,
+            self._context,
         )
 
     def __len__(self):
-        '''number of incoming'''
-        return len(self.incoming)
+        '''number of _inflow'''
+        return len(self._inflow)
 
     count = __len__
 
@@ -277,8 +277,8 @@ class ActiveMixin(KnifeMixin):
         return self
 
     def clearin(self):
-        '''clear incoming'''
-        self.incoming.clear()
+        '''clear _inflow'''
+        self._inflow.clear()
         return self
 
     def clearout(self):
@@ -297,8 +297,8 @@ class OutputMixin(ActiveMixin, OutflowMixin):
 
     def close(self):
         '''return output and clear out everything'''
-        # revert to default flow
-        self.unflow()
+        # revert to default _as_flow
+        self._unflow()
         wrap, output = self._wrapper, self.output
         wrap = self.output.pop() if len(output) == 1 else wrap(output)
         # clear every last thing
@@ -312,12 +312,12 @@ class OutputMixin(ActiveMixin, OutflowMixin):
 
     def out(self):
         '''clear output and return outgoing things'''
-        self.unflow()
+        self._unflow()
         wrap, output = self._wrapper, self.output
         wrap = output.pop() if len(output) == 1 else wrap(output)
         # clear outgoing things
         self.clearout()
-        if self._channel == self._QUERY:
+        if self._context == self._QUERY:
             self.baseline()
         return wrap
 

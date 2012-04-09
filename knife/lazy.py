@@ -30,101 +30,101 @@ class LazyMixin(KnifeMixin):
     ## mode things ############################################################
     ###########################################################################
 
-    def query(self):
-        '''flow to query mode'''
+    def as_view(self):
+        '''_as_flow to as_view mode'''
         with self._flow3(outflow=self._HOLDVAR, keep=False):
             self._xreplace(self._iterable)
         with self._flow1(hard=True, workq=self._HOLDVAR, keep=False):
-            self._channel = self._QUERY
+            self._context = self._QUERY
             return self
 
     ###########################################################################
-    ## flow things ############################################################
+    ## _as_flow things ############################################################
     ###########################################################################
 
     @contextmanager
     def _flow2(self, **kw):
-        '''switch to manually balanced two-stage flow'''
-        self.flow(
-            flow=self._flow2, output=kw.get(self._OUTCFG, self._INVAR), **kw
+        '''switch to manually balanced two-stage _as_flow'''
+        self._as_flow(
+            _as_flow=self._flow2, output=kw.get(self._OUTCFG, self._INVAR), **kw
         )._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
         outflow = self._OUT
-        # extend work pool with outgoing
+        # extend work pool with _outflow
         work, wrap = tee(getr_(outflow))
         setr_(self._WORK, work)
         setr_(outflow, wrap)
         yield
-        # extend outgoing with holding pool
+        # extend _outflow with holding pool
         hold = getr_(self._HOLD)
         setr_(
             outflow,
             hold if self._buildup else chain(hold, getr_(outflow)),
         )
         self._clearworking()
-        # return to global flow
+        # return to global _as_flow
         self._reflow()
 
     @contextmanager
     def _flow3(self, **kw):
-        '''switch to manually balanced three-stage flow'''
-        self.flow(
-            holdq=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+        '''switch to manually balanced three-stage _as_flow'''
+        self._as_flow(
+            holdq=kw.get(self._WORKCFG, self._WORKVAR), _as_flow=self._flow3, **kw
         )._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
         INQ = self._IN
-        # extend work pool with incoming
+        # extend work pool with _inflow
         work, incoming = tee(getr_(INQ))
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend outgoing with holding pool
+        # extend _outflow with holding pool
         hold = getr_(self._HOLD)
         setr_(
             self._OUT,
             hold if self._buildup else chain(hold, getr_(self._OUT)),
         )
         self._clearworking()
-        # revert to current flow
+        # revert to current _as_flow
         self._reflow()
 
     @contextmanager
     def _flow4(self, **kw):
-        '''switch to manually balanced four-stage flow'''
-        self.flow(flow=self._flow4, **kw)._clearworking()
+        '''switch to manually balanced four-stage _as_flow'''
+        self._as_flow(_as_flow=self._flow4, **kw)._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
         INQ = self._IN
-        # extend work pool with incoming
+        # extend work pool with _inflow
         work, incoming = tee(getr_(INQ))
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend outgoing with holding pool
+        # extend _outflow with holding pool
         hold = getr_(self._HOLD)
         setr_(
             self._OUT,
             hold if self._buildup else chain(hold, getr_(self._OUT)),
         )
         self._clearworking()
-        # return to global flow
+        # return to global _as_flow
         self._reflow()
 
     @contextmanager
     def _autoflow(self, **kw):
-        '''switch to automatically balanced four-stage flow'''
-        self.flow(flow=self._autoflow, **kw)._clearworking()
+        '''switch to automatically balanced four-stage _as_flow'''
+        self._as_flow(_as_flow=self._autoflow, **kw)._clearworking()
         setr_ = lambda x, y: setattr(self, x, y)
         getr_ = lambda x: getattr(self, x)
         INQ = self._IN
-        # extend work pool with incoming
+        # extend work pool with _inflow
         work, incoming = tee(getr_(INQ))
         setr_(self._WORK, work)
         setr_(INQ, incoming)
         yield
-        # extend incoming and outgoing with holding pool
+        # extend _inflow and _outflow with holding pool
         incoming, wrap = tee(getr_(self._HOLD))
         setr_(
             self._OUT,
@@ -132,7 +132,7 @@ class LazyMixin(KnifeMixin):
         )
         setr_(INQ, incoming)
         self._clearworking()
-        # return to global flow
+        # return to global _as_flow
         self._reflow()
 
     ###########################################################################
@@ -217,19 +217,19 @@ class LazyMixin(KnifeMixin):
             list_(hold2),
             self._OUT,
             list_(out2),
-            self._channel,
+            self._context,
         )
 
     def __len__(self):
-        '''number of incoming'''
-        self.incoming, incoming = tee(self.incoming)
+        '''number of _inflow'''
+        self._inflow, incoming = tee(self._inflow)
         return len(list(incoming))
 
     count = __len__
 
     def countout(self):
-        '''number of outgoing'''
-        self.outgoing, outflow = tee(self.outgoing)
+        '''number of _outflow'''
+        self._outflow, outflow = tee(self._outflow)
         return len(list(outflow))
 
     ###########################################################################
@@ -262,13 +262,13 @@ class LazyMixin(KnifeMixin):
         return self
 
     def clearin(self):
-        '''clear incoming'''
+        '''clear _inflow'''
         delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
     def clearout(self):
-        '''clear outgoing'''
+        '''clear _outflow'''
         delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
@@ -279,14 +279,14 @@ class OutputMixin(LazyMixin, OutflowMixin):
     '''active output knife mixin'''
 
     def __iter__(self):
-        '''yield outgoing, clearing outgoing as it iterates'''
+        '''yield _outflow, clearing _outflow as it iterates'''
         return getattr(self, self._OUT)
 
     def close(self):
-        '''return outgoing and clear out everything'''
-        # revert to default flow
-        self.unflow()
-        out, tell = tee(self.outgoing)
+        '''return _outflow and clear out everything'''
+        # revert to default _as_flow
+        self._unflow()
+        out, tell = tee(self._outflow)
         wrap = self._wrapper
         wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
         # clear every last thing
@@ -294,21 +294,21 @@ class OutputMixin(LazyMixin, OutflowMixin):
         return wrap
 
     def peek(self):
-        '''snapshot of current outgoing'''
-        out, tell, self.outgoing = tee(getattr(self, self._OUT), 3)
+        '''snapshot of current _outflow'''
+        out, tell, self._outflow = tee(getattr(self, self._OUT), 3)
         wrap = self._wrapper
         return wrap(out).pop() if len(wrap(tell)) == 1 else wrap(out)
 
     def out(self):
-        '''return outgoing and clear outgoing'''
-        # revert to default flow
-        self.unflow()
-        out, tell = tee(self.outgoing)
+        '''return _outflow and clear _outflow'''
+        # revert to default _as_flow
+        self._unflow()
+        out, tell = tee(self._outflow)
         wrap = self._wrapper
         wrap = next(out) if len(wrap(tell)) == 1 else wrap(out)
-        # clear outgoing
+        # clear _outflow
         self.clearout()
-        if self._channel == self._QUERY:
+        if self._context == self._QUERY:
             self.baseline()
         return wrap
 
