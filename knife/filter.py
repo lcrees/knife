@@ -212,7 +212,7 @@ class FilterMixin(local):
             call = true
         def partition(iterable): #@IgnorePep8
             falsy, truey = cls._clone(iterable)
-            return iter((l(ff(call, truey)), l(ff(call, falsy))))
+            return iter((l(f(call, truey)), l(ff(call, falsy))))
         return partition
 
     @staticmethod
@@ -296,12 +296,12 @@ class FilterMixin(local):
     def subset(self):
         '''incoming that are subsets of incoming'''
         with self._flow():
-            return self._many(self._subset)
+            return self._one(self._subset)
 
     def superset(self):
         '''incoming that are supersets of incoming'''
         with self._flow():
-            return self._many(self._superset)
+            return self._one(self._superset)
 
     def union(self):
         '''union between incoming'''

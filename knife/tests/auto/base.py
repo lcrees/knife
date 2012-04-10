@@ -51,15 +51,17 @@ class AMixin(object):
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).append(2).undo().shift_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.undo(everything=True).shift_out()
-        self.assertListEqual(queue.shift_out().end(), [1, 2, 3])
+        queue.append(1).append(2).undo(2).shift_out()
+        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        queue.undo(original=True).shift_out()
+        self.assertListEqual(queue.end(), [1, 2, 3])
 
     def test_insync(self):
         q = self.qclass([1, 2, 3, 4, 5, 6]).shift_out()
         self.assertListEqual(list(q._inflow), list(q._outflow))
-        q = self.qclass(
-            [1, 2, 3, 4, 5, 6]
-        ).shift_out().clear_in().shift_in()
+        q = self.qclass([1, 2, 3, 4, 5, 6]).shift_out()
+        q.clear_in()
+        q.shift_in()
         self.assertListEqual(list(q._inflow), list(q._outflow))
 
     def test_results(self):

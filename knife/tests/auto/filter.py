@@ -48,7 +48,7 @@ class ACollectMixin(object):
         test = lambda x: not x[0].startswith('__')
         out = self.qclass(
             stoog3
-        ).tap(test, isclass).as_tuple().mro().members().untap().end()
+        ).tap(test, isclass).as_many().as_tuple().mro().members().untap().end()
         self.assertEqual(
             out,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
@@ -56,7 +56,7 @@ class ACollectMixin(object):
             out,
         )
 
-    def test_pick(self):
+    def test_attributes(self):
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
@@ -130,13 +130,17 @@ class AFilterMixin(object):
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).partition().end(), [[1, 3, 5], [2, 4, 6]]
+            ).partition().end(), [[2, 4, 6], [1, 3, 5]]
         )
 
     def test_difference(self):
         self.assertEqual(
             self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).difference().end(),
             [1, 3, 4],
+        )
+        self.assertEqual(
+            self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(True).end(),
+            [1, 3, 4, 10]
         )
 
     def test_disjointed(self):
@@ -153,6 +157,15 @@ class AFilterMixin(object):
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
             ).intersection().end(), [1, 2],
         )
+
+    def test_subset(self):
+        self.assertTrue(
+            self.qclass([1, 2, 3], [101, 2, 1, 3]).subset().end(),
+        )
+
+    def test_superset(self):
+        diff = self.qclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset().end()
+        self.assertTrue(diff)
 
     def test_union(self):
         self.assertEqual(

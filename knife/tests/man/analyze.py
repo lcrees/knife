@@ -113,19 +113,7 @@ class MTruthMixin(object):
         self._false_true_false(
             self.qclass(11, 3, 5, 11, 7, 3, 11).frequency(),
             self.assertEqual,
-            [(11, 3), (3, 2), (5, 1), (7, 1)],
-        )
-        # most common
-        self._false_true_false(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).common(),
-            self.assertEqual,
-            11,
-        )
-        # least common
-        self._false_true_false(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon(),
-            self.assertEqual,
-            7,
+            (7, 11, [(11, 3), (3, 2), (5, 1), (7, 1)]),
         )
 
 
@@ -160,12 +148,12 @@ class MOrderMixin(object):
         self._false_true_false(
             self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby(),
             self.assertListEqual,
-            [[1.0, [1.3]], [2.0, [2.1, 2.4]]]
+            [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self._true_true_false(
             self.qclass(1.3, 2.1, 2.4).groupby(),
             self.assertListEqual,
-            [[1.3, [1.3]], [2.1, [2.1]], [2.4, [2.4]]],
+            [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
 
     def test_reverse(self):

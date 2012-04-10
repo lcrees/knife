@@ -125,15 +125,13 @@ class ActiveMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @staticmethod
-    def _clone(iterable, n=2, deque_=deque):
+    def _dupe(iterable, deque_=deque):
         '''
         clone an iterable
 
         @param n: number of clones
         '''
-        if n == 2:
-            return deque_(iterable), iterable
-        return iterable, iterable
+        return deque_(iterable)
 
     ###########################################################################
     ## iterate things #########################################################

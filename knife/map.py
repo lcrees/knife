@@ -117,14 +117,18 @@ class MapMixin(local):
 
     @staticmethod
     def _map(call, args, kwargs, imap_=imap, starmap_=istarmap):
-        call_ = lambda x, y: call(*x, **y) if kwargs else call
+        if kwargs:
+            call_ = lambda x, y: call(*x, **y)
+        else:
+            call_ = call
         if args:
-            def map(iterable): #@IgnorePep8
+            def starmap(iterable): #@IgnorePep8
                 return starmap_(call_, iterable)
+            return starmap
         else:
             def map(iterable): #@IgnorePep8
                 return imap_(call_, iterable)
-        return map
+            return map
 
     def invoke(self, name):
         '''

@@ -24,7 +24,7 @@ class Manning(unittest.TestCase):
             out = manknife.results()
             expr(out, comp, out)
         else:
-            expr(manknife.results())
+            expr(manknife.results(), comp)
         self.assertFalse(manknife.balanced)
 
     def _false_true_true(self, manknife, expr, comp=None):
@@ -34,5 +34,5 @@ class Manning(unittest.TestCase):
         if comp is not None:
             expr(manknife.results(), comp)
         else:
-            expr(manknife.results())
+            expr(manknife.results(), comp)
         self.assertTrue(manknife.balanced)

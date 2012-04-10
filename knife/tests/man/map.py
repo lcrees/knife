@@ -66,7 +66,7 @@ class MMapMixin(object):
 
     def test_factory(self):
         from stuf import stuf
-        self.assertDictEqual(
+        self.assertEqual(
             self.qclass(
                 ('a', 1), ('b', 2), ('c', 3)
             ).reup().tap(stuf, factory=True).map().end(),
@@ -107,18 +107,6 @@ class MMapMixin(object):
             self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort'),
             self.assertEqual,
             [[1, 5, 7], [1, 2, 3]]
-        )
-        self._true_true_false(
-            self.qclass(
-                [5, 1, 7], [3, 2, 1]
-            ).arguments(1).invoke('index', 0.0001),
-            self.assertEqual,
-            [1, 2],
-        )
-        self._true_true_false(
-            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001),
-            self.assertEqual,
-            [[1, 5, 7], [1, 2, 3]],
         )
 
 __all__ = sorted(name for name, obj in port.items(locals()) if not any([

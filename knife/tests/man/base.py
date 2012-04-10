@@ -11,12 +11,10 @@ class MQMixin(object):
         )
 
     def test_preview(self):
-        initial = self.qclass(1, 2, 3, 4, 5, 6)
+        initial = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
         self.assertListEqual(initial.preview(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 6)
-        self.assertListEqual(
-            initial.shift_out().end(), [1, 2, 3, 4, 5, 6]
-        )
+        self.assertListEqual(initial.shift_out().end(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 0)
 
     def test_extend(self):
@@ -65,13 +63,11 @@ class MQMixin(object):
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2).shift_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.undo(everything=True).shift_out()
-        self.assertListEqual(queue.shift_out().end(), [1, 2, 3])
+        queue.undo(original=True).shift_out()
+        self.assertListEqual(queue.end(), [1, 2, 3])
 
     def test_insync(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).shift_in(
-            reverse=True
-        ).clear_in().shift_in()
+        q = self.qclass(1, 2, 3, 4, 5, 6).shift_in().clear_in().shift_in()
         self.assertEqual(list(q._inflow), list(q._outflow))
 
     def test_outsync(self):
@@ -222,7 +218,7 @@ class MQMixin(object):
         self._true_true_false(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_ascii(),
+            ).as_many().as_ascii().shift_out(),
             self.assertEqual,
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
@@ -232,7 +228,7 @@ class MQMixin(object):
         self._true_true_false(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_bytes(),
+            ).as_many().as_bytes().shift_out(),
             self.assertEqual,
             [
         b('[1]'), b('True'), b('t'), b('i'),  b('g'), b('None'), b('(1,)')
@@ -244,7 +240,7 @@ class MQMixin(object):
         self._true_true_false(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_unicode(),
+            ).as_many().as_unicode().shift_out(),
             self.assertEqual,
             [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
         )

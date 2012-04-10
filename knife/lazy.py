@@ -117,13 +117,13 @@ class LazyMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @staticmethod
-    def _clone(iterable, n=2, tee_=tee):
+    def _dupe(iterable, n=2, tee_=tee):
         '''
         clone an iterable
 
         @param n: number of clones
         '''
-        return tee_(iterable, n)
+        return tee_(iterable, n)[0]
 
     ###########################################################################
     ## iterate things #########################################################
@@ -261,7 +261,10 @@ class OutputMixin(LazyMixin, OutflowMixin):
         '''Take a peek at the current state of outgoing things.'''
         outflow, tell = tee(self._outflow)
         wrap = self._wrapper
-        value = list(wrap(i) for i in outflow) if self._MANY else wrap(outflow)
+        if self._mode == self._MANY:
+            value = list(wrap(i) for i in outflow)
+        else:
+            value = wrap(outflow)
         return value.pop() if len(wrap(tell)) == 1 else value
 
 

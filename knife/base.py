@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''base knife mixins'''
 
+from itertools import tee
 from operator import truth
 from threading import local
 from collections import deque
@@ -177,7 +178,7 @@ class KnifeMixin(local):
     # automatically shift_in inflow with outflow
     _DEFAULT_FLOW = _AUTO = '_autoflow'
     # manually shift_in inflow with outflow
-    _MANUAL = '_flow4'
+    _MANUAL = '_manual4'
     # 1. stage for incoming things which flows to =>
     _INCFG = 'inflow'
     _INVAR = '_inflow'
@@ -188,7 +189,7 @@ class KnifeMixin(local):
     _HOLDCFG = 'hold'
     _HOLDVAR = '_hold'
     # 4. stage where outgoing things can be removed from pipeline
-    _OUTCFG = '_outflow'
+    _OUTCFG = 'outflow'
     _OUTVAR = '_outflow'
 
     def _as_flow(self, **kw):
@@ -196,7 +197,7 @@ class KnifeMixin(local):
         # retain flow-specific settings between flow switches
         self._FLOWCFG = kw if kw.get('hard', False) else {}
         # take snapshot
-        if kw.get('snapshot', True):
+        if kw.get('snap', True):
             self.snapshot()
         # set current flow
         self._flow = kw.get('flow', getattr(self, self._DEFAULT_FLOW))
@@ -214,11 +215,11 @@ class KnifeMixin(local):
 
     def _reflow(self):
         '''switch to currently selected flow'''
-        return self._as_flow(keep=False, **self._FLOWCFG)
+        return self._as_flow(keep=False, snap=False, **self._FLOWCFG)
 
     def _unflow(self):
         '''switch to default flow'''
-        return self._as_flow(keep=False)
+        return self._as_flow(keep=False, snap=False)
 
     @contextmanager
     def _manual1(self, **kw):
@@ -240,25 +241,23 @@ class KnifeMixin(local):
         Context where inflow must be explicitly and manually rebalanced
         outflow.
         '''
-        cls._DEFAULT_CONTEXT = cls._MANUAL
+        cls._DEFAULT_FLOW = cls._MANUAL
         return cls
 
     def shift_in(self):
-        '''Copy outgoing things back to inflow.'''
+        '''Manually copy outgoing things to inflow.'''
         with self._autoflow(
-            inflow=self._OUTVAR, outflow=self._INVAR, keep=False, snap=False,
+            inflow=self._OUTVAR, outflow=self._INVAR, snap=False,
         ):
             return self._xtend(self._iterable)
 
     def shift_out(self):
-        '''
-        Manually copy incoming things to outflow as outgoing things.
-        '''
-        with self._autoflow(snap=False, keep=False):
+        '''Manually copy incoming things to outflow.'''
+        with self._autoflow(snap=False):
             return self._xtend(self._iterable)
 
     def reup(self):
-        '''put incoming in incoming as one incoming thing'''
+        '''put incoming in inflow as one incoming thing'''
         with self._manual2(keep=False):
             return self._xtend(list(self._iterable))
 
@@ -266,6 +265,15 @@ class KnifeMixin(local):
     def balanced(self):
         '''Determine if inflow and outflow are in balance'''
         return self.count_out() == self.__len__()
+
+    @staticmethod
+    def _clone(iterable, n=2, tee_=tee):
+        '''
+        clone an iterable
+
+        @param n: number of clones
+        '''
+        return tee_(iterable, n)
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -279,7 +287,7 @@ class KnifeMixin(local):
         @param original: make snapshot original version (default: False)
         '''
         # take snapshot
-        snapshot = self._clone(getattr(self, self._IN))[0]
+        snapshot = self._dupe(getattr(self, self._IN))
         # make this snapshot the baseline snapshot
         if self._context == self._EDIT or baseline:
             self._baseline = snapshot
@@ -306,15 +314,15 @@ class KnifeMixin(local):
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            self._inflow = self._clone(self._original)[0]
+            self._inflow = self._dupe(self._original)
         elif baseline:
             # clear snapshots
             self._clearsp()
             # restore baseline version of incoming things
-            self._inflow = self._clone(self._baseline)[0]
+            self._inflow = self._dupe(self._baseline)
         # if specified, use a specific snapshot
         elif snapshot:
-            self._sps.rotate(snapshot)
+            self._sps.rotate(-(snapshot - 1))
             self._inflow = self._sps.popleft()
         # by default revert to most recent snapshot
         else:

@@ -27,7 +27,7 @@ class MCollectMixin(object):
                 stooges, stoog2, stoog3
             ).tap(
                 lambda x: not x[0].startswith('__'), isclass
-            ).tuplevalue().members().untap().shift_in(),
+            ).as_tuple().members().untap().shift_in(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
@@ -48,7 +48,7 @@ class MCollectMixin(object):
         self._true_true_false(
             self.qclass(stoog3).tap(
                 lambda x: x, isclass
-            ).tuplevalue().mro().shift_in().members().untap().shift_in(),
+            ).as_tuple().mro().shift_in().members().untap().shift_in(),
             self.assertEqual,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
             ('age', 40), ('name', 'moe'))
@@ -129,7 +129,7 @@ class MFilterMixin(object):
                 1, 2, 3, 4, 5, 6
             ).tap(lambda x: x % 2 == 0).partition(),
             self.assertEqual,
-            [[1, 3, 5], [2, 4, 6]],
+            [[2, 4, 6], [1, 3, 5]],
         )
 
     def test_filter(self):
@@ -159,10 +159,8 @@ class MFilterMixin(object):
             self.assertEqual,
             [1, 3, 4]
         )
-
-    def test_symmetric_difference(self):
         self._false_true_false(
-            self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).symmetric_difference(),
+            self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(True),
             self.assertEqual,
             [1, 3, 4, 10]
         )
@@ -197,7 +195,7 @@ class MFilterMixin(object):
 
     def test_superset(self):
         self._false_true_false(
-            self.qclass([1, 2, 3], [101, 2, 1, 3, 6, 34]).superset(),
+            self.qclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset(),
             self.assertTrue,
         )
 

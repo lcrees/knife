@@ -97,7 +97,7 @@ class MReduceMixin(object):
         self._false_true_false(
             self.qclass([0, 1], [2, 3], [4, 5]).tap(
                 lambda x, y: x + y
-            ).right([0, 0], True),
+            ).reduce([0, 0], True),
             self.assertEqual,
             [4, 5, 2, 3, 0, 1, 0, 0],
         )
@@ -122,7 +122,7 @@ class MReduceMixin(object):
 
     def test_join(self):
         from stuf.six import u, b
-        self._true_true_false(
+        self._false_true_false(
             self.qclass([1], True, b('thing'), None, (1,)).join(u(', ')),
             self.assertEqual,
             u('[1], True, thing, None, (1,)')
