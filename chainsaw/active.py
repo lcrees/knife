@@ -2,7 +2,6 @@
 '''actively evaluating knives'''
 
 from collections import deque
-from itertools import repeat
 from contextlib import contextmanager
 
 from stuf.utils import clsname
@@ -32,8 +31,6 @@ class ActiveMixin(ChainsawMixin):
             inchain = deque()
             inchain.append(things)
         super(ActiveMixin, self).__init__(inchain, deque(), **kw)
-        # assign default iterator
-        self._iterator = self._iterexcept
         # work link
         self._work = deque()
         # holding link
@@ -44,33 +41,11 @@ class ActiveMixin(ChainsawMixin):
     ###########################################################################
 
     @contextmanager
-    def _man2(self, **kw):
-        '''switch to a manually balanced two-link chain'''
-        self._as_chain(
-            chain=self._man2, outs=kw.get(self._OUTCFG, self._INVAR), **kw
-        )
-        outchain = getattr(self, self._OUT)
-        # move outgoing (usually incoming) things up to work link
-        getattr(self, self._WORK).extend(outchain)
-        # assign chain iterator
-        self._iterator = self._breakcount
-        yield
-        # clear outchain
-        if self._buildup:
-            outchain.clear()
-        # move things from holding state to outchain
-        outchain.extend(getattr(self, self._HOLD))
-        # clear work & holding link & return to current selected chain
-        self._rechain()._clearworking()
-
-    @contextmanager
     def _man4(self, **kw):
         '''switch to a manually balanced four-link chain'''
         self._as_chain(chain=self._man4, **kw)
         # move incoming things up to work link
         getattr(self, self._WORK).extend(getattr(self, self._IN))
-        # assign chain iterator
-        self._iterator = self._iterexcept
         yield
         outchain = getattr(self, self._OUT)
         # clear outchain
@@ -88,8 +63,6 @@ class ActiveMixin(ChainsawMixin):
         inchain = getattr(self, self._IN)
         # move incoming things up to work link
         getattr(self, self._WORK).extend(inchain)
-        # assign chain iterator
-        self._iterator = self._iterexcept
         yield
         outchain = getattr(self, self._OUT)
         # clear outchain
@@ -131,7 +104,7 @@ class ActiveMixin(ChainsawMixin):
         '''
         Revert incoming things to a previous version within ins.
 
-        @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc. (default: 0)
+        @param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
         @param baseline: return ins to baseline version (default: False)
         @param original: return ins to original version (default: False)
         '''
@@ -162,18 +135,12 @@ class ActiveMixin(ChainsawMixin):
     ## iterate things #########################################################
     ###########################################################################
 
-    def _breakcount(self, attr='_HOLD', repeat_=repeat, len_=len, g=getattr):
-        '''
-        breakcount iterator
+    @property
+    def _iterable(self):
+        '''iterable link in the chain'''
+        return self._iterator(self._WORK)
 
-        @param attr: link to iterate over
-        '''
-        dq = g(self, attr)
-        length, call = len_(dq), dq.popleft
-        for i in repeat_(None, length):  # @UnusedVariable
-            yield call()
-
-    def _iterexcept(self, attr='_HOLD', getattr_=getattr):
+    def _iterator(self, attr='_HOLD', getattr_=getattr):
         '''
         repeatedly invoke callable until IndexError is raised
 
@@ -185,11 +152,6 @@ class ActiveMixin(ChainsawMixin):
                 yield call()
         except IndexError:
             pass
-
-    @property
-    def _iterable(self):
-        '''iterable link in the chain'''
-        return self._iterator(self._WORK)
 
     ###########################################################################
     ## extend things ##########################################################
@@ -291,7 +253,7 @@ class OutputMixin(ActiveMixin, OutchainMixin):
 
     def __iter__(self):
         '''Yield outgoing things, clearing outchain as it goes.'''
-        return self._iterexcept(self._OUT)
+        return self._iterator(self._OUT)
 
     def preview(self):
         '''Take a peek at the current state of outgoing things.'''

@@ -1,14 +1,52 @@
 # -*- coding: utf-8 -*-
-'''auto queuing call chain test mixins'''
+'''chainsaw base test mixins'''
 
 
-class AMixin(object):
+class Mixin(object):
+
+    def _false_true_false(self, manchainsaw, expr, comp=None):
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        if comp is not None:
+            expr(manchainsaw.results(), comp)
+        else:
+            expr(manchainsaw.results())
+        self.assertFalse(manchainsaw.balanced)
+
+    def _true_true_false(self, manchainsaw, expr, comp=None):
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        if comp is not None:
+            out = manchainsaw.results()
+            expr(out, comp, out)
+        else:
+            expr(manchainsaw.results(), comp)
+        self.assertFalse(manchainsaw.balanced)
+
+    def _false_true_true(self, manchainsaw, expr, comp=None):
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        if comp is not None:
+            expr(manchainsaw.results(), comp)
+        else:
+            expr(manchainsaw.results(), comp)
+        self.assertTrue(manchainsaw.balanced)
 
     def test_repr(self):
         from stuf.six import strings
-        self.assertTrue(isinstance(
+        self.assertIsInstance(
             self.qclass([1, 2, 3, 4, 5, 6]).__repr__(), strings,
-        ))
+        )
+
+    def test_preview(self):
+        initial = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
+        self.assertListEqual(initial.preview(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(len(initial), 6)
+        self.assertListEqual(initial.shift_out().end(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertListEqual(
@@ -27,12 +65,15 @@ class AMixin(object):
         )
 
     def test_append(self):
-        autochainsaw = self.qclass().append('foo').shift_out()
-        self.assertEqual(autochainsaw.end(), 'foo')
+        self.assertEqual(
+            self.qclass().append('foo').shift_out().end(), 'foo'
+        )
 
     def test_appendfront(self):
-        autochainsaw = self.qclass().appendfront('foo').shift_out()
-        self.assertEqual(autochainsaw.end(), 'foo')
+        self.assertEqual(
+            self.qclass().appendfront('foo').shift_out().end(),
+            'foo'
+        )
 
     def test_clearin(self):
         self.assertEqual(len(list(self.qclass([1, 2, 5, 6]).clear_in())), 0)
@@ -53,23 +94,27 @@ class AMixin(object):
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2).shift_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        queue.append(1).append(2).undo(baseline=True).shift_out()
+        self.assertListEqual(
+            queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1]
+        )
         queue.undo(original=True).shift_out()
         self.assertListEqual(queue.end(), [1, 2, 3])
 
     def test_insync(self):
-        q = self.qclass([1, 2, 3, 4, 5, 6]).shift_out()
-        self.assertListEqual(list(q._ins), list(q._outs))
-        q = self.qclass([1, 2, 3, 4, 5, 6]).shift_out()
-        q.clear_in()
-        q.shift_in()
-        self.assertListEqual(list(q._ins), list(q._outs))
+        q = self.qclass(1, 2, 3, 4, 5, 6).shift_in().clear_in().shift_in()
+        self.assertEqual(list(q._ins), list(q._outs))
+
+    def test_outsync(self):
+        q = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
+        self.assertEqual(list(q._ins), list(q._outs))
 
     def test_results(self):
         self.assertListEqual(
             list(self.qclass(
                 1, 2, 3, 4, 5, 6
             ).shift_out().results()),
-            [1, 2, 3, 4, 5, 6],
+            [1, 2, 3, 4, 5, 6]
         )
 
     def test_tuple_wrap(self):
@@ -197,7 +242,7 @@ class AMixin(object):
             stuf,
         )
         self.assertDictEqual(
-            self.qclass(
+            self.mclass(
                 (1, 2), (3, 4), (5, 6)
             ).as_stuf().shift_out().results(),
            stuf({1: 2, 3: 4, 5: 6}),
@@ -205,27 +250,56 @@ class AMixin(object):
 
     def test_ascii(self):
         from stuf.six import u, b
+        # auto
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_ascii().shift_out().end(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
+        # man
+        self._true_true_false(
+            self.mclass(
+                [1], True, r't', b('i'), u('g'), None, (1,)
+            ).as_many().as_ascii().shift_out(),
+            self.assertEqual,
+            [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
+        )
 
     def test_bytes(self):
         from stuf.six import u, b
+        # auto
         self.assertEqual(
             self.qclass(
                 [1], True, r't',  b('i'), u('g'), None, (1,)
             ).as_many().as_bytes().shift_out().end(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
+        # man
+        self._true_true_false(
+            self.mclass(
+                [1], True, r't', b('i'), u('g'), None, (1,)
+            ).as_many().as_bytes().shift_out(),
+            self.assertEqual,
+            [
+        b('[1]'), b('True'), b('t'), b('i'),  b('g'), b('None'), b('(1,)')
+            ]
+        )
 
     def test_unicode(self):
         from stuf.six import u, b
+        # auto
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_unicode().shift_out().end(),
+            [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
+        )
+        # man
+        self._true_true_false(
+            self.mclass(
+                [1], True, r't', b('i'), u('g'), None, (1,)
+            ).as_many().as_unicode().shift_out(),
+            self.assertEqual,
             [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
         )

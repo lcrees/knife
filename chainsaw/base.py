@@ -15,8 +15,8 @@ from chainsaw.compat import tounicode, tobytes, imap
 SLOTS = [
      '_IN', '_ins', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_sps',
      '_outs', '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth',
-     '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_iterator',
-     '_original', '_baseline',
+     '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_original',
+     '_baseline',
 ]
 
 

@@ -36,27 +36,6 @@ class LazyMixin(ChainsawMixin):
     ###########################################################################
 
     @contextmanager
-    def _man2(self, **kw):
-        '''switch to a manually balanced two-link chain'''
-        self._as_chain(
-            chain=self._man2, outs=kw.get(self._OUTCFG, self._INVAR), **kw
-        )
-        # move outgoing things up to work link
-        work, outs = tee(getattr(self, self._OUT))
-        setattr(self, self._WORK, work)
-        setattr(self, self._OUT, outs)
-        yield
-        # move things from holding state to outs
-        hold = getattr(self, self._HOLD)
-        setattr(
-            self,
-            outs,
-            hold if self._buildup else chain(hold, getattr(self, self._OUT)),
-        )
-        # clear work & holding link & return to current selected chain
-        self._rechain()._clearworking()
-
-    @contextmanager
     def _man4(self, **kw):
         '''switch to a manually balanced four-link chain'''
         self._as_chain(chain=self._man4, **kw)
