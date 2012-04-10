@@ -36,10 +36,10 @@ class LazyMixin(KnifeMixin):
     ###########################################################################
 
     @contextmanager
-    def _flow2(self, **kw):
+    def _manual2(self, **kw):
         '''switch to a manually balanced two-stage flow'''
         self._as_flow(
-            flow=self._flow2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
+            flow=self._manual2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
         )._clearworking()
         # move outgoing things up to work stage
         work, outflow = tee(getattr(self, self._OUT))
@@ -57,10 +57,10 @@ class LazyMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @contextmanager
-    def _flow3(self, **kw):
+    def _manual3(self, **kw):
         '''switch to a manually balanced three-stage flow'''
         self._as_flow(
-            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._manual3, **kw
         )._clearworking()
         # move incoming things up to work stage
         work, incoming = tee(getattr(self, self._IN))
@@ -78,9 +78,9 @@ class LazyMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @contextmanager
-    def _flow4(self, **kw):
+    def _manual4(self, **kw):
         '''switch to a manually balanced four-stage flow'''
-        self._as_flow(flow=self._flow4, **kw)._clearworking()
+        self._as_flow(flow=self._manual4, **kw)._clearworking()
         # move incoming things up to work stage
         work, incoming = tee(getattr(self, self._IN))
         setattr(self, self._WORK, work)
@@ -116,13 +116,22 @@ class LazyMixin(KnifeMixin):
         # clear work, holding stages & return to current selected flow
         self._clearworking()._reflow()
 
+    @staticmethod
+    def _clone(iterable, n=2, tee_=tee):
+        '''
+        clone an iterable
+
+        @param n: number of clones
+        '''
+        return tee_(iterable, n)
+
     ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
 
     @property
     def _iterable(self, getattr_=getattr):
-        '''iterable'''
+        '''some iterable derived from a stage in the flow'''
         return getattr_(self, self._WORK)
 
     ###########################################################################
@@ -130,7 +139,7 @@ class LazyMixin(KnifeMixin):
     ###########################################################################
 
     def _xtend(self, things, chain_=chain, getattr_=getattr):
-        '''extend holding stage with `things`'''
+        '''extend the holding stage with `things`'''
         setattr(
             self,
             self._HOLD,
@@ -138,12 +147,11 @@ class LazyMixin(KnifeMixin):
         return self
 
     def _xtendfront(self, things, reversed_=reversed):
-        '''extend before of holding stage with `things`'''
+        '''
+        extend holding stage with `things` placed in front of anything already
+        in the holding stage
+        '''
         return self._xtend(reversed_(things))
-
-    ###########################################################################
-    ## append things ##########################################################
-    ###########################################################################
 
     def _append(self, things, chain_=chain, iter_=iter, getattr_=getattr):
         '''append `things` to holding stage'''
@@ -155,7 +163,10 @@ class LazyMixin(KnifeMixin):
         return self
 
     def _appendfront(self, things, iter_=iter):
-        '''append `things` before of holding stage'''
+        '''
+        append `things` to the holding stage in front of anything already in
+        the holding stage
+        '''
         return self._xtend(iter_([things]))
 
     ###########################################################################
@@ -183,6 +194,7 @@ class LazyMixin(KnifeMixin):
             l(hold2),
             self._OUT,
             l(out2),
+            self._mode,
             self._context,
         )
 
@@ -193,7 +205,7 @@ class LazyMixin(KnifeMixin):
 
     count = __len__
 
-    def countout(self):
+    def count_out(self):
         '''Number of outgoing things.'''
         self._outflow, outflow = tee(self._outflow)
         return len(list(outflow))
@@ -224,13 +236,13 @@ class LazyMixin(KnifeMixin):
         setattr(self, self._WORK, iter([]))
         return self
 
-    def clearin(self):
+    def clear_in(self):
         '''Clear inflow stage.'''
         delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
-    def clearout(self):
+    def clear_out(self):
         '''Clear outflow stage.'''
         delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
@@ -245,35 +257,12 @@ class OutputMixin(LazyMixin, OutflowMixin):
         '''Yield outgoing things, clearing outflow as it goes.'''
         return getattr(self, self._OUT)
 
-    def end(self):
-        '''Return outgoing things and clear out everything.'''
-        self._unflow()
-        outflow, tell = tee(self._outflow)
-        wrap = self._wrapper
-        results = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
-        # clear every last thing
-        self.clear()._clearsp()
-        self._baseline = self._original = None
-        return results
-
     def preview(self):
         '''Take a peek at the current state of outgoing things.'''
-        outflow, tell, self._outflow = tee(getattr(self, self._OUT), 3)
-        wrap = self._wrapper
-        return outflow.pop() if len(wrap(tell)) == 1 else wrap(outflow)
-
-    def results(self):
-        '''Return outgoing things and clear outflow.'''
-        self._unflow()
         outflow, tell = tee(self._outflow)
         wrap = self._wrapper
-        results = next(outflow) if len(wrap(tell)) == 1 else wrap(outflow)
-        # clear outflow
-        self.clearout()
-        # restore baseline if in query context
-        if self._context == self._QUERY:
-            self.undo(baseline=True)
-        return results
+        value = list(wrap(i) for i in outflow) if self._MANY else wrap(outflow)
+        return value.pop() if len(wrap(tell)) == 1 else value
 
 
 class lazyknife(

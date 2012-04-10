@@ -111,12 +111,12 @@ class AFilterMixin(object):
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).filter().end(), [2, 4, 6]
+            ).filter(reverse=True).end(), [1, 3, 5]
         )
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).filter(invert=True).end(), [1, 3, 5]
+            ).filter().end(), [2, 4, 6]
         )
 
     def test_find(self):

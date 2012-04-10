@@ -77,18 +77,12 @@ class ATruthMixin(object):
         )
 
     def test_frequency(self):
-        self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[2],
-            [(11, 3), (3, 2), (5, 1), (7, 1)]
-        )
+        common = self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()
+        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
         # most common
-        self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[1], 11,
-        )
+        self.assertEqual(common[1], 11)
         # least common
-        self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[0], 7,
-        )
+        self.assertEqual(common[0], 7)
 
 
 class AOrderMixin(object):

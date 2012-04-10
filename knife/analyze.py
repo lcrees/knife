@@ -4,6 +4,7 @@
 from math import fsum
 from threading import local
 from operator import truediv
+from itertools import groupby
 from random import choice, shuffle, sample
 
 from knife.compat import Counter, imap, iall, iany, imax, imin, isum
@@ -18,7 +19,7 @@ class StatsMixin(local):
         i1, i2 = cls._clone(iterable)
         return t(s(i1, 0.0), n(list(i2)))
 
-    @classmethod
+    @staticmethod
     def _max(key, imax_=imax):
         def max_(iterable):
             return imax_(iterable, key=key)
@@ -41,7 +42,7 @@ class StatsMixin(local):
         i1 = list_(sorted_(iterable))
         return i1[-1] - i1[0]
 
-    @classmethod
+    @staticmethod
     def _min(key, imin_=imin):
         def min_(iterable):
             return imin_(iterable, key=key)
@@ -49,7 +50,7 @@ class StatsMixin(local):
 
     @staticmethod
     def _sum(start, floats, sum=isum, fsum_=fsum):
-        summer = lambda x: sum(x, start) if not floats else fsum_
+        summer = fsum_ if floats else lambda x: sum(x, start)
         def sum_(iterable): #@IgnorePep8
             return summer(iterable)
         return sum_
@@ -164,6 +165,18 @@ class OrderMixin(local):
     '''order mixin'''
 
     @staticmethod
+    def _choice(iterable, choice_=choice, list_=list):
+        return choice_(list_(iterable))
+
+    @staticmethod
+    def _groupby(key, imap_=imap, tuple_=tuple, groupby_=groupby):
+        def grouper(x):
+            return (x[0], tuple_(x[1]))
+        def groupby__(iterable): #@IgnorePep8
+            return imap_(grouper, groupby_(iterable, key))
+        return groupby__
+
+    @staticmethod
     def _reverse(iterable, list_=list, reversed_=reversed):
         return reversed_(list_(iterable))
 
@@ -172,10 +185,6 @@ class OrderMixin(local):
         def sort(iterable):
             return sorted_(iterable, key=key)
         return sort
-
-    @staticmethod
-    def _choice(iterable, choice_=choice, list_=list):
-        return choice_(list_(iterable))
 
     @staticmethod
     def _sample(n, _sample=sample, list_=list):
@@ -193,6 +202,13 @@ class OrderMixin(local):
         '''random choice of/from incoming'''
         with self._flow():
             return self._one(self._choice)
+
+    def groupby(self):
+        '''
+        group incoming, optionally using current call for key function
+        '''
+        with self._flow():
+            return self._many(self._groupby(self._identity))
 
     def reverse(self):
         '''reverse order of incoming'''

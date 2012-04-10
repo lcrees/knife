@@ -44,10 +44,10 @@ class ActiveMixin(KnifeMixin):
     ###########################################################################
 
     @contextmanager
-    def _flow2(self, **kw):
+    def _manual2(self, **kw):
         '''switch to a manually balanced two-stage flow'''
         self._as_flow(
-            flow=self._flow2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
+            flow=self._manual2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
         )._clearworking()
         outflow = getattr(self, self._OUT)
         # move outgoing (usually incoming) things up to work stage
@@ -64,10 +64,10 @@ class ActiveMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @contextmanager
-    def _flow3(self, **kw):
+    def _manual3(self, **kw):
         '''switch to a manually balanced three-stage flow'''
         self._as_flow(
-            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._flow3, **kw
+            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._manual3, **kw
         )._clearworking()
         # move incoming things up to work stage
         getattr(self, self._WORK).extend(getattr(self, self._IN))
@@ -84,9 +84,9 @@ class ActiveMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     @contextmanager
-    def _flow4(self, **kw):
+    def _manual4(self, **kw):
         '''switch to a manually balanced four-stage flow'''
-        self._as_flow(flow=self._flow4, **kw)._clearworking()
+        self._as_flow(flow=self._manual4, **kw)._clearworking()
         # move incoming things up to work stage
         getattr(self, self._WORK).extend(getattr(self, self._IN))
         # assign flow iterator
@@ -123,6 +123,17 @@ class ActiveMixin(KnifeMixin):
         inflow.extend(hold)
         # clear work, holding stages & return to current selected flow
         self._clearworking()._reflow()
+
+    @staticmethod
+    def _clone(iterable, n=2, deque_=deque):
+        '''
+        clone an iterable
+
+        @param n: number of clones
+        '''
+        if n == 2:
+            return deque_(iterable), iterable
+        return iterable, iterable
 
     ###########################################################################
     ## iterate things #########################################################
@@ -174,10 +185,6 @@ class ActiveMixin(KnifeMixin):
         getattr_(self, self._HOLD).extendleft(things)
         return self
 
-    ###########################################################################
-    ## append things ##########################################################
-    ###########################################################################
-
     def _append(self, things, getattr_=getattr):
         '''append `things` to the holding stage'''
         getattr_(self, self._HOLD).append(things)
@@ -208,6 +215,7 @@ class ActiveMixin(KnifeMixin):
             list_(getattr_(self, self._HOLD)),
             self._OUT,
             list_(getattr_(self, self._OUT)),
+            self._mode,
             self._context,
         )
 
@@ -217,7 +225,7 @@ class ActiveMixin(KnifeMixin):
 
     count = __len__
 
-    def countout(self):
+    def count_out(self):
         '''Number of outgoing things.'''
         return len(self._outflow)
 
@@ -243,12 +251,12 @@ class ActiveMixin(KnifeMixin):
         self._work.clear()
         return self
 
-    def clearin(self):
+    def clear_in(self):
         '''Clear inflow stage.'''
         self._inflow.clear()
         return self
 
-    def clearout(self):
+    def clear_out(self):
         '''Clear outflow stage.'''
         self._outflow.clear()
         return self
@@ -262,31 +270,14 @@ class OutputMixin(ActiveMixin, OutflowMixin):
         '''Yield outgoing things, clearing outflow as it goes.'''
         return self._iterexcept(self._OUT)
 
-    def end(self):
-        '''Return outgoing things and clear out everything.'''
-        self._unflow()
-        wrap, outflow = self._wrapper, self._outflow
-        value = outflow.pop() if len(outflow) == 1 else wrap(outflow)
-        # clear every last thing
-        self.clear()._clearsp()
-        return value
-
     def preview(self):
         '''Take a peek at the current state of outgoing things.'''
-        outflow, wrap = deque(self._outflow), self._wrapper
-        return outflow.pop() if len(outflow) == 1 else wrap(outflow)
-
-    def results(self):
-        '''Return outgoing things and clear outflow.'''
-        self._unflow()
         wrap, outflow = self._wrapper, self._outflow
-        value = outflow.pop() if len(outflow) == 1 else wrap(outflow)
-        # clear outflow
-        self.clearout()
-        # restore baseline if in query context
-        if self._context == self._QUERY:
-            self.undo(baseline=True)
-        return value
+        if self._mode == self._MANY:
+            value = list(wrap(i) for i in outflow)
+        else:
+            value = wrap(outflow)
+        return value.pop() if len(value) == 1 else value
 
 
 class activeknife(

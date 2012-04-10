@@ -4,7 +4,7 @@
 from threading import local
 from collections import deque
 from functools import partial, reduce
-from itertools import cycle, islice, groupby
+from itertools import cycle, islice
 
 from stuf.six import strings, u
 from knife.compat import imap, ichain, tounicode, zip_longest
@@ -134,14 +134,6 @@ class SliceMixin(local):
             return islice_(iterable, n) if n else next_(iterable)
         return first
 
-    @staticmethod
-    def _groupby(key, imap_=imap, tuple_=tuple, groupby_=groupby):
-        def grouper(x):
-            return (x[0], tuple_(x[1]))
-        def groupby__(iterable): #@IgnorePep8
-            return imap_(grouper, groupby_(iterable, key))
-        return groupby__
-
     @classmethod
     def _initial(cls, iterable, islice_=islice, len_=len, list_=list):
         i1, i2 = cls._clone(iterable)
@@ -179,13 +171,6 @@ class SliceMixin(local):
         with self._flow():
             first = self._first
             return self._many(first(n)) if n else self._one(first(n))
-
-    def groupby(self):
-        '''
-        group incoming, optionally using current call for key function
-        '''
-        with self._flow():
-            return self._many(self._groupby(self._identity))
 
     def initial(self):
         '''all incoming except the last thing'''

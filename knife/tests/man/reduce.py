@@ -11,7 +11,7 @@ class MSliceMixin(object):
     def test_first(self):
         manknife = self.qclass(5, 4, 3, 2, 1).first()
         self.assertFalse(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         self.assertEqual(manknife.results(), 5)
         self.assertFalse(manknife.balanced)
@@ -30,7 +30,7 @@ class MSliceMixin(object):
     def test_last(self):
         manknife = self.qclass(5, 4, 3, 2, 1).last()
         self.assertFalse(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         self.assertEqual(manknife.results(), 1)
         self.assertFalse(manknife.balanced)

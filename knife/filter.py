@@ -155,7 +155,14 @@ class FilterMixin(local):
             call = compile(pat, flag).search
         else:
             call = true
-        return lambda x: ff(call, x) if false else f(call, x)
+        if false:
+            def falsefilter(iterable):
+                return ff(call, iterable)
+            return falsefilter
+        else:
+            def truefilter(iterable):
+                return f(call, iterable)
+            return truefilter
 
     @classmethod
     def _find(cls, true, pat, false, flag, f=ifilter, ff=ifilterfalse):
@@ -163,9 +170,14 @@ class FilterMixin(local):
             call = compile(pat, flag).search
         else:
             call = true
-        def find(iterable): #@IgnorePep8
-            return next(lambda x: ff(call, x) if false else f(call, x))
-        return find
+        if false:
+            def falsefind(iterable): #@IgnorePep8
+                return next(ff(call, iterable))
+            return falsefind
+        else:
+            def truefind(iterable):
+                return next(f(call, iterable))
+            return truefind
 
     @staticmethod
     def _replace(pattern, new, count, flags, imap_=imap):
@@ -234,7 +246,10 @@ class FilterMixin(local):
         @param pattern: search pattern expression (default: None)
         @param reverse: reduce from right side (default: False)
         '''
-        return self._many(self._filter(self._test, pattern, reverse, flags))
+        with self._flow():
+            return self._many(
+                self._filter(self._test, pattern, reverse, flags)
+            )
 
     def find(self, pattern=None, reverse=False, flags=0):
         '''first incoming thing for which current callable returns `True`'''

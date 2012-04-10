@@ -42,7 +42,7 @@ class MRepeatMixin(object):
         testlist = [[1, [2, 3]], [4, [5, 6]]]
         manknife = self.qclass(testlist).copy()
         self.assertTrue(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         newlist = manknife.end()
         self.assertFalse(newlist is testlist)

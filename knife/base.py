@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 '''base knife mixins'''
 
-import re
-from json import loads
-from itertools import tee
 from operator import truth
 from threading import local
 from collections import deque
 from contextlib import contextmanager
-from htmlentitydefs import name2codepoint
-from json.encoder import encode_basestring
-from xml.sax.saxutils import escape, unescape
 
 from stuf.utils import OrderedDict
 from stuf.core import stuf, frozenstuf, orderedstuf
@@ -88,9 +82,9 @@ class KnifeMixin(local):
     ###########################################################################
 
     # process all incoming things as one thing
-    _ONE = _DEFAULT_MODE = 'AS ONE'
+    _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
     # process each incoming thing as one of many individual things
-    _MANY = 'AS MANY'
+    _MANY = 'TREAT AS MANY'
 
     def _one(self, call, _imap=imap):
         # append incoming things to outflow if processing them as one thing
@@ -135,12 +129,12 @@ class KnifeMixin(local):
     ###########################################################################
 
     # modify incoming things from input to output in one series of operations
-    _EDIT = _DEFAULT_CONTEXT = 'EDIT'
+    _EDIT = _DEFAULT_CONTEXT = 'EDIT KNIFE'
     # reset incoming things back to a baseline snapshot after each query
-    _QUERY = 'QUERY'
+    _QUERY = 'QUERY KNIFE'
     # reset incoming things back to a baseline snapshot after using results of
     # operations on incoming to determine which of two paths to follow
-    _TRUTH = 'CONDITION'
+    _TRUTH = 'CONDITION KNIFE'
 
     def as_edit(self):
         '''
@@ -162,7 +156,7 @@ class KnifeMixin(local):
         opportunities to extract and transform them aren't lost.
         '''
         self._context = self._TRUTH
-        return self.snapshot(baseline=True)._as_flow(hard=True, snapshot=False)
+        return self.snapshot(baseline=True)._as_flow(hard=True, snap=False)
 
     def as_view(self):
         '''
@@ -180,9 +174,9 @@ class KnifeMixin(local):
     ## things in flow #########################################################
     ###########################################################################
 
-    # automatically rebalance inflow with outflow
+    # automatically shift_in inflow with outflow
     _DEFAULT_FLOW = _AUTO = '_autoflow'
-    # manually rebalance inflow with outflow
+    # manually shift_in inflow with outflow
     _MANUAL = '_flow4'
     # 1. stage for incoming things which flows to =>
     _INCFG = 'inflow'
@@ -227,10 +221,10 @@ class KnifeMixin(local):
         return self._as_flow(keep=False)
 
     @contextmanager
-    def _flow1(self, **kw):
+    def _manual1(self, **kw):
         '''switch to one-stage flow'''
         q = kw.pop(self._WORKCFG, self._INVAR)
-        self._as_flow(work=q, hold=q, flow=self._flow1, **kw)
+        self._as_flow(work=q, hold=q, flow=self._manual1, **kw)
         yield
         self._reflow()
 
@@ -249,42 +243,33 @@ class KnifeMixin(local):
         cls._DEFAULT_CONTEXT = cls._MANUAL
         return cls
 
-    def rebalance(self, reverse=True):
-        '''
-        Manually rebalance inflow with outflow by copying outgoing things
-        back to inflow as incoming things.
-
-        @param reverse: copy incoming things to outflow as outgoing things
-        (default: `True`)
-        '''
-        # rebalance by copying inflow to outflow
-        if reverse:
-            with self._autoflow(snapshot=False, keep=False):
-                return self._xtend(self._iterable)
-        # rebalance by copying outflow back to inflow
+    def shift_in(self):
+        '''Copy outgoing things back to inflow.'''
         with self._autoflow(
-            inflow=self._OUTVAR, outflow=self._INVAR, keep=False,
-            snapshot=False,
+            inflow=self._OUTVAR, outflow=self._INVAR, keep=False, snap=False,
         ):
             return self._xtend(self._iterable)
 
+    def shift_out(self):
+        '''
+        Manually copy incoming things to outflow as outgoing things.
+        '''
+        with self._autoflow(snap=False, keep=False):
+            return self._xtend(self._iterable)
+
+    def reup(self):
+        '''put incoming in incoming as one incoming thing'''
+        with self._manual2(keep=False):
+            return self._xtend(list(self._iterable))
+
     @property
     def balanced(self):
-        '''Determine if inflow and outflow are in rebalance'''
-        return self.countout() == self.__len__()
+        '''Determine if inflow and outflow are in balance'''
+        return self.count_out() == self.__len__()
 
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
-
-    @staticmethod
-    def _clone(iterable, n=2, tee_=tee):
-        '''
-        clone an iterable
-
-        @param n: number of clones
-        '''
-        return tee_(iterable, n)
 
     def snapshot(self, baseline=False, original=False):
         '''
@@ -351,8 +336,8 @@ class KnifeMixin(local):
     @property
     def _test(self):
         '''
-        Substitute truth operator function for current callable is no
-        current callable is assigned.
+        Substitute truth operator function for current callable is no current
+        callable is assigned.
         '''
         return self._call if self._call is not None else truth
 
@@ -415,7 +400,7 @@ class KnifeMixin(local):
 
         @param things: wannabe incoming things
         '''
-        with self._flow1():
+        with self._manual1():
             return self._xtend(things)
 
     def extendfront(self, things):
@@ -425,7 +410,7 @@ class KnifeMixin(local):
 
         @param thing: wannabe incoming things
         '''
-        with self._flow1():
+        with self._manual1():
             return self._xtendfront(things)
 
     def append(self, thing):
@@ -435,7 +420,7 @@ class KnifeMixin(local):
 
         @param thing: one wannabe incoming thing
         '''
-        with self._flow1():
+        with self._manual1():
             return self._append(thing)
 
     def appendfront(self, thing):
@@ -445,7 +430,7 @@ class KnifeMixin(local):
 
         @param thing: one wannabe incoming thing
         '''
-        with self._flow1():
+        with self._manual1():
             return self._appendfront(thing)
 
     ###########################################################################
@@ -458,10 +443,10 @@ class KnifeMixin(local):
 
     @staticmethod
     def _repr(*args):
-        '''Object representation'''
+        '''object representation'''
         return (
             '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => '
-            'OUT: {8}: ({9})]) <<{10}>>'
+            'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>'
         ).format(*args)
 
     ###########################################################################
@@ -469,60 +454,72 @@ class KnifeMixin(local):
     ###########################################################################
 
     def _clearsp(self):
-        '''Clear out snapshots.'''
+        '''clear out snapshots'''
         self._sps.clear()
         return self
 
     def clear(self):
         '''Clear out everything.'''
         self._truth = None
-        return self.untap().unwrap().clearout().clearin()._clearw()._clearh()
+        return self.untap().unwrap().clear_out().clear_in()._clearw()._clearh()
 
 
 class OutflowMixin(local):
 
-    '''knife output mixin'''
+    '''knifing output mixin'''
 
-    def _html(self):
-        return self.wrap(lambda x: escape(x, {'"': "&quot;", "'": '&#39;'}))
-
-    def _js(self):
-        return self.wrap(encode_basestring)
-
-    @staticmethod
-    def _unhtml():
+    def which(self, call=None, alt=None):
         '''
-        from -> John J. Lee
-        http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
+        choose current callable based on results of operations in CONDITION
+        mode
+
+        @param call: external callable to use if condition is `True`
+        @param alt: external callable  to use if condition if `False`
         '''
-        def unescape_charref(ref):
-            name = ref[2:-1]
-            base = 10
-            if name.startswith("x"):
-                name = name[1:]
-                base = 16
-            return unichr(int(name, base))
-        def replace_entities(match): #@IgnorePep8
-            ent = match.group()
-            if ent[1] == "#":
-                return unescape_charref(ent)
-            repl = name2codepoint.get(ent[1:-1])
-            return unichr(repl) if repl is not None else ent
-        def unescape_(data): #@IgnorePep8
-            return re.sub(r'&#?[A-Za-z0-9]+?;', replace_entities, data)
-        return unescape_
+        if self.__bool__():
+            # use external call or current callable
+            self._call = call if call is not None else self._call
+        else:
+            # use external callable or current alternative callable
+            self._call = alt if alt is not None else self._alt
+        # return to edit mode
+        return self.as_edit()
 
-    @staticmethod
-    def _unjs():
-        return loads
+    def end(self):
+        '''Return outgoing things and clear out everything.'''
+        self._unflow()
+        value = self.preview()
+        # clear every last thing
+        self.clear()._clearsp()
+        return value
 
-    @staticmethod
-    def _unxml():
-        return unescape
+    def results(self):
+        '''Return outgoing things and clear outflow.'''
+        self._unflow()
+        value = self.preview()
+        # clear outflow
+        self.clear_out()
+        # restore baseline if in query context
+        if self._context == self._QUERY:
+            self.undo(baseline=True)
+        return value
 
-    @staticmethod
-    def _xml():
-        return escape
+    ###########################################################################
+    ## wrapping things ########################################################
+    ###########################################################################
+
+    def wrap(self, wrapper):
+        '''
+        wrapper for outflow
+
+        @param wrapper: an iterator class
+        '''
+        self._wrapper = wrapper
+        return self
+
+    ###########################################################################
+    ## string wrapping things #################################################
+    ###########################################################################
 
     def as_ascii(self, errors='strict'):
         '''
@@ -541,63 +538,6 @@ class OutflowMixin(local):
         '''
         return self.wrap(lambda x: tobytes(x, encoding, errors))
 
-    def as_deque(self):
-        '''set wrapper to `deque`'''
-        return self.wrap(deque)
-
-    def as_dict(self):
-        '''set wrapper to `dict`'''
-        return self.wrap(dict)
-
-    def as_escaped(self, format='html'):
-        '''escape incoming'''
-        return self.wrap(getattr(self, format))
-
-    def as_frozenset(self):
-        '''set wrapper to `frozenset`'''
-        return self.wrap(frozenset)
-
-    def as_frozenstuf(self):
-        '''set wrapper to `frozenstuf`'''
-        return self.wrap(frozenstuf)
-
-    def as_list(self):
-        '''clear current wrapper'''
-        return self.wrap(list)
-
-    unwrap = as_list
-
-    def as_ordereddict(self):
-        '''set wrapper to `OrderedDict`'''
-        return self.wrap(OrderedDict)
-
-    def as_orderedstuf(self):
-        '''set wrapper to `orderedstuf`'''
-        return self.wrap(orderedstuf)
-
-    def as_stuf(self):
-        '''set wrapper to `stuf`'''
-        return self.wrap(stuf)
-
-    def reup(self):
-        '''put incoming in incoming as one incoming thing'''
-        with self._flow2(keep=False):
-            return self._xtend(list(self._iterable))
-
-    def as_set(self):
-        '''set wrapper to `set`'''
-        return self.wrap(set)
-
-    def as_tuple(self):
-        '''set wrapper to `tuple`'''
-        return self.wrap(tuple)
-
-    def as_unescaped(self, format='html'):
-        '''
-        unescape incoming stings
-        '''
-        return self.wrap(getattr(self, 'un' + format))
-
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
         decode each incoming thing as unicode string (regardless of type)
@@ -607,18 +547,60 @@ class OutflowMixin(local):
         '''
         return self.wrap(lambda x: tounicode(x, encoding, errors))
 
-    def wrap(self, wrapper):
-        '''
-        wrapper for outflow
+    ###########################################################################
+    ## sequence wrapping things ###############################################
+    ###########################################################################
 
-        @param wrapper: an iterator class
-        '''
-        self._wrapper = wrapper
-        return self
+    def as_list(self):
+        '''clear current wrapper'''
+        return self.wrap(list)
 
-    def which(self, call=None, alt=None):
-        if self:
-            self._call = call if call is not None else self._call
-        else:
-            self._call = alt if alt is not None else self._alt
-        return self.as_edit()
+    unwrap = as_list
+
+    def as_deque(self):
+        '''set wrapper to `deque`'''
+        return self.wrap(deque)
+
+    def as_tuple(self):
+        '''set wrapper to `tuple`'''
+        return self.wrap(tuple)
+
+    ###########################################################################
+    ## map wrapping things ####################################################
+    ###########################################################################
+
+    def as_dict(self):
+        '''set wrapper to `dict`'''
+        return self.wrap(dict)
+
+    def as_ordereddict(self):
+        '''set wrapper to `OrderedDict`'''
+        return self.wrap(OrderedDict)
+
+    ###########################################################################
+    ## stuf wrapping things ###################################################
+    ###########################################################################
+
+    def as_frozenstuf(self):
+        '''set wrapper to `frozenstuf`'''
+        return self.wrap(frozenstuf)
+
+    def as_orderedstuf(self):
+        '''set wrapper to `orderedstuf`'''
+        return self.wrap(orderedstuf)
+
+    def as_stuf(self):
+        '''set wrapper to `stuf`'''
+        return self.wrap(stuf)
+
+    ###########################################################################
+    ## set wrapping things ####################################################
+    ###########################################################################
+
+    def as_frozenset(self):
+        '''set wrapper to `frozenset`'''
+        return self.wrap(frozenset)
+
+    def as_set(self):
+        '''set wrapper to `set`'''
+        return self.wrap(set)

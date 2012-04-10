@@ -60,7 +60,7 @@ class AMapMixin(object):
         from stuf import stuf
         thing = self.qclass(
             ('a', 1), ('b', 2), ('c', 3)
-        ).reup().tap(stuf, factory=True).map().rebalance().end()
+        ).reup().tap(stuf, factory=True).map().shift_in().end()
         self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
 
     def test_map(self):
@@ -73,12 +73,12 @@ class AMapMixin(object):
             [6, 10, 14],
         )
         self.assertEqual(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
-        )
-        self.assertEqual(
             self.qclass(
                 (1, 2), (2, 3), (3, 4)
             ).tap(lambda x, y: x * y).map(args=True).end(), [2, 6, 12],
+        )
+        self.assertEqual(
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
         )
 
     def test_invoke(self):

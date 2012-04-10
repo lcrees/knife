@@ -20,7 +20,7 @@ class MMathMixin(object):
         ]
         manknife = self.qclass(*stooges).tap(lambda x: x.age).max()
         self.assertFalse(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         self.assertEqual(stuf(manknife.end()), stuf(name='curly', age=60))
         self.assertTrue(manknife.balanced)
@@ -134,7 +134,7 @@ class MOrderMixin(object):
     def test_choice(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).choice()
         self.assertFalse(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         manknife.end()
         self.assertTrue(manknife.balanced)
@@ -142,7 +142,7 @@ class MOrderMixin(object):
     def test_sample(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).sample(3)
         self.assertFalse(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         manknife.end()
         self.assertTrue(manknife.balanced)
@@ -150,7 +150,7 @@ class MOrderMixin(object):
     def test_shuffle(self):
         manknife = self.qclass(1, 2, 3, 4, 5, 6).shuffle()
         self.assertTrue(manknife.balanced)
-        manknife.rebalance()
+        manknife.shift_in()
         self.assertTrue(manknife.balanced)
         manknife.end()
         self.assertTrue(manknife.balanced)

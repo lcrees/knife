@@ -27,7 +27,7 @@ class MCollectMixin(object):
                 stooges, stoog2, stoog3
             ).tap(
                 lambda x: not x[0].startswith('__'), isclass
-            ).tuplevalue().members().untap().rebalance(),
+            ).tuplevalue().members().untap().shift_in(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
@@ -48,7 +48,7 @@ class MCollectMixin(object):
         self._true_true_false(
             self.qclass(stoog3).tap(
                 lambda x: x, isclass
-            ).tuplevalue().mro().rebalance().members().untap().rebalance(),
+            ).tuplevalue().mro().shift_in().members().untap().shift_in(),
             self.assertEqual,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
             ('age', 40), ('name', 'moe'))
@@ -141,7 +141,7 @@ class MFilterMixin(object):
         self._false_true_false(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).filter(invert=True),
+            ).filter(reverse=True),
             self.assertEqual,
             [1, 3, 5],
         )
