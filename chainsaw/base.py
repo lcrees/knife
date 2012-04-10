@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''base knife mixins'''
+'''base chainsaw mixins'''
 
 from itertools import tee
 from operator import truth
@@ -10,51 +10,51 @@ from contextlib import contextmanager
 from stuf.utils import OrderedDict
 from stuf.core import stuf, frozenstuf, orderedstuf
 
-from knife.compat import tounicode, tobytes, imap
+from chainsaw.compat import tounicode, tobytes, imap
 
 SLOTS = [
-     '_IN', '_inflow', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_outflow',
-     '_buildup',  '_mode', '_FLOWCFG',  '_flow', '_truth', '_context',
-     '_call', '_alt', '_wrapper', '_args', '_kw', '_iterator', '_sps',
+     '_IN', '_ins', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_sps',
+     '_outs', '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth',
+     '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_iterator',
      '_original', '_baseline',
 ]
 
 
-class KnifeMixin(local):
+class ChainsawMixin(local):
 
-    '''knives mixin'''
+    '''base chainsaw mixin'''
 
-    def __init__(self, inflow, outflow, **kw):
+    def __init__(self, ins, outs, **kw):
         '''
         init
 
-        @param inflow: incoming things
-        @param outflow: outgoing things
+        @param ins: incoming things
+        @param outs: outgoing things
         '''
-        super(KnifeMixin, self).__init__()
+        super(ChainsawMixin, self).__init__()
         # incoming things
-        self._inflow = inflow
+        self._ins = ins
         # outgoing things
-        self._outflow = outflow
+        self._outs = outs
         # default context
         self._context = self._DEFAULT_CONTEXT
         # default mode
         self._mode = self._DEFAULT_MODE
         # no truth value to override default `__bool__` response
         self._truth = None
-        ## flow defaults ######################################################
-        self._flow = getattr(self, self._DEFAULT_FLOW)
-        # 1. default inflow stage
+        ## chain defaults #####################################################
+        self._chain = getattr(self, self._DEFAULT_CHAIN)
+        # 1. default ins link
         self._IN = self._INVAR
-        # 2. default work stage
+        # 2. default work link
         self._WORK = self._WORKVAR
-        # 3. default holding stage
+        # 3. default holding link
         self._HOLD = self._HOLDVAR
-        # 4. default outflow stage
+        # 4. default outs link
         self._OUT = self._OUTVAR
-        # default flow configuration
-        self._FLOWCFG = {}
-        # clear things out of outflow stage before adding other things to it?
+        # default chain configuration
+        self._CHAINCFG = {}
+        # clear things out of outs link before adding other things to it?
         self._buildup = True
         ## snapshot defaults ##################################################
         # original and baseline snapshots
@@ -82,44 +82,44 @@ class KnifeMixin(local):
     ## things in process ######################################################
     ###########################################################################
 
-    # process all incoming things as one thing
+    # chainsaw all incoming things as one thing
     _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
-    # process each incoming thing as one of many individual things
+    # chainsaw each incoming thing as one of many individual things
     _MANY = 'TREAT AS MANY'
 
     def _one(self, call, _imap=imap):
-        # append incoming things to outflow if processing them as one thing
+        # append incoming things to outs if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._append(call(self._iterable))
-        # map incoming things and extend outflow if processed as many things
+        # map incoming things and extend outs if chainsawing many things
         elif self._mode == self._MANY:
             return self._xtend(imap(call, self._iterable))
 
     def _many(self, call, _imap=imap):
-        # extend outflow with incoming things if procesing them as one thing
+        # extend outs with incoming things if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._xtend(call(self._iterable))
-        # map incoming things and extend outflow if processed as many things
+        # map incoming things and extend outs if chainsawing many things
         elif self._mode == self._MANY:
             return self._xtend(imap(call, self._iterable))
 
     def _iter(self, call, iter_=iter):
-        '''extend work stage with `things` wrapped in iterator'''
-        # extend outflow with incoming things if procesing them as one thing
+        '''extend work link with `things` wrapped in iterator'''
+        # extend outs with incoming things if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._xtend(iter_(call(self._iterable)))
-        # map incoming things and extend outflow if processed as many things
+        # map incoming things and extend outs if chainsawing many things
         elif self._mode == self._MANY:
             return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
 
     def as_one(self):
-        '''Switch to processing incoming things as one individual thing.'''
+        '''Switch to chainsawing incoming things as one individual thing.'''
         self._mode = self._ONE
         return self
 
     def as_many(self):
         '''
-        Switch to processing each incoming thing as one individual thing among
+        Switch to chainsawing each incoming thing as one individual thing among
         many individual things.
         '''
         self._mode = self._MANY
@@ -130,135 +130,134 @@ class KnifeMixin(local):
     ###########################################################################
 
     # modify incoming things from input to output in one series of operations
-    _EDIT = _DEFAULT_CONTEXT = 'EDIT KNIFE'
+    _EDIT = _DEFAULT_CONTEXT = 'EDIT'
     # reset incoming things back to a baseline snapshot after each query
-    _QUERY = 'QUERY KNIFE'
+    _QUERY = 'QUERY'
     # reset incoming things back to a baseline snapshot after using results of
     # operations on incoming to determine which of two paths to follow
-    _TRUTH = 'CONDITION KNIFE'
+    _TRUTH = 'CONDITION'
 
     def as_edit(self):
         '''
         Switch to editing context where incoming things can be extracted and
         transformed in sequence of operations from their initial placement in
-        the inflow to their final extraction from the outflow.
+        the ins to their final extraction from the outs.
         '''
         self._context = self._EDIT
         self._truth = None
-        return self.clear().undo(baseline=True)._unflow()
+        return self.clear().undo(baseline=True)._unchain()
 
     def as_truth(self):
         '''
         Switch to evaluation context where incoming things can be extracted and
-        transformed so that the results of processing them can be used to
+        transformed so that the results of chainsawing them can be used to
         determine which of two potential paths should be executed. After
-        they're evaluated, the inflow state is automatically returned to a
+        they're evaluated, the ins state is automatically returned to a
         previously taken baseline snapshot of the incoming things so further
         opportunities to extract and transform them aren't lost.
         '''
         self._context = self._TRUTH
-        return self.snapshot(baseline=True)._as_flow(hard=True, snap=False)
+        return self.snapshot(baseline=True)._as_chain(hard=True, snap=False)
 
     def as_view(self):
         '''
         Switch to query context where incoming things can be extracted and
-        transformed so that the results of processing them can be queried.
-        After they're queried, the inflow state is automatically returned to a
+        transformed so that the results of chainsawing them can be queried.
+        After they're queried, the ins state is automatically returned to a
         previously taken baseline snapshot of the incoming things so further
         opportunities to extract and transform them aren't lost.
         '''
         self._context = self._QUERY
         self._truth = None
-        return self.snapshot(baseline=True)._as_flow()
+        return self.snapshot(baseline=True)._as_chain()
 
     ###########################################################################
-    ## things in flow #########################################################
+    ## things in chain ########################################################
     ###########################################################################
 
-    # automatically shift_in inflow with outflow
-    _DEFAULT_FLOW = _AUTO = '_autoflow'
-    # manually shift_in inflow with outflow
-    _MANUAL = '_manual4'
-    # 1. stage for incoming things which flows to =>
-    _INCFG = 'inflow'
-    _INVAR = '_inflow'
-    # 2. stage for working on incoming things which flows to =>
+    # automatically balance ins with outs
+    _DEFAULT_CHAIN = _AUTO = '_auto'
+    # manually balance ins with outs
+    _MANUAL = '_man4'
+    # 1. link for incoming things which is chained to =>
+    _INCFG = 'ins'
+    _INVAR = '_ins'
+    # 2. link for working on incoming things which is chained to =>
     _WORKCFG = 'work'
     _WORKVAR = '_work'
-    # 3. stage to temporarily hold processed incoming things which flows to =>
+    # 3. link temporarily holding chainsawed things which is chained to =>
     _HOLDCFG = 'hold'
     _HOLDVAR = '_hold'
-    # 4. stage where outgoing things can be removed from pipeline
-    _OUTCFG = 'outflow'
-    _OUTVAR = '_outflow'
+    # 4. link where outgoing things can be removed from chain
+    _OUTCFG = 'outs'
+    _OUTVAR = '_outs'
 
-    def _as_flow(self, **kw):
-        '''switch between flows'''
-        # retain flow-specific settings between flow switches
-        self._FLOWCFG = kw if kw.get('hard', False) else {}
+    def _as_chain(self, **kw):
+        '''switch chains'''
+        # retain chain-specific settings between chain switching
+        self._CHAINCFG = kw if kw.get('hard', False) else {}
         # take snapshot
         if kw.get('snap', True):
             self.snapshot()
-        # set current flow
-        self._flow = kw.get('flow', getattr(self, self._DEFAULT_FLOW))
-        # if outflow should be cleared before adding more things to it
+        # set current chain
+        self._chain = kw.get('chain', getattr(self, self._DEFAULT_CHAIN))
+        # if clear outgoing things before adding more things
         self._buildup = kw.get('keep', True)
-        # 1. assign inflow stage
+        # 1. assign "ins" link
         self._IN = kw.get(self._INCFG, self._INVAR)
-        # 2. assign work stage
+        # 2. assign "work" link
         self._WORK = kw.get(self._WORKCFG, self._WORKVAR)
-        # 3. assign holding stage
+        # 3. assign "holding" link
         self._HOLD = kw.get(self._HOLDCFG, self._HOLDVAR)
-        # 4. assign outflow stage
+        # 4. assign "outs" link
         self._OUT = kw.get(self._OUTCFG, self._OUTVAR)
         return self
 
-    def _reflow(self):
-        '''switch to currently selected flow'''
-        return self._as_flow(keep=False, snap=False, **self._FLOWCFG)
+    def _rechain(self):
+        '''switch to currently selected chain'''
+        return self._as_chain(
+            keep=False, snap=False, **self._CHAINCFG
+        )
 
-    def _unflow(self):
-        '''switch to default flow'''
-        return self._as_flow(keep=False, snap=False)
+    def _unchain(self):
+        '''switch to default chain'''
+        return self._as_chain(keep=False, snap=False)
 
     @contextmanager
-    def _manual1(self, **kw):
-        '''switch to one-stage flow'''
+    def _man1(self, **kw):
+        '''switch to one-link chain'''
         q = kw.pop(self._WORKCFG, self._INVAR)
-        self._as_flow(work=q, hold=q, flow=self._manual1, **kw)
+        self._as_chain(work=q, hold=q, chain=self._man1, **kw)
         yield
-        self._reflow()
+        self._rechain()
 
     @classmethod
     def as_auto(cls):
-        '''Context where inflow is automatically rebalanced outflow.'''
-        cls._DEFAULT_FLOW = cls._AUTO
+        '''Context where ins is automatically rebalanced outs.'''
+        cls._DEFAULT_CHAIN = cls._AUTO
         return cls
 
     @classmethod
     def as_manual(cls):
-        '''
-        Context where inflow must be explicitly and manually rebalanced
-        outflow.
-        '''
-        cls._DEFAULT_FLOW = cls._MANUAL
+        '''Context where ins must be manually rebalanced with outs.'''
+        cls._DEFAULT_CHAIN = cls._MANUAL
         return cls
 
     def shift_in(self):
-        '''Manually copy outgoing things to inflow.'''
-        with self._autoflow(
-            inflow=self._OUTVAR, outflow=self._INVAR, snap=False,
+        '''Manually copy outgoing things to ins.'''
+        with self._auto(
+            ins=self._OUTVAR, outs=self._INVAR, snap=False,
         ):
             return self._xtend(self._iterable)
 
     def shift_out(self):
-        '''Manually copy incoming things to outflow.'''
-        with self._autoflow(snap=False):
+        '''Manually copy incoming things to outs.'''
+        with self._auto(snap=False):
             return self._xtend(self._iterable)
 
     @property
     def balanced(self):
-        '''Determine if inflow and outflow are in balance'''
+        '''Determine if ins and outs are in balance'''
         return self.count_out() == self.__len__()
 
     @staticmethod
@@ -276,7 +275,7 @@ class KnifeMixin(local):
 
     def snapshot(self, baseline=False, original=False):
         '''
-        Take a snapshot of incoming things currently in inflow.
+        Take a snapshot of incoming things currently in ins.
 
         @param baseline: make snapshot baseline version (default: False)
         @param original: make snapshot original version (default: False)
@@ -295,11 +294,11 @@ class KnifeMixin(local):
 
     def undo(self, snapshot=0, baseline=False, original=False):
         '''
-        Revert incoming things to a previous version within inflow.
+        Revert incoming things to a previous version within ins.
 
         @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc. (default: 0)
-        @param baseline: return inflow to baseline version (default: False)
-        @param original: return inflow to original version (default: False)
+        @param baseline: return ins to baseline version (default: False)
+        @param original: return ins to original version (default: False)
         '''
         # clear everything
         self.clear()
@@ -309,19 +308,19 @@ class KnifeMixin(local):
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            self._inflow = self._dupe(self._original)
+            self._ins = self._dupe(self._original)
         elif baseline:
             # clear snapshots
             self._clearsp()
             # restore baseline version of incoming things
-            self._inflow = self._dupe(self._baseline)
+            self._ins = self._dupe(self._baseline)
         # if specified, use a specific snapshot
         elif snapshot:
             self._sps.rotate(-(snapshot - 1))
-            self._inflow = self._sps.popleft()
+            self._ins = self._sps.popleft()
         # by default revert to most recent snapshot
         else:
-            self._inflow = self._sps.popleft()
+            self._ins = self._sps.popleft()
         return self
 
     ###########################################################################
@@ -399,41 +398,41 @@ class KnifeMixin(local):
     def extend(self, things):
         '''
         Place many `things` after any incoming `things` already in current
-        inflow.
+        ins.
 
         @param things: wannabe incoming things
         '''
-        with self._manual1():
+        with self._man1():
             return self._xtend(things)
 
     def extendfront(self, things):
         '''
         Place many `things` before any incoming `things` already in current
-        inflow.
+        ins.
 
         @param thing: wannabe incoming things
         '''
-        with self._manual1():
+        with self._man1():
             return self._xtendfront(things)
 
     def append(self, thing):
         '''
         Place one `thing` after any incoming `things` already in current
-        inflow.
+        ins.
 
         @param thing: one wannabe incoming thing
         '''
-        with self._manual1():
+        with self._man1():
             return self._append(thing)
 
     def appendfront(self, thing):
         '''
         Place one `thing` before any incoming `things` already in current
-        inflow.
+        ins.
 
         @param thing: one wannabe incoming thing
         '''
-        with self._manual1():
+        with self._man1():
             return self._appendfront(thing)
 
     ###########################################################################
@@ -441,7 +440,7 @@ class KnifeMixin(local):
     ###########################################################################
 
     def __bool__(self):
-        '''Return results build while in truth context or length of inflow.'''
+        '''Return results build while in truth context or length of ins.'''
         return (self._truth if self._truth is not None else self.__len__())
 
     @staticmethod
@@ -467,14 +466,13 @@ class KnifeMixin(local):
         return self.untap().unwrap().clear_out().clear_in()._clearw()._clearh()
 
 
-class OutflowMixin(local):
+class OutchainMixin(local):
 
     '''knifing output mixin'''
 
     def which(self, call=None, alt=None):
         '''
-        choose current callable based on results of operations in CONDITION
-        mode
+        choose current callable based on results of CONDITION mode
 
         @param call: external callable to use if condition is `True`
         @param alt: external callable  to use if condition if `False`
@@ -490,17 +488,17 @@ class OutflowMixin(local):
 
     def end(self):
         '''Return outgoing things and clear out everything.'''
-        self._unflow()
+        self._unchain()
         value = self.preview()
         # clear every last thing
         self.clear()._clearsp()
         return value
 
     def results(self):
-        '''Return outgoing things and clear outflow.'''
-        self._unflow()
+        '''Return outgoing things and clear outs.'''
+        self._unchain()
         value = self.preview()
-        # clear outflow
+        # clear outs
         self.clear_out()
         # restore baseline if in query context
         if self._context == self._QUERY:
@@ -513,7 +511,7 @@ class OutflowMixin(local):
 
     def wrap(self, wrapper):
         '''
-        wrapper for outflow
+        wrapper for outs
 
         @param wrapper: an iterator class
         '''

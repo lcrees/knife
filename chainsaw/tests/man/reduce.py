@@ -3,18 +3,18 @@
 
 from inspect import ismodule
 
-from knife.compat import port
+from chainsaw.compat import port
 
 
 class MSliceMixin(object):
 
     def test_first(self):
-        manknife = self.qclass(5, 4, 3, 2, 1).first()
-        self.assertFalse(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        self.assertEqual(manknife.results(), 5)
-        self.assertFalse(manknife.balanced)
+        manchainsaw = self.qclass(5, 4, 3, 2, 1).first()
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        self.assertEqual(manchainsaw.results(), 5)
+        self.assertFalse(manchainsaw.balanced)
         self._false_true_false(
             self.qclass(5, 4, 3, 2, 1).first(2), self.assertEqual, [5, 4],
         )
@@ -28,12 +28,12 @@ class MSliceMixin(object):
         )
 
     def test_last(self):
-        manknife = self.qclass(5, 4, 3, 2, 1).last()
-        self.assertFalse(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        self.assertEqual(manknife.results(), 1)
-        self.assertFalse(manknife.balanced)
+        manchainsaw = self.qclass(5, 4, 3, 2, 1).last()
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        self.assertEqual(manchainsaw.results(), 1)
+        self.assertFalse(manchainsaw.balanced)
         self._false_true_false(
             self.qclass(5, 4, 3, 2).last(2), self.assertEqual, [3, 2],
         )

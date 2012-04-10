@@ -3,7 +3,7 @@
 
 from inspect import ismodule
 
-from knife.compat import port
+from chainsaw.compat import port
 
 
 class MCollectMixin(object):

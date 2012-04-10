@@ -6,16 +6,16 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from knife.map import RepeatMixin, MapMixin
-from knife.reduce import SliceMixin, ReduceMixin
-from knife.filter import FilterMixin, CollectMixin
-from knife.base import SLOTS, KnifeMixin, OutflowMixin
-from knife.analyze import StatsMixin, TruthMixin, OrderMixin
+from chainsaw.map import RepeatMixin, MapMixin
+from chainsaw.reduce import SliceMixin, ReduceMixin
+from chainsaw.filter import FilterMixin, CollectMixin
+from chainsaw.base import SLOTS, ChainsawMixin, OutchainMixin
+from chainsaw.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
-class LazyMixin(KnifeMixin):
+class LazyMixin(ChainsawMixin):
 
-    '''lazy knife mixin'''
+    '''lazy chainsaw mixin'''
 
     def __init__(self, *things, **kw):
         '''
@@ -23,98 +23,77 @@ class LazyMixin(KnifeMixin):
 
         @param *things: wannabe incoming things
         '''
-        # if just one thing, put it in inflow or put everything in inflow
-        inflow = iter([things[0]]) if len(things) == 1 else iter(things)
-        super(LazyMixin, self).__init__(inflow, iter([]), **kw)
-        # work stage
+        # if just one thing, put it in inchain or put everything in inchain
+        inchain = iter([things[0]]) if len(things) == 1 else iter(things)
+        super(LazyMixin, self).__init__(inchain, iter([]), **kw)
+        # work link
         self._work = iter([])
-        # holding stage
+        # holding link
         self._hold = iter([])
 
     ###########################################################################
-    ## flow things ############################################################
+    ## chain things ###########################################################
     ###########################################################################
 
     @contextmanager
-    def _manual2(self, **kw):
-        '''switch to a manually balanced two-stage flow'''
-        self._as_flow(
-            flow=self._manual2, outflow=kw.get(self._OUTCFG, self._INVAR), **kw
-        )._clearworking()
-        # move outgoing things up to work stage
-        work, outflow = tee(getattr(self, self._OUT))
+    def _man2(self, **kw):
+        '''switch to a manually balanced two-link chain'''
+        self._as_chain(
+            chain=self._man2, outs=kw.get(self._OUTCFG, self._INVAR), **kw
+        )
+        # move outgoing things up to work link
+        work, outs = tee(getattr(self, self._OUT))
         setattr(self, self._WORK, work)
-        setattr(self, self._OUT, outflow)
+        setattr(self, self._OUT, outs)
         yield
-        # move things from holding state to outflow
+        # move things from holding state to outs
         hold = getattr(self, self._HOLD)
         setattr(
             self,
-            outflow,
+            outs,
             hold if self._buildup else chain(hold, getattr(self, self._OUT)),
         )
-        # clear work & holding stage & return to current selected flow
-        self._clearworking()._reflow()
+        # clear work & holding link & return to current selected chain
+        self._rechain()._clearworking()
 
     @contextmanager
-    def _manual3(self, **kw):
-        '''switch to a manually balanced three-stage flow'''
-        self._as_flow(
-            hold=kw.get(self._WORKCFG, self._WORKVAR), flow=self._manual3, **kw
-        )._clearworking()
-        # move incoming things up to work stage
+    def _man4(self, **kw):
+        '''switch to a manually balanced four-link chain'''
+        self._as_chain(chain=self._man4, **kw)
+        # move incoming things up to work link
         work, incoming = tee(getattr(self, self._IN))
         setattr(self, self._WORK, work)
         setattr(self, self._IN, incoming)
         yield
-        # move things from holding state to outflow
-        hold = getattr(self, self._HOLD)
-        setattr(
-            self,
-            self._OUT,
-            hold if self._buildup else chain(hold, getattr(self, self._OUT)),
-        )
-        # clear work, holding stages & return to current selected flow
-        self._clearworking()._reflow()
-
-    @contextmanager
-    def _manual4(self, **kw):
-        '''switch to a manually balanced four-stage flow'''
-        self._as_flow(flow=self._manual4, **kw)._clearworking()
-        # move incoming things up to work stage
-        work, incoming = tee(getattr(self, self._IN))
-        setattr(self, self._WORK, work)
-        setattr(self, self._IN, incoming)
-        yield
-        # extend outgoing things with holding stage
+        # extend outgoing things with holding link
         hold = getattr(self, self._HOLD)
         setattr(
             self,
             self._OUT,
             hold if self._buildup else chain(hold, getattr(self, self._OUT)),
         )
-        # clear work, holding stages & return to current selected flow
-        self._clearworking()._reflow()
+        # clear work, holding links & return to current selected chain
+        self._rechain()._clearworking()
 
     @contextmanager
-    def _autoflow(self, **kw):
-        '''switch to an automatically balanced four-stage flow'''
-        self._as_flow(flow=self._autoflow, **kw)._clearworking()
-        # move incoming things up to work stage
-        work, incoming = tee(getattr(self, self._IN))
+    def _auto(self, **kw):
+        '''switch to an automatically balanced four-link chain'''
+        self._as_chain(chain=self._auto, **kw)
+        # move ins things up to work link
+        work, ins = tee(getattr(self, self._IN))
         setattr(self, self._WORK, work)
-        setattr(self, self._IN, incoming)
+        setattr(self, self._IN, ins)
         yield
-        # move things from holding stage to inflow and outflow
-        incoming, out = tee(getattr(self, self._HOLD))
+        # move things from holding link to inchain and outs
+        ins, outs = tee(getattr(self, self._HOLD))
         setattr(
             self,
             self._OUT,
-            out if self._buildup else chain(out, getattr(self, self._OUT)),
+            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
         )
-        setattr(self, self._IN, incoming)
-        # clear work, holding stages & return to current selected flow
-        self._clearworking()._reflow()
+        setattr(self, self._IN, ins)
+        # clear work, holding links & return to current selected chain
+        self._rechain()._clearworking()
 
     @staticmethod
     def _dupe(iterable, n=2, tee_=tee):
@@ -131,7 +110,7 @@ class LazyMixin(KnifeMixin):
 
     @property
     def _iterable(self, getattr_=getattr):
-        '''some iterable derived from a stage in the flow'''
+        '''some iterable derived from a link in the chain'''
         return getattr_(self, self._WORK)
 
     ###########################################################################
@@ -139,7 +118,7 @@ class LazyMixin(KnifeMixin):
     ###########################################################################
 
     def _xtend(self, things, chain_=chain, getattr_=getattr):
-        '''extend the holding stage with `things`'''
+        '''extend the holding link with `things`'''
         setattr(
             self,
             self._HOLD,
@@ -148,13 +127,13 @@ class LazyMixin(KnifeMixin):
 
     def _xtendfront(self, things, reversed_=reversed):
         '''
-        extend holding stage with `things` placed in front of anything already
-        in the holding stage
+        extend holding link with `things` placed in front of anything already
+        in the holding link
         '''
         return self._xtend(reversed_(things))
 
     def _append(self, things, chain_=chain, iter_=iter, getattr_=getattr):
-        '''append `things` to holding stage'''
+        '''append `things` to holding link'''
         setattr(
             self,
             self._HOLD,
@@ -164,8 +143,8 @@ class LazyMixin(KnifeMixin):
 
     def _appendfront(self, things, iter_=iter):
         '''
-        append `things` to the holding stage in front of anything already in
-        the holding stage
+        append `things` to the holding link in front of anything already in
+        the holding link
         '''
         return self._xtend(iter_([things]))
 
@@ -200,142 +179,142 @@ class LazyMixin(KnifeMixin):
 
     def __len__(self):
         '''Number of incoming things.'''
-        self._inflow, incoming = tee(self._inflow)
+        self._ins, incoming = tee(self._ins)
         return len(list(incoming))
 
     count = __len__
 
     def count_out(self):
         '''Number of outgoing things.'''
-        self._outflow, outflow = tee(self._outflow)
-        return len(list(outflow))
+        self._outs, outs = tee(self._outs)
+        return len(list(outs))
 
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################
 
     def _clearworking(self, iter_=iter):
-        '''clear working and holding stages'''
-        # clear work stage
+        '''clear working and holding links'''
+        # clear work link
         delattr(self, self._WORK)
         setattr(self, self._WORK, iter_([]))
-        # clear holding stage
+        # clear holding link
         delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter_([]))
         return self
 
     def _clearh(self):
-        '''Clear holding stage.'''
+        '''Clear holding link.'''
         delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter([]))
         return self
 
     def _clearw(self):
-        '''Clear work stage.'''
+        '''Clear work link.'''
         delattr(self, self._WORK)
         setattr(self, self._WORK, iter([]))
         return self
 
     def clear_in(self):
-        '''Clear inflow stage.'''
+        '''Clear inchain link.'''
         delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
     def clear_out(self):
-        '''Clear outflow stage.'''
+        '''Clear outs link.'''
         delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
 
 
-class OutputMixin(LazyMixin, OutflowMixin):
+class OutputMixin(LazyMixin, OutchainMixin):
 
-    '''active output knife mixin'''
+    '''active output chainsaw mixin'''
 
     def __iter__(self):
-        '''Yield outgoing things, clearing outflow as it goes.'''
+        '''Yield outgoing things, clearing outs as it goes.'''
         return getattr(self, self._OUT)
 
     def preview(self):
         '''Take a peek at the current state of outgoing things.'''
-        outflow, tell = tee(self._outflow)
+        outs, tell = tee(self._outs)
         wrap = self._wrapper
         if self._mode == self._MANY:
-            value = list(wrap(i) for i in outflow)
+            value = list(wrap(i) for i in outs)
         else:
-            value = wrap(outflow)
+            value = wrap(outs)
         return value.pop() if len(wrap(tell)) == 1 else value
 
 
-class lazyknife(
+class lazychainsaw(
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, CollectMixin,
     SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
 ):
 
-    '''lazy knife'''
+    '''lazy chainsaw'''
 
     __slots__ = SLOTS
 
 
-class collectknife(OutputMixin, CollectMixin):
+class collectchainsaw(OutputMixin, CollectMixin):
 
-    '''collecting knife'''
-
-    __slots__ = SLOTS
-
-
-class sliceknife(OutputMixin, SliceMixin):
-
-    '''slicing knife'''
+    '''collecting chainsaw'''
 
     __slots__ = SLOTS
 
 
-class filterknife(OutputMixin, FilterMixin):
+class slicechainsaw(OutputMixin, SliceMixin):
 
-    '''filtering knife'''
-
-    __slots__ = SLOTS
-
-
-class repeatknife(OutputMixin, RepeatMixin):
-
-    '''repeating knife'''
+    '''slicing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mapknife(OutputMixin, MapMixin):
+class filterchainsaw(OutputMixin, FilterMixin):
 
-    '''mapping knife'''
-
-    __slots__ = SLOTS
-
-
-class orderknife(OutputMixin, OrderMixin):
-
-    '''ordering knife'''
+    '''filtering chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mathknife(OutputMixin, StatsMixin):
+class repeatchainsaw(OutputMixin, RepeatMixin):
 
-    '''mathing knife'''
-
-    __slots__ = SLOTS
-
-
-class truthknife(OutputMixin, TruthMixin):
-
-    '''truthing knife'''
+    '''repeating chainsaw'''
 
     __slots__ = SLOTS
 
 
-class reduceknife(OutputMixin, ReduceMixin):
+class mapchainsaw(OutputMixin, MapMixin):
 
-    '''reducing knife'''
+    '''mapping chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class orderchainsaw(OutputMixin, OrderMixin):
+
+    '''ordering chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class mathchainsaw(OutputMixin, StatsMixin):
+
+    '''mathing chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class truthchainsaw(OutputMixin, TruthMixin):
+
+    '''truthing chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class reducechainsaw(OutputMixin, ReduceMixin):
+
+    '''reducing chainsaw'''
 
     __slots__ = SLOTS

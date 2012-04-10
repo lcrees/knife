@@ -1,4 +1,4 @@
-'''knife fabfile'''
+'''chainsaw fabfile'''
 
 from fabric.api import prompt, local, settings, env
 
@@ -11,12 +11,12 @@ def _test(val):
 
 
 def tox():
-    '''test knife'''
+    '''test chainsaw'''
     local('tox')
 
 
 def tox_recreate():
-    '''recreate knife test env'''
+    '''recreate chainsaw test env'''
     prompt(
         'Enter testenv: [py26, py27, py32]',
         'testenv',
@@ -26,7 +26,7 @@ def tox_recreate():
 
 
 def release():
-    '''release knife'''
+    '''release chainsaw'''
     local('hg update pu')
     local('hg update next')
     local('hg merge pu; hg ci -m automerge')
@@ -39,14 +39,14 @@ def release():
     prompt('Enter tag: ', 'tag')
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push ssh://hg@bitbucket.org/lcrees/chainsaw')
+        local('hg push git+ssh://git@github.com:kwarterthieves/chainsaw.git')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')
 
 
 def release_next():
-    '''release knife from next branch'''
+    '''release chainsaw from next branch'''
     local('hg update maint')
     local('hg merge default; hg ci -m automerge')
     local('hg update default')
@@ -56,7 +56,7 @@ def release_next():
     prompt('Enter tag: ', 'tag')
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push ssh://hg@bitbucket.org/lcrees/chainsaw')
+        local('hg push git+ssh://git@github.com:kwarterthieves/chainsaw.git')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')

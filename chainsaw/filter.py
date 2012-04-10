@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''knife filtering mixins'''
+'''chainsaw filtering mixins'''
 
 from re import compile
 from inspect import getmro
@@ -7,7 +7,7 @@ from threading import local
 from functools import reduce
 from operator import attrgetter, itemgetter, truth
 
-from knife.compat import (
+from chainsaw.compat import (
     ifilter, ichain, imap, ifilterfalse, ivalues, iitems, ikeys, istarmap)
 
 
@@ -100,7 +100,7 @@ class CollectMixin(local):
 
     def attributes(self, *names):
         '''extract object attributes from incoming by their `*names`'''
-        with self._flow():
+        with self._chain():
             return self._iter(self._attributes(names))
 
     def extract(self, pattern, flags=0):
@@ -109,39 +109,39 @@ class CollectMixin(local):
 
         @param pattern: search pattern
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._extract(pattern, flags))
 
     def items(self):
         '''invoke call on each mapping to get key, value pairs'''
-        with self._flow():
+        with self._chain():
             return self._many(self._items(self._call))
 
     def keys(self):
         '''invoke call on each mapping to get keys'''
-        with self._flow():
+        with self._chain():
             return self._many(self._keys(self._call))
 
     def members(self):
         '''extract object members from incoming'''
-        with self._flow():
+        with self._chain():
             return self._many(
                 self._members(self._test, self._alt, self._wrapper),
             )
 
     def mro(self):
         '''extract ancestors of things by method resolution order'''
-        with self._flow():
+        with self._chain():
             return self._many(self._mro)
 
     def pluck(self, *keys):
         '''extract object items from incoming by item `*keys`'''
-        with self._flow():
+        with self._chain():
             return self._iter(self._pluck(keys))
 
     def values(self):
         '''invoke call on each mapping to get values'''
-        with self._flow():
+        with self._chain():
             return self._many(self._values(self._call))
 
 
@@ -246,14 +246,14 @@ class FilterMixin(local):
         @param pattern: search pattern expression (default: None)
         @param reverse: reduce from right side (default: False)
         '''
-        with self._flow():
+        with self._chain():
             return self._many(
                 self._filter(self._test, pattern, reverse, flags)
             )
 
     def find(self, pattern=None, reverse=False, flags=0):
         '''first incoming thing for which current callable returns `True`'''
-        with self._flow():
+        with self._chain():
             return self._one(self._find(self._test, pattern, reverse, flags))
 
     def replace(self, pattern, new, count=0, flags=0):
@@ -263,7 +263,7 @@ class FilterMixin(local):
         @param pattern: search pattern
         @param new: replacement string
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._replace(pattern, new, count, flags))
 
     def difference(self, symmetric=False):
@@ -272,17 +272,17 @@ class FilterMixin(local):
 
         @param symmetric: use symmetric difference
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._difference(symmetric))
 
     def disjointed(self):
         '''disjoint between incoming'''
-        with self._flow():
+        with self._chain():
             return self._one(self._disjointed)
 
     def intersection(self):
         '''intersection between incoming'''
-        with self._flow():
+        with self._chain():
             return self._many(self._intersection)
 
     def partition(self, pattern=None, flags=0):
@@ -290,22 +290,22 @@ class FilterMixin(local):
         split incoming into `True` and `False` things based on results
         of call
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._divide(self._test, pattern, flags))
 
     def subset(self):
         '''incoming that are subsets of incoming'''
-        with self._flow():
+        with self._chain():
             return self._one(self._subset)
 
     def superset(self):
         '''incoming that are supersets of incoming'''
-        with self._flow():
+        with self._chain():
             return self._one(self._superset)
 
     def union(self):
         '''union between incoming'''
-        with self._flow():
+        with self._chain():
             return self._many(self._union)
 
     def unique(self):
@@ -313,5 +313,5 @@ class FilterMixin(local):
         list unique incoming, preserving order and remember all incoming things
         ever seen
         '''
-        with self._flow():
+        with self._chain():
             return self._iter(self._unique(self._identity))

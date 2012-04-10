@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''knife support'''
+'''chainsaw support'''
 
 try:
     import __builtin__ as builtins

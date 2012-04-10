@@ -3,7 +3,7 @@
 
 from inspect import ismodule
 
-from knife.compat import port
+from chainsaw.compat import port
 
 
 class MRepeatMixin(object):
@@ -40,18 +40,18 @@ class MRepeatMixin(object):
 
     def test_copy(self):
         testlist = [[1, [2, 3]], [4, [5, 6]]]
-        manknife = self.qclass(testlist).copy()
-        self.assertTrue(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        newlist = manknife.end()
+        manchainsaw = self.qclass(testlist).copy()
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        newlist = manchainsaw.end()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
         self.assertListEqual(newlist[0], testlist[0])
         self.assertFalse(newlist[1] is testlist[1])
         self.assertListEqual(newlist[1], testlist[1])
-        self.assertTrue(manknife.balanced)
+        self.assertTrue(manchainsaw.balanced)
 
     def test_product(self):
         self._false_true_false(

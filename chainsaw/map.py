@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-'''knife mapping mixins'''
+'''chainsaw mapping mixins'''
 
 from copy import deepcopy
 from threading import local
 from operator import methodcaller
 
-from knife.compat import (
+from chainsaw.compat import (
     imap, istarmap, irepeat, iproduct, icombinations, ipermutations)
 
 
@@ -56,12 +56,12 @@ class RepeatMixin(local):
 
         @param n: number of repetitions
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._combinations(n))
 
     def copy(self):
         '''copy each incoming thing'''
-        with self._flow():
+        with self._chain():
             return self._many(self._copy)
 
     def product(self, n=1):
@@ -70,7 +70,7 @@ class RepeatMixin(local):
 
         @param n: number of repetitions (default: 1)
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._product(n))
 
     def permutations(self, n):
@@ -79,7 +79,7 @@ class RepeatMixin(local):
 
         @param n: length of thing to permutate
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._permutations(n))
 
     def repeat(self, n):
@@ -88,7 +88,7 @@ class RepeatMixin(local):
 
         @param n: number of times to repeat
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._repeat(n))
 
     def times(self, n=None):
@@ -97,7 +97,7 @@ class RepeatMixin(local):
 
         @param n: repeat call n times on incoming (default: None)
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._times(self._call, n))
 
 
@@ -137,7 +137,7 @@ class MapMixin(local):
 
         @param name: name of method
         '''
-        with self._flow():
+        with self._chain():
             return self._many(
                 self._invoke(name, (self._args, self._kw))
             )
@@ -150,5 +150,5 @@ class MapMixin(local):
         @param kwargs: map each incoming thing as python **kwargs for call
         '''
         args = kwargs if kwargs else args
-        with self._flow():
+        with self._chain():
             return self._many(self._map(self._call, args, kwargs))

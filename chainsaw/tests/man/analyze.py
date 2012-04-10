@@ -3,7 +3,7 @@
 
 from inspect import ismodule
 
-from knife.compat import port
+from chainsaw.compat import port
 
 
 class MMathMixin(object):
@@ -18,12 +18,12 @@ class MMathMixin(object):
             stuf(name='larry', age=50),
             stuf(name='curly', age=60),
         ]
-        manknife = self.qclass(*stooges).tap(lambda x: x.age).max()
-        self.assertFalse(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        self.assertEqual(stuf(manknife.end()), stuf(name='curly', age=60))
-        self.assertTrue(manknife.balanced)
+        manchainsaw = self.qclass(*stooges).tap(lambda x: x.age).max()
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        self.assertEqual(stuf(manchainsaw.end()), stuf(name='curly', age=60))
+        self.assertTrue(manchainsaw.balanced)
 
     def test_min(self):
         self._false_true_false(
@@ -120,28 +120,28 @@ class MTruthMixin(object):
 class MOrderMixin(object):
 
     def test_choice(self):
-        manknife = self.qclass(1, 2, 3, 4, 5, 6).choice()
-        self.assertFalse(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        manknife.end()
-        self.assertTrue(manknife.balanced)
+        manchainsaw = self.qclass(1, 2, 3, 4, 5, 6).choice()
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.end()
+        self.assertTrue(manchainsaw.balanced)
 
     def test_sample(self):
-        manknife = self.qclass(1, 2, 3, 4, 5, 6).sample(3)
-        self.assertFalse(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        manknife.end()
-        self.assertTrue(manknife.balanced)
+        manchainsaw = self.qclass(1, 2, 3, 4, 5, 6).sample(3)
+        self.assertFalse(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.end()
+        self.assertTrue(manchainsaw.balanced)
 
     def test_shuffle(self):
-        manknife = self.qclass(1, 2, 3, 4, 5, 6).shuffle()
-        self.assertTrue(manknife.balanced)
-        manknife.shift_in()
-        self.assertTrue(manknife.balanced)
-        manknife.end()
-        self.assertTrue(manknife.balanced)
+        manchainsaw = self.qclass(1, 2, 3, 4, 5, 6).shuffle()
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.shift_in()
+        self.assertTrue(manchainsaw.balanced)
+        manchainsaw.end()
+        self.assertTrue(manchainsaw.balanced)
 
     def test_group(self,):
         from math import floor

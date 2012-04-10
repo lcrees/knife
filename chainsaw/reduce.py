@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''knife reducing mixins'''
+'''chainsaw reducing mixins'''
 
 from threading import local
 from collections import deque
@@ -7,7 +7,7 @@ from functools import partial, reduce
 from itertools import cycle, islice
 
 from stuf.six import strings, u
-from knife.compat import imap, ichain, tounicode, zip_longest
+from chainsaw.compat import imap, ichain, tounicode, zip_longest
 
 
 class ReduceMixin(local):
@@ -80,12 +80,12 @@ class ReduceMixin(local):
 
     def concat(self):
         '''concatenate incoming together'''
-        with self._flow():
+        with self._chain():
             return self._many(self._concat)
 
     def flatten(self):
         '''flatten nested incoming'''
-        with self._flow():
+        with self._chain():
             return self._many(self._flatten)
 
     def join(self, sep=u(''), encoding='utf-8', errors='strict'):
@@ -96,7 +96,7 @@ class ReduceMixin(local):
         @param encoding: encoding for things (default: 'utf-8')
         @param errors: error handling (default: 'strict')
         '''
-        with self._flow():
+        with self._chain():
             return self._one(self._join(sep, encoding, errors))
 
     def reduce(self, initial=None, reverse=False):
@@ -107,12 +107,12 @@ class ReduceMixin(local):
         @param initial: initial thing (default: None)
         @param reverse: reduce from right side of incoming things
         '''
-        with self._flow():
+        with self._chain():
             return self._one(self._reduce(self._call, initial, reverse))
 
     def weave(self):
         '''interleave incoming into one thing'''
-        with self._flow():
+        with self._chain():
             return self._many(self._roundrobin)
 
     def zip(self):
@@ -120,7 +120,7 @@ class ReduceMixin(local):
         smash incoming into one single thing, pairing things by iterable
         position
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._zip)
 
 
@@ -168,13 +168,13 @@ class SliceMixin(local):
 
         @param n: number of things (default: 0)
         '''
-        with self._flow():
+        with self._chain():
             first = self._first
             return self._many(first(n)) if n else self._one(first(n))
 
     def initial(self):
         '''all incoming except the last thing'''
-        with self._flow():
+        with self._chain():
             return self._many(self._initial)
 
     def last(self, n=0):
@@ -183,7 +183,7 @@ class SliceMixin(local):
 
         @param n: number of things (default: 0)
         '''
-        with self._flow():
+        with self._chain():
             last = self._last
             return self._many(last(n)) if n else self._one(last(n))
 
@@ -194,12 +194,12 @@ class SliceMixin(local):
         @param n: number of things
         @param default: default thing (default: None)
         '''
-        with self._flow():
+        with self._chain():
             return self._one(self._nth(n, default))
 
     def rest(self):
         '''all incoming except the first thing'''
-        with self._flow():
+        with self._chain():
             return self._many(self._rest)
 
     def split(self, n, fill=None):
@@ -210,5 +210,5 @@ class SliceMixin(local):
         @param n: number of things
         @param fill: fill thing (default: None)
         '''
-        with self._flow():
+        with self._chain():
             return self._many(self._split(n, fill))
