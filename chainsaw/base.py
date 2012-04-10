@@ -270,60 +270,6 @@ class ChainsawMixin(local):
         return tee_(iterable, n)
 
     ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    def snapshot(self, baseline=False, original=False):
-        '''
-        Take a snapshot of incoming things currently in ins.
-
-        @param baseline: make snapshot baseline version (default: False)
-        @param original: make snapshot original version (default: False)
-        '''
-        # take snapshot
-        snapshot = self._dupe(getattr(self, self._IN))
-        # make this snapshot the baseline snapshot
-        if self._context == self._EDIT or baseline:
-            self._baseline = snapshot
-        # make this snapshot the original snapshot
-        if original:
-            self._original = snapshot
-        # place snapshot at beginning of snapshot stack
-        self._sps.appendleft(snapshot)
-        return self
-
-    def undo(self, snapshot=0, baseline=False, original=False):
-        '''
-        Revert incoming things to a previous version within ins.
-
-        @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc. (default: 0)
-        @param baseline: return ins to baseline version (default: False)
-        @param original: return ins to original version (default: False)
-        '''
-        # clear everything
-        self.clear()
-        if original:
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original version of incoming things
-            self._ins = self._dupe(self._original)
-        elif baseline:
-            # clear snapshots
-            self._clearsp()
-            # restore baseline version of incoming things
-            self._ins = self._dupe(self._baseline)
-        # if specified, use a specific snapshot
-        elif snapshot:
-            self._sps.rotate(-(snapshot - 1))
-            self._ins = self._sps.popleft()
-        # by default revert to most recent snapshot
-        else:
-            self._ins = self._sps.popleft()
-        return self
-
-    ###########################################################################
     ## things called ##########################################################
     ###########################################################################
 
