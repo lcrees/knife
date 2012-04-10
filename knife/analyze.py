@@ -25,10 +25,10 @@ class StatsMixin(local):
         return max_
 
     @staticmethod
-    def _median(iterable, s=sorted, l=list, d=truediv, i=int, n=len):
+    def _median(iterable, s=sorted, l=list, d=truediv, int=int, len=len):
         i = l(s(iterable))
-        e = d(n(i) - 1, 2)
-        p = i(e)
+        e = d(len(i) - 1, 2)
+        p = int(e)
         return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
 
     @classmethod
@@ -197,7 +197,7 @@ class OrderMixin(local):
     def reverse(self):
         '''reverse order of incoming'''
         with self._flow():
-            return self._many(self._reversed)
+            return self._many(self._reverse)
 
     def sort(self):
         '''

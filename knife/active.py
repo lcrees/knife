@@ -7,11 +7,10 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from knife.output import OutflowMixin
-from knife.base import SLOTS, KnifeMixin
 from knife.map import RepeatMixin, MapMixin
 from knife.reduce import SliceMixin, ReduceMixin
 from knife.filter import FilterMixin, CollectMixin
+from knife.base import SLOTS, KnifeMixin, OutflowMixin
 from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
@@ -126,19 +125,6 @@ class ActiveMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    @staticmethod
-    def _clone(iterable, n=2, deque_=deque):
-        '''
-        clone an iterable
-
-        @param n: number of clones
-        '''
-        return iterable, iterable if n == 1 else deque_(iterable), iterable
-
-    ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
 
@@ -186,11 +172,6 @@ class ActiveMixin(KnifeMixin):
         in the holding stage
         '''
         getattr_(self, self._HOLD).extendleft(things)
-        return self
-
-    def _iter(self, things, getattr_=getattr, iter_=iter):
-        '''extend the holding stage with `things` wrapped in an iterator'''
-        getattr_(self, self._HOLD).extend(iter_(things))
         return self
 
     ###########################################################################

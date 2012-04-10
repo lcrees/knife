@@ -25,7 +25,7 @@ class ACollectMixin(object):
         test = lambda x: not x[0].startswith('__')
         out = self.qclass(
             stooges, stoog2, stoog3
-        ).tap(test, isclass).tuplevalue().members().untap().end(),
+        ).tap(test, isclass).as_tuple().members().untap().end(),
         self.assertEqual(
             out,
             ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
@@ -48,7 +48,7 @@ class ACollectMixin(object):
         test = lambda x: not x[0].startswith('__')
         out = self.qclass(
             stoog3
-        ).tap(test, isclass).tuplevalue().mro().members().untap().end()
+        ).tap(test, isclass).as_tuple().mro().members().untap().end()
         self.assertEqual(
             out,
             (('age', 60), ('name', 'curly'), ('age', 50), ('name', 'larry'),
@@ -64,15 +64,15 @@ class ACollectMixin(object):
             stuf(name='curly', age=60)
         ]
         self.assertEqual(
-            self.qclass(*stooges).pick('name').end(),
+            self.qclass(*stooges).attributes('name').end(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
-            self.qclass(*stooges).pick('name', 'age').end(),
+            self.qclass(*stooges).attributes('name', 'age').end(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         self.assertEqual(
-            self.qclass(*stooges).pick('place').end(), [],
+            self.qclass(*stooges).attributes('place').end(), [],
         )
 
     def test_pluck(self):
@@ -113,29 +113,17 @@ class AFilterMixin(object):
                 lambda x: x % 2 == 0
             ).filter().end(), [2, 4, 6]
         )
+        self.assertEqual(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(
+                lambda x: x % 2 == 0
+            ).filter(invert=True).end(), [1, 3, 5]
+        )
 
     def test_find(self):
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
             ).find().end(), 2,
-        )
-
-    def test_reject(self):
-        self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(
-                lambda x: x % 2 == 0
-            ).reject().end(), [1, 3, 5]
-        )
-
-    def test_compact(self):
-        self.assertEqual(
-            self.qclass(0, 1, False, 2, '', 3).compact().end(), [1, 2, 3],
-        )
-
-    def test_without(self):
-        self.assertEqual(
-            self.qclass(1, 2, 1, 0, 3, 1, 4).without(0, 1).end(), [2, 3, 4],
         )
 
     def test_partition(self):

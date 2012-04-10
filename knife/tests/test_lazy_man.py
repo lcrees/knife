@@ -11,7 +11,7 @@ from knife.tests.man.manning import Manning
 from knife.tests.man.base import MQMixin
 
 
-class TestManQ(
+class TestMan(
     Manning, MQMixin, MFilterMixin, MMapMixin, MReduceMixin, MOrderMixin,
 ):
 
@@ -20,7 +20,7 @@ class TestManQ(
         self.qclass = lazyknife.as_manual()
 
 
-class TestManFilterQ(Manning, MFilterMixin):
+class TestManFilter(Manning, MFilterMixin):
 
     def setUp(self):
         self.maxDiff = None
@@ -28,14 +28,14 @@ class TestManFilterQ(Manning, MFilterMixin):
         self.qclass = filterknife.as_manual()
 
 
-class TestManSliceQ(Manning, MQMixin, MSliceMixin):
+class TestManSlice(Manning, MQMixin, MSliceMixin):
 
     def setUp(self):
         from knife.lazy import sliceknife
         self.qclass = sliceknife.as_manual()
 
 
-class TestManCollectQ(Manning, MQMixin, MCollectMixin):
+class TestManCollect(Manning, MQMixin, MCollectMixin):
 
     def setUp(self):
         from knife.lazy import collectknife
@@ -49,35 +49,35 @@ class TestManMap(Manning, MQMixin, MMapMixin):
         self.qclass = mapknife.as_manual()
 
 
-class TestManRepeatQ(Manning, MQMixin, MRepeatMixin):
+class TestManRepeat(Manning, MQMixin, MRepeatMixin):
 
     def setUp(self):
         from knife.lazy import repeatknife
         self.qclass = repeatknife.as_manual()
 
 
-class TestManOrderQ(Manning, MQMixin, MOrderMixin):
+class TestManOrder(Manning, MQMixin, MOrderMixin):
 
     def setUp(self):
         from knife.lazy import orderknife
         self.qclass = orderknife.as_manual()
 
 
-class TestManReduceQ(Manning, MQMixin, MReduceMixin):
+class TestManReduce(Manning, MQMixin, MReduceMixin):
 
     def setUp(self):
         from knife.lazy import reduceknife
         self.qclass = reduceknife.as_manual()
 
 
-class TestManMathQ(Manning, MQMixin, MMathMixin):
+class TestManMath(Manning, MQMixin, MMathMixin):
 
     def setUp(self):
         from knife.lazy import mathknife
         self.qclass = mathknife.as_manual()
 
 
-class TestManTruthQ(Manning, MQMixin, MTruthMixin):
+class TestManTruth(Manning, MQMixin, MTruthMixin):
 
     def setUp(self):
         from knife.lazy import truthknife

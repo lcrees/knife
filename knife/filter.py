@@ -5,7 +5,6 @@ from re import compile
 from inspect import getmro
 from threading import local
 from functools import reduce
-
 from operator import attrgetter, itemgetter, truth
 
 from knife.compat import (
@@ -150,40 +149,22 @@ class FilterMixin(local):
 
     '''filtering mixin'''
 
-    @staticmethod
-    def _filter(truth_, pattern, flags, things, f=ifilter, c=compile):
-        if pattern is not None:
-            call = c(pattern, flags).search
-        elif things:
-            call = lambda y: y in things
+    @classmethod
+    def _filter(cls, true, pat, false, flag, f=ifilter, ff=ifilterfalse):
+        if pat is not None:
+            call = compile(pat, flag).search
         else:
-            call = truth_
-        def filter(iterable): #@IgnorePep8
-            return f(call, iterable)
-        return filter
+            call = true
+        return lambda x: ff(call, x) if false else f(call, x)
 
-    @staticmethod
-    def _filterfalse(truth_, pattern, flags, things, ffalse_=ifilterfalse):
-        if pattern is not None:
-            call = compile(pattern, flags).search
-        elif things:
-            call = lambda y: y in things
+    @classmethod
+    def _find(cls, true, pat, false, flag, f=ifilter, ff=ifilterfalse):
+        if pat is not None:
+            call = compile(pat, flag).search
         else:
-            call = truth_
-        def filterfalse(iterable): #@IgnorePep8
-            return ffalse_(call, iterable)
-        return filterfalse
-
-    @staticmethod
-    def _find(truth_, pattern, flags, things):
-        if pattern is not None:
-            call = compile(pattern, flags).search
-        elif things:
-            call = lambda y: y in things
-        else:
-            call = truth_
+            call = true
         def find(iterable): #@IgnorePep8
-            return next(ifilter(call, iterable))
+            return next(lambda x: ff(call, x) if false else f(call, x))
         return find
 
     @staticmethod
@@ -212,18 +193,14 @@ class FilterMixin(local):
         return reduce_(lambda x, y: set_(x).intersection(y), iterable)
 
     @classmethod
-    def _partition(cls, truth_, pattern, flags, things, l=list):
-        if pattern is not None:
-            call = compile(pattern, flags).search
-        elif things:
-            call = lambda y: y in things
+    def _divide(cls, true, pat, flag, f=ifilter, ff=ifilterfalse, l=list):
+        if pat is not None:
+            call = compile(pat, flag).search
         else:
-            call = truth_
+            call = true
         def partition(iterable): #@IgnorePep8
             falsy, truey = cls._clone(iterable)
-            return iter((
-                l(ifilter(call, truey)), l(ifilterfalse(call, falsy)),
-            ))
+            return iter((l(ff(call, truey)), l(ff(call, falsy))))
         return partition
 
     @staticmethod
@@ -250,26 +227,19 @@ class FilterMixin(local):
                     yield element
         return unique
 
-    def filter(self, pattern=None, flags=0, *things):
+    def filter(self, pattern=None, reverse=False, flags=0):
         '''
         incoming for which current callable returns `True`
 
         @param pattern: search pattern expression (default: None)
+        @param reverse: reduce from right side (default: False)
         '''
-        return self._many(self._filter(self._test, pattern, flags, things))
+        return self._many(self._filter(self._test, pattern, reverse, flags))
 
-    def filterfalse(self, pattern=None, flags=0, *things):
-        '''strip things from incoming'''
-        return self._many(self._filterfalse(
-            self._test, pattern, flags, things,
-        ))
-
-    def find(self, pattern=None, flags=0, *things):
+    def find(self, pattern=None, reverse=False, flags=0):
         '''first incoming thing for which current callable returns `True`'''
         with self._flow():
-            return self._one(
-                self._find(self._test, pattern, flags, things)
-            )
+            return self._one(self._find(self._test, pattern, reverse, flags))
 
     def replace(self, pattern, new, count=0, flags=0):
         '''
@@ -293,22 +263,20 @@ class FilterMixin(local):
     def disjointed(self):
         '''disjoint between incoming'''
         with self._flow():
-            return self._many(self._disjointed)
+            return self._one(self._disjointed)
 
     def intersection(self):
         '''intersection between incoming'''
         with self._flow():
             return self._many(self._intersection)
 
-    def partition(self, pattern=None, flags=0, *things):
+    def partition(self, pattern=None, flags=0):
         '''
         split incoming into `True` and `False` things based on results
         of call
         '''
         with self._flow():
-            return self._many(self._partition(
-                self._test, pattern, flags, things,
-            ))
+            return self._many(self._divide(self._test, pattern, flags))
 
     def subset(self):
         '''incoming that are subsets of incoming'''

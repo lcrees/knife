@@ -56,6 +56,13 @@ class ARepeatMixin(object):
 
 class AMapMixin(object):
 
+    def test_factory(self):
+        from stuf import stuf
+        thing = self.qclass(
+            ('a', 1), ('b', 2), ('c', 3)
+        ).reup().tap(stuf, factory=True).map().rebalance().end()
+        self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
+
     def test_map(self):
         def test(*args, **kw):
             return sum(args) * kw['a']
@@ -76,7 +83,9 @@ class AMapMixin(object):
 
     def test_invoke(self):
         self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1]).args(1).invoke('index').end(),
+            self.qclass(
+                [5, 1, 7], [3, 2, 1]
+            ).arguments(1).invoke('index').end(),
             [1, 2],
         )
         self.assertEqual(
@@ -85,11 +94,11 @@ class AMapMixin(object):
         )
         self.assertEqual(
             self.qclass([5, 1, 7], [3, 2, 1])
-            .args(1).invoke('index', 0.0001).end(),
+            .arguments(1).invoke('index').end(),
             [1, 2],
         )
         self.assertEqual(
-            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort', 0.0001).end(),
+            self.qclass([5, 1, 7], [3, 2, 1]).invoke('sort').end(),
             [[1, 5, 7], [1, 2, 3]],
         )
 

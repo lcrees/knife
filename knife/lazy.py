@@ -6,11 +6,10 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from knife.output import OutflowMixin
-from knife.base import SLOTS, KnifeMixin
 from knife.map import RepeatMixin, MapMixin
 from knife.reduce import SliceMixin, ReduceMixin
 from knife.filter import FilterMixin, CollectMixin
+from knife.base import SLOTS, KnifeMixin, OutflowMixin
 from knife.analyze import StatsMixin, TruthMixin, OrderMixin
 
 
@@ -118,19 +117,6 @@ class LazyMixin(KnifeMixin):
         self._clearworking()._reflow()
 
     ###########################################################################
-    ## snapshot for things ####################################################
-    ###########################################################################
-
-    @staticmethod
-    def _clone(iterable, n=2, tee_=tee):
-        '''
-        clone an iterable
-
-        @param n: number of clones
-        '''
-        return tee_(iterable, n)
-
-    ###########################################################################
     ## iterate things #########################################################
     ###########################################################################
 
@@ -154,10 +140,6 @@ class LazyMixin(KnifeMixin):
     def _xtendfront(self, things, reversed_=reversed):
         '''extend before of holding stage with `things`'''
         return self._xtend(reversed_(things))
-
-    def _iter(self, things, iter_=iter):
-        '''extend work stage with `things` wrapped in iterator'''
-        return self._xtend(iter_(things))
 
     ###########################################################################
     ## append things ##########################################################

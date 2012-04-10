@@ -54,7 +54,7 @@ class MCollectMixin(object):
             ('age', 40), ('name', 'moe'))
         )
 
-    def test_pick(self):
+    def test_attributes(self):
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
@@ -62,17 +62,17 @@ class MCollectMixin(object):
             stuf(name='curly', age=60)
         ]
         self._true_true_false(
-            self.qclass(*stooges).pick('name'),
+            self.qclass(*stooges).attributes('name'),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
-            self.qclass(*stooges).pick('name', 'age'),
+            self.qclass(*stooges).attributes('name', 'age'),
             self.assertEqual,
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         self._false_true_true(
-            self.qclass(*stooges).pick('place'),
+            self.qclass(*stooges).attributes('place'),
             self.assertEqual,
             [],
         )
@@ -123,11 +123,27 @@ class MCollectMixin(object):
 
 class MFilterMixin(object):
 
+    def test_partition(self):
+        self._false_true_false(
+            self.qclass(
+                1, 2, 3, 4, 5, 6
+            ).tap(lambda x: x % 2 == 0).partition(),
+            self.assertEqual,
+            [[1, 3, 5], [2, 4, 6]],
+        )
+
     def test_filter(self):
         self._false_true_false(
             self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).filter(),
             self.assertEqual,
             [2, 4, 6],
+        )
+        self._false_true_false(
+            self.qclass(1, 2, 3, 4, 5, 6).tap(
+                lambda x: x % 2 == 0
+            ).filter(invert=True),
+            self.assertEqual,
+            [1, 3, 5],
         )
 
     def test_find(self):
@@ -135,27 +151,6 @@ class MFilterMixin(object):
             self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).find(),
             self.assertEqual,
             2,
-        )
-
-    def test_reject(self):
-        self._false_true_false(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(lambda x: x % 2 == 0).reject(),
-            self.assertEqual,
-            [1, 3, 5],
-        )
-
-    def test_compact(self):
-        self._false_true_false(
-            self.qclass(0, 1, False, 2, '', 3).compact(),
-            self.assertEqual,
-            [1, 2, 3],
-        )
-
-    def test_without(self):
-        self._false_true_false(
-            self.qclass(1, 2, 1, 0, 3, 1, 4).without(0, 1),
-            self.assertEqual,
-            [2, 3, 4],
         )
 
     def test_difference(self):

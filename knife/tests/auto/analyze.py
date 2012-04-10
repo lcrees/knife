@@ -37,15 +37,16 @@ class AMathMixin(object):
         self.assertEqual(self.qclass(4, 5, 7, 2, 1).median().end(), 4)
         self.assertEqual(self.qclass(4, 5, 7, 2, 1, 8).median().end(), 4.5)
 
-    def test_statrange(self):
-        self.assertEqual(self.qclass(3, 5, 7, 3, 11).statrange().end(), 8)
+    def test_range(self):
+        self.assertEqual(self.qclass(3, 5, 7, 3, 11).range().end(), 8)
 
     def test_sum(self):
         self.assertEqual(self.qclass(1, 2, 3).sum().end(), 6)
         self.assertEqual(self.qclass(1, 2, 3).sum(1).end(), 7)
-    #    def test_fsum(self):
         self.assertEqual(
-            self.qclass(.1, .1, .1, .1, .1, .1, .1, .1, .1, .1).fsum().end(),
+            self.qclass(
+                .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
+            ).sum(floats=True).end(),
             1.0,
         )
 
@@ -67,9 +68,6 @@ class ATruthMixin(object):
             self.qclass(None, 0, 'yes', False).tap(bool).any().end()
         )
 
-    def test_include(self):
-        self.assertTrue(self.qclass(1, 2, 3).contains(3).end())
-
     def test_quantify(self):
         self.assertEqual(
             self.qclass(True, 1, None, 'yes').tap(bool).quantify().end(), 3,
@@ -80,16 +78,16 @@ class ATruthMixin(object):
 
     def test_frequency(self):
         self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end(),
+            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[2],
             [(11, 3), (3, 2), (5, 1), (7, 1)]
         )
         # most common
         self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).common().end(), 11,
+            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[1], 11,
         )
         # least common
         self.assertEqual(
-            self.qclass(11, 3, 5, 11, 7, 3, 11).uncommon().end(), 7,
+            self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()[0], 7,
         )
 
 
@@ -115,11 +113,11 @@ class AOrderMixin(object):
         from math import floor
         self.assertEqual(
         self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby().end(),
-            [[1.0, [1.3]], [2.0, [2.1, 2.4]]]
+            [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self.assertEqual(
             self.qclass(1.3, 2.1, 2.4).groupby().end(),
-            [[1.3, [1.3]], [2.1, [2.1]], [2.4, [2.4]]],
+            [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
 
     def test_reverse(self):

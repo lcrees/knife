@@ -4,13 +4,6 @@
 
 class AMixin(object):
 
-    def test_factory(self):
-        from stuf import stuf
-        thing = self.qclass(
-            ('a', 1), ('b', 2), ('c', 3)
-        ).reup().tap(stuf, factory=True).map().rebalance().end()
-        self.assertDictEqual(thing, stuf(a=1, b=2, c=3), thing)
-
     def test_repr(self):
         from stuf.six import strings
         self.assertTrue(isinstance(
@@ -34,12 +27,6 @@ class AMixin(object):
             [1, 2, 3, 4, 5, 6],
         )
 
-    def test_outextend(self):
-        self.assertListEqual(
-            self.qclass().extendout([1, 2, 3, 4, 5, 6]).end(),
-            [1, 2, 3, 4, 5, 6],
-        )
-
     def test_extendfront(self):
         self.assertListEqual(
             self.qclass().extendfront(
@@ -56,28 +43,23 @@ class AMixin(object):
         autoknife = self.qclass().appendfront('foo').rebalance(reverse=True)
         self.assertEqual(autoknife.end(), 'foo')
 
-    def test_inclear(self):
+    def test_clearin(self):
         self.assertEqual(len(list(self.qclass([1, 2, 5, 6]).clearin())), 0)
 
-    def test_outclear(self):
+    def test_clearout(self):
         self.assertEqual(
-            len(list(self.qclass([1, 2, 5, 6]).clearvalue().outgoing)), 0
+            len(list(self.qclass([1, 2, 5, 6]).clearout()._outflow)), 0
         )
-
-    ###########################################################################
-    ## queue balancing ########################################################
-    ###########################################################################
 
     def test_undo(self):
         queue = self.qclass(1, 2, 3).extendfront(
             [1, 2, 3, 4, 5, 6]
         ).rebalance(reverse=True)
-        self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo().rebalance(reverse=True)
-        self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).append(2).undo().rebalance(reverse=True)
-        self.assertListEqual(queue.snapshot(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.undo(everything=True).rebalance(reverse=True)
         self.assertListEqual(queue.rebalance(reverse=True).end(), [1, 2, 3])
 
@@ -85,11 +67,11 @@ class AMixin(object):
         q = self.qclass(
             [1, 2, 3, 4, 5, 6]
         ).rebalance(reverse=True).clearin().rebalance()
-        self.assertListEqual(list(q.incoming), list(q.outgoing))
+        self.assertListEqual(list(q._inflow), list(q._outflow))
 
     def test_outsync(self):
         q = self.qclass([1, 2, 3, 4, 5, 6]).rebalance(reverse=True)
-        self.assertListEqual(list(q.incoming), list(q.outgoing))
+        self.assertListEqual(list(q._inflow), list(q._outflow))
 
     def test_results(self):
         self.assertListEqual(
@@ -103,13 +85,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).tuplevalue().rebalance(reverse=True).results(),
+            ).as_tuple().rebalance(reverse=True).results(),
             tuple,
         )
         self.assertTupleEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).tuplevalue().rebalance(reverse=True).results(),
+            ).as_tuple().rebalance(reverse=True).results(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -117,13 +99,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).setvalue().rebalance(reverse=True).results(),
+            ).as_set().rebalance(reverse=True).results(),
             set,
         )
         self.assertSetEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).setvalue().rebalance(reverse=True).results(),
+            ).as_set().rebalance(reverse=True).results(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
@@ -132,13 +114,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).dequevalue().rebalance(reverse=True).results(),
+            ).as_deque().rebalance(reverse=True).results(),
             deque,
         )
         self.assertEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).dequevalue().rebalance(reverse=True).results(),
+            ).as_deque().rebalance(reverse=True).results(),
             deque([1, 2, 3, 4, 5, 6]),
         )
 
@@ -146,13 +128,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).fsetvalue().rebalance(reverse=True).results(),
+            ).as_frozenset().rebalance(reverse=True).results(),
             frozenset,
         )
         self.assertSetEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).fsetvalue().rebalance(reverse=True).results(),
+            ).as_frozenset().rebalance(reverse=True).results(),
             frozenset([1, 2, 3, 4, 5, 6]),
         )
 
@@ -160,13 +142,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictvalue().rebalance(reverse=True).results(),
+            ).as_dict().rebalance(reverse=True).results(),
             dict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).dictvalue().rebalance(reverse=True).results(),
+            ).as_dict().rebalance(reverse=True).results(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -175,13 +157,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufvalue().rebalance(reverse=True).results(),
+            ).as_frozenstuf().rebalance(reverse=True).results(),
             frozenstuf,
         )
         self.assertEqual(
             self.qclass(
                 ('a1', 2), ('a3', 4), ('a5', 6)
-            ).fstufvalue().rebalance(reverse=True).results(),
+            ).as_frozenstuf().rebalance(reverse=True).results(),
            frozenstuf({'a1': 2, 'a3': 4, 'a5': 6}),
         )
 
@@ -190,13 +172,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictvalue().rebalance(reverse=True).results(),
+            ).as_ordereddict().rebalance(reverse=True).results(),
             OrderedDict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).odictvalue().rebalance(reverse=True).results(),
+            ).as_ordereddict().rebalance(reverse=True).results(),
             OrderedDict({1: 2, 3: 4, 5: 6}),
         )
 
@@ -205,13 +187,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufvalue().rebalance(reverse=True).results(),
+            ).as_orderedstuf().rebalance(reverse=True).results(),
             orderedstuf,
         )
         self.assertEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).ostufvalue().rebalance(reverse=True).results(),
+            ).as_orderedstuf().rebalance(reverse=True).results(),
            orderedstuf({1: 2, 3: 4, 5: 6}),
         )
 
@@ -220,13 +202,13 @@ class AMixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufvalue().rebalance(reverse=True).results(),
+            ).as_stuf().rebalance(reverse=True).results(),
             stuf,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).stufvalue().rebalance(reverse=True).results(),
+            ).as_stuf().rebalance(reverse=True).results(),
            stuf({1: 2, 3: 4, 5: 6}),
         )
 
@@ -235,7 +217,7 @@ class AMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).ascii().end(),
+            ).as_many().as_ascii().end(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
 
@@ -244,7 +226,7 @@ class AMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't',  b('i'), u('g'), None, (1,)
-            ).bytes().end(),
+            ).as_many().as_bytes().end(),
             [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
         )
 
@@ -253,6 +235,6 @@ class AMixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).unicode().end(),
+            ).as_many().as_unicode().end(),
             [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
         )

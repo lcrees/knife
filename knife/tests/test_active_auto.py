@@ -9,7 +9,7 @@ from knife.tests.auto.filter import *  # @UnusedWildImport
 from knife.tests.auto.base import AMixin
 
 
-class TestAutoQ(
+class TestAuto(
     unittest.TestCase, AMixin, AFilterMixin, AMapMixin, AReduceMixin,
     AOrderMixin,
 ):
@@ -19,7 +19,7 @@ class TestAutoQ(
         self.qclass = activeknife
 
 
-class TestAutoFilterQ(unittest.TestCase, AMixin, AFilterMixin):
+class TestAutoFilter(unittest.TestCase, AMixin, AFilterMixin):
 
     def setUp(self):
         self.maxDiff = None
@@ -27,14 +27,14 @@ class TestAutoFilterQ(unittest.TestCase, AMixin, AFilterMixin):
         self.qclass = filterknife
 
 
-class TestAutoSliceQ(unittest.TestCase, AMixin, ASliceMixin):
+class TestAutoSlice(unittest.TestCase, AMixin, ASliceMixin):
 
     def setUp(self):
         from knife.active import sliceknife
         self.qclass = sliceknife
 
 
-class TestAutoCollectQ(unittest.TestCase, AMixin, ACollectMixin):
+class TestAutoCollect(unittest.TestCase, AMixin, ACollectMixin):
 
     def setUp(self):
         self.maxDiff = None
@@ -49,35 +49,35 @@ class TestAutoMap(unittest.TestCase, AMixin, AMapMixin):
         self.qclass = mapknife
 
 
-class TestAutoRepeatQ(unittest.TestCase, AMixin, ARepeatMixin):
+class TestAutoRepeat(unittest.TestCase, AMixin, ARepeatMixin):
 
     def setUp(self):
         from knife.active import repeatknife
         self.qclass = repeatknife
 
 
-class TestAutoOrderQ(unittest.TestCase, AMixin, AOrderMixin):
+class TestAutoOrder(unittest.TestCase, AMixin, AOrderMixin):
 
     def setUp(self):
         from knife.active import orderknife
         self.qclass = orderknife
 
 
-class TestAutoReduceQ(unittest.TestCase, AMixin, AReduceMixin):
+class TestAutoReduce(unittest.TestCase, AMixin, AReduceMixin):
 
     def setUp(self):
         from knife.active import reduceknife
         self.qclass = reduceknife
 
 
-class TestAutoMathQ(unittest.TestCase, AMixin, AMathMixin):
+class TestAutoMath(unittest.TestCase, AMixin, AMathMixin):
 
     def setUp(self):
         from knife.active import mathknife
         self.qclass = mathknife
 
 
-class TestAutoTruthQ(unittest.TestCase, AMixin, ATruthMixin):
+class TestAutoTruth(unittest.TestCase, AMixin, ATruthMixin):
 
     def setUp(self):
         from knife.active import truthknife

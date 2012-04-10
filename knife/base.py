@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 '''base knife mixins'''
 
+import re
+from json import loads
+from itertools import tee
 from operator import truth
 from threading import local
 from collections import deque
 from contextlib import contextmanager
+from htmlentitydefs import name2codepoint
+from json.encoder import encode_basestring
+from xml.sax.saxutils import escape, unescape
 
-from knife.compat import imap
+from stuf.utils import OrderedDict
+from stuf.core import stuf, frozenstuf, orderedstuf
+
+from knife.compat import tounicode, tobytes, imap
 
 SLOTS = [
      '_IN', '_inflow', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_outflow',
@@ -98,6 +107,15 @@ class KnifeMixin(local):
         # map incoming things and extend outflow if processed as many things
         elif self._mode == self._MANY:
             return self._xtend(imap(call, self._iterable))
+
+    def _iter(self, call, iter_=iter):
+        '''extend work stage with `things` wrapped in iterator'''
+        # extend outflow with incoming things if procesing them as one thing
+        if self._mode == self._ONE:
+            return self._xtend(iter_(call(self._iterable)))
+        # map incoming things and extend outflow if processed as many things
+        elif self._mode == self._MANY:
+            return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
 
     def as_one(self):
         '''Switch to processing incoming things as one individual thing.'''
@@ -242,13 +260,13 @@ class KnifeMixin(local):
         # rebalance by copying inflow to outflow
         if reverse:
             with self._autoflow(snapshot=False, keep=False):
-                return self._many(self._iterable)
+                return self._xtend(self._iterable)
         # rebalance by copying outflow back to inflow
         with self._autoflow(
             inflow=self._OUTVAR, outflow=self._INVAR, keep=False,
             snapshot=False,
         ):
-            return self._many(self._iterable)
+            return self._xtend(self._iterable)
 
     @property
     def balanced(self):
@@ -258,6 +276,15 @@ class KnifeMixin(local):
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
+
+    @staticmethod
+    def _clone(iterable, n=2, tee_=tee):
+        '''
+        clone an iterable
+
+        @param n: number of clones
+        '''
+        return tee_(iterable, n)
 
     def snapshot(self, baseline=False, original=False):
         '''
@@ -450,3 +477,148 @@ class KnifeMixin(local):
         '''Clear out everything.'''
         self._truth = None
         return self.untap().unwrap().clearout().clearin()._clearw()._clearh()
+
+
+class OutflowMixin(local):
+
+    '''knife output mixin'''
+
+    def _html(self):
+        return self.wrap(lambda x: escape(x, {'"': "&quot;", "'": '&#39;'}))
+
+    def _js(self):
+        return self.wrap(encode_basestring)
+
+    @staticmethod
+    def _unhtml():
+        '''
+        from -> John J. Lee
+        http://groups.google.com/group/comp.lang.python/msg/ce3fc3330cbbac0a
+        '''
+        def unescape_charref(ref):
+            name = ref[2:-1]
+            base = 10
+            if name.startswith("x"):
+                name = name[1:]
+                base = 16
+            return unichr(int(name, base))
+        def replace_entities(match): #@IgnorePep8
+            ent = match.group()
+            if ent[1] == "#":
+                return unescape_charref(ent)
+            repl = name2codepoint.get(ent[1:-1])
+            return unichr(repl) if repl is not None else ent
+        def unescape_(data): #@IgnorePep8
+            return re.sub(r'&#?[A-Za-z0-9]+?;', replace_entities, data)
+        return unescape_
+
+    @staticmethod
+    def _unjs():
+        return loads
+
+    @staticmethod
+    def _unxml():
+        return unescape
+
+    @staticmethod
+    def _xml():
+        return escape
+
+    def as_ascii(self, errors='strict'):
+        '''
+        encode each incoming thing as ascii string (regardless of type)
+
+        @param errors: error handling (default: 'strict')
+        '''
+        return self.wrap(lambda x: tobytes(x, 'ascii', errors))
+
+    def as_bytes(self, encoding='utf-8', errors='strict'):
+        '''
+        encode each incoming thing as byte string (regardless of type)
+
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        return self.wrap(lambda x: tobytes(x, encoding, errors))
+
+    def as_deque(self):
+        '''set wrapper to `deque`'''
+        return self.wrap(deque)
+
+    def as_dict(self):
+        '''set wrapper to `dict`'''
+        return self.wrap(dict)
+
+    def as_escaped(self, format='html'):
+        '''escape incoming'''
+        return self.wrap(getattr(self, format))
+
+    def as_frozenset(self):
+        '''set wrapper to `frozenset`'''
+        return self.wrap(frozenset)
+
+    def as_frozenstuf(self):
+        '''set wrapper to `frozenstuf`'''
+        return self.wrap(frozenstuf)
+
+    def as_list(self):
+        '''clear current wrapper'''
+        return self.wrap(list)
+
+    unwrap = as_list
+
+    def as_ordereddict(self):
+        '''set wrapper to `OrderedDict`'''
+        return self.wrap(OrderedDict)
+
+    def as_orderedstuf(self):
+        '''set wrapper to `orderedstuf`'''
+        return self.wrap(orderedstuf)
+
+    def as_stuf(self):
+        '''set wrapper to `stuf`'''
+        return self.wrap(stuf)
+
+    def reup(self):
+        '''put incoming in incoming as one incoming thing'''
+        with self._flow2(keep=False):
+            return self._xtend(list(self._iterable))
+
+    def as_set(self):
+        '''set wrapper to `set`'''
+        return self.wrap(set)
+
+    def as_tuple(self):
+        '''set wrapper to `tuple`'''
+        return self.wrap(tuple)
+
+    def as_unescaped(self, format='html'):
+        '''
+        unescape incoming stings
+        '''
+        return self.wrap(getattr(self, 'un' + format))
+
+    def as_unicode(self, encoding='utf-8', errors='strict'):
+        '''
+        decode each incoming thing as unicode string (regardless of type)
+
+        @param encoding: encoding for things (default: 'utf-8')
+        @param errors: error handling (default: 'strict')
+        '''
+        return self.wrap(lambda x: tounicode(x, encoding, errors))
+
+    def wrap(self, wrapper):
+        '''
+        wrapper for outflow
+
+        @param wrapper: an iterator class
+        '''
+        self._wrapper = wrapper
+        return self
+
+    def which(self, call=None, alt=None):
+        if self:
+            self._call = call if call is not None else self._call
+        else:
+            self._call = alt if alt is not None else self._alt
+        return self.as_edit()

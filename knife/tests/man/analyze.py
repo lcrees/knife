@@ -57,7 +57,7 @@ class MMathMixin(object):
         self._false_true_false(
             self.qclass(
                 .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
-            ).sum(float=True),
+            ).sum(floats=True),
             self.assertEqual,
             1.0,
         )
@@ -77,11 +77,9 @@ class MMathMixin(object):
             31.666666666666668,
         )
 
-    def test_statrange(self):
+    def test_range(self):
         self._false_true_false(
-            self.qclass(3, 5, 7, 3, 11).statrange(),
-            self.assertEqual,
-            8,
+            self.qclass(3, 5, 7, 3, 11).range(), self.assertEqual, 8,
         )
 
 

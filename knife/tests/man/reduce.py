@@ -8,15 +8,6 @@ from knife.compat import port
 
 class MSliceMixin(object):
 
-    def test_partition(self):
-        self._false_true_false(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).tap(lambda x: x % 2 == 0).partition(),
-            self.assertEqual,
-            [[1, 3, 5], [2, 4, 6]],
-        )
-
     def test_first(self):
         manknife = self.qclass(5, 4, 3, 2, 1).first()
         self.assertFalse(manknife.balanced)
@@ -24,6 +15,9 @@ class MSliceMixin(object):
         self.assertTrue(manknife.balanced)
         self.assertEqual(manknife.results(), 5)
         self.assertFalse(manknife.balanced)
+        self._false_true_false(
+            self.qclass(5, 4, 3, 2, 1).first(2), self.assertEqual, [5, 4],
+        )
 
     def test_nth(self):
         self._false_true_false(
@@ -40,6 +34,9 @@ class MSliceMixin(object):
         self.assertTrue(manknife.balanced)
         self.assertEqual(manknife.results(), 1)
         self.assertFalse(manknife.balanced)
+        self._false_true_false(
+            self.qclass(5, 4, 3, 2).last(2), self.assertEqual, [3, 2],
+        )
 
     def test_initial(self):
         self._false_true_false(
@@ -53,21 +50,11 @@ class MSliceMixin(object):
             self.qclass(5, 4, 3, 2, 1).rest(), self.assertEqual, [4, 3, 2, 1],
         )
 
-    def test_take(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).take(2), self.assertEqual, [5, 4],
-        )
-
-    def test_takeback(self):
-        self._false_true_false(
-            self.qclass(5, 4, 3, 2, 1).snatch(2), self.assertEqual, [2, 1],
-        )
-
     def test_split(self):
         self._false_true_false(
             self.qclass(
                 'moe', 'larry', 'curly', 30, 40, 50, True,
-            ).grouper(2, 'x'),
+            ).split(2, 'x'),
             self.assertEqual,
             [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')],
         )

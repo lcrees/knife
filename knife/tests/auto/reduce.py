@@ -34,7 +34,7 @@ class ASliceMixin(object):
         self.assertEqual(
             self.qclass(
                 'moe', 'larry', 'curly', 30, 40, 50, True
-            ).grouper(2, 'x').end(),
+            ).split(2, 'x').end(),
              [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
         )
 
@@ -77,7 +77,7 @@ class AReduceMixin(object):
         self.assertEqual(
             self.qclass([0, 1], [2, 3], [4, 5]).tap(
                 lambda x, y: x + y
-            ).reduceright([0, 0], True).end(), [4, 5, 2, 3, 0, 1, 0, 0],
+            ).reduce([0, 0], True).end(), [4, 5, 2, 3, 0, 1, 0, 0],
         )
 
     def test_weave(self):

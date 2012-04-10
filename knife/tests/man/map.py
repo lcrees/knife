@@ -64,8 +64,16 @@ class MRepeatMixin(object):
 
 class MMapMixin(object):
 
+    def test_factory(self):
+        from stuf import stuf
+        self.assertDictEqual(
+            self.qclass(
+                ('a', 1), ('b', 2), ('c', 3)
+            ).reup().tap(stuf, factory=True).map().end(),
+            stuf(a=1, b=2, c=3),
+        )
+
     def test_map(self):
-        # test each
         def test(*args, **kw):
             return sum(args) * kw['a']
         self._true_true_false(
@@ -91,7 +99,7 @@ class MMapMixin(object):
 
     def test_invoke(self):
         self._true_true_false(
-            self.qclass([5, 1, 7], [3, 2, 1]).args(1).invoke('index'),
+            self.qclass([5, 1, 7], [3, 2, 1]).arguments(1).invoke('index'),
             self.assertEqual,
             [1, 2],
         )
@@ -103,7 +111,7 @@ class MMapMixin(object):
         self._true_true_false(
             self.qclass(
                 [5, 1, 7], [3, 2, 1]
-            ).args(1).invoke('index', 0.0001),
+            ).arguments(1).invoke('index', 0.0001),
             self.assertEqual,
             [1, 2],
         )

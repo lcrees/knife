@@ -129,7 +129,7 @@ class SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
-    def _first(n, islice_=islice, next_=next):
+    def _first(n=0, islice_=islice, next_=next):
         def first(iterable):
             return islice_(iterable, n) if n else next_(iterable)
         return first
@@ -178,7 +178,7 @@ class SliceMixin(local):
         '''
         with self._flow():
             first = self._first
-            return self._many(first(n)) if n else self._one(first())
+            return self._many(first(n)) if n else self._one(first(n))
 
     def groupby(self):
         '''
