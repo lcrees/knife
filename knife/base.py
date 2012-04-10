@@ -256,11 +256,6 @@ class KnifeMixin(local):
         with self._autoflow(snap=False):
             return self._xtend(self._iterable)
 
-    def reup(self):
-        '''put incoming in inflow as one incoming thing'''
-        with self._manual2(keep=False):
-            return self._xtend(list(self._iterable))
-
     @property
     def balanced(self):
         '''Determine if inflow and outflow are in balance'''

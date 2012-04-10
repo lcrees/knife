@@ -68,9 +68,9 @@ class MMapMixin(object):
         from stuf import stuf
         self.assertEqual(
             self.qclass(
-                ('a', 1), ('b', 2), ('c', 3)
-            ).reup().tap(stuf, factory=True).map().end(),
-            stuf(a=1, b=2, c=3),
+                [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
+            ).tap(stuf, factory=True).map().end(),
+            [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)],
         )
 
     def test_map(self):

@@ -59,9 +59,11 @@ class AMapMixin(object):
     def test_factory(self):
         from stuf import stuf
         thing = self.qclass(
-            ('a', 1), ('b', 2), ('c', 3)
-        ).tap(stuf, factory=True).reup().map().shift_in().end()
-        self.assertEqual(thing, stuf(a=1, b=2, c=3), thing)
+            [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
+        ).tap(stuf, factory=True).map().end()
+        self.assertEqual(
+            thing, [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)], thing
+        )
 
     def test_map(self):
         def test(*args, **kw):
