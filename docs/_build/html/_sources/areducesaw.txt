@@ -1,0 +1,7 @@
+:class:`chainsaw.active.reducesaw` --- Active Reducing Chainsaw
+===============================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: reducesaw
+    :inherited-members:

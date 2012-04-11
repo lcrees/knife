@@ -1,0 +1,7 @@
+:class:`chainsaw.active.mapsaw` --- Active Mapping Chainsaw
+===========================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: mapsaw
+    :inherited-members:    

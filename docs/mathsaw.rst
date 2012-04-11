@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.mathsaw` --- Lazily Evaluated Mathing Chainsaw
-====================================================================
+:class:`chainsaw.lazy.mathsaw` --- Mathing chainsaw
+===================================================
 
 .. module:: chainsaw.lazy
 

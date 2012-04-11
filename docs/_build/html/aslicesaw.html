@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>chainsaw.active.slicesaw — Active Slicing Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
+    <link rel="next" title="chainsaw.active.truthsaw — Active Truthing Chainsaw" href="atruthsaw.html" />
+    <link rel="prev" title="chainsaw.active.repeatsaw — Active Repeating Chainsaw" href="arepeatsaw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atruthsaw.html" title="chainsaw.active.truthsaw — Active Truthing Chainsaw"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arepeatsaw.html" title="chainsaw.active.repeatsaw — Active Repeating Chainsaw"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-chainsaw.active">
+<span id="chainsaw-active-slicesaw-active-slicing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.slicesaw" title="chainsaw.active.slicesaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.slicesaw</span></tt></a> &#8212; Active Slicing Chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="chainsaw.active.slicesaw">
+<em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">slicesaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#slicesaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.slicesaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>slicing chainsaw</p>
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.append">
+<tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.appendstart">
+<tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.appendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.arguments">
+<tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign any positional and/or keyword arguments to be used anytime the
+current callable or alternative callable is invoked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.active.slicesaw.as_auto">
+<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to context where incoming things are automatically rebalanced
+with outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
+its original type</em>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_deque">
+<tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_deque" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_edit">
+<tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to editing context where operations can be performed on incoming
+things from initial placement to final extraction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_frozenset">
+<tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_frozenstuf">
+<tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.active.slicesaw.as_manual">
+<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to context where incoming things must be manually rebalanced
+with outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_many">
+<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on each incoming thing as just one
+individual thing in a series of many individual things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_one">
+<tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on incoming things as one whole thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_ordereddict">
+<tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_orderedstuf">
+<tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_stuf">
+<tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_stuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_truth">
+<tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to evaluation context where the results of operations on
+incoming things determine which of two potential paths to execute.
+After exiting the evaluation context by invoking <tt class="docutils literal"><span class="pre">which</span></tt>, incoming
+things automatically revert to a prior baseline snapshot of incoming
+things so further operations can be performed on an unmodified baseline
+version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) decode
+each incoming thing (<em>regardless of its original type</em>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.as_view">
+<tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to query context where the results of operations on incoming
+things queried. Upon exit from query context by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
+or <tt class="docutils literal"><span class="pre">end</span></tt>, incoming things automatically revert to a prior baseline
+snapshot of so that further operations can be performed on an
+unmodified baseline version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.at">
+<tt class="descname">at</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return thing at <cite>n</cite> index within an iterable or <cite>default</cite> if nothing is
+found at <cite>n</cite> index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; index of some thing</li>
+<li><strong>default</strong> &#8211; default thing (<em>default:</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chainsaw.active.slicesaw.balanced">
+<tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.active.slicesaw.balanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if incoming and outgoing things are in balance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear out everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.clear_in">
+<tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.clear_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.clear_out">
+<tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.clear_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.count_out">
+<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.count_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.end">
+<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things, cleaning out everything afterwards.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.extend">
+<tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.extendstart">
+<tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.extendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.first">
+<tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return either <cite>n</cite> things from the start of an iterable or just the
+first thing in the iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.initial">
+<tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return everything in an iterable except the very <strong>last</strong> thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.last">
+<tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return either <cite>n</cite> things from the end of an iterable or just the
+<strong>last</strong> thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.preview">
+<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a peek at the current state of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.rest">
+<tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return everything in an iterable except the very <strong>first</strong> thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.results">
+<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things, clearing outgoing things afterwards.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.shift_in">
+<tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.shift_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy outgoing things back to incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.shift_out">
+<tt class="descname">shift_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.shift_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy incoming things to outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.slice">
+<tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slice an iterable down to a certain size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; starting index of slice</li>
+<li><strong>stop</strong> &#8211; stopping index of slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>step</strong> &#8211; size of step in slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a snapshot of current incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.split">
+<tt class="descname">split</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split an iterable into multiple iterables of length <cite>n</cite> while using
+<cite>fill</cite> value to pad out any incomplete iterables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; number of things per split (<em>default:</em>  <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete iterables with (<em>default</em>:
+<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.tap">
+<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<cite>factory</cite> flag is set to <tt class="docutils literal"><span class="pre">True</span></tt>, use the callable passed with the
+<cite>call</cite> argument as a factory to build the current callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default</em>:
+<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
+(<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
+(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
+<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>original</strong> &#8211; revert incoming things to original snapshot (
+<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.untap">
+<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.untap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear any current callable, alternative callable, or assigned position
+or keywork arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.unwrap">
+<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.unwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.which">
+<tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose current callable based on results of condition mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="docutils literal"><span class="pre">True</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="docutils literal"><span class="pre">False</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.slicesaw.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterable wrapper for outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an iterable wrapper</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arepeatsaw.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.repeatsaw</span></tt> &#8212; Active Repeating Chainsaw</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atruthsaw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.truthsaw</span></tt> &#8212; Active Truthing Chainsaw</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/aslicesaw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atruthsaw.html" title="chainsaw.active.truthsaw — Active Truthing Chainsaw"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arepeatsaw.html" title="chainsaw.active.repeatsaw — Active Repeating Chainsaw"
+             >previous</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

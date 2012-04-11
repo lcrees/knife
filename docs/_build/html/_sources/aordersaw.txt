@@ -1,0 +1,7 @@
+:class:`chainsaw.active.ordersaw` --- Active Ordering Chainsaw
+==============================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: ordersaw
+    :inherited-members:

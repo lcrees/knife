@@ -50,7 +50,7 @@
             
   <h1>Source code for chainsaw.active</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&#39;&#39;&#39;actively chainsaws&#39;&#39;&#39;</span>
+<span class="sd">&#39;&#39;&#39;active chainsaws&#39;&#39;&#39;</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
@@ -78,7 +78,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        init</span>
 
-<span class="sd">        @param *things: wannabe incoming things</span>
+<span class="sd">        :params *things: incoming things</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c"># if just one thing, put it in inchain or put everything in inchain</span>
         <span class="k">try</span><span class="p">:</span>
@@ -94,7 +94,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_hold</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
 
     <span class="c">###########################################################################</span>
-    <span class="c">## things in chain ########################################################</span>
+    <span class="c">## chain things ###########################################################</span>
     <span class="c">###########################################################################</span>
 
     <span class="nd">@contextmanager</span>
@@ -142,9 +142,10 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Take a snapshot of current incoming things.</span>
 
-<span class="sd">        :param baseline: make snapshot baseline version (default: ``False``)</span>
-
-<span class="sd">        :param original: make snapshot original version (default: ``False``)</span>
+<span class="sd">        :param baseline: make this snapshot the baseline snapshot (*default*:</span>
+<span class="sd">          ``False``)</span>
+<span class="sd">        :param original: make this snapshot the original snapshot (*default*:</span>
+<span class="sd">          ``False``)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c"># take snapshot</span>
         <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="o">.</span><span class="n">__copy__</span><span class="p">()</span>
@@ -162,9 +163,12 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Revert incoming things to a previous snapshot of incoming things.</span>
 
-<span class="sd">        :param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)</span>
-<span class="sd">        :param baseline: return ins to baseline version (default: False)</span>
-<span class="sd">        :param original: return ins to original version (default: False)</span>
+<span class="sd">        :param snapshot: number of steps ago e.g. ``1``, ``2``, ``3``, etc.</span>
+<span class="sd">          (*default*: ``0``)</span>
+<span class="sd">        :param baseline: revert incoming things to baseline snapshot (</span>
+<span class="sd">          *default:* ``False``)</span>
+<span class="sd">        :param original: revert incoming things to original snapshot (</span>
+<span class="sd">          *default:* ``False``)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c"># clear everything</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -337,67 +341,67 @@
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<span class="k">class</span> <span class="nc">collectsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CollectMixin</span><span class="p">,</span> <span class="n">_CollectMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="collectsaw"><a class="viewcode-back" href="../../collectsaw.html#chainsaw.active.collectsaw">[docs]</a><span class="k">class</span> <span class="nc">collectsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CollectMixin</span><span class="p">,</span> <span class="n">_CollectMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;collecting chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">slicesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="slicesaw"><a class="viewcode-back" href="../../aslicesaw.html#chainsaw.active.slicesaw">[docs]</a><span class="k">class</span> <span class="nc">slicesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;slicing chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">filtersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="filtersaw"><a class="viewcode-back" href="../../afiltersaw.html#chainsaw.active.filtersaw">[docs]</a><span class="k">class</span> <span class="nc">filtersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;filtering chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">repeatsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="repeatsaw"><a class="viewcode-back" href="../../arepeatsaw.html#chainsaw.active.repeatsaw">[docs]</a><span class="k">class</span> <span class="nc">repeatsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;repeating chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="mapsaw"><a class="viewcode-back" href="../../amapsaw.html#chainsaw.active.mapsaw">[docs]</a><span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;mapping chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">ordersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="ordersaw"><a class="viewcode-back" href="../../aordersaw.html#chainsaw.active.ordersaw">[docs]</a><span class="k">class</span> <span class="nc">ordersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;ordering chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">mathsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="mathsaw"><a class="viewcode-back" href="../../amathsaw.html#chainsaw.active.mathsaw">[docs]</a><span class="k">class</span> <span class="nc">mathsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;mathing chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">truthsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">TruthMixin</span><span class="p">,</span> <span class="n">_TruthMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="truthsaw"><a class="viewcode-back" href="../../atruthsaw.html#chainsaw.active.truthsaw">[docs]</a><span class="k">class</span> <span class="nc">truthsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">TruthMixin</span><span class="p">,</span> <span class="n">_TruthMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;truthing chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
-
-<span class="k">class</span> <span class="nc">reducesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="reducesaw"><a class="viewcode-back" href="../../areducesaw.html#chainsaw.active.reducesaw">[docs]</a><span class="k">class</span> <span class="nc">reducesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;reducing chainsaw&#39;&#39;&#39;</span>
 
-    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span></div>
 </pre></div>
 
           </div>

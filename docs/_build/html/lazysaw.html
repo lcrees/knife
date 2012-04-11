@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw" href="collectsaw.html" />
-    <link rel="prev" title="chainsaw.active.activesaw — Active Chainsaws" href="activesaw.html" /> 
+    <link rel="next" title="chainsaw.active.collectsaw — Active Collecting Chainsaw" href="collectsaw.html" />
+    <link rel="prev" title="chainsaw.active.truthsaw — Active Truthing Chainsaw" href="atruthsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="collectsaw.html" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw"
+          <a href="collectsaw.html" title="chainsaw.active.collectsaw — Active Collecting Chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="activesaw.html" title="chainsaw.active.activesaw — Active Chainsaws"
+          <a href="atruthsaw.html" title="chainsaw.active.truthsaw — Active Truthing Chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -94,8 +94,8 @@ current callable or alternative callable is invoked.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to encode each incoming things as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encoded
-with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (regardless of its original type)</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -117,8 +117,8 @@ with outgoing things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to encode each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt>
-(regardless of its original type).</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
+its original type</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -235,14 +235,14 @@ version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_unicode">
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to decode each incoming thing as <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt>
-(<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) (regardless its original type).</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) decode
+each incoming thing (<em>regardless of its original type</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> &#8211; Unicode encoding (default: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
 <li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
 <tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
 </ul>
@@ -1022,11 +1022,11 @@ their position within the iterable.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="activesaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.activesaw</span></tt> &#8212; Active Chainsaws</a></p>
+  <p class="topless"><a href="atruthsaw.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.truthsaw</span></tt> &#8212; Active Truthing Chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="collectsaw.html"
-                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.collectsaw</span></tt> &#8212; Lazily Evaluated Collecting Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.collectsaw</span></tt> &#8212; Active Collecting Chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/lazysaw.txt"
@@ -1059,10 +1059,10 @@ their position within the iterable.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="collectsaw.html" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw"
+          <a href="collectsaw.html" title="chainsaw.active.collectsaw — Active Collecting Chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="activesaw.html" title="chainsaw.active.activesaw — Active Chainsaws"
+          <a href="atruthsaw.html" title="chainsaw.active.truthsaw — Active Truthing Chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

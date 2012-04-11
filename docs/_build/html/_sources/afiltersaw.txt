@@ -1,0 +1,7 @@
+:class:`chainsaw.active.filtersaw` --- Active Filtering Chainsaw
+================================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: filtersaw
+    :inherited-members:

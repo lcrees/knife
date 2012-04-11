@@ -6,12 +6,29 @@
 Welcome to chainsaw's documentation!
 ====================================
 
-Contents:
+Active Chainsaws
+----------------
 
 .. toctree::
    :maxdepth: 2
 
    activesaw
+   acollectsaw
+   afiltersaw
+   amapsaw
+   amathsaw
+   aordersaw
+   areducesaw
+   arepeatsaw
+   aslicesaw
+   atruthsaw
+   
+Lazy Chainsaws
+--------------
+
+.. toctree::
+   :maxdepth: 2
+
    lazysaw
    collectsaw
    filtersaw

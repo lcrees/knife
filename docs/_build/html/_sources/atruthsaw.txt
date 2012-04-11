@@ -1,0 +1,7 @@
+:class:`chainsaw.active.truthsaw` --- Active Truthing Chainsaw
+==============================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: truthsaw
+    :inherited-members:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''actively chainsaws'''
+'''active chainsaws'''
 
 from collections import deque
 from contextlib import contextmanager
@@ -27,7 +27,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''
         init
 
-        @param *things: wannabe incoming things
+        :params *things: incoming things
         '''
         # if just one thing, put it in inchain or put everything in inchain
         try:
@@ -43,7 +43,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         self._hold = deque()
 
     ###########################################################################
-    ## things in chain ########################################################
+    ## chain things ###########################################################
     ###########################################################################
 
     @contextmanager
@@ -91,9 +91,10 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''
         Take a snapshot of current incoming things.
 
-        :param baseline: make snapshot baseline version (default: ``False``)
-
-        :param original: make snapshot original version (default: ``False``)
+        :param baseline: make this snapshot the baseline snapshot (*default*:
+          ``False``)
+        :param original: make this snapshot the original snapshot (*default*:
+          ``False``)
         '''
         # take snapshot
         snapshot = self._in.__copy__()
@@ -111,9 +112,12 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''
         Revert incoming things to a previous snapshot of incoming things.
 
-        :param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
-        :param baseline: return ins to baseline version (default: False)
-        :param original: return ins to original version (default: False)
+        :param snapshot: number of steps ago e.g. ``1``, ``2``, ``3``, etc.
+          (*default*: ``0``)
+        :param baseline: revert incoming things to baseline snapshot (
+          *default:* ``False``)
+        :param original: revert incoming things to original snapshot (
+          *default:* ``False``)
         '''
         # clear everything
         self.clear()

@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.mapsaw` --- Lazily Evaluated Mapping Chainsaw
-===================================================================
+:class:`chainsaw.lazy.mapsaw` --- Mapping chainsaw
+==================================================
 
 .. module:: chainsaw.lazy
 

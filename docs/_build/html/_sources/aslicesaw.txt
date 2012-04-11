@@ -1,0 +1,7 @@
+:class:`chainsaw.active.slicesaw` --- Active Slicing Chainsaw
+=============================================================
+
+.. module:: chainsaw.active
+
+.. autoclass:: slicesaw
+    :inherited-members:

@@ -274,8 +274,8 @@ class OutchainMixin(local):
 
     def as_ascii(self, errors='strict'):
         '''
-        Set wrapper to encode each incoming things as a :class:`byte` encoded
-        with the ``'ascii'`` codec (regardless of its original type)
+        Set wrapper to :class:`byte` encode each incoming thing with the
+        ``'ascii'`` codec (*regardless of its original type*)
 
         :param errors: error handling for decoding issues (*default*:
           ``'strict'``)
@@ -284,8 +284,8 @@ class OutchainMixin(local):
 
     def as_bytes(self, encoding='utf-8', errors='strict'):
         '''
-        Set wrapper to encode each incoming thing as a :class:`byte`
-        (regardless of its original type).
+        Set wrapper to :class:`byte` encode each incoming thing (*regardless of
+        its original type*).
 
         :param encoding: Unicode encoding (*default*: ``'utf-8'``)
 
@@ -296,10 +296,10 @@ class OutchainMixin(local):
 
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set wrapper to decode each incoming thing as :class:`unicode`
-        (:class:`str`` under Python 3) (regardless its original type).
+        Set wrapper to :class:`unicode` (:class:`str`` under Python 3) decode
+        each incoming thing (*regardless of its original type*).
 
-        :param encoding: Unicode encoding (default: ``'utf-8'``)
+        :param encoding: Unicode encoding (*default*: ``'utf-8'``)
 
         :param errors: error handling for decoding issues (*default*:
           ``'strict'``)
