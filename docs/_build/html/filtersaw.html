@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.lazy.filtersaw — Lazily Evaluated Filtering Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,7 +25,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" /> 
+    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
+    <link rel="next" title="chainsaw.lazy.mapsaw — Lazily Evaluated Mapping Chainsaw" href="mapsaw.html" />
+    <link rel="prev" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw" href="collectsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,6 +39,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="mapsaw.html" title="chainsaw.lazy.mapsaw — Lazily Evaluated Mapping Chainsaw"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="collectsaw.html" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -46,7 +54,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-chainsaw.lazy"><span id="filtersaw"></span></span><hr class="docutils" />
+  <div class="section" id="module-chainsaw.lazy">
+<span id="chainsaw-lazy-filtersaw-lazily-evaluated-filtering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.filtersaw" title="chainsaw.lazy.filtersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.filtersaw</span></tt></a> &#8212; Lazily Evaluated Filtering Chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.lazy.filtersaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.lazy.</tt><tt class="descname">filtersaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/lazy.html#filtersaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.lazy.filtersaw" title="Permalink to this definition">¶</a></dt>
@@ -54,58 +63,75 @@
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.append" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> before any current incoming things.</p>
-<p>&#64;param thing: wannabe incoming things</p>
+<dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.filtersaw.appendfront">
-<tt class="descname">appendfront</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.appendfront" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>thing</cite> before any current incoming things.</p>
-<p>&#64;param thing: one wannabe incoming thing</p>
+<dt id="chainsaw.lazy.filtersaw.appendstart">
+<tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.appendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign arguments to be used by the current or alternative callable.</p>
+<dd><p>Assign any positional and/or keyword arguments to be used anytime the
+current callable or alternative callable is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to encode each thing in a series of things as string/byte
-type encoded as <cite>ascii</cite> (regardless of type)</p>
-<p>&#64;param errors: error handling (default: &#8216;strict&#8217;)</p>
+<dd><p>Set wrapper to encode each incoming things as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encoded
+with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (regardless of its original type)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="chainsaw.lazy.filtersaw.as_auto">
 <em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_auto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context where incoming things are automatically rebalanced with
-outgoing things.</p>
+<dd><p>Switch to context where incoming things are automatically rebalanced
+with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>encode each incoming thing as byte string (regardless of type)</p>
-<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
-&#64;param errors: error handling for encoding stringish things</p>
-<blockquote>
-<div>(default: &#8216;strict&#8217;)</div></blockquote>
+<dd><p>Set wrapper to encode each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt>
+(regardless of its original type).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_deque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>deque</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>dict</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -118,26 +144,26 @@ things from initial placement to final extraction.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>frozenset</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>frozenstuf</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>list</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="chainsaw.lazy.filtersaw.as_manual">
 <em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_manual" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context where incoming must be manually rebalanced with outgoing
-things.</p>
+<dd><p>Switch to context where incoming things must be manually rebalanced
+with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -150,32 +176,31 @@ individual thing in a series of many individual things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_one">
 <tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_one" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to performing operations on incoming things as one whole
-individual thing.</p>
+<dd><p>Switch to performing operations on incoming things as one whole thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_ordereddict">
 <tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>OrderedDict</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>orderedstuf</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>set</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_stuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>stuf</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -183,43 +208,52 @@ individual thing.</p>
 <tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_truth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to evaluation context where the results of operations on
 incoming things determine which of two potential paths to execute.
-After exting the evaluation context, incoming things automatically
-revert to a prior baseline snapshot of incoming things so further
-operations can be performed on the unmodified version.</p>
+After exiting the evaluation context by invoking <tt class="docutils literal"><span class="pre">which</span></tt>, incoming
+things automatically revert to a prior baseline snapshot of incoming
+things so further operations can be performed on an unmodified baseline
+version.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>tuple</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_unicode">
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to decode each thing in a series of things as <cite>unicode</cite>
-type (regardless of type).</p>
-<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
-&#64;param errors: error handling for decoding stringish things</p>
-<blockquote>
-<div>(default: &#8216;strict&#8217;)</div></blockquote>
+<dd><p>Set wrapper to decode each incoming thing as <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt>
+(<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) (regardless its original type).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (default: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.as_view">
 <tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.as_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to query context where incoming things can be extracted and
-transformed so that the results of chainsawing them can be queried.
-Upon exit from query context by invoking <cite>results</cite> or <cite>end</cite>, all
-incoming things automatically revert to a prior baseline snapshot of
-incoming things so that further operations can be performed on the
-unmodified version.</p>
+<dd><p>Switch to query context where the results of operations on incoming
+things queried. Upon exit from query context by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
+or <tt class="docutils literal"><span class="pre">end</span></tt>, incoming things automatically revert to a prior baseline
+snapshot of so that further operations can be performed on an
+unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="chainsaw.lazy.filtersaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.filtersaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine if ins and out are in balance</p>
+<dd><p>Determine if incoming and outgoing things are in balance</p>
 </dd></dl>
 
 <dl class="method">
@@ -256,7 +290,14 @@ unmodified version.</p>
 <dt id="chainsaw.lazy.filtersaw.difference">
 <tt class="descname">difference</tt><big>(</big><em>symmetric=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.difference" title="Permalink to this definition">¶</a></dt>
 <dd><p>The difference between a series of things.</p>
-<p>&#64;param symmetric: use symmetric difference (default: <cite>False</cite>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> &#8211; use symmetric difference (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -268,53 +309,69 @@ unmodified version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things and clear out every last thing.</p>
+<dd><p>Return outgoing things, cleaning out everything afterwards.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.extend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> after any current incoming things.</p>
-<p>&#64;param things: wannabe incoming things</p>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.filtersaw.extendfront">
-<tt class="descname">extendfront</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.extendfront" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> after any current incoming thing.</p>
-<p>&#64;param thing: one wannabe incoming thing</p>
+<dt id="chainsaw.lazy.filtersaw.extendstart">
+<tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.extendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.filter">
-<tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.filter" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Things within a series of things that pass a filter. By default things
-that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
-set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
-while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
-the filter will be a regular expression. Otherwise the current callable
-will be used.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
-<blockquote>
-<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
-<p>&#64;param flags: regular expression flags (default: 0)</p>
+that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
+set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
+while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
+supplied the filter will be a regular expression. Otherwise the current
+callable is used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> rather than
+<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.find">
-<tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.find" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>The first in a series of things that pass a filter. By default things
-that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
-set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
-while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
-the filter will be a regular expression. Otherwise the current callable
-will be used.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
-<blockquote>
-<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
-<p>&#64;param flags: regular expression flags (default: 0)</p>
+that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
+set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
+while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
+supplied the filter will be a regular expression. Otherwise the current
+callable will be used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (default: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> and not
+<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -326,10 +383,20 @@ will be used.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.partition">
 <tt class="descname">partition</tt><big>(</big><em>pattern=None</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.partition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divide a series of things into <cite>True</cite> and <cite>False</cite> things based on the
-results returned by the current callable.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param flags: regular expression flags (default: 0)</p>
+<dd><p>Lump a series of things into <tt class="docutils literal"><span class="pre">True</span></tt> and <tt class="docutils literal"><span class="pre">False</span></tt> things based on
+the results of the current callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -343,22 +410,33 @@ results returned by the current callable.</p>
 <tt class="descname">replace</tt><big>(</big><em>pattern</em>, <em>new</em>, <em>count=0</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.replace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace segments within a series of strings with a new string segment
 if they match a pattern.</p>
-<p>&#64;param pattern: regular expression search pattern
-&#64;param new: replacement string
-&#64;param count: number of replacements to make in a string (default: 0)
-&#64;param flags: regular expression flags (default: 0)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern</li>
+<li><strong>new</strong> &#8211; replacement string</li>
+<li><strong>count</strong> &#8211; number of replacements to make in a string
+(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.results">
 <tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things and clear outgoing things.</p>
+<dd><p>Return outgoing things, clearing outgoing things afterwards.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.shift_in">
 <tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.shift_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things to incoming things.</p>
+<dd><p>Manually copy outgoing things back to incoming things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -371,8 +449,20 @@ if they match a pattern.</p>
 <dt id="chainsaw.lazy.filtersaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
-<p>&#64;param baseline: make snapshot baseline version (default: False)
-&#64;param original: make snapshot original version (default: False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -390,21 +480,46 @@ if they match a pattern.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign current callable and, optionally, an alternative callable. If
-<cite>factory</cite> flag is set, use the <cite>call</cite> argument as a factory for
-building the current callable.</p>
-<p>&#64;param call: primary callable to assign
-&#64;param alt: alternative callable to assign (default: None)
-&#64;param factor: whether <cite>call</cite> is a callable factory (default: False)</p>
+<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<cite>factory</cite> flag is set to <tt class="docutils literal"><span class="pre">True</span></tt>, use the callable passed with the
+<cite>call</cite> argument as a factory to build the current callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default</em>:
+<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
+(<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
-<p>&#64;param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
-&#64;param baseline: return ins to baseline version (default: False)
-&#64;param original: return ins to original version (default: False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
+(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
+<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>original</strong> &#8211; revert incoming things to original snapshot (
+<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -423,32 +538,53 @@ remember everything ever encountered.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear current callable, alternative callable, and stored arguments.</p>
+<dd><p>Clear any current callable, alternative callable, or assigned position
+or keywork arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.unwrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>list</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose current callable based on results of condition mode</p>
-<p>&#64;param call: external callable to use if condition is <cite>True</cite>
-&#64;param alt: external callable to use if condition if <cite>False</cite></p>
+<dd><p>Choose current callable based on results of condition mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="docutils literal"><span class="pre">True</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="docutils literal"><span class="pre">False</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.wrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterable wrapper for outgoing things.</p>
-<p>&#64;param wrapper: an iterable wrapper</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an iterable wrapper</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
+</div>
 
 
           </div>
@@ -456,6 +592,12 @@ remember everything ever encountered.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="collectsaw.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">chainsaw.lazy.collectsaw</span></tt> &#8212; Lazily Evaluated Collecting Chainsaw</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mapsaw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.mapsaw</span></tt> &#8212; Lazily Evaluated Mapping Chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/filtersaw.txt"
@@ -487,6 +629,12 @@ remember everything ever encountered.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="mapsaw.html" title="chainsaw.lazy.mapsaw — Lazily Evaluated Mapping Chainsaw"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="collectsaw.html" title="chainsaw.lazy.collectsaw — Lazily Evaluated Collecting Chainsaw"
+             >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
     </div>

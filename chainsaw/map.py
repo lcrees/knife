@@ -13,7 +13,7 @@ class RepeatMixin(local):
         Each possible combinations for every number of things within a series
         of things.
 
-        @param n: number of things to derive combinations from
+        :param n: number of things to derive combinations from
         '''
         with self._chain():
             return self._many(self._combinations(n))
@@ -27,7 +27,7 @@ class RepeatMixin(local):
         '''
         Results of nested for each loops repeated a certain number of times.
 
-        @param n: number of loops to repeat (default: 1)
+        :param n: number of loops to repeat (*default*: ``1``)
         '''
         with self._chain():
             return self._many(self._product(n))
@@ -37,7 +37,7 @@ class RepeatMixin(local):
         Each possible permutation for every number of things within a series of
         things.
 
-        @param n: number of things to derive permutations from
+        :param n: number of things to derive permutations from
         '''
         with self._chain():
             return self._many(self._permutations(n))
@@ -46,8 +46,9 @@ class RepeatMixin(local):
         '''
         Repeat a series of things or the results of the current callable.
 
-        @param n: number of times to repeat (default: `None`)
-        @param call: repeat result of current callable (default: `False`)
+        :param n: number of times to repeat (*default*: ``None``)
+
+        :param call: repeat result of current callable (*default*: ``False``)
         '''
         with self._chain():
             return self._many(self._repeat(n, call, self._identity))
@@ -61,9 +62,9 @@ class MapMixin(local):
         '''
         Invoke method `name` on each thing within a series of things with the
         current positio nnd keyword arguments but return the thing as the
-        result if the method returns `None`.
+        result if the method returns ``None``.
 
-        @param name: method name
+        :param name: method name
         '''
         with self._chain():
             return self._many(
@@ -72,18 +73,18 @@ class MapMixin(local):
 
     def map(self, args=False, kwargs=False, current=False):
         '''
-        Invoke current callable on each thing within a series of things. Pass
-        results of iterable as *args to current callable if `args` flag is set.
-        Pass results of iterable to current callable as tuple of *args and
-        **kwargs if `kwargs` flag is set.
+        Invoke current callable on each thing in an iterable. Pass
+        results of iterable as `*args` to current callable if `args` flag is
+        set. Pass results of iterable to current callable as a :class:`tuple`
+        of `*args` and `**kwargs` if `kwargs` flag is set.
 
-        @param args: map each thing as a tuple of Python *args for current
-            callable (default: `False`)
-        @param kwargs: map each thing as a tuple of Python *args and
-            **kwargs for current callable (default: `False`)
-        @param current: map each thing as a tuple of Python *args and **kwargs
-            including current positional and keyword arguments for current
-            callable (default: `False`)
+        :param args: map each thing as a :class:`tuple` of Python `*args` for
+          the current callable (*default*: ``False``)
+        :param kwargs: map each thing as a :class:`tuple` of Python `*args` and
+          `**kwargs` for the current callable (*default*: ``False``)
+        :param current: map each thing as a :class"`tuple` of Python `*args`
+          and `**kwargs` and any assigned positional and/or keyword arguments
+          for the current callable (*default*: ``False``)
         '''
         args = kwargs if kwargs else args
         with self._chain():

@@ -143,14 +143,14 @@ class KChainsaw(AppspaceKey):
         @param thing: one wannabe incoming thing
         '''
 
-    def extendfront(things):  # @NoSelf
+    def extendstart(things):  # @NoSelf
         '''
         Place `things` before any current incoming things.
 
         @param thing: wannabe incoming things
         '''
 
-    def appendfront(thing):  # @NoSelf
+    def appendstart(thing):  # @NoSelf
         '''
         Place `thing` before any current incoming things.
 
@@ -383,12 +383,12 @@ class KSlice(AppspaceKey):
         @param n: number of things (default: 0)
         '''
 
-    def index(n, default=None):  # @NoSelf
+    def at(n, default=None):  # @NoSelf
         '''
-        Return each thing at a specified index in a series of incoming things
+        Return each thing at a specified at in a series of incoming things
         or the passed default thing.
 
-        @param n: index of thing
+        @param n: at of thing
         @param default: default thing (default: `None`)
         '''
 

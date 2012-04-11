@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.active.activesaw — Active Chainsaws &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,7 +25,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" /> 
+    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
+    <link rel="next" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw" href="lazysaw.html" />
+    <link rel="prev" title="Welcome to chainsaw’s documentation!" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,6 +39,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to chainsaw’s documentation!"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -46,7 +54,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-chainsaw.active"><span id="activesaw"></span></span><hr class="docutils" />
+  <div class="section" id="module-chainsaw.active">
+<span id="chainsaw-active-activesaw-active-chainsaws"></span><h1><a class="reference internal" href="#chainsaw.active.activesaw" title="chainsaw.active.activesaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.activesaw</span></tt></a> &#8212; Active Chainsaws<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.active.activesaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">activesaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#activesaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.activesaw" title="Permalink to this definition">¶</a></dt>
@@ -54,70 +63,87 @@
 <dl class="method">
 <dt id="chainsaw.active.activesaw.all">
 <tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if everthing in a series of things is <cite>True</cite>.</p>
+<dd><p>Tell if everthing in a series of things is <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.any">
 <tt class="descname">any</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.any" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if anything in a series of things is <cite>True</cite></p>
+<dd><p>Tell if anything in a series of things is <tt class="docutils literal"><span class="pre">True</span></tt></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.append" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> before any current incoming things.</p>
-<p>&#64;param thing: wannabe incoming things</p>
+<dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.activesaw.appendfront">
-<tt class="descname">appendfront</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.appendfront" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>thing</cite> before any current incoming things.</p>
-<p>&#64;param thing: one wannabe incoming thing</p>
+<dt id="chainsaw.active.activesaw.appendstart">
+<tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.appendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign arguments to be used by the current or alternative callable.</p>
+<dd><p>Assign any positional and/or keyword arguments to be used anytime the
+current callable or alternative callable is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to encode each thing in a series of things as string/byte
-type encoded as <cite>ascii</cite> (regardless of type)</p>
-<p>&#64;param errors: error handling (default: &#8216;strict&#8217;)</p>
+<dd><p>Set wrapper to encode each incoming things as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encoded
+with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (regardless of its original type)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="chainsaw.active.activesaw.as_auto">
 <em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_auto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context where incoming things are automatically rebalanced with
-outgoing things.</p>
+<dd><p>Switch to context where incoming things are automatically rebalanced
+with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>encode each incoming thing as byte string (regardless of type)</p>
-<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
-&#64;param errors: error handling for encoding stringish things</p>
-<blockquote>
-<div>(default: &#8216;strict&#8217;)</div></blockquote>
+<dd><p>Set wrapper to encode each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt>
+(regardless of its original type).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_deque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>deque</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>dict</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -130,26 +156,26 @@ things from initial placement to final extraction.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>frozenset</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>frozenstuf</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>list</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="chainsaw.active.activesaw.as_manual">
 <em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_manual" title="Permalink to this definition">¶</a></dt>
-<dd><p>Context where incoming must be manually rebalanced with outgoing
-things.</p>
+<dd><p>Switch to context where incoming things must be manually rebalanced
+with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -162,32 +188,31 @@ individual thing in a series of many individual things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_one">
 <tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_one" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to performing operations on incoming things as one whole
-individual thing.</p>
+<dd><p>Switch to performing operations on incoming things as one whole thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_ordereddict">
 <tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>OrderedDict</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>orderedstuf</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>set</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_stuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <cite>stuf</cite> type.</p>
+<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -195,37 +220,65 @@ individual thing.</p>
 <tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_truth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to evaluation context where the results of operations on
 incoming things determine which of two potential paths to execute.
-After exting the evaluation context, incoming things automatically
-revert to a prior baseline snapshot of incoming things so further
-operations can be performed on the unmodified version.</p>
+After exiting the evaluation context by invoking <tt class="docutils literal"><span class="pre">which</span></tt>, incoming
+things automatically revert to a prior baseline snapshot of incoming
+things so further operations can be performed on an unmodified baseline
+version.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>tuple</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_unicode">
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to decode each thing in a series of things as <cite>unicode</cite>
-type (regardless of type).</p>
-<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
-&#64;param errors: error handling for decoding stringish things</p>
-<blockquote>
-<div>(default: &#8216;strict&#8217;)</div></blockquote>
+<dd><p>Set wrapper to decode each incoming thing as <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt>
+(<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) (regardless its original type).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> &#8211; Unicode encoding (default: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_view">
 <tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to query context where incoming things can be extracted and
-transformed so that the results of chainsawing them can be queried.
-Upon exit from query context by invoking <cite>results</cite> or <cite>end</cite>, all
-incoming things automatically revert to a prior baseline snapshot of
-incoming things so that further operations can be performed on the
-unmodified version.</p>
+<dd><p>Switch to query context where the results of operations on incoming
+things queried. Upon exit from query context by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
+or <tt class="docutils literal"><span class="pre">end</span></tt>, incoming things automatically revert to a prior baseline
+snapshot of so that further operations can be performed on an
+unmodified baseline version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.at">
+<tt class="descname">at</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return thing at <cite>n</cite> index within an iterable or <cite>default</cite> if nothing is
+found at <cite>n</cite> index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; index of some thing</li>
+<li><strong>default</strong> &#8211; default thing (<em>default:</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -237,7 +290,7 @@ unmodified version.</p>
 <dl class="attribute">
 <dt id="chainsaw.active.activesaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.active.activesaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine if ins and out are in balance</p>
+<dd><p>Determine if incoming and outgoing things are in balance</p>
 </dd></dl>
 
 <dl class="method">
@@ -269,13 +322,20 @@ unmodified version.</p>
 <tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.combinations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Each possible combinations for every number of things within a series
 of things.</p>
-<p>&#64;param n: number of things to derive combinations from</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things to derive combinations from</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.concat">
 <tt class="descname">concat</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.concat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Concatenate a series of things into one series of things.</p>
+<dd><p>Merge many iterables into one iterables.</p>
 </dd></dl>
 
 <dl class="method">
@@ -300,7 +360,14 @@ of things.</p>
 <dt id="chainsaw.active.activesaw.difference">
 <tt class="descname">difference</tt><big>(</big><em>symmetric=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.difference" title="Permalink to this definition">¶</a></dt>
 <dd><p>The difference between a series of things.</p>
-<p>&#64;param symmetric: use symmetric difference (default: <cite>False</cite>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> &#8211; use symmetric difference (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -312,95 +379,109 @@ of things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things and clear out every last thing.</p>
+<dd><p>Return outgoing things, cleaning out everything afterwards.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.extend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> after any current incoming things.</p>
-<p>&#64;param things: wannabe incoming things</p>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.activesaw.extendfront">
-<tt class="descname">extendfront</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.extendfront" title="Permalink to this definition">¶</a></dt>
-<dd><p>Place <cite>things</cite> after any current incoming thing.</p>
-<p>&#64;param thing: one wannabe incoming thing</p>
+<dt id="chainsaw.active.activesaw.extendstart">
+<tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.extendstart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.filter">
-<tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.filter" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Things within a series of things that pass a filter. By default things
-that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
-set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
-while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
-the filter will be a regular expression. Otherwise the current callable
-will be used.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
-<blockquote>
-<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
-<p>&#64;param flags: regular expression flags (default: 0)</p>
+that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
+set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
+while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
+supplied the filter will be a regular expression. Otherwise the current
+callable is used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> rather than
+<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.find">
-<tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.find" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>The first in a series of things that pass a filter. By default things
-that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
-set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
-while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
-the filter will be a regular expression. Otherwise the current callable
-will be used.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
-<blockquote>
-<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
-<p>&#64;param flags: regular expression flags (default: 0)</p>
+that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
+set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
+while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
+supplied the filter will be a regular expression. Otherwise the current
+callable will be used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (default: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> and not
+<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.first">
 <tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.first" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return either the specified number of things from the beginning of a
-series of things or just the first thing.</p>
-<p>&#64;param n: number of things (default: 0)</p>
+<dd><p>Return either <cite>n</cite> things from the start of an iterable or just the
+first thing in the iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.flatten">
 <tt class="descname">flatten</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.flatten" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flatten a series of nested things into a flat series of things.</p>
+<dd><p>Reduce an iterable of nested things to an iterable of unnested
+things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.frequency">
 <tt class="descname">frequency</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.frequency" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count of each thing in a series of things.</p>
+<dd><p>Count of each thing within a series of things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.groupby">
 <tt class="descname">groupby</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.groupby" title="Permalink to this definition">¶</a></dt>
-<dd><p>Group things together using the current callable as the key function.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.activesaw.index">
-<tt class="descname">index</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return each thing at a specified index in a series of incoming things
-or the passed default thing.</p>
-<p>&#64;param n: index of thing
-&#64;param default: default thing (default: <cite>None</cite>)</p>
+<dd><p>Group things together using the current callable as the <cite>key</cite> function.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.initial">
 <tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.initial" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return everything within a series of things except the very last thing
-within the series of things.</p>
+<dd><p>Return everything in an iterable except the very <strong>last</strong> thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -414,61 +495,101 @@ within the series of things.</p>
 <tt class="descname">invoke</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.invoke" title="Permalink to this definition">¶</a></dt>
 <dd><p>Invoke method <cite>name</cite> on each thing within a series of things with the
 current positio nnd keyword arguments but return the thing as the
-result if the method returns <cite>None</cite>.</p>
-<p>&#64;param name: method name</p>
+result if the method returns <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; method name</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.items">
 <tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect object items from a series of things matching their keys.</p>
-<p>&#64;param <a href="#id1"><span class="problematic" id="id2">*</span></a>keys: item keys</p>
+<dd><p>Collect object items from a series of things matching their <cite>keys</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.join">
 <tt class="descname">join</tt><big>(</big><em>separator=u''</em>, <em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.join" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine a series of stringish things join into one unicode string
-(regardless of the original string type).</p>
-<p>&#64;param separator: string to join at (default: &#8216;&#8217;)
-&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
-&#64;param errors: error handling when encoding stringish things</p>
-<blockquote>
-<div>(default: &#8216;strict&#8217;)</div></blockquote>
+<dd><p>Combine an iterable into one <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> on Python
+3) regardless of type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>separator</strong> &#8211; string to join at (<em>default:</em>: <tt class="docutils literal"><span class="pre">''</span></tt>)</li>
+<li><strong>encoding</strong> &#8211; Unicode encoding for things (<em>default:</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling when encoding things (<em>default:</em>:
+<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.last">
 <tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.last" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return either the specified number of things from the end of a series
-of things or just the last thing.</p>
-<p>&#64;param n: number of things (default: 0)</p>
+<dd><p>Return either <cite>n</cite> things from the end of an iterable or just the
+<strong>last</strong> thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.map">
 <tt class="descname">map</tt><big>(</big><em>args=False</em>, <em>kwargs=False</em>, <em>current=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invoke current callable on each thing within a series of things. Pass
-results of iterable as <a href="#id3"><span class="problematic" id="id4">*</span></a>args to current callable if <cite>args</cite> flag is set.
-Pass results of iterable to current callable as tuple of <a href="#id5"><span class="problematic" id="id6">*</span></a>args and
-<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs if <cite>kwargs</cite> flag is set.</p>
-<dl class="docutils">
-<dt>&#64;param args: map each thing as a tuple of Python <a href="#id9"><span class="problematic" id="id10">*</span></a>args for current</dt>
-<dd>callable (default: <cite>False</cite>)</dd>
-<dt>&#64;param kwargs: map each thing as a tuple of Python <a href="#id11"><span class="problematic" id="id12">*</span></a>args and</dt>
-<dd><a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs for current callable (default: <cite>False</cite>)</dd>
-<dt>&#64;param current: map each thing as a tuple of Python <a href="#id15"><span class="problematic" id="id16">*</span></a>args and <a href="#id17"><span class="problematic" id="id18">**</span></a>kwargs</dt>
-<dd>including current positional and keyword arguments for current
-callable (default: <cite>False</cite>)</dd>
-</dl>
+<dd><p>Invoke current callable on each thing in an iterable. Pass
+results of iterable as <cite>*args</cite> to current callable if <cite>args</cite> flag is
+set. Pass results of iterable to current callable as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>
+of <cite>*args</cite> and <cite>**kwargs</cite> if <cite>kwargs</cite> flag is set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> &#8211; map each thing as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of Python <cite>*args</cite> for
+the current callable (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>kwargs</strong> &#8211; map each thing as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of Python <cite>*args</cite> and
+<cite>**kwargs</cite> for the current callable (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>current</strong> &#8211; map each thing as a :class&#8221;<cite>tuple</cite> of Python <cite>*args</cite>
+and <cite>**kwargs</cite> and any assigned positional and/or keyword arguments
+for the current callable (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.mapping">
 <tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect keys and values from a series of mappings.</p>
-<p>&#64;param keys: gather keys only (default: <cite>False</cite>)
-&#64;param values: gather values only (default: <cite>False</cite>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>keys</strong> &#8211; gather keys only (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>values</strong> &#8211; gather values only (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -500,10 +621,20 @@ the key function.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.partition">
 <tt class="descname">partition</tt><big>(</big><em>pattern=None</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.partition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divide a series of things into <cite>True</cite> and <cite>False</cite> things based on the
-results returned by the current callable.</p>
-<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
-&#64;param flags: regular expression flags (default: 0)</p>
+<dd><p>Lump a series of things into <tt class="docutils literal"><span class="pre">True</span></tt> and <tt class="docutils literal"><span class="pre">False</span></tt> things based on
+the results of the current callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -511,7 +642,14 @@ results returned by the current callable.</p>
 <tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.permutations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Each possible permutation for every number of things within a series of
 things.</p>
-<p>&#64;param n: number of things to derive permutations from</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things to derive permutations from</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -524,14 +662,21 @@ things.</p>
 <dt id="chainsaw.active.activesaw.product">
 <tt class="descname">product</tt><big>(</big><em>n=1</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Results of nested for each loops repeated a certain number of times.</p>
-<p>&#64;param n: number of loops to repeat (default: 1)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of loops to repeat (<em>default</em>: <tt class="docutils literal"><span class="pre">1</span></tt>)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.quantify">
 <tt class="descname">quantify</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.quantify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of how many times current callable evaluates to <cite>True</cite> in a
-series of things.</p>
+<dd><p>Number of how many times current callable evaluates to <tt class="docutils literal"><span class="pre">True</span></tt> within
+a series of things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -543,20 +688,41 @@ series of things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.reduce">
 <tt class="descname">reduce</tt><big>(</big><em>initial=None</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.reduce" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduce a series of things down to one thing using the current callable.
-If <cite>reverse</cite> flag is set, reduction will come from the right side of
-the series. Otherwise, reduction will come from the left side of the
-series.</p>
-<p>&#64;param initial: initial thing (default: <cite>None</cite>)
-&#64;param reverse: reduce from right side of things (default: <cite>False</cite>)</p>
+<dd><p>Reduce an iterable down to one thing using the current callable. If
+<tt class="docutils literal"><span class="pre">reverse</span></tt> is set to <tt class="docutils literal"><span class="pre">True</span></tt>, reduction comes from the right side of
+the iterable. Otherwise, reduction comes from the left side of the
+iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial</strong> &#8211; starting value (<em>default:</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>reverse</strong> &#8211; reduce from right side of iterable (<em>default:</em>:
+<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.repeat">
 <tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Repeat a series of things or the results of the current callable.</p>
-<p>&#64;param n: number of times to repeat (default: <cite>None</cite>)
-&#64;param call: repeat result of current callable (default: <cite>False</cite>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; number of times to repeat (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>call</strong> &#8211; repeat result of current callable (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -564,23 +730,33 @@ series.</p>
 <tt class="descname">replace</tt><big>(</big><em>pattern</em>, <em>new</em>, <em>count=0</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.replace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace segments within a series of strings with a new string segment
 if they match a pattern.</p>
-<p>&#64;param pattern: regular expression search pattern
-&#64;param new: replacement string
-&#64;param count: number of replacements to make in a string (default: 0)
-&#64;param flags: regular expression flags (default: 0)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; regular expression search pattern</li>
+<li><strong>new</strong> &#8211; replacement string</li>
+<li><strong>count</strong> &#8211; number of replacements to make in a string
+(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.rest">
 <tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.rest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return everything within a series of things except the very first thing
-within the series of things.</p>
+<dd><p>Return everything in an iterable except the very <strong>first</strong> thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.results">
 <tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things and clear outgoing things.</p>
+<dd><p>Return outgoing things, clearing outgoing things afterwards.</p>
 </dd></dl>
 
 <dl class="method">
@@ -593,13 +769,20 @@ within the series of things.</p>
 <dt id="chainsaw.active.activesaw.sample">
 <tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a random sample drawn from a series of things.</p>
-<p>&#64;param n: sample size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; sample size</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.shift_in">
 <tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.shift_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things to incoming things.</p>
+<dd><p>Manually copy outgoing things back to incoming things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -617,33 +800,65 @@ within the series of things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.slice">
 <tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slice a series of things down to a certain size.</p>
-<p>&#64;param start: starting point of slice
-&#64;param stop: stopping point of slice (default: <cite>False</cite>)
-&#64;param step: size of step in slice (default: <cite>False</cite>)</p>
+<dd><p>Slice an iterable down to a certain size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; starting index of slice</li>
+<li><strong>stop</strong> &#8211; stopping index of slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>step</strong> &#8211; size of step in slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
-<p>&#64;param baseline: make snapshot baseline version (default: False)
-&#64;param original: make snapshot original version (default: False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseline</strong> &#8211; make snapshot baseline version (default: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>original</strong> &#8211; make snapshot original version (default: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.sort">
 <tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sort" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sort a series of things using the current callable as the key function.</p>
+<dd><p>Sort a series of things using the current callable as the <cite>key</cite>
+function.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.split">
 <tt class="descname">split</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.split" title="Permalink to this definition">¶</a></dt>
-<dd><p>Split a series of things into series of things of a specified length
-using <cite>fill</cite> argument to pad out incomplete series.</p>
-<p>&#64;param n: number of things per split
-&#64;param fill: value to pad out incomplete things (default: <cite>None</cite>)</p>
+<dd><p>Split an iterable into multiple iterables of length <cite>n</cite> while using
+<cite>fill</cite> value to pad out any incomplete iterables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; number of things per split (<em>default:</em>  <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete iterables with (<em>default</em>:
+<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -656,8 +871,18 @@ using <cite>fill</cite> argument to pad out incomplete series.</p>
 <dt id="chainsaw.active.activesaw.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>floats=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add the value of a series of things together.</p>
-<p>&#64;param start: starting number (default: 0)
-&#64;param floats: incoming are floats (default: False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; starting number (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>floats</strong> &#8211; incoming are floats (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -669,21 +894,43 @@ using <cite>fill</cite> argument to pad out incomplete series.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign current callable and, optionally, an alternative callable. If
-<cite>factory</cite> flag is set, use the <cite>call</cite> argument as a factory for
-building the current callable.</p>
-<p>&#64;param call: primary callable to assign
-&#64;param alt: alternative callable to assign (default: None)
-&#64;param factor: whether <cite>call</cite> is a callable factory (default: False)</p>
+<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<cite>factory</cite> flag is set to <tt class="docutils literal"><span class="pre">True</span></tt>, use the callable passed with the
+<cite>call</cite> argument as a factory to build the current callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default</em>:
+<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
+(<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
-<p>&#64;param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
-&#64;param baseline: return ins to baseline version (default: False)
-&#64;param original: return ins to original version (default: False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>snapshot</strong> &#8211; steps ago 1, 2, 3 steps, etc.. (default: 0)</li>
+<li><strong>baseline</strong> &#8211; return ins to baseline version (default: False)</li>
+<li><strong>original</strong> &#8211; return ins to original version (default: False)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -702,45 +949,66 @@ remember everything ever encountered.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear current callable, alternative callable, and stored arguments.</p>
+<dd><p>Clear any current callable, alternative callable, or assigned position
+or keywork arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.unwrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <cite>list</cite> type.</p>
+<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.weave">
 <tt class="descname">weave</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.weave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interleave a series of things into one thing.</p>
+<dd><p>Interleave multiple iterables into one iterable.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose current callable based on results of condition mode</p>
-<p>&#64;param call: external callable to use if condition is <cite>True</cite>
-&#64;param alt: external callable to use if condition if <cite>False</cite></p>
+<dd><p>Choose current callable based on results of condition mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="docutils literal"><span class="pre">True</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="docutils literal"><span class="pre">False</span></tt>
+(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.wrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterable wrapper for outgoing things.</p>
-<p>&#64;param wrapper: an iterable wrapper</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an iterable wrapper</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.zip">
 <tt class="descname">zip</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.zip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduce of a series of things down to one thing, pairing each things by
-their position in the series.</p>
+<dd><p>Reduce a iterables down to one thing, pairing each things by
+their position within the iterable.</p>
 </dd></dl>
 
 </dd></dl>
 
+</div>
 
 
           </div>
@@ -748,6 +1016,12 @@ their position in the series.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to chainsaw&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lazysaw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.lazysaw</span></tt> &#8212; Lazily Evaluated Chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/activesaw.txt"
@@ -779,6 +1053,12 @@ their position in the series.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to chainsaw’s documentation!"
+             >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
     </div>

@@ -21,14 +21,14 @@ class SliceMixin(object):
 
     def test_index(self):
         # auto
-        self.assertEqual(self.qclass(5, 4, 3, 2, 1).index(2).end(), 3)
-        self.assertEqual(self.qclass(5, 4, 3, 2, 1).index(10, 11).end(), 11)
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).at(2).end(), 3)
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).at(10, 11).end(), 11)
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).index(2), self.assertEqual, 3,
+            self.mclass(5, 4, 3, 2, 1).at(2), self.assertEqual, 3,
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).index(10, 11), self.assertEqual, 11,
+            self.mclass(5, 4, 3, 2, 1).at(10, 11), self.assertEqual, 11,
         )
 
     def test_slice(self):

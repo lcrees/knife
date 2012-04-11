@@ -48,8 +48,9 @@ class MathMixin(local):
         '''
         Add the value of a series of things together.
 
-        @param start: starting number (default: 0)
-        @param floats: incoming are floats (default: False)
+        :param start: starting number (*default*: ``0``)
+
+        :param floats: incoming are floats (*default*: ``False``)
         '''
         with self._chain():
             return self._one(self._sum(start, floats))
@@ -60,24 +61,24 @@ class TruthMixin(local):
     '''truth mixin'''
 
     def all(self):
-        '''Tell if everthing in a series of things is `True`.'''
+        '''Tell if everthing in a series of things is ``True``.'''
         with self._chain():
             return self._one(self._all(self._test))
 
     def any(self):
-        '''Tell if anything in a series of things is `True`'''
+        '''Tell if anything in a series of things is ``True``'''
         with self._chain():
             return self._one(self._any(self._test))
 
     def frequency(self):
-        '''Count of each thing in a series of things.'''
+        '''Count of each thing within a series of things.'''
         with self._chain():
             return self._one(self._frequency)
 
     def quantify(self):
         '''
-        Number of how many times current callable evaluates to `True` in a
-        series of things.
+        Number of how many times current callable evaluates to ``True`` within
+        a series of things.
         '''
         with self._chain():
             return self._one(self._quantify(self._test))
@@ -94,7 +95,7 @@ class OrderMixin(local):
 
     def groupby(self):
         '''
-        Group things together using the current callable as the key function.
+        Group things together using the current callable as the `key` function.
         '''
         with self._chain():
             return self._many(self._groupby(self._identity))
@@ -106,7 +107,8 @@ class OrderMixin(local):
 
     def sort(self):
         '''
-        Sort a series of things using the current callable as the key function.
+        Sort a series of things using the current callable as the `key`
+        function.
         '''
         with self._chain():
             return self._many(self._sort(self._identity))
@@ -115,7 +117,7 @@ class OrderMixin(local):
         '''
         Take a random sample drawn from a series of things.
 
-        @param n: sample size
+        :param n: sample size
         '''
         with self._chain():
             return self._many(self._sample(n))

@@ -11,17 +11,17 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-    activesaw
-    lazysaw
-    collectsaw
-    filtersaw
-    mapsaw
-    mathsaw
-    ordersaw
-    reducesaw
-    repeatsaw
-    slicesaw
-    truthsaw
+   activesaw
+   lazysaw
+   collectsaw
+   filtersaw
+   mapsaw
+   mathsaw
+   ordersaw
+   reducesaw
+   repeatsaw
+   slicesaw
+   truthsaw
 
 Indices and tables
 ==================

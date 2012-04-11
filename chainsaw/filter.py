@@ -12,10 +12,10 @@ class CollectMixin(local):
 #        '''
 #        Collect attributes from a series of objects by their attribute names.
 #
-#        @param deep: traverse deep inside an object (default: `False`)
-#        @param ancestors: traverse deep inside classes within method resolutio
-#            order (default: `False`)
-#        @param *keys: item keys
+#        :param deep: traverse deep inside an object (default: ``False``)
+#
+#        :param ancestors: traverse deep inside classes within method resolutio
+#            order (default: ``False``)
 #        '''
 #        with self._chain():
 #            return self._iter(self._attributes(names, deep, ancestors))
@@ -24,17 +24,16 @@ class CollectMixin(local):
         '''
         Collect keys and values from a series of mappings.
 
-        @param keys: gather keys only (default: `False`)
-        @param values: gather values only (default: `False`)
+        :param keys: gather keys only (*default*: ``False``)
+
+        :param values: gather values only (*default*: ``False``)
         '''
         with self._chain():
             return self._many(self._mapping(self._call, keys, values))
 
     def items(self, *keys):
         '''
-        Collect object items from a series of things matching their keys.
-
-        @param *keys: item keys
+        Collect object items from a series of things matching their `keys`.
         '''
         with self._chain():
             return self._iter(self._items(keys))
@@ -44,51 +43,59 @@ class FilterMixin(local):
 
     '''filtering mixin'''
 
-    def filter(self, pattern=None, reverse=False, flags=0):
+    def filter(self, pattern=None, invert=False, flags=0):
         '''
         Things within a series of things that pass a filter. By default things
-        that evaluate to `True` pass the filter but if the `reverse` flag is
-        set to `True` than things that evaluate to `False` pass the filter
-        while things that evaluate to False do not. If a `pattern` is supplied
-        the filter will be a regular expression. Otherwise the current callable
-        will be used.
+        that evaluate to ``True`` pass the filter but if the `reverse` flag is
+        set to ``True`` than things that evaluate to ``False`` pass the filter
+        while things that evaluate to ``False`` do not. If a `pattern` is
+        supplied the filter will be a regular expression. Otherwise the current
+        callable is used.
 
-        @param pattern: regular expression search pattern (default: `None`)
-        @param reverse: return things for which filter is `False` rather than
-            `True` (default: `False`)
-        @param flags: regular expression flags (default: 0)
+        :param pattern: regular expression search pattern (*default*: ``None``)
+
+        :param invert: return things for which filter is ``False`` rather than
+          ``True`` (*default*: ``False``)
+
+        :param flags: regular expression flags (*default*: ``0``)
         '''
         with self._chain():
             return self._many(
-                self._filter(self._test, pattern, reverse, flags)
+                self._filter(self._test, pattern, invert, flags)
             )
 
-    def find(self, pattern=None, reverse=False, flags=0):
+    def find(self, pattern=None, invert=False, flags=0):
         '''
         The first in a series of things that pass a filter. By default things
-        that evaluate to `True` pass the filter but if the `reverse` flag is
-        set to `True` than things that evaluate to `False` pass the filter
-        while things that evaluate to False do not. If a `pattern` is supplied
-        the filter will be a regular expression. Otherwise the current callable
-        will be used.
+        that evaluate to ``True`` pass the filter but if the `reverse` flag is
+        set to ``True`` than things that evaluate to ``False`` pass the filter
+        while things that evaluate to ``False`` do not. If a `pattern` is
+        supplied the filter will be a regular expression. Otherwise the current
+        callable will be used.
 
-        @param pattern: regular expression search pattern (default: `None`)
-        @param reverse: return things for which filter is `False` rather than
-            `True` (default: `False`)
-        @param flags: regular expression flags (default: 0)
+        :param pattern: regular expression search pattern (default: ``None``)
+
+        :param invert: return things for which filter is ``False`` and not
+          ``True`` (*default*: ``False``)
+
+        :param flags: regular expression flags (*default*: ``0``)
         '''
         with self._chain():
-            return self._one(self._find(self._test, pattern, reverse, flags))
+            return self._one(self._find(self._test, pattern, invert, flags))
 
     def replace(self, pattern, new, count=0, flags=0):
         '''
         Replace segments within a series of strings with a new string segment
         if they match a pattern.
 
-        @param pattern: regular expression search pattern
-        @param new: replacement string
-        @param count: number of replacements to make in a string (default: 0)
-        @param flags: regular expression flags (default: 0)
+        :param pattern: regular expression search pattern
+
+        :param new: replacement string
+
+        :param count: number of replacements to make in a string
+          (*default*: ``0``)
+
+        :param flags: regular expression flags (*default*: ``0``)
         '''
         with self._chain():
             return self._many(self._replace(pattern, new, count, flags))
@@ -97,7 +104,7 @@ class FilterMixin(local):
         '''
         The difference between a series of things.
 
-        @param symmetric: use symmetric difference (default: `False`)
+        :param symmetric: use symmetric difference (*default*: ``False``)
         '''
         with self._chain():
             return self._many(self._difference(symmetric))
@@ -114,11 +121,12 @@ class FilterMixin(local):
 
     def partition(self, pattern=None, flags=0):
         '''
-        Divide a series of things into `True` and `False` things based on the
-        results returned by the current callable.
+        Lump a series of things into ``True`` and ``False`` things based on
+        the results of the current callable.
 
-        @param pattern: regular expression search pattern (default: `None`)
-        @param flags: regular expression flags (default: 0)
+        :param pattern: regular expression search pattern (*default*: ``None``)
+
+        :param flags: regular expression flags (*default*: ``0``)
         '''
         with self._chain():
             return self._many(self._partition(self._test, pattern, flags))

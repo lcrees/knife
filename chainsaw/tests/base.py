@@ -58,7 +58,7 @@ class Mixin(object):
 
     def test_extendfront(self):
         self.assertListEqual(
-            self.qclass().extendfront(
+            self.qclass().extendstart(
                 [1, 2, 3, 4, 5, 6]
             ).shift_out().end(),
             [6, 5, 4, 3, 2, 1]
@@ -71,7 +71,7 @@ class Mixin(object):
 
     def test_appendfront(self):
         self.assertEqual(
-            self.qclass().appendfront('foo').shift_out().end(),
+            self.qclass().appendstart('foo').shift_out().end(),
             'foo'
         )
 
@@ -84,7 +84,7 @@ class Mixin(object):
         )
 
     def test_undo(self):
-        queue = self.qclass(1, 2, 3).extendfront(
+        queue = self.qclass(1, 2, 3).extendstart(
             [1, 2, 3, 4, 5, 6]
         ).shift_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])

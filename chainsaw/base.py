@@ -20,8 +20,7 @@ class ChainsawMixin(local):
 
     def as_one(self):
         '''
-        Switch to performing operations on incoming things as one whole
-        individual thing.
+        Switch to performing operations on incoming things as one whole thing.
         '''
         self._mode = self._ONE
         return self
@@ -51,21 +50,21 @@ class ChainsawMixin(local):
         '''
         Switch to evaluation context where the results of operations on
         incoming things determine which of two potential paths to execute.
-        After exting the evaluation context, incoming things automatically
-        revert to a prior baseline snapshot of incoming things so further
-        operations can be performed on the unmodified version.
+        After exiting the evaluation context by invoking ``which``, incoming
+        things automatically revert to a prior baseline snapshot of incoming
+        things so further operations can be performed on an unmodified baseline
+        version.
         '''
         self._context = self._TRUTH
         return self.snapshot(baseline=True)._as_chain(hard=True, snap=False)
 
     def as_view(self):
         '''
-        Switch to query context where incoming things can be extracted and
-        transformed so that the results of chainsawing them can be queried.
-        Upon exit from query context by invoking `results` or `end`, all
-        incoming things automatically revert to a prior baseline snapshot of
-        incoming things so that further operations can be performed on the
-        unmodified version.
+        Switch to query context where the results of operations on incoming
+        things queried. Upon exit from query context by invoking ``results``
+        or ``end``, incoming things automatically revert to a prior baseline
+        snapshot of so that further operations can be performed on an
+        unmodified baseline version.
         '''
         self._context = self._QUERY
         self._truth = None
@@ -78,8 +77,8 @@ class ChainsawMixin(local):
     @classmethod
     def as_auto(cls):
         '''
-        Context where incoming things are automatically rebalanced with
-        outgoing things.
+        Switch to context where incoming things are automatically rebalanced
+        with outgoing things.
         '''
         cls._DEFAULT_CHAIN = cls._AUTO
         return cls
@@ -87,14 +86,14 @@ class ChainsawMixin(local):
     @classmethod
     def as_manual(cls):
         '''
-        Context where incoming must be manually rebalanced with outgoing
-        things.
+        Switch to context where incoming things must be manually rebalanced
+        with outgoing things.
         '''
         cls._DEFAULT_CHAIN = cls._MANUAL
         return cls
 
     def shift_in(self):
-        '''Manually copy outgoing things to incoming things.'''
+        '''Manually copy outgoing things back to incoming things.'''
         with self._auto(
             chainin=self._OUTVAR, chainout=self._INVAR, snap=False,
         ):
@@ -107,7 +106,7 @@ class ChainsawMixin(local):
 
     @property
     def balanced(self):
-        '''Determine if ins and out are in balance'''
+        '''Determine if incoming and outgoing things are in balance'''
         return self.count_out() == self.__len__()
 
     ###########################################################################
@@ -116,7 +115,8 @@ class ChainsawMixin(local):
 
     def arguments(self, *args, **kw):
         '''
-        Assign arguments to be used by the current or alternative callable.
+        Assign any positional and/or keyword arguments to be used anytime the
+        current callable or alternative callable is invoked.
         '''
         # position arguments
         self._args = args
@@ -126,13 +126,17 @@ class ChainsawMixin(local):
 
     def tap(self, call, alt=None, factory=False):
         '''
-        Assign current callable and, optionally, an alternative callable. If
-        `factory` flag is set, use the `call` argument as a factory for
-        building the current callable.
+        Assign current callable. Optionally assign an alternative callable. If
+        `factory` flag is set to ``True``, use the callable passed with the
+        `call` argument as a factory to build the current callable.
 
-        @param call: primary callable to assign
-        @param alt: alternative callable to assign (default: None)
-        @param factor: whether `call` is a callable factory (default: False)
+        :param call: callable assigned as current callable
+
+        :param alt: callable assigned as alternative callable (*default*:
+          ``None``)
+
+        :param factory: whether `call` is a factory that produces callables
+          (*default*: ``False``)
         '''
         # reset stored position arguments
         self._args = ()
@@ -152,7 +156,8 @@ class ChainsawMixin(local):
 
     def untap(self):
         '''
-        Clear current callable, alternative callable, and stored arguments.
+        Clear any current callable, alternative callable, or assigned position
+        or keywork arguments.
         '''
         # reset position arguments
         self._args = ()
@@ -169,38 +174,22 @@ class ChainsawMixin(local):
     ###########################################################################
 
     def extend(self, things):
-        '''
-        Place `things` after any current incoming things.
-
-        @param things: wannabe incoming things
-        '''
+        '''Insert `things` **after** any other incoming things.'''
         with self._man1():
             return self._xtend(things)
 
-    def extendfront(self, things):
-        '''
-        Place `things` after any current incoming thing.
-
-        @param thing: one wannabe incoming thing
-        '''
+    def extendstart(self, things):
+        '''Insert `things` **before** any other incoming things.'''
         with self._man1():
             return self._xtendfront(things)
 
     def append(self, thing):
-        '''
-        Place `things` before any current incoming things.
-
-        @param thing: wannabe incoming things
-        '''
+        '''Insert `thing` **after** any other incoming things.'''
         with self._man1():
             return self._append(thing)
 
-    def appendfront(self, thing):
-        '''
-        Place `thing` before any current incoming things.
-
-        @param thing: one wannabe incoming thing
-        '''
+    def appendstart(self, thing):
+        '''Insert `thing` **before** any other incoming things.'''
         with self._man1():
             return self._appendfront(thing)
 
@@ -210,8 +199,8 @@ class ChainsawMixin(local):
 
     def __bool__(self):
         '''
-        Return results built up while in truth context or return the length of
-        incoming things.
+        Return either results built up while in truth context or return the
+        number of incoming things.
         '''
         return (self._truth if self._truth is not None else self.__len__())
 
@@ -227,14 +216,16 @@ class ChainsawMixin(local):
 
 class OutchainMixin(local):
 
-    '''knifing output mixin'''
+    '''chainsaw output mixin'''
 
     def which(self, call=None, alt=None):
         '''
-        Choose current callable based on results of condition mode
+        Choose current callable based on results of condition mode.
 
-        @param call: external callable to use if condition is `True`
-        @param alt: external callable to use if condition if `False`
+        :param call: new callable to use if condition is ``True``
+          (*default*: ``None``)
+        :param alt: new external callable to use if condition is ``False``
+          (*default*: ``None``)
         '''
         if self.__bool__():
             # use external call or current callable
@@ -246,7 +237,7 @@ class OutchainMixin(local):
         return self.as_edit()
 
     def end(self):
-        '''Return outgoing things and clear out every last thing.'''
+        '''Return outgoing things, cleaning out everything afterwards.'''
         self._unchain()
         value = self._output()
         # clear every last thing
@@ -254,7 +245,7 @@ class OutchainMixin(local):
         return value
 
     def results(self):
-        '''Return outgoing things and clear outgoing things.'''
+        '''Return outgoing things, clearing outgoing things afterwards.'''
         self._unchain()
         value = self._output()
         # clear out
@@ -272,7 +263,7 @@ class OutchainMixin(local):
         '''
         Iterable wrapper for outgoing things.
 
-        @param wrapper: an iterable wrapper
+        :param wrapper: an iterable wrapper
         '''
         self._wrapper = wrapper
         return self
@@ -283,31 +274,35 @@ class OutchainMixin(local):
 
     def as_ascii(self, errors='strict'):
         '''
-        Set wrapper to encode each thing in a series of things as string/byte
-        type encoded as `ascii` (regardless of type)
+        Set wrapper to encode each incoming things as a :class:`byte` encoded
+        with the ``'ascii'`` codec (regardless of its original type)
 
-        @param errors: error handling (default: 'strict')
+        :param errors: error handling for decoding issues (*default*:
+          ``'strict'``)
         '''
         return self.wrap(lambda x: tobytes(x, 'ascii', errors))
 
     def as_bytes(self, encoding='utf-8', errors='strict'):
         '''
-        encode each incoming thing as byte string (regardless of type)
+        Set wrapper to encode each incoming thing as a :class:`byte`
+        (regardless of its original type).
 
-        @param encoding: encoding for stringish things (default: 'utf-8')
-        @param errors: error handling for encoding stringish things
-            (default: 'strict')
+        :param encoding: Unicode encoding (*default*: ``'utf-8'``)
+
+        :param errors: error handling for encoding issues (*default*:
+          ``'strict'``)
         '''
         return self.wrap(lambda x: tobytes(x, encoding, errors))
 
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set wrapper to decode each thing in a series of things as `unicode`
-        type (regardless of type).
+        Set wrapper to decode each incoming thing as :class:`unicode`
+        (:class:`str`` under Python 3) (regardless its original type).
 
-        @param encoding: encoding for stringish things (default: 'utf-8')
-        @param errors: error handling for decoding stringish things
-            (default: 'strict')
+        :param encoding: Unicode encoding (default: ``'utf-8'``)
+
+        :param errors: error handling for decoding issues (*default*:
+          ``'strict'``)
         '''
         return self.wrap(lambda x: tounicode(x, encoding, errors))
 
@@ -316,17 +311,17 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_list(self):
-        '''Set wrapper to `list` type.'''
+        '''Set wrapper to :class:`list`.'''
         return self.wrap(list)
 
     unwrap = as_list
 
     def as_deque(self):
-        '''Set wrapper to `deque` type.'''
+        '''Set wrapper to :class:`deque`.'''
         return self.wrap(deque)
 
     def as_tuple(self):
-        '''Set wrapper to `tuple` type.'''
+        '''Set wrapper to :class:`tuple`.'''
         return self.wrap(tuple)
 
     ###########################################################################
@@ -334,11 +329,11 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_dict(self):
-        '''Set wrapper to `dict` type.'''
+        '''Set wrapper to :class:`dict`.'''
         return self.wrap(dict)
 
     def as_ordereddict(self):
-        '''Set wrapper to `OrderedDict` type.'''
+        '''Set wrapper to :class:`OrderedDict`.'''
         return self.wrap(OrderedDict)
 
     ###########################################################################
@@ -346,15 +341,15 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_frozenstuf(self):
-        '''Set wrapper to `frozenstuf` type.'''
+        '''Set wrapper to :class:`frozenstuf`.'''
         return self.wrap(frozenstuf)
 
     def as_orderedstuf(self):
-        '''Set iterable wrapper to `orderedstuf` type.'''
+        '''Set iterable wrapper to :class:`orderedstuf`.'''
         return self.wrap(orderedstuf)
 
     def as_stuf(self):
-        '''Set iterable wrapper to `stuf` type.'''
+        '''Set iterable wrapper to :class:`stuf`.'''
         return self.wrap(stuf)
 
     ###########################################################################
@@ -362,9 +357,9 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_frozenset(self):
-        '''Set iterable wrapper to `frozenset` type.'''
+        '''Set iterable wrapper to :class:`frozenset`.'''
         return self.wrap(frozenset)
 
     def as_set(self):
-        '''Set iterable wrapper to `set` type.'''
+        '''Set iterable wrapper to :class:`set`.'''
         return self.wrap(set)

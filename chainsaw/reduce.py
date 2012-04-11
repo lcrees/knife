@@ -11,50 +11,57 @@ class ReduceMixin(local):
     '''reduce mixin'''
 
     def concat(self):
-        '''Concatenate a series of things into one series of things.'''
+        '''Merge many iterables into one iterables.'''
         with self._chain():
             return self._many(self._concat)
 
     def flatten(self):
-        '''Flatten a series of nested things into a flat series of things.'''
+        '''
+        Reduce an iterable of nested things to an iterable of unnested
+        things.
+        '''
         with self._chain():
             return self._many(self._flatten)
 
     def join(self, separator=u(''), encoding='utf-8', errors='strict'):
         '''
-        Combine a series of stringish things join into one unicode string
-        (regardless of the original string type).
+        Combine an iterable into one :class:`unicode` (:class:`str` on Python
+        3) regardless of type.
 
-        @param separator: string to join at (default: '')
-        @param encoding: encoding for stringish things (default: 'utf-8')
-        @param errors: error handling when encoding stringish things
-            (default: 'strict')
+        :param separator: string to join at (*default:*: ``''``)
+
+        :param encoding: Unicode encoding for things (*default:*: ``'utf-8'``)
+
+        :param errors: error handling when encoding things (*default:*:
+          ``'strict'``)
         '''
         with self._chain():
             return self._one(self._join(separator, encoding, errors))
 
     def reduce(self, initial=None, reverse=False):
         '''
-        Reduce a series of things down to one thing using the current callable.
-        If `reverse` flag is set, reduction will come from the right side of
-        the series. Otherwise, reduction will come from the left side of the
-        series.
+        Reduce an iterable down to one thing using the current callable. If
+        ``reverse`` is set to ``True``, reduction comes from the right side of
+        the iterable. Otherwise, reduction comes from the left side of the
+        iterable.
 
-        @param initial: initial thing (default: `None`)
-        @param reverse: reduce from right side of things (default: `False`)
+        :param initial: starting value (*default:*: ``None``)
+
+        :param reverse: reduce from right side of iterable (*default:*:
+          ``False``)
         '''
         with self._chain():
             return self._one(self._reduce(self._call, initial, reverse))
 
     def weave(self):
-        '''Interleave a series of things into one thing.'''
+        '''Interleave multiple iterables into one iterable.'''
         with self._chain():
             return self._many(self._roundrobin)
 
     def zip(self):
         '''
-        Reduce of a series of things down to one thing, pairing each things by
-        their position in the series.
+        Reduce a iterables down to one thing, pairing each things by
+        their position within the iterable.
         '''
         with self._chain():
             return self._many(self._zip)
@@ -66,71 +73,70 @@ class SliceMixin(local):
 
     def first(self, n=0):
         '''
-        Return either the specified number of things from the beginning of a
-        series of things or just the first thing.
+        Return either `n` things from the start of an iterable or just the
+        first thing in the iterable.
 
-        @param n: number of things (default: 0)
+        :param n: number of things (*default:*: ``0``)
         '''
         with self._chain():
             first = self._first
             return self._many(first(n)) if n else self._one(first(n))
 
     def initial(self):
-        '''
-        Return everything within a series of things except the very last thing
-        within the series of things.
-        '''
+        '''Return everything in an iterable except the very **last** thing.'''
         with self._chain():
             return self._many(self._initial)
 
     def last(self, n=0):
         '''
-        Return either the specified number of things from the end of a series
-        of things or just the last thing.
+        Return either `n` things from the end of an iterable or just the
+        **last** thing.
 
-        @param n: number of things (default: 0)
+        :param n: number of things (*default:*: ``0``)
         '''
         with self._chain():
             last = self._last
             return self._many(last(n)) if n else self._one(last(n))
 
-    def index(self, n, default=None):
+    def at(self, n, default=None):
         '''
-        Return each thing at a specified index in a series of incoming things
-        or the passed default thing.
+        Return thing at `n` index within an iterable or `default` if nothing is
+        found at `n` index.
 
-        @param n: index of thing
-        @param default: default thing (default: `None`)
+        :param n: index of some thing
+
+        :param default: default thing (*default:*: ``None``)
         '''
         with self._chain():
             return self._one(self._nth(n, default))
 
     def rest(self):
-        '''
-        Return everything within a series of things except the very first thing
-        within the series of things.
-        '''
+        '''Return everything in an iterable except the very **first** thing.'''
         with self._chain():
             return self._many(self._rest)
 
     def slice(self, start, stop=False, step=False):
         '''
-        Slice a series of things down to a certain size.
+        Slice an iterable down to a certain size.
 
-        @param start: starting point of slice
-        @param stop: stopping point of slice (default: `False`)
-        @param step: size of step in slice (default: `False`)
+        :param start: starting index of slice
+
+        :param stop: stopping index of slice (*default:* ``False``)
+
+        :param step: size of step in slice (*default:* ``False``)
         '''
         with self._chain():
             return self._many(self._slice(start, stop, step))
 
     def split(self, n, fill=None):
         '''
-        Split a series of things into series of things of a specified length
-        using `fill` argument to pad out incomplete series.
+        Split an iterable into multiple iterables of length `n` while using
+        `fill` value to pad out any incomplete iterables.
 
-        @param n: number of things per split
-        @param fill: value to pad out incomplete things (default: `None`)
+        :param n: number of things per split (*default:*  ``0``)
+
+        :param fill: value to pad out incomplete iterables with (*default*:
+          ``None``)
         '''
         with self._chain():
             return self._many(self._split(n, fill))
