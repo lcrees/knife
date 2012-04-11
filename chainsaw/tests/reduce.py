@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 '''auto reduce test mixins'''
 
-from inspect import ismodule
-
-from chainsaw.compat import port
-
 
 class SliceMixin(object):
 
@@ -182,14 +178,29 @@ class ReduceMixin(object):
         self.assertEqual(
             self.qclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).weave().end(),
+            ).as_one().weave().end(),
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
         # man
         self._false_true_false(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).weave(),
+            ).as_one().weave(),
+            self.assertEqual,
+            ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
+        )
+        # auto
+        self.assertEqual(
+            self.qclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
+            ).as_many().weave().end(),
+            ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
+        )
+        # man
+        self._false_true_false(
+            self.mclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
+            ).as_many().weave(),
             self.assertEqual,
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
@@ -199,20 +210,29 @@ class ReduceMixin(object):
         self.assertEqual(
             self.qclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).zip().end(),
+            ).as_one().zip().end(),
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )
         # man
         self._true_true_false(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
-            ).zip(),
+            ).as_one().zip(),
             self.assertEqual,
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )
-
-
-__all__ = sorted(name for name, obj in port.items(locals()) if not any([
-    name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']
-]))
-del ismodule
+        # auto
+        self.assertEqual(
+            self.qclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
+            ).as_many().zip().end(),
+            [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
+        )
+        # man
+        self._true_true_false(
+            self.mclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
+            ).as_many().zip(),
+            self.assertEqual,
+            [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
+        )

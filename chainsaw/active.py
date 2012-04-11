@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''actively evaluating knives'''
+'''actively evaluating chainsaws'''
 
 from collections import deque
 from contextlib import contextmanager
@@ -10,7 +10,7 @@ from chainsaw.map import RepeatMixin, MapMixin
 from chainsaw.reduce import SliceMixin, ReduceMixin
 from chainsaw.filter import FilterMixin, CollectMixin
 from chainsaw.base import SLOTS, ChainsawMixin, OutchainMixin
-from chainsaw.analyze import StatsMixin, TruthMixin, OrderMixin
+from chainsaw.analyze import MathMixin, TruthMixin, OrderMixin
 
 
 class ActiveMixin(ChainsawMixin):
@@ -47,12 +47,12 @@ class ActiveMixin(ChainsawMixin):
         # move incoming things up to work link
         getattr(self, self._WORK).extend(getattr(self, self._IN))
         yield
-        outchain = getattr(self, self._OUT)
-        # clear outchain
+        out = getattr(self, self._OUT)
+        # clear out
         if self._buildup:
-            outchain.clear()
+            out.clear()
         # extend outgoing things with holding link
-        outchain.extend(getattr(self, self._HOLD))
+        out.extend(getattr(self, self._HOLD))
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
@@ -64,13 +64,13 @@ class ActiveMixin(ChainsawMixin):
         # move incoming things up to work link
         getattr(self, self._WORK).extend(inchain)
         yield
-        outchain = getattr(self, self._OUT)
-        # clear outchain
+        out = getattr(self, self._OUT)
+        # clear out
         if self._buildup:
-            outchain.clear()
+            out.clear()
         # extend outgoing things with holding link
         hold = getattr(self, self._HOLD)
-        outchain.extend(hold)
+        out.extend(hold)
         # extend incoming things with holding link
         inchain.clear()
         inchain.extend(hold)
@@ -89,7 +89,7 @@ class ActiveMixin(ChainsawMixin):
         @param original: make snapshot original version (default: False)
         '''
         # take snapshot
-        snapshot = self._ins.__copy__()
+        snapshot = self._in.__copy__()
         # make this snapshot the baseline snapshot
         if self._context == self._EDIT or baseline:
             self._baseline = snapshot
@@ -97,7 +97,7 @@ class ActiveMixin(ChainsawMixin):
         if original:
             self._original = snapshot
         # place snapshot at beginning of snapshot stack
-        self._sps.appendleft(snapshot)
+        self._ss.appendleft(snapshot)
         return self
 
     def undo(self, snapshot=0, baseline=False, original=False):
@@ -116,19 +116,19 @@ class ActiveMixin(ChainsawMixin):
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            self._ins = self._original.__copy__()
+            self._in = self._original.__copy__()
         elif baseline:
             # clear snapshots
             self._clearsp()
             # restore baseline version of incoming things
-            self._ins = self._baseline.__copy__()
+            self._in = self._baseline.__copy__()
         # if specified, use a specific snapshot
         elif snapshot:
-            self._sps.rotate(-(snapshot - 1))
-            self._ins = self._sps.popleft()
+            self._ss.rotate(-(snapshot - 1))
+            self._in = self._ss.popleft()
         # by default revert to most recent snapshot
         else:
-            self._ins = self._sps.popleft()
+            self._in = self._ss.popleft()
         return self
 
     ###########################################################################
@@ -206,13 +206,13 @@ class ActiveMixin(ChainsawMixin):
 
     def __len__(self):
         '''Number of incoming things.'''
-        return len(self._ins)
+        return len(self._in)
 
     count = __len__
 
     def count_out(self):
         '''Number of outgoing things.'''
-        return len(self._outs)
+        return len(self._out)
 
     ###########################################################################
     ## clear things ###########################################################
@@ -238,12 +238,12 @@ class ActiveMixin(ChainsawMixin):
 
     def clear_in(self):
         '''Clear inchain link.'''
-        self._ins.clear()
+        self._in.clear()
         return self
 
     def clear_out(self):
-        '''Clear outchain link.'''
-        self._outs.clear()
+        '''Clear out link.'''
+        self._out.clear()
         return self
 
 
@@ -252,22 +252,24 @@ class OutputMixin(ActiveMixin, OutchainMixin):
     '''lazy output chainsaw mixin'''
 
     def __iter__(self):
-        '''Yield outgoing things, clearing outchain as it goes.'''
+        '''Yield outgoing things, clearing them as it goes.'''
         return self._iterator(self._OUT)
 
-    def preview(self):
+    def _output(self):
         '''Take a peek at the current state of outgoing things.'''
-        wrap, outchain = self._wrapper, self._outs
+        wrap, out = self._wrapper, self._out
         if self._mode == self._MANY:
-            value = list(wrap(i) for i in outchain)
+            value = tuple(wrap(i) for i in out)
         else:
-            value = wrap(outchain)
+            value = wrap(out)
         return value.pop() if len(value) == 1 else value
 
+    preview = _output
 
-class activechainsaw(
+
+class activesaw(
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, CollectMixin,
-    SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
+    SliceMixin, TruthMixin, MathMixin, RepeatMixin,
 ):
 
     '''active chainsaw'''
@@ -275,63 +277,63 @@ class activechainsaw(
     __slots__ = SLOTS
 
 
-class collectchainsaw(OutputMixin, CollectMixin):
+class collectsaw(OutputMixin, CollectMixin):
 
     '''collecting chainsaw'''
 
     __slots__ = SLOTS
 
 
-class slicechainsaw(OutputMixin, SliceMixin):
+class slicesaw(OutputMixin, SliceMixin):
 
     '''slicing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class filterchainsaw(OutputMixin, FilterMixin):
+class filtersaw(OutputMixin, FilterMixin):
 
     '''filtering chainsaw'''
 
     __slots__ = SLOTS
 
 
-class repeatchainsaw(OutputMixin, RepeatMixin):
+class repeatsaw(OutputMixin, RepeatMixin):
 
     '''repeating chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mapchainsaw(OutputMixin, MapMixin):
+class mapsaw(OutputMixin, MapMixin):
 
     '''mapping chainsaw'''
 
     __slots__ = SLOTS
 
 
-class orderchainsaw(OutputMixin, OrderMixin):
+class ordersaw(OutputMixin, OrderMixin):
 
     '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mathchainsaw(OutputMixin, StatsMixin):
+class mathsaw(OutputMixin, MathMixin):
 
     '''mathing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class truthchainsaw(OutputMixin, TruthMixin):
+class truthsaw(OutputMixin, TruthMixin):
 
     '''truthing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class reducechainsaw(OutputMixin, ReduceMixin):
+class reducesaw(OutputMixin, ReduceMixin):
 
     '''reducing chainsaw'''
 

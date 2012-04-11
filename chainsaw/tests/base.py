@@ -80,7 +80,7 @@ class Mixin(object):
 
     def test_clearout(self):
         self.assertEqual(
-            len(list(self.qclass([1, 2, 5, 6]).clear_out()._outs)), 0
+            len(list(self.qclass([1, 2, 5, 6]).clear_out()._out)), 0
         )
 
     def test_undo(self):
@@ -103,11 +103,11 @@ class Mixin(object):
 
     def test_insync(self):
         q = self.qclass(1, 2, 3, 4, 5, 6).shift_in().clear_in().shift_in()
-        self.assertEqual(list(q._ins), list(q._outs))
+        self.assertEqual(list(q._in), list(q._out))
 
     def test_outsync(self):
         q = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
-        self.assertEqual(list(q._ins), list(q._outs))
+        self.assertEqual(list(q._in), list(q._out))
 
     def test_results(self):
         self.assertListEqual(
@@ -255,7 +255,7 @@ class Mixin(object):
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_ascii().shift_out().end(),
-            [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
+            (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
@@ -263,7 +263,7 @@ class Mixin(object):
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_ascii().shift_out(),
             self.assertEqual,
-            [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
+            (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
     def test_bytes(self):
@@ -273,7 +273,7 @@ class Mixin(object):
             self.qclass(
                 [1], True, r't',  b('i'), u('g'), None, (1,)
             ).as_many().as_bytes().shift_out().end(),
-            [b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)')]
+            (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
@@ -281,9 +281,9 @@ class Mixin(object):
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_bytes().shift_out(),
             self.assertEqual,
-            [
+            (
         b('[1]'), b('True'), b('t'), b('i'),  b('g'), b('None'), b('(1,)')
-            ]
+            )
         )
 
     def test_unicode(self):
@@ -293,7 +293,7 @@ class Mixin(object):
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_unicode().shift_out().end(),
-            [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
+            (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )
         # man
         self._true_true_false(
@@ -301,5 +301,5 @@ class Mixin(object):
                 [1], True, r't', b('i'), u('g'), None, (1,)
             ).as_many().as_unicode().shift_out(),
             self.assertEqual,
-            [u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)')]
+            (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

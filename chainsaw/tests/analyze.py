@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 '''ordering test mixins'''
 
-from inspect import ismodule
-
-from chainsaw.compat import port
-
 
 class MathMixin(object):
 
@@ -288,9 +284,3 @@ class OrderMixin(object):
           self.assertListEqual,
             [2, 3, 4, 4, 6, 63, 65],
         )
-
-
-__all__ = sorted(name for name, obj in port.items(locals()) if not any([
-    name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']
-]))
-del ismodule

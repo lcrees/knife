@@ -8,6 +8,7 @@ except ImportError:
 from itertools import (
     starmap, repeat, product, combinations, permutations, chain)
 from operator import contains
+from collections import Iterable
 try:
     import unittest2 as unittest
 except ImportError:
@@ -128,6 +129,12 @@ isbinary = port.isbinary
 isstring = port.isstring
 isunicode = port.isunicode
 texts = six.texts
+
+
+def makeiter(wrap, thing):
+    if not isstring(thing) and isinstance(thing, Iterable):
+        return thing
+    return wrap(thing)
 
 
 def tounicode(thing, encoding='utf-8', errors='strict'):

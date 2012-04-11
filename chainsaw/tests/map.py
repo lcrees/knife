@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 '''auto mapping call chain test mixins'''
 
-from inspect import ismodule
-
-from chainsaw.compat import port
-
 
 class RepeatMixin(object):
 
@@ -186,9 +182,3 @@ class MapMixin(object):
             self.assertEqual,
             [[1, 5, 7], [1, 2, 3]]
         )
-
-
-__all__ = sorted(name for name, obj in port.items(locals()) if not any([
-    name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']
-]))
-del ismodule

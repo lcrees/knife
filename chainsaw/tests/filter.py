@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 '''auto filtering call chain test mixins'''
 
-from inspect import ismodule
-
-from chainsaw.compat import port
-
 
 class CollectMixin(object):
 
@@ -336,9 +332,3 @@ class FilterMixin(object):
             self.assertEqual,
             [1, 2, 3, 4],
         )
-
-__all__ = sorted(name for name, obj in port.items(locals()) if not any([
-    name.startswith('_'), ismodule(obj), name in ['ismodule', 'port']
-]))
-del ismodule
-del port

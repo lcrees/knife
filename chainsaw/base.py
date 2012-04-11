@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 '''base chainsaw mixins'''
 
-from itertools import tee
 from operator import truth
 from threading import local
 from collections import deque
-from contextlib import contextmanager
 
 from stuf.utils import OrderedDict
 from stuf.core import stuf, frozenstuf, orderedstuf
 
-from chainsaw.compat import tounicode, tobytes, imap
+from chainsaw._compat import tounicode, tobytes
 
 SLOTS = [
-     '_IN', '_ins', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_sps',
-     '_outs', '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth',
+     '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_ss',
+     '_out', '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth',
      '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_original',
      '_baseline',
 ]
@@ -24,60 +22,6 @@ class ChainsawMixin(local):
 
     '''base chainsaw mixin'''
 
-    def __init__(self, ins, outs, **kw):
-        '''
-        init
-
-        @param ins: incoming things
-        @param outs: outgoing things
-        '''
-        super(ChainsawMixin, self).__init__()
-        # incoming things
-        self._ins = ins
-        # outgoing things
-        self._outs = outs
-        # default context
-        self._context = self._DEFAULT_CONTEXT
-        # default mode
-        self._mode = self._DEFAULT_MODE
-        # no truth value to override default `__bool__` response
-        self._truth = None
-        ## chain defaults #####################################################
-        self._chain = getattr(self, self._DEFAULT_CHAIN)
-        # 1. default ins link
-        self._IN = self._INVAR
-        # 2. default work link
-        self._WORK = self._WORKVAR
-        # 3. default holding link
-        self._HOLD = self._HOLDVAR
-        # 4. default outs link
-        self._OUT = self._OUTVAR
-        # default chain configuration
-        self._CHAINCFG = {}
-        # clear things out of outs link before adding other things to it?
-        self._buildup = True
-        ## snapshot defaults ##################################################
-        # original and baseline snapshots
-        self._original = self._baseline = None
-        # maximum number of snapshots to keep (default: 5)
-        maxlen = kw.pop('snapshots', 5)
-        # snapshot stack
-        self._sps = deque(maxlen=maxlen) if maxlen is not None else maxlen
-        # take snapshot of original incoming things
-        if self._sps is not None:
-            self.snapshot(original=True)
-        ## callable defaults ##################################################
-        # current callable
-        self._call = None
-        # position arguments
-        self._args = ()
-        # keyword arguments
-        self._kw = {}
-        # current alternate callable
-        self._alt = None
-        # default output class
-        self._wrapper = list
-
     ###########################################################################
     ## things in process ######################################################
     ###########################################################################
@@ -86,31 +30,6 @@ class ChainsawMixin(local):
     _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
     # chainsaw each incoming thing as one of many individual things
     _MANY = 'TREAT AS MANY'
-
-    def _one(self, call, _imap=imap):
-        # append incoming things to outs if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._append(call(self._iterable))
-        # map incoming things and extend outs if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
-
-    def _many(self, call, _imap=imap):
-        # extend outs with incoming things if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._xtend(call(self._iterable))
-        # map incoming things and extend outs if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
-
-    def _iter(self, call, iter_=iter):
-        '''extend work link with `things` wrapped in iterator'''
-        # extend outs with incoming things if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._xtend(iter_(call(self._iterable)))
-        # map incoming things and extend outs if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
 
     def as_one(self):
         '''Switch to chainsawing incoming things as one individual thing.'''
@@ -141,7 +60,7 @@ class ChainsawMixin(local):
         '''
         Switch to editing context where incoming things can be extracted and
         transformed in sequence of operations from their initial placement in
-        the ins to their final extraction from the outs.
+        the ins to their final extraction from the out.
         '''
         self._context = self._EDIT
         self._truth = None
@@ -175,13 +94,13 @@ class ChainsawMixin(local):
     ## things in chain ########################################################
     ###########################################################################
 
-    # automatically balance ins with outs
+    # automatically balance ins with out
     _DEFAULT_CHAIN = _AUTO = '_auto'
-    # manually balance ins with outs
+    # manually balance ins with out
     _MANUAL = '_man4'
     # 1. link for incoming things which is chained to =>
-    _INCFG = 'ins'
-    _INVAR = '_ins'
+    _INCFG = 'chainin'
+    _INVAR = '_in'
     # 2. link for working on incoming things which is chained to =>
     _WORKCFG = 'work'
     _WORKVAR = '_work'
@@ -189,85 +108,37 @@ class ChainsawMixin(local):
     _HOLDCFG = 'hold'
     _HOLDVAR = '_hold'
     # 4. link where outgoing things can be removed from chain
-    _OUTCFG = 'outs'
-    _OUTVAR = '_outs'
-
-    def _as_chain(self, **kw):
-        '''switch chains'''
-        # retain chain-specific settings between chain switching
-        self._CHAINCFG = kw if kw.get('hard', False) else {}
-        # take snapshot
-        if kw.get('snap', True):
-            self.snapshot()
-        # set current chain
-        self._chain = kw.get('chain', getattr(self, self._DEFAULT_CHAIN))
-        # if clear outgoing things before adding more things
-        self._buildup = kw.get('keep', True)
-        # 1. assign "ins" link
-        self._IN = kw.get(self._INCFG, self._INVAR)
-        # 2. assign "work" link
-        self._WORK = kw.get(self._WORKCFG, self._WORKVAR)
-        # 3. assign "holding" link
-        self._HOLD = kw.get(self._HOLDCFG, self._HOLDVAR)
-        # 4. assign "outs" link
-        self._OUT = kw.get(self._OUTCFG, self._OUTVAR)
-        return self
-
-    def _rechain(self):
-        '''switch to currently selected chain'''
-        return self._as_chain(
-            keep=False, snap=False, **self._CHAINCFG
-        )
-
-    def _unchain(self):
-        '''switch to default chain'''
-        return self._as_chain(keep=False, snap=False)
-
-    @contextmanager
-    def _man1(self, **kw):
-        '''switch to one-link chain'''
-        q = kw.pop(self._WORKCFG, self._INVAR)
-        self._as_chain(work=q, hold=q, chain=self._man1, **kw)
-        yield
-        self._rechain()
+    _OUTCFG = 'chainout'
+    _OUTVAR = '_out'
 
     @classmethod
     def as_auto(cls):
-        '''Context where ins is automatically rebalanced outs.'''
+        '''Context where ins is automatically rebalanced out.'''
         cls._DEFAULT_CHAIN = cls._AUTO
         return cls
 
     @classmethod
     def as_manual(cls):
-        '''Context where ins must be manually rebalanced with outs.'''
+        '''Context where ins must be manually rebalanced with out.'''
         cls._DEFAULT_CHAIN = cls._MANUAL
         return cls
 
     def shift_in(self):
         '''Manually copy outgoing things to ins.'''
         with self._auto(
-            ins=self._OUTVAR, outs=self._INVAR, snap=False,
+            chainin=self._OUTVAR, chainout=self._INVAR, snap=False,
         ):
             return self._xtend(self._iterable)
 
     def shift_out(self):
-        '''Manually copy incoming things to outs.'''
+        '''Manually copy incoming things to out.'''
         with self._auto(snap=False):
             return self._xtend(self._iterable)
 
     @property
     def balanced(self):
-        '''Determine if ins and outs are in balance'''
+        '''Determine if ins and out are in balance'''
         return self.count_out() == self.__len__()
-
-    @staticmethod
-    def _clone(iterable, n=2, tee_=tee):
-        '''
-        clone an iterable
-
-        @param n: number of clones
-        '''
-        return tee_(iterable, n)
 
     ###########################################################################
     ## things called ##########################################################
@@ -401,11 +272,6 @@ class ChainsawMixin(local):
     ## clearing things up #####################################################
     ###########################################################################
 
-    def _clearsp(self):
-        '''clear out snapshots'''
-        self._sps.clear()
-        return self
-
     def clear(self):
         '''Clear out everything.'''
         self._truth = None
@@ -418,10 +284,10 @@ class OutchainMixin(local):
 
     def which(self, call=None, alt=None):
         '''
-        choose current callable based on results of CONDITION mode
+        Choose current callable based on results of condition mode.
 
         @param call: external callable to use if condition is `True`
-        @param alt: external callable  to use if condition if `False`
+        @param alt: external callable to use if condition is `False`
         '''
         if self.__bool__():
             # use external call or current callable
@@ -441,10 +307,10 @@ class OutchainMixin(local):
         return value
 
     def results(self):
-        '''Return outgoing things and clear outs.'''
+        '''Return outgoing things and clear out.'''
         self._unchain()
         value = self.preview()
-        # clear outs
+        # clear out
         self.clear_out()
         # restore baseline if in query context
         if self._context == self._QUERY:
@@ -457,7 +323,7 @@ class OutchainMixin(local):
 
     def wrap(self, wrapper):
         '''
-        wrapper for outs
+        wrapper for out
 
         @param wrapper: an iterator class
         '''

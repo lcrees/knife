@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''lazily evaluated knives'''
+'''lazily evaluated chainsaws'''
 
 from itertools import tee, chain
 from contextlib import contextmanager
@@ -7,10 +7,16 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from chainsaw.map import RepeatMixin, MapMixin
+
 from chainsaw.reduce import SliceMixin, ReduceMixin
 from chainsaw.filter import FilterMixin, CollectMixin
 from chainsaw.base import SLOTS, ChainsawMixin, OutchainMixin
-from chainsaw.analyze import StatsMixin, TruthMixin, OrderMixin
+from chainsaw.analyze import MathMixin, TruthMixin, OrderMixin
+
+from chainsaw._map import _RepeatMixin, _MapMixin
+from chainsaw._reduce import _SliceMixin, _ReduceMixin
+from chainsaw._filter import _FilterMixin, _CollectMixin
+from chainsaw._analyze import _MathMixin, _TruthMixin, _OrderMixin
 
 
 class LazyMixin(ChainsawMixin):
@@ -86,7 +92,7 @@ class LazyMixin(ChainsawMixin):
         @param original: make snapshot original version (default: False)
         '''
         # take snapshot
-        snapshot, self._ins = tee(self._ins)
+        snapshot, self._in = tee(self._in)
         # make this snapshot the baseline snapshot
         if self._context == self._EDIT or baseline:
             self._baseline = snapshot
@@ -94,7 +100,7 @@ class LazyMixin(ChainsawMixin):
         if original:
             self._original = snapshot
         # place snapshot at beginning of snapshot stack
-        self._sps.appendleft(snapshot)
+        self._ss.appendleft(snapshot)
         return self
 
     def undo(self, snapshot=0, baseline=False, original=False):
@@ -113,19 +119,19 @@ class LazyMixin(ChainsawMixin):
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            self._ins, self._original = tee(self._original)
+            self._in, self._original = tee(self._original)
         elif baseline:
             # clear snapshots
             self._clearsp()
             # revert to baseline version of incoming things
-            self._ins, self._baseline = tee(self._baseline)
+            self._in, self._baseline = tee(self._baseline)
         # if specified, use a specific snapshot
         elif snapshot:
-            self._sps.rotate(-(snapshot - 1))
-            self._ins = self._sps.popleft()
+            self._ss.rotate(-(snapshot - 1))
+            self._in = self._ss.popleft()
         # by default revert to most recent snapshot
         else:
-            self._ins = self._sps.popleft()
+            self._in = self._ss.popleft()
         return self
 
     ###########################################################################
@@ -203,14 +209,14 @@ class LazyMixin(ChainsawMixin):
 
     def __len__(self):
         '''Number of incoming things.'''
-        self._ins, incoming = tee(self._ins)
+        self._in, incoming = tee(self._in)
         return len(list(incoming))
 
     count = __len__
 
     def count_out(self):
         '''Number of outgoing things.'''
-        self._outs, outs = tee(self._outs)
+        self._out, outs = tee(self._out)
         return len(list(outs))
 
     ###########################################################################
@@ -260,9 +266,9 @@ class OutputMixin(LazyMixin, OutchainMixin):
         '''Yield outgoing things, clearing outs as it goes.'''
         return getattr(self, self._OUT)
 
-    def preview(self):
+    def _output(self):
         '''Take a peek at the current state of outgoing things.'''
-        outs, tell = tee(self._outs)
+        outs, tell = tee(self._out)
         wrap = self._wrapper
         if self._mode == self._MANY:
             value = list(wrap(i) for i in outs)
@@ -270,10 +276,14 @@ class OutputMixin(LazyMixin, OutchainMixin):
             value = wrap(outs)
         return value.pop() if len(wrap(tell)) == 1 else value
 
+    preview = _output
 
-class lazychainsaw(
-    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, CollectMixin,
-    SliceMixin, TruthMixin, StatsMixin, RepeatMixin,
+
+class lazysaw(
+    OutputMixin, FilterMixin, _FilterMixin, MapMixin, _MapMixin, ReduceMixin,
+    _ReduceMixin, OrderMixin, _OrderMixin, CollectMixin, _CollectMixin,
+    SliceMixin, _SliceMixin, TruthMixin, _TruthMixin, MathMixin, _MathMixin,
+    RepeatMixin, _RepeatMixin,
 ):
 
     '''lazy chainsaw'''
@@ -281,63 +291,63 @@ class lazychainsaw(
     __slots__ = SLOTS
 
 
-class collectchainsaw(OutputMixin, CollectMixin):
+class collectsaw(OutputMixin, CollectMixin, _CollectMixin):
 
     '''collecting chainsaw'''
 
     __slots__ = SLOTS
 
 
-class slicechainsaw(OutputMixin, SliceMixin):
+class slicesaw(OutputMixin, SliceMixin, _SliceMixin):
 
     '''slicing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class filterchainsaw(OutputMixin, FilterMixin):
+class filtersaw(OutputMixin, FilterMixin, _FilterMixin):
 
     '''filtering chainsaw'''
 
     __slots__ = SLOTS
 
 
-class repeatchainsaw(OutputMixin, RepeatMixin):
+class repeatsaw(OutputMixin, RepeatMixin, _RepeatMixin):
 
     '''repeating chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mapchainsaw(OutputMixin, MapMixin):
+class mapsaw(OutputMixin, MapMixin, _MapMixin):
 
     '''mapping chainsaw'''
 
     __slots__ = SLOTS
 
 
-class orderchainsaw(OutputMixin, OrderMixin):
+class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
 
     '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
 
-class mathchainsaw(OutputMixin, StatsMixin):
+class mathsaw(OutputMixin, MathMixin, _MathMixin):
 
     '''mathing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class truthchainsaw(OutputMixin, TruthMixin):
+class truthsaw(OutputMixin, TruthMixin, _TruthMixin):
 
     '''truthing chainsaw'''
 
     __slots__ = SLOTS
 
 
-class reducechainsaw(OutputMixin, ReduceMixin):
+class reducesaw(OutputMixin, ReduceMixin, _ReduceMixin):
 
     '''reducing chainsaw'''
 

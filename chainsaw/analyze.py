@@ -1,59 +1,12 @@
 # -*- coding: utf-8 -*-
 '''chainsaw reducing mixins'''
 
-from math import fsum
 from threading import local
-from operator import truediv
-from itertools import groupby
-from random import choice, shuffle, sample
-
-from chainsaw.compat import Counter, imap, iall, iany, imax, imin, isum
 
 
-class StatsMixin(local):
+class MathMixin(local):
 
     '''math mixin'''
-
-    @classmethod
-    def _average(cls, iterable, s=sum, t=truediv, n=len):
-        i1, i2 = cls._clone(iterable)
-        return t(s(i1, 0.0), n(list(i2)))
-
-    @staticmethod
-    def _max(key, imax_=imax):
-        def max_(iterable):
-            return imax_(iterable, key=key)
-        return max_
-
-    @staticmethod
-    def _median(iterable, s=sorted, l=list, d=truediv, int=int, len=len):
-        i = l(s(iterable))
-        e = d(len(i) - 1, 2)
-        p = int(e)
-        return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
-
-    @classmethod
-    def _minmax(cls, iterable, iter_=iter, min=imin, max=imax):
-        i1, i2 = cls._clone(iterable)
-        return iter_((min(i1), max(i2)))
-
-    @staticmethod
-    def _range(iterable, list_=list, sorted_=sorted):
-        i1 = list_(sorted_(iterable))
-        return i1[-1] - i1[0]
-
-    @staticmethod
-    def _min(key, imin_=imin):
-        def min_(iterable):
-            return imin_(iterable, key=key)
-        return min_
-
-    @staticmethod
-    def _sum(start, floats, sum=isum, fsum_=fsum):
-        summer = fsum_ if floats else lambda x: sum(x, start)
-        def sum_(iterable): #@IgnorePep8
-            return summer(iterable)
-        return sum_
 
     def average(self):
         '''average value of incoming'''
@@ -106,37 +59,6 @@ class TruthMixin(local):
 
     '''truth mixin'''
 
-    @staticmethod
-    def _all(truth, all_=iall, imap_=imap):
-        def all(iterable):
-            return all_(imap_(truth, iterable))
-        return all
-
-    @staticmethod
-    def _any(truth, any_=iany, imap_=imap):
-        def any(iterable):
-            return any_(imap_(truth, iterable))
-        return any
-
-    @staticmethod
-    def _frequency(iterable, counter=Counter):
-        count = counter(iterable)
-        commonality = count.most_common()
-        return (
-            # least common
-            commonality[:-2:-1][0][0],
-            # most common (mode)
-            count.most_common(1)[0][0],
-            # overall commonality
-            commonality,
-        )
-
-    @staticmethod
-    def _quantify(call, imap_=imap, sum=isum):
-        def quantify(iterable):
-            return sum(imap_(call, iterable))
-        return quantify
-
     def all(self):
         '''if `all` incoming are `True`'''
         with self._chain():
@@ -163,40 +85,6 @@ class TruthMixin(local):
 class OrderMixin(local):
 
     '''order mixin'''
-
-    @staticmethod
-    def _choice(iterable, choice_=choice, list_=list):
-        return choice_(list_(iterable))
-
-    @staticmethod
-    def _groupby(key, imap_=imap, tuple_=tuple, groupby_=groupby):
-        def grouper(x):
-            return (x[0], tuple_(x[1]))
-        def groupby__(iterable): #@IgnorePep8
-            return imap_(grouper, groupby_(iterable, key))
-        return groupby__
-
-    @staticmethod
-    def _reverse(iterable, list_=list, reversed_=reversed):
-        return reversed_(list_(iterable))
-
-    @staticmethod
-    def _sort(key, sorted_=sorted):
-        def sort(iterable):
-            return sorted_(iterable, key=key)
-        return sort
-
-    @staticmethod
-    def _sample(n, _sample=sample, list_=list):
-        def sample_(iterable):
-            return _sample(list_(iterable), n)
-        return sample_
-
-    @staticmethod
-    def _shuffle(iterable, list_=list, shuffle_=shuffle):
-        iterable = list_(iterable)
-        shuffle_(iterable)
-        return iterable
 
     def choice(self):
         '''random choice of/from incoming'''

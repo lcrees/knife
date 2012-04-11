@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-'''Things go in. Things happen. Things go out.'''
+'''Things go in. Things happen. Things come out.'''
 
-from chainsaw.compat import port
-from chainsaw.lazy import lazychainsaw
-from chainsaw.active import activechainsaw
+from chainsaw._compat import port
+from chainsaw.lazy import lazysaw
+from chainsaw.active import activesaw
 
-chainsaw = activechainsaw
+lazysaw = activesaw
 
-__all__ = ('chainsaw', 'activechainsaw', 'lazychainsaw' 'port')
+__all__ = ('chainsaw', 'activesaw', 'lazysaw' 'port')
 __version__ = (0, 5, 0)
