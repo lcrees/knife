@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; chainsaw 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-chainsaw.lazy"><span id="repeatsaw"></span></span><hr class="docutils" />
+<dl class="class">
+<dt id="chainsaw.lazy.repeatsaw">
+<em class="property">class </em><tt class="descclassname">chainsaw.lazy.</tt><tt class="descname">repeatsaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/lazy.html#repeatsaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.lazy.repeatsaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>repeating chainsaw</p>
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.append">
+<tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> before any current incoming things.</p>
+<p>&#64;param thing: wannabe incoming things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.appendfront">
+<tt class="descname">appendfront</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.appendfront" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>thing</cite> before any current incoming things.</p>
+<p>&#64;param thing: one wannabe incoming thing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.arguments">
+<tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign arguments to be used by the current or alternative callable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to encode each thing in a series of things as string/byte
+type encoded as <cite>ascii</cite> (regardless of type)</p>
+<p>&#64;param errors: error handling (default: &#8216;strict&#8217;)</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.lazy.repeatsaw.as_auto">
+<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context where incoming things are automatically rebalanced with
+outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>encode each incoming thing as byte string (regardless of type)</p>
+<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
+&#64;param errors: error handling for encoding stringish things</p>
+<blockquote>
+<div>(default: &#8216;strict&#8217;)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_deque">
+<tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_deque" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>deque</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>dict</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_edit">
+<tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to editing context where operations can be performed on incoming
+things from initial placement to final extraction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_frozenset">
+<tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>frozenset</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_frozenstuf">
+<tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>frozenstuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>list</cite> type.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.lazy.repeatsaw.as_manual">
+<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context where incoming must be manually rebalanced with outgoing
+things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_many">
+<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on each incoming thing as just one
+individual thing in a series of many individual things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_one">
+<tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on incoming things as one whole
+individual thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_ordereddict">
+<tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>OrderedDict</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_orderedstuf">
+<tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>orderedstuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>set</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_stuf">
+<tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_stuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>stuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_truth">
+<tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to evaluation context where the results of operations on
+incoming things determine which of two potential paths to execute.
+After exting the evaluation context, incoming things automatically
+revert to a prior baseline snapshot of incoming things so further
+operations can be performed on the unmodified version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>tuple</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to decode each thing in a series of things as <cite>unicode</cite>
+type (regardless of type).</p>
+<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
+&#64;param errors: error handling for decoding stringish things</p>
+<blockquote>
+<div>(default: &#8216;strict&#8217;)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.as_view">
+<tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to query context where incoming things can be extracted and
+transformed so that the results of chainsawing them can be queried.
+Upon exit from query context by invoking <cite>results</cite> or <cite>end</cite>, all
+incoming things automatically revert to a prior baseline snapshot of
+incoming things so that further operations can be performed on the
+unmodified version.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chainsaw.lazy.repeatsaw.balanced">
+<tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.repeatsaw.balanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if ins and out are in balance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear out everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.clear_in">
+<tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.clear_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.clear_out">
+<tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.clear_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.combinations">
+<tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each possible combinations for every number of things within a series
+of things.</p>
+<p>&#64;param n: number of things to derive combinations from</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate each thing in a series of things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.count_out">
+<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.count_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.end">
+<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things and clear out every last thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.extend">
+<tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> after any current incoming things.</p>
+<p>&#64;param things: wannabe incoming things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.extendfront">
+<tt class="descname">extendfront</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.extendfront" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> after any current incoming thing.</p>
+<p>&#64;param thing: one wannabe incoming thing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.permutations">
+<tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each possible permutation for every number of things within a series of
+things.</p>
+<p>&#64;param n: number of things to derive permutations from</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.preview">
+<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a peek at the current state of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.product">
+<tt class="descname">product</tt><big>(</big><em>n=1</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Results of nested for each loops repeated a certain number of times.</p>
+<p>&#64;param n: number of loops to repeat (default: 1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.repeat">
+<tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repeat a series of things or the results of the current callable.</p>
+<p>&#64;param n: number of times to repeat (default: <cite>None</cite>)
+&#64;param call: repeat result of current callable (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.results">
+<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things and clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.shift_in">
+<tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.shift_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy outgoing things to incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.shift_out">
+<tt class="descname">shift_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.shift_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy incoming things to outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a snapshot of current incoming things.</p>
+<p>&#64;param baseline: make snapshot baseline version (default: False)
+&#64;param original: make snapshot original version (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.tap">
+<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign current callable and, optionally, an alternative callable. If
+<cite>factory</cite> flag is set, use the <cite>call</cite> argument as a factory for
+building the current callable.</p>
+<p>&#64;param call: primary callable to assign
+&#64;param alt: alternative callable to assign (default: None)
+&#64;param factor: whether <cite>call</cite> is a callable factory (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
+<p>&#64;param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
+&#64;param baseline: return ins to baseline version (default: False)
+&#64;param original: return ins to original version (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.untap">
+<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.untap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear current callable, alternative callable, and stored arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.unwrap">
+<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.unwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>list</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.which">
+<tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose current callable based on results of condition mode</p>
+<p>&#64;param call: external callable to use if condition is <cite>True</cite>
+&#64;param alt: external callable to use if condition if <cite>False</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.repeatsaw.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterable wrapper for outgoing things.</p>
+<p>&#64;param wrapper: an iterable wrapper</p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/repeatsaw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

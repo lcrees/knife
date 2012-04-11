@@ -3,16 +3,16 @@
 
 from chainsaw._compat import unittest
 
-from chainsaw.tests.map import *  # @UnusedWildImport
-from chainsaw.tests.reduce import *  # @UnusedWildImport
-from chainsaw.tests.filter import *  # @UnusedWildImport
-from chainsaw.tests.analyze import *  # @UnusedWildImport
 from chainsaw.tests.base import Mixin
+from chainsaw.tests.map import MapMixin, RepeatMixin
+from chainsaw.tests.reduce import ReduceMixin, SliceMixin
+from chainsaw.tests.filter import FilterMixin, CollectMixin
+from chainsaw.tests.analyze import OrderMixin, MathMixin, TruthMixin
 
 
 class TestMain(
-    Mixin, TruthMixin, MapMixin, ReduceMixin, OrderMixin, SliceMixin,
-    CollectMixin, RepeatMixin, MathMixin, FilterMixin
+    unittest.TestCase, Mixin, TruthMixin, MapMixin, ReduceMixin, OrderMixin,
+    SliceMixin, CollectMixin, RepeatMixin, MathMixin, FilterMixin
 ):
 
     def setUp(self):

@@ -689,3 +689,9 @@ class KOrder(AppspaceKey):
 
     def shuffle():  # @NoSelf
         '''Randomly reorder a series of things.'''
+
+
+class KSaw(KOutchain, KCollect, KFilter, KReduce, KMap, KMath, KSlice, KTruth,
+    KOrder, KRepeat):
+
+    '''combined'''

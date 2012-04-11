@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; chainsaw 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-chainsaw.active"><span id="activesaw"></span></span><hr class="docutils" />
+<dl class="class">
+<dt id="chainsaw.active.activesaw">
+<em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">activesaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#activesaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.activesaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>active chainsaw</p>
+<dl class="method">
+<dt id="chainsaw.active.activesaw.all">
+<tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell if everthing in a series of things is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.any">
+<tt class="descname">any</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.any" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell if anything in a series of things is <cite>True</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.append">
+<tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> before any current incoming things.</p>
+<p>&#64;param thing: wannabe incoming things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.appendfront">
+<tt class="descname">appendfront</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.appendfront" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>thing</cite> before any current incoming things.</p>
+<p>&#64;param thing: one wannabe incoming thing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.arguments">
+<tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign arguments to be used by the current or alternative callable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to encode each thing in a series of things as string/byte
+type encoded as <cite>ascii</cite> (regardless of type)</p>
+<p>&#64;param errors: error handling (default: &#8216;strict&#8217;)</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.active.activesaw.as_auto">
+<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context where incoming things are automatically rebalanced with
+outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>encode each incoming thing as byte string (regardless of type)</p>
+<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
+&#64;param errors: error handling for encoding stringish things</p>
+<blockquote>
+<div>(default: &#8216;strict&#8217;)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_deque">
+<tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_deque" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>deque</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>dict</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_edit">
+<tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to editing context where operations can be performed on incoming
+things from initial placement to final extraction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_frozenset">
+<tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>frozenset</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_frozenstuf">
+<tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>frozenstuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>list</cite> type.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chainsaw.active.activesaw.as_manual">
+<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context where incoming must be manually rebalanced with outgoing
+things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_many">
+<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on each incoming thing as just one
+individual thing in a series of many individual things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_one">
+<tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to performing operations on incoming things as one whole
+individual thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_ordereddict">
+<tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>OrderedDict</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_orderedstuf">
+<tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>orderedstuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>set</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_stuf">
+<tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_stuf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set iterable wrapper to <cite>stuf</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_truth">
+<tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to evaluation context where the results of operations on
+incoming things determine which of two potential paths to execute.
+After exting the evaluation context, incoming things automatically
+revert to a prior baseline snapshot of incoming things so further
+operations can be performed on the unmodified version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>tuple</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to decode each thing in a series of things as <cite>unicode</cite>
+type (regardless of type).</p>
+<p>&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
+&#64;param errors: error handling for decoding stringish things</p>
+<blockquote>
+<div>(default: &#8216;strict&#8217;)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.as_view">
+<tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to query context where incoming things can be extracted and
+transformed so that the results of chainsawing them can be queried.
+Upon exit from query context by invoking <cite>results</cite> or <cite>end</cite>, all
+incoming things automatically revert to a prior baseline snapshot of
+incoming things so that further operations can be performed on the
+unmodified version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.average">
+<tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.average" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average value within a series of things.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chainsaw.active.activesaw.balanced">
+<tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.active.activesaw.balanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if ins and out are in balance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.choice">
+<tt class="descname">choice</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a random choice from a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear out everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.clear_in">
+<tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.clear_out">
+<tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.combinations">
+<tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each possible combinations for every number of things within a series
+of things.</p>
+<p>&#64;param n: number of things to derive combinations from</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.concat">
+<tt class="descname">concat</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a series of things into one series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate each thing in a series of things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.count_out">
+<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.count_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.difference">
+<tt class="descname">difference</tt><big>(</big><em>symmetric=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>The difference between a series of things.</p>
+<p>&#64;param symmetric: use symmetric difference (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.disjointed">
+<tt class="descname">disjointed</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.disjointed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The disjoint between a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.end">
+<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things and clear out every last thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.extend">
+<tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> after any current incoming things.</p>
+<p>&#64;param things: wannabe incoming things</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.extendfront">
+<tt class="descname">extendfront</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.extendfront" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place <cite>things</cite> after any current incoming thing.</p>
+<p>&#64;param thing: one wannabe incoming thing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.filter">
+<tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Things within a series of things that pass a filter. By default things
+that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
+set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
+while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
+the filter will be a regular expression. Otherwise the current callable
+will be used.</p>
+<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
+&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
+<blockquote>
+<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
+<p>&#64;param flags: regular expression flags (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.find">
+<tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>reverse=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>The first in a series of things that pass a filter. By default things
+that evaluate to <cite>True</cite> pass the filter but if the <cite>reverse</cite> flag is
+set to <cite>True</cite> than things that evaluate to <cite>False</cite> pass the filter
+while things that evaluate to False do not. If a <cite>pattern</cite> is supplied
+the filter will be a regular expression. Otherwise the current callable
+will be used.</p>
+<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
+&#64;param reverse: return things for which filter is <cite>False</cite> rather than</p>
+<blockquote>
+<div><cite>True</cite> (default: <cite>False</cite>)</div></blockquote>
+<p>&#64;param flags: regular expression flags (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.first">
+<tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return either the specified number of things from the beginning of a
+series of things or just the first thing.</p>
+<p>&#64;param n: number of things (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.flatten">
+<tt class="descname">flatten</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten a series of nested things into a flat series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.frequency">
+<tt class="descname">frequency</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count of each thing in a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.groupby">
+<tt class="descname">groupby</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.groupby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group things together using the current callable as the key function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.index">
+<tt class="descname">index</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return each thing at a specified index in a series of incoming things
+or the passed default thing.</p>
+<p>&#64;param n: index of thing
+&#64;param default: default thing (default: <cite>None</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.initial">
+<tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return everything within a series of things except the very last thing
+within the series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.intersection">
+<tt class="descname">intersection</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.intersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The intersection between a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.invoke">
+<tt class="descname">invoke</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.invoke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke method <cite>name</cite> on each thing within a series of things with the
+current positio nnd keyword arguments but return the thing as the
+result if the method returns <cite>None</cite>.</p>
+<p>&#64;param name: method name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.items">
+<tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect object items from a series of things matching their keys.</p>
+<p>&#64;param <a href="#id1"><span class="problematic" id="id2">*</span></a>keys: item keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.join">
+<tt class="descname">join</tt><big>(</big><em>separator=u''</em>, <em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine a series of stringish things join into one unicode string
+(regardless of the original string type).</p>
+<p>&#64;param separator: string to join at (default: &#8216;&#8217;)
+&#64;param encoding: encoding for stringish things (default: &#8216;utf-8&#8217;)
+&#64;param errors: error handling when encoding stringish things</p>
+<blockquote>
+<div>(default: &#8216;strict&#8217;)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.last">
+<tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return either the specified number of things from the end of a series
+of things or just the last thing.</p>
+<p>&#64;param n: number of things (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.map">
+<tt class="descname">map</tt><big>(</big><em>args=False</em>, <em>kwargs=False</em>, <em>current=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke current callable on each thing within a series of things. Pass
+results of iterable as <a href="#id3"><span class="problematic" id="id4">*</span></a>args to current callable if <cite>args</cite> flag is set.
+Pass results of iterable to current callable as tuple of <a href="#id5"><span class="problematic" id="id6">*</span></a>args and
+<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs if <cite>kwargs</cite> flag is set.</p>
+<dl class="docutils">
+<dt>&#64;param args: map each thing as a tuple of Python <a href="#id9"><span class="problematic" id="id10">*</span></a>args for current</dt>
+<dd>callable (default: <cite>False</cite>)</dd>
+<dt>&#64;param kwargs: map each thing as a tuple of Python <a href="#id11"><span class="problematic" id="id12">*</span></a>args and</dt>
+<dd><a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs for current callable (default: <cite>False</cite>)</dd>
+<dt>&#64;param current: map each thing as a tuple of Python <a href="#id15"><span class="problematic" id="id16">*</span></a>args and <a href="#id17"><span class="problematic" id="id18">**</span></a>kwargs</dt>
+<dd>including current positional and keyword arguments for current
+callable (default: <cite>False</cite>)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.mapping">
+<tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect keys and values from a series of mappings.</p>
+<p>&#64;param keys: gather keys only (default: <cite>False</cite>)
+&#64;param values: gather values only (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.max">
+<tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum value within a series of things using current callable as the
+key function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.median">
+<tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Median value within a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.min">
+<tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum value within a series of things using the current callable as
+the key function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.minmax">
+<tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.minmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum and maximum values within a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.partition">
+<tt class="descname">partition</tt><big>(</big><em>pattern=None</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide a series of things into <cite>True</cite> and <cite>False</cite> things based on the
+results returned by the current callable.</p>
+<p>&#64;param pattern: regular expression search pattern (default: <cite>None</cite>)
+&#64;param flags: regular expression flags (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.permutations">
+<tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each possible permutation for every number of things within a series of
+things.</p>
+<p>&#64;param n: number of things to derive permutations from</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.preview">
+<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a peek at the current state of outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.product">
+<tt class="descname">product</tt><big>(</big><em>n=1</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Results of nested for each loops repeated a certain number of times.</p>
+<p>&#64;param n: number of loops to repeat (default: 1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.quantify">
+<tt class="descname">quantify</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.quantify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of how many times current callable evaluates to <cite>True</cite> in a
+series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.range">
+<tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Statistical range within a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.reduce">
+<tt class="descname">reduce</tt><big>(</big><em>initial=None</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce a series of things down to one thing using the current callable.
+If <cite>reverse</cite> flag is set, reduction will come from the right side of
+the series. Otherwise, reduction will come from the left side of the
+series.</p>
+<p>&#64;param initial: initial thing (default: <cite>None</cite>)
+&#64;param reverse: reduce from right side of things (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.repeat">
+<tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repeat a series of things or the results of the current callable.</p>
+<p>&#64;param n: number of times to repeat (default: <cite>None</cite>)
+&#64;param call: repeat result of current callable (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.replace">
+<tt class="descname">replace</tt><big>(</big><em>pattern</em>, <em>new</em>, <em>count=0</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace segments within a series of strings with a new string segment
+if they match a pattern.</p>
+<p>&#64;param pattern: regular expression search pattern
+&#64;param new: replacement string
+&#64;param count: number of replacements to make in a string (default: 0)
+&#64;param flags: regular expression flags (default: 0)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.rest">
+<tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return everything within a series of things except the very first thing
+within the series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.results">
+<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things and clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.reverse">
+<tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverse the order of a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.sample">
+<tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a random sample drawn from a series of things.</p>
+<p>&#64;param n: sample size</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.shift_in">
+<tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.shift_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy outgoing things to incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.shift_out">
+<tt class="descname">shift_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.shift_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually copy incoming things to outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.shuffle">
+<tt class="descname">shuffle</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly reorder a series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.slice">
+<tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slice a series of things down to a certain size.</p>
+<p>&#64;param start: starting point of slice
+&#64;param stop: stopping point of slice (default: <cite>False</cite>)
+&#64;param step: size of step in slice (default: <cite>False</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a snapshot of current incoming things.</p>
+<p>&#64;param baseline: make snapshot baseline version (default: False)
+&#64;param original: make snapshot original version (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.sort">
+<tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort a series of things using the current callable as the key function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.split">
+<tt class="descname">split</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a series of things into series of things of a specified length
+using <cite>fill</cite> argument to pad out incomplete series.</p>
+<p>&#64;param n: number of things per split
+&#64;param fill: value to pad out incomplete things (default: <cite>None</cite>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.subset">
+<tt class="descname">subset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell if a series of things is a subset of other series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.sum">
+<tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>floats=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the value of a series of things together.</p>
+<p>&#64;param start: starting number (default: 0)
+&#64;param floats: incoming are floats (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.superset">
+<tt class="descname">superset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.superset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell if a series of things is a superset of another series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.tap">
+<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign current callable and, optionally, an alternative callable. If
+<cite>factory</cite> flag is set, use the <cite>call</cite> argument as a factory for
+building the current callable.</p>
+<p>&#64;param call: primary callable to assign
+&#64;param alt: alternative callable to assign (default: None)
+&#64;param factor: whether <cite>call</cite> is a callable factory (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
+<p>&#64;param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
+&#64;param baseline: return ins to baseline version (default: False)
+&#64;param original: return ins to original version (default: False)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.union">
+<tt class="descname">union</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.union" title="Permalink to this definition">¶</a></dt>
+<dd><p>The union between two series of things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.unique">
+<tt class="descname">unique</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get unique things within a series of things while preserving order and
+remember everything ever encountered.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.untap">
+<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.untap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear current callable, alternative callable, and stored arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.unwrap">
+<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.unwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set wrapper to <cite>list</cite> type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.weave">
+<tt class="descname">weave</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.weave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interleave a series of things into one thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.which">
+<tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose current callable based on results of condition mode</p>
+<p>&#64;param call: external callable to use if condition is <cite>True</cite>
+&#64;param alt: external callable to use if condition if <cite>False</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterable wrapper for outgoing things.</p>
+<p>&#64;param wrapper: an iterable wrapper</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.active.activesaw.zip">
+<tt class="descname">zip</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.zip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce of a series of things down to one thing, pairing each things by
+their position in the series.</p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/activesaw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

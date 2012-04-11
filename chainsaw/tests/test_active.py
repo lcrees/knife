@@ -4,14 +4,14 @@
 from chainsaw._compat import unittest
 
 from chainsaw.tests.base import Mixin
-from chainsaw.tests.filter import FilterMixin, CollectMixin
 from chainsaw.tests.map import MapMixin, RepeatMixin
 from chainsaw.tests.reduce import ReduceMixin, SliceMixin
+from chainsaw.tests.filter import FilterMixin, CollectMixin
 from chainsaw.tests.analyze import OrderMixin, MathMixin, TruthMixin
 
 
 class TestMain(
-    Mixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
+    unittest.TestCase, Mixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
     SliceMixin, CollectMixin, RepeatMixin, MathMixin, TruthMixin
 ):
 
