@@ -19,16 +19,32 @@ class SliceMixin(object):
             self.mclass(5, 4, 3, 2, 1).first(2), self.assertEqual, [5, 4],
         )
 
-    def test_nth(self):
+    def test_index(self):
         # auto
-        self.assertEqual(self.qclass(5, 4, 3, 2, 1).nth(2).end(), 3)
-        self.assertEqual(self.qclass(5, 4, 3, 2, 1).nth(10, 11).end(), 11)
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).index(2).end(), 3)
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).index(10, 11).end(), 11)
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).nth(2), self.assertEqual, 3,
+            self.mclass(5, 4, 3, 2, 1).index(2), self.assertEqual, 3,
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).nth(10, 11), self.assertEqual, 11,
+            self.mclass(5, 4, 3, 2, 1).index(10, 11), self.assertEqual, 11,
+        )
+
+    def test_slice(self):
+        # auto
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).slice(2).end(), [5, 4])
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).slice(2, 4).end(), [3, 2])
+        self.assertEqual(self.qclass(5, 4, 3, 2, 1).slice(2, 4, 2).end(), 3)
+        # man
+        self._false_true_false(
+            self.mclass(5, 4, 3, 2, 1).slice(2), self.assertEqual, [5, 4],
+        )
+        self._false_true_false(
+            self.mclass(5, 4, 3, 2, 1).slice(2, 4), self.assertEqual, [3, 2]
+        )
+        self._false_true_false(
+            self.mclass(5, 4, 3, 2, 1).slice(2, 4, 2), self.assertEqual, 3,
         )
 
     def test_last(self):
@@ -119,14 +135,14 @@ class ReduceMixin(object):
     def test_flatten(self):
         # auto
         self.assertEqual(
-            self.qclass([[1, [2], [3, [[4]]]]]).flatten().end(),
-            [1, 2, 3, 4],
+            self.qclass([[1, [2], [3, [[4]]]], 'here']).flatten().end(),
+            [1, 2, 3, 4, 'here'],
         )
         # man
         self._false_true_false(
-            self.mclass([[1, [2], [3, [[4]]]]]).flatten(),
+            self.mclass([[1, [2], [3, [[4]]]], 'here']).flatten(),
             self.assertEqual,
-            [1, 2, 3, 4],
+            [1, 2, 3, 4, 'here'],
         )
 
     def test_reduce(self):
@@ -189,21 +205,6 @@ class ReduceMixin(object):
             self.assertEqual,
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
-        # auto
-        self.assertEqual(
-            self.qclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_many().weave().end(),
-            ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
-        )
-        # man
-        self._false_true_false(
-            self.mclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_many().weave(),
-            self.assertEqual,
-            ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
-        )
 
     def test_zip(self):
         # auto
@@ -218,21 +219,6 @@ class ReduceMixin(object):
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
             ).as_one().zip(),
-            self.assertEqual,
-            [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
-        )
-        # auto
-        self.assertEqual(
-            self.qclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_many().zip().end(),
-            [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
-        )
-        # man
-        self._true_true_false(
-            self.mclass(
-                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
-            ).as_many().zip(),
             self.assertEqual,
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )

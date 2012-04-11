@@ -50,7 +50,7 @@ class RepeatMixin(local):
         @param call: repeat result of current callable (default: `False`)
         '''
         with self._chain():
-            return self._many(self._repeat(self._call, call, n))
+            return self._many(self._repeat(n, call, self._identity))
 
 
 class MapMixin(local):
@@ -87,4 +87,6 @@ class MapMixin(local):
         '''
         args = kwargs if kwargs else args
         with self._chain():
-            return self._many(self._map(self._call, args, kwargs, current))
+            return self._many(self._map(
+                self._call, args, kwargs, current, self._args, self._kw,
+            ))

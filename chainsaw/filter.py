@@ -8,17 +8,17 @@ class CollectMixin(local):
 
     '''collecting mixin'''
 
-    def attributes(self, deep=False, ancestors=False, *names):
-        '''
-        Collect attributes from a series of objects by their attribute names.
-
-        @param deep: traverse deep inside an object (default: `False`)
-        @param ancestors: traverse deep inside classes within method resolution
-            order (default: `False`)
-        @param *keys: item keys
-        '''
-        with self._chain():
-            return self._iter(self._attributes(names, deep, ancestors))
+#    def attributes(self, deep=False, ancestors=False, *names):
+#        '''
+#        Collect attributes from a series of objects by their attribute names.
+#
+#        @param deep: traverse deep inside an object (default: `False`)
+#        @param ancestors: traverse deep inside classes within method resolutio
+#            order (default: `False`)
+#        @param *keys: item keys
+#        '''
+#        with self._chain():
+#            return self._iter(self._attributes(names, deep, ancestors))
 
     def mapping(self, keys=False, values=False):
         '''
@@ -28,7 +28,7 @@ class CollectMixin(local):
         @param values: gather values only (default: `False`)
         '''
         with self._chain():
-            return self._many(self._items(self._call, keys, values))
+            return self._many(self._mapping(self._call, keys, values))
 
     def items(self, *keys):
         '''
@@ -37,7 +37,7 @@ class CollectMixin(local):
         @param *keys: item keys
         '''
         with self._chain():
-            return self._iter(self._pluck(keys))
+            return self._iter(self._items(keys))
 
 
 class FilterMixin(local):
@@ -121,7 +121,7 @@ class FilterMixin(local):
         @param flags: regular expression flags (default: 0)
         '''
         with self._chain():
-            return self._many(self._divide(self._test, pattern, flags))
+            return self._many(self._partition(self._test, pattern, flags))
 
     def subset(self):
         '''

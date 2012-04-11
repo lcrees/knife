@@ -271,7 +271,7 @@ class OutputMixin(LazyMixin, OutchainMixin):
         outs, tell = tee(self._out)
         wrap = self._wrapper
         if self._mode == self._MANY:
-            value = list(wrap(i) for i in outs)
+            value = tuple(wrap(i) for i in outs)
         else:
             value = wrap(outs)
         return value.pop() if len(wrap(tell)) == 1 else value

@@ -113,16 +113,16 @@ class SliceMixin(local):
         with self._chain():
             return self._many(self._rest)
 
-    def slice(self, start, stop=None, step=None):
+    def slice(self, start, stop=False, step=False):
         '''
         Slice a series of things down to a certain size.
 
         @param start: starting point of slice
-        @param stop: stopping point of slice (default: `None`)
-        @param step: size of step in slice (default: `None`)
+        @param stop: stopping point of slice (default: `False`)
+        @param step: size of step in slice (default: `False`)
         '''
         with self._chain():
-            return self._many(self._split(start, stop, step))
+            return self._many(self._slice(start, stop, step))
 
     def split(self, n, fill=None):
         '''

@@ -4,68 +4,100 @@
 
 class CollectMixin(object):
 
-    def test_members(self):
-        from inspect import isclass
-        class stooges: #@IgnorePep8
-            name = 'moe'
-            age = 40
-        class stoog2: #@IgnorePep8
-            name = 'larry'
-            age = 50
-        class stoog3: #@IgnorePep8
-            name = 'curly'
-            age = 60
-            class stoog4: #@IgnorePep8
-                name = 'beastly'
-                age = 969
-        # auto
-        test = lambda x: not x[0].startswith('__')
-        out = self.qclass(
-            stooges, stoog2, stoog3
-        ).tap(test, isclass).as_tuple().members().untap().end(),
-        self.assertEqual(
-            out,
-            ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
-            ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
-            ('name', 'beastly')))),),
-            out,
-        )
-        # man
-        self._true_true_false(
-            self.mclass(
-                stooges, stoog2, stoog3
-            ).tap(test, isclass).as_tuple().members().untap().shift_in(),
-            self.assertEqual,
-            (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
-            ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
-            ('name', 'beastly')))),
-        )
+#    def test_attributes(self):
+#        from inspect import isclass
+#        class stooges: #@IgnorePep8
+#            name = 'moe'
+#            age = 40
+#        class stoog2: #@IgnorePep8
+#            name = 'larry'
+#            age = 50
+#        class stoog3: #@IgnorePep8
+#            name = 'curly'
+#            age = 60
+#            class stoog4: #@IgnorePep8
+#                name = 'beastly'
+#                age = 969
+#        # auto
+#        test = lambda x: not x[0].startswith('__')
+#        out = self.qclass(
+#            stooges, stoog2, stoog3
+#        ).tap(test, isclass).as_tuple().attributes(deep=True).untap().end(),
+#        self.assertEqual(
+#            out,
+#            ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
+#            ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
+#            ('name', 'beastly')))),),
+#            out,
+#        )
+#        # man
+#        self._true_true_false(
+#            self.mclass(
+#                stooges, stoog2, stoog3
+#            ).tap(test, isclass).as_tuple().members().untap().shift_in(),
+#            self.assertEqual,
+#            (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
+#            ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
+#            ('name', 'beastly')))),
+#        )
+#        # auto
+#        class stooge: #@IgnorePep8
+#            name = 'moe'
+#            age = 40
+#        class stooge2(stooges): #@IgnorePep8
+#            name = 'larry'
+#            age = 50
+#        class stooge3(stoog2): #@IgnorePep8
+#            name = 'curly'
+#            age = 60
+#        out = self.qclass(stoog3).mro().end()
+#        self.assertEqual(
+#            out,
+#            [stooge3, stooge2, stooge],
+#            out,
+#        )
+#        # man
+#        self._true_true_false(
+#            self.mclass(stoog3).mro(),
+#            self.assertEqual,
+#            [stoog3, stoog2, stooges],
+#        )
+#        from stuf import stuf
+#        stooges = [
+#            stuf(name='moe', age=40),
+#            stuf(name='larry', age=50),
+#            stuf(name='curly', age=60)
+#        ]
+#        # auto
+#        self.assertEqual(
+#            self.qclass(*stooges).attributes('name').end(),
+#            ['moe', 'larry', 'curly'],
+#        )
+#        self.assertEqual(
+#            self.qclass(*stooges).attributes('name', 'age').end(),
+#            [('moe', 40), ('larry', 50), ('curly', 60)],
+#        )
+#        self.assertEqual(
+#            self.qclass(*stooges).attributes('place').end(), [],
+#        )
+#        # man
+#        self._true_true_false(
+#            self.mclass(*stooges).attributes('name'),
+#            self.assertEqual,
+#            ['moe', 'larry', 'curly'],
+#        )
+#        self._true_true_false(
+#            self.mclass(*stooges).attributes('name', 'age'),
+#            self.assertEqual,
+#            [('moe', 40), ('larry', 50), ('curly', 60)],
+#        )
+#        self._false_true_true(
+#            self.mclass(*stooges).attributes('place'),
+#            self.assertEqual,
+#            [],
+#        )
 
-    def test_mro(self):
-        # auto
-        class stooges: #@IgnorePep8
-            name = 'moe'
-            age = 40
-        class stoog2(stooges): #@IgnorePep8
-            name = 'larry'
-            age = 50
-        class stoog3(stoog2): #@IgnorePep8
-            name = 'curly'
-            age = 60
-        out = self.qclass(stoog3).mro().end()
-        self.assertEqual(
-            out,
-            [stoog3, stoog2, stooges],
-            out,
-        )
-        # man
-        self._true_true_false(
-            self.mclass(stoog3).mro(),
-            self.assertEqual,
-            [stoog3, stoog2, stooges],
-        )
-
-    def test_attributes(self):
+    def test_items(self):
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
@@ -74,95 +106,64 @@ class CollectMixin(object):
         ]
         # auto
         self.assertEqual(
-            self.qclass(*stooges).attributes('name').end(),
+            self.qclass(*stooges).items('name').end(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
-            self.qclass(*stooges).attributes('name', 'age').end(),
+            self.qclass(*stooges).items('name', 'age').end(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
+        stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
         self.assertEqual(
-            self.qclass(*stooges).attributes('place').end(), [],
+            self.qclass(*stooges).items(0).end(), ['moe', 'larry', 'curly'],
         )
+        self.assertEqual(self.qclass(*stooges).items(1).end(), [40, 50, 60])
+        self.assertEqual(self.qclass(*stooges).items('place').end(), [])
         # man
-        self._true_true_false(
-            self.mclass(*stooges).attributes('name'),
-            self.assertEqual,
-            ['moe', 'larry', 'curly'],
-        )
-        self._true_true_false(
-            self.mclass(*stooges).attributes('name', 'age'),
-            self.assertEqual,
-            [('moe', 40), ('larry', 50), ('curly', 60)],
-        )
-        self._false_true_true(
-            self.mclass(*stooges).attributes('place'),
-            self.assertEqual,
-            [],
-        )
-
-    def test_pluck(self):
-        from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
             stuf(name='larry', age=50),
             stuf(name='curly', age=60)
         ]
-        # auto
-        self.assertEqual(
-            self.qclass(*stooges).pluck('name').end(),
-            ['moe', 'larry', 'curly'],
-        )
-        self.assertEqual(
-            self.qclass(*stooges).pluck('name', 'age').end(),
-            [('moe', 40), ('larry', 50), ('curly', 60)],
-        )
-        stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
-        self.assertEqual(
-            self.qclass(*stooges).pluck(0).end(), ['moe', 'larry', 'curly'],
-        )
-        self.assertEqual(self.qclass(*stooges).pluck(1).end(), [40, 50, 60])
-        self.assertEqual(self.qclass(*stooges).pluck('place').end(), [])
-        # man
         self._true_true_false(
-            self.mclass(*stooges).pluck('name'),
+            self.mclass(*stooges).items('name'),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
-            self.mclass(*stooges).pluck('name', 'age'),
+            self.mclass(*stooges).items('name', 'age'),
             self.assertEqual,
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
         self._true_true_false(
-            self.mclass(*stooges).pluck(0),
+            self.mclass(*stooges).items(0),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
-            self.mclass(*stooges).pluck(1),
+            self.mclass(*stooges).items(1),
             self.assertEqual,
             [40, 50, 60],
         )
         self._false_true_true(
-            self.mclass(*stooges).pluck('place'),
+            self.mclass(*stooges).items('place'),
             self.assertEqual,
             [],
         )
 
-    def test_items(self):
+    def test_mapping(self):
         # auto
         self.assertEqual(
             self.qclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).tap(lambda x, y: x * y).items().end(), [2, 6, 12, 2, 6, 12],
+            ).tap(lambda x, y: x * y).mapping().end(), [2, 6, 12, 2, 6, 12],
         )
         # man
         self._false_true_false(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).tap(lambda x, y: x * y).items(),
+            ).tap(lambda x, y: x * y).mapping(),
             self.assertEqual,
             [2, 6, 12, 2, 6, 12],
         )

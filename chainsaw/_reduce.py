@@ -112,6 +112,19 @@ class _SliceMixin(local):
         return _islice(iterable, 1, None)
 
     @staticmethod
+    def _slice(start, stop, step, _islice=islice):
+        if stop and step:
+            def slice_(iterable):
+                return _islice(iterable, start, stop, step)
+        elif stop:
+            def slice_(iterable):
+                return _islice(iterable, start, stop)
+        else:
+            def slice_(iterable):
+                return _islice(iterable, start)
+        return slice_
+
+    @staticmethod
     def _split(n, fill, zip_longest_=zip_longest, iter_=iter):
         def grouper(iterable):
             return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)

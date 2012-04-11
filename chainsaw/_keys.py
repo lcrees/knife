@@ -398,13 +398,13 @@ class KSlice(AppspaceKey):
         within the series of things.
         '''
 
-    def slice(start, stop=None, step=None):  # @NoSelf
+    def slice(start, stop=False, step=False):  # @NoSelf
         '''
         Slice a series of things down to a certain size.
 
         @param start: starting point of slice
-        @param stop: stopping point of slice (default: `None`)
-        @param step: size of step in slice (default: `None`)
+        @param stop: stopping point of slice (default: `False`)
+        @param step: size of step in slice (default: `False`)
         '''
 
     def split(n, fill=None):  # @NoSelf

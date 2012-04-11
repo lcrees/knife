@@ -16,18 +16,16 @@ class RepeatMixin(object):
             self.assertEqual,
             [(40, 50, 60), (40, 50, 60), (40, 50, 60)],
         )
-
-    def test_times(self):
         # auto
-        def test(*args):
+        def test(*args): #@IgnorePep8
             return list(args)
         self.assertEqual(
-            self.qclass(40, 50, 60).tap(test).times(3).end(),
+            self.qclass(40, 50, 60).tap(test).repeat(3, True).end(),
             [[40, 50, 60], [40, 50, 60], [40, 50, 60]],
         )
         # man
         self._true_true_false(
-            self.mclass(40, 50, 60).tap(test).times(3),
+            self.mclass(40, 50, 60).tap(test).repeat(3, True),
             self.assertEqual,
             [[40, 50, 60], [40, 50, 60], [40, 50, 60]],
         )

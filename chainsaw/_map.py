@@ -3,6 +3,7 @@
 
 from copy import deepcopy
 from threading import local
+from functools import partial
 from operator import methodcaller
 
 from chainsaw._compat import (
@@ -36,19 +37,15 @@ class _RepeatMixin(local):
         return permutations
 
     @staticmethod
-    def _repeat(n, repeat_=irepeat, tuple_=tuple):
-        def repeat(iterable):
-            return repeat_(tuple_(iterable), n)
-        return repeat
-
-    @staticmethod
-    def _times(call, n=None, r=irepeat, l=list, s=istarmap):
-        def times(iterable):
-            return (
-                s(call, r(l(iterable))) if n is None
-                else s(call, r(l(iterable), n))
-            )
-        return times
+    def _repeat(n, usecall, call, r=irepeat, tuple_=tuple, l=list, s=istarmap):
+        if usecall:
+            if n is None:
+                return lambda x: s(call, r(l(x)))
+            return lambda x: s(call, r(l(x), n))
+        else:
+            def repeat(iterable):
+                return r(tuple_(iterable), n)
+            return repeat
 
 
 class _MapMixin(local):
@@ -66,9 +63,11 @@ class _MapMixin(local):
         return invoke_
 
     @staticmethod
-    def _map(call, args, kwargs, imap_=imap, starmap_=istarmap):
+    def _map(call, args, kwargs, curr, arg, kw, imap_=imap, starmap_=istarmap):
         if kwargs:
             call_ = lambda x, y: call(*x, **y)
+        elif curr:
+            call = partial(lambda x, y: call(*x, **y), arg, kw)
         else:
             call_ = call
         if args:
