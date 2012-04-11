@@ -11,46 +11,50 @@ class ReduceMixin(local):
     '''reduce mixin'''
 
     def concat(self):
-        '''concatenate incoming together'''
+        '''Concatenate a series of things into one series of things.'''
         with self._chain():
             return self._many(self._concat)
 
     def flatten(self):
-        '''flatten nested incoming'''
+        '''Flatten a series of nested things into a flat series of things.'''
         with self._chain():
             return self._many(self._flatten)
 
-    def join(self, sep=u(''), encoding='utf-8', errors='strict'):
+    def join(self, separator=u(''), encoding='utf-8', errors='strict'):
         '''
-        join incoming into one unicode string (regardless of type)
+        Combine a series of stringish things join into one unicode string
+        (regardless of the original string type).
 
-        @param sep: join separator (default: '')
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
+        @param separator: string to join at (default: '')
+        @param encoding: encoding for stringish things (default: 'utf-8')
+        @param errors: error handling when encoding stringish things
+            (default: 'strict')
         '''
         with self._chain():
-            return self._one(self._join(sep, encoding, errors))
+            return self._one(self._join(separator, encoding, errors))
 
     def reduce(self, initial=None, reverse=False):
         '''
-        reduce incoming to one thing using current callable (from left
-        side of incoming)
+        Reduce a series of things down to one thing using the current callable.
+        If `reverse` flag is set, reduction will come from the right side of
+        the series. Otherwise, reduction will come from the left side of the
+        series.
 
-        @param initial: initial thing (default: None)
-        @param reverse: reduce from right side of incoming things
+        @param initial: initial thing (default: `None`)
+        @param reverse: reduce from right side of things (default: `False`)
         '''
         with self._chain():
             return self._one(self._reduce(self._call, initial, reverse))
 
     def weave(self):
-        '''interleave incoming into one thing'''
+        '''Interleave a series of things into one thing.'''
         with self._chain():
             return self._many(self._roundrobin)
 
     def zip(self):
         '''
-        smash incoming into one single thing, pairing things by iterable
-        position
+        Reduce of a series of things down to one thing, pairing each things by
+        their position in the series.
         '''
         with self._chain():
             return self._many(self._zip)
@@ -62,7 +66,8 @@ class SliceMixin(local):
 
     def first(self, n=0):
         '''
-        first `n` things of incoming or just the first thing
+        Return either the specified number of things from the beginning of a
+        series of things or just the first thing.
 
         @param n: number of things (default: 0)
         '''
@@ -71,13 +76,17 @@ class SliceMixin(local):
             return self._many(first(n)) if n else self._one(first(n))
 
     def initial(self):
-        '''all incoming except the last thing'''
+        '''
+        Return everything within a series of things except the very last thing
+        within the series of things.
+        '''
         with self._chain():
             return self._many(self._initial)
 
     def last(self, n=0):
         '''
-        last `n` things of incoming or just the last thing
+        Return either the specified number of things from the end of a series
+        of things or just the last thing.
 
         @param n: number of things (default: 0)
         '''
@@ -85,39 +94,43 @@ class SliceMixin(local):
             last = self._last
             return self._many(last(n)) if n else self._one(last(n))
 
-    def nth(self, n, default=None):
+    def index(self, n, default=None):
         '''
-        `nth` incoming thing in incoming or default thing
+        Return each thing at a specified index in a series of incoming things
+        or the passed default thing.
 
-        @param n: number of things
-        @param default: default thing (default: None)
+        @param n: index of thing
+        @param default: default thing (default: `None`)
         '''
         with self._chain():
             return self._one(self._nth(n, default))
 
     def rest(self):
-        '''all incoming except the first thing'''
+        '''
+        Return everything within a series of things except the very first thing
+        within the series of things.
+        '''
         with self._chain():
             return self._many(self._rest)
 
     def slice(self, start, stop=None, step=None):
         '''
-        split incoming into sequences of length `n`, using `fill` thing
-        to pad incomplete sequences
+        Slice a series of things down to a certain size.
 
-        @param n: number of things
-        @param fill: fill thing (default: None)
+        @param start: starting point of slice
+        @param stop: stopping point of slice (default: `None`)
+        @param step: size of step in slice (default: `None`)
         '''
         with self._chain():
             return self._many(self._split(start, stop, step))
 
     def split(self, n, fill=None):
         '''
-        split incoming into sequences of length `n`, using `fill` thing
-        to pad incomplete sequences
+        Split a series of things into series of things of a specified length
+        using `fill` argument to pad out incomplete series.
 
-        @param n: number of things
-        @param fill: fill thing (default: None)
+        @param n: number of things per split
+        @param fill: value to pad out incomplete things (default: `None`)
         '''
         with self._chain():
             return self._many(self._split(n, fill))

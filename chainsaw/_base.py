@@ -2,6 +2,7 @@
 '''base chainsaw mixins'''
 
 from itertools import tee
+from operator import truth
 from threading import local
 from collections import deque
 from contextlib import contextmanager
@@ -16,7 +17,7 @@ SLOTS = [
 ]
 
 
-class ChainsawMixin(local):
+class _ChainsawMixin(local):
 
     '''base chainsaw mixin'''
 
@@ -27,7 +28,7 @@ class ChainsawMixin(local):
         @param ins: incoming things
         @param out: outgoing things
         '''
-        super(ChainsawMixin, self).__init__()
+        super(_ChainsawMixin, self).__init__()
         # incoming things
         self._in = ins
         # outgoing things
@@ -78,6 +79,11 @@ class ChainsawMixin(local):
     ## things in process ######################################################
     ###########################################################################
 
+    # chainsaw all incoming things as one thing
+    _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
+    # chainsaw each incoming thing as one of many individual things
+    _MANY = 'TREAT AS MANY'
+
     def _one(self, call, _imap=imap):
         # append incoming things to out if chainsawing them as one thing
         if self._mode == self._ONE:
@@ -104,8 +110,37 @@ class ChainsawMixin(local):
             return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
 
     ###########################################################################
+    ## things in context ######################################################
+    ###########################################################################
+
+    # modify incoming things from input to output in one series of operations
+    _EDIT = _DEFAULT_CONTEXT = 'EDIT'
+    # reset incoming things back to a baseline snapshot after each query
+    _QUERY = 'QUERY'
+    # reset incoming things back to a baseline snapshot after using results of
+    # operations on incoming to determine which of two paths to follow
+    _TRUTH = 'CONDITION'
+
+    ###########################################################################
     ## things in chain ########################################################
     ###########################################################################
+
+    # automatically balance ins with out
+    _DEFAULT_CHAIN = _AUTO = '_auto'
+    # manually balance ins with out
+    _MANUAL = '_man4'
+    # 1. link for incoming things which is chained to =>
+    _INCFG = 'chainin'
+    _INVAR = '_in'
+    # 2. link for working on incoming things which is chained to =>
+    _WORKCFG = 'work'
+    _WORKVAR = '_work'
+    # 3. link temporarily holding chainsawed things which is chained to =>
+    _HOLDCFG = 'hold'
+    _HOLDVAR = '_hold'
+    # 4. link where outgoing things can be removed from chain
+    _OUTCFG = 'chainout'
+    _OUTVAR = '_out'
 
     def _as_chain(self, **kw):
         '''switch chains'''
@@ -154,6 +189,38 @@ class ChainsawMixin(local):
         @param n: number of clones
         '''
         return tee_(iterable, n)
+
+    ###########################################################################
+    ## things called ##########################################################
+    ###########################################################################
+
+    @property
+    def _identity(self):
+        '''
+        Substitute generic identity function for current callable if no current
+        callable is assigned.
+        '''
+        return self._call if self._call is not None else lambda x: x
+
+    @property
+    def _test(self):
+        '''
+        Substitute truth operator function for current callable is no current
+        callable is assigned.
+        '''
+        return self._call if self._call is not None else truth
+
+    ###########################################################################
+    ## knowing things #########################################################
+    ###########################################################################
+
+    @staticmethod
+    def _repr(*args):
+        '''Object representation.'''
+        return (
+            '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => '
+            'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>'
+        ).format(*args)
 
     ###########################################################################
     ## clearing things up #####################################################

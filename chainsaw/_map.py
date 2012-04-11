@@ -58,10 +58,10 @@ class _MapMixin(local):
     @staticmethod
     def _invoke(name, args, mc_=methodcaller, imap_=imap):
         caller = mc_(name, *args[0], **args[1])
-        def invoke(thing): #@IgnorePep8
-            results = caller(thing)
-            return thing if results is None else results
         def invoke_(iterable): #@IgnorePep8
+            def invoke(thing): #@IgnorePep8
+                results = caller(thing)
+                return thing if results is None else results
             return imap_(invoke, iterable)
         return invoke_
 

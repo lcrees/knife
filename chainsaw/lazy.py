@@ -7,19 +7,19 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from chainsaw.map import RepeatMixin, MapMixin
-
 from chainsaw.reduce import SliceMixin, ReduceMixin
 from chainsaw.filter import FilterMixin, CollectMixin
-from chainsaw.base import SLOTS, ChainsawMixin, OutchainMixin
+from chainsaw.base import ChainsawMixin, OutchainMixin
 from chainsaw.analyze import MathMixin, TruthMixin, OrderMixin
 
+from chainsaw._base import SLOTS, _ChainsawMixin
 from chainsaw._map import _RepeatMixin, _MapMixin
 from chainsaw._reduce import _SliceMixin, _ReduceMixin
 from chainsaw._filter import _FilterMixin, _CollectMixin
 from chainsaw._analyze import _MathMixin, _TruthMixin, _OrderMixin
 
 
-class LazyMixin(ChainsawMixin):
+class LazyMixin(ChainsawMixin, _ChainsawMixin):
 
     '''lazy chainsaw mixin'''
 
@@ -86,7 +86,7 @@ class LazyMixin(ChainsawMixin):
 
     def snapshot(self, baseline=False, original=False):
         '''
-        Take a snapshot of incoming things currently in ins.
+        Take a snapshot of current incoming things.
 
         @param baseline: make snapshot baseline version (default: False)
         @param original: make snapshot original version (default: False)
@@ -105,9 +105,9 @@ class LazyMixin(ChainsawMixin):
 
     def undo(self, snapshot=0, baseline=False, original=False):
         '''
-        Revert incoming things to a previous version within ins.
+        Revert incoming things to a previous snapshot of incoming things.
 
-        @param snapshot: snapshot to revert to e.g. 1, 2, 3, etc. (default: 0)
+        @param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
         @param baseline: return ins to baseline version (default: False)
         @param original: return ins to original version (default: False)
         '''
@@ -183,7 +183,7 @@ class LazyMixin(ChainsawMixin):
     ###########################################################################
 
     def __repr__(self, tee_=tee, setattr_=setattr, getattr_=getattr, l=list):
-        '''object representation'''
+        '''Object representation.'''
         in1, in2 = tee_(getattr(self, self._IN))
         setattr_(self, self._IN, in1)
         out1, out2 = tee_(getattr(self, self._OUT))
@@ -246,13 +246,13 @@ class LazyMixin(ChainsawMixin):
         return self
 
     def clear_in(self):
-        '''Clear inchain link.'''
+        '''Clear incoming things.'''
         delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
     def clear_out(self):
-        '''Clear outs link.'''
+        '''Clear outgoing things.'''
         delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
@@ -263,7 +263,7 @@ class OutputMixin(LazyMixin, OutchainMixin):
     '''active output chainsaw mixin'''
 
     def __iter__(self):
-        '''Yield outgoing things, clearing outs as it goes.'''
+        '''Yield outgoing things.'''
         return getattr(self, self._OUT)
 
     def _output(self):

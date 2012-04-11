@@ -10,53 +10,47 @@ class RepeatMixin(local):
 
     def combinations(self, n):
         '''
-        repeat every combination for `n` of incoming
+        Each possible combinations for every number of things within a series
+        of things.
 
-        @param n: number of repetitions
+        @param n: number of things to derive combinations from
         '''
         with self._chain():
             return self._many(self._combinations(n))
 
     def copy(self):
-        '''copy each incoming thing'''
+        '''Duplicate each thing in a series of things'''
         with self._chain():
             return self._many(self._copy)
 
     def product(self, n=1):
         '''
-        nested for each loops repeated `n` times
+        Results of nested for each loops repeated a certain number of times.
 
-        @param n: number of repetitions (default: 1)
+        @param n: number of loops to repeat (default: 1)
         '''
         with self._chain():
             return self._many(self._product(n))
 
     def permutations(self, n):
         '''
-        repeat every permutation for every `n` of incoming
+        Each possible permutation for every number of things within a series of
+        things.
 
-        @param n: length of thing to permutate
+        @param n: number of things to derive permutations from
         '''
         with self._chain():
             return self._many(self._permutations(n))
 
-    def repeat(self, n):
+    def repeat(self, n=None, call=False):
         '''
-        repeat incoming `n` times
+        Repeat a series of things or the results of the current callable.
 
-        @param n: number of times to repeat
+        @param n: number of times to repeat (default: `None`)
+        @param call: repeat result of current callable (default: `False`)
         '''
         with self._chain():
-            return self._many(self._repeat(n))
-
-    def times(self, n=None):
-        '''
-        repeat call with incoming `n` times
-
-        @param n: repeat call n times on incoming (default: None)
-        '''
-        with self._chain():
-            return self._many(self._times(self._call, n))
+            return self._many(self._repeat(self._call, call, n))
 
 
 class MapMixin(local):
@@ -65,23 +59,32 @@ class MapMixin(local):
 
     def invoke(self, name):
         '''
-        invoke method `name` on each incoming thing with passed arguments,
-        keywords but return incoming thing instead if method returns `None`
+        Invoke method `name` on each thing within a series of things with the
+        current positio nnd keyword arguments but return the thing as the
+        result if the method returns `None`.
 
-        @param name: name of method
+        @param name: method name
         '''
         with self._chain():
             return self._many(
                 self._invoke(name, (self._args, self._kw))
             )
 
-    def map(self, args=False, kwargs=False):
+    def map(self, args=False, kwargs=False, current=False):
         '''
-        invoke call on each incoming thing
+        Invoke current callable on each thing within a series of things. Pass
+        results of iterable as *args to current callable if `args` flag is set.
+        Pass results of iterable to current callable as tuple of *args and
+        **kwargs if `kwargs` flag is set.
 
-        @param args: map each incoming thing as python *args for call
-        @param kwargs: map each incoming thing as python **kwargs for call
+        @param args: map each thing as a tuple of Python *args for current
+            callable (default: `False`)
+        @param kwargs: map each thing as a tuple of Python *args and
+            **kwargs for current callable (default: `False`)
+        @param current: map each thing as a tuple of Python *args and **kwargs
+            including current positional and keyword arguments for current
+            callable (default: `False`)
         '''
         args = kwargs if kwargs else args
         with self._chain():
-            return self._many(self._map(self._call, args, kwargs))
+            return self._many(self._map(self._call, args, kwargs, current))

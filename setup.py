@@ -16,7 +16,7 @@ install_requires = list(l.strip() for l in open(
 setup(
     name='chainsaw',
     version='0.5.0',
-    description='Things go in. Things get chainsawed. Things come out.',
+    description='Things go in. Things happen. Things come out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='pipe flow ETL iterator functional fluent chaining',
     license='BSD',

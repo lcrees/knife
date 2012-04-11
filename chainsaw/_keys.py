@@ -13,12 +13,15 @@ class KChainsaw(AppspaceKey):
     ###########################################################################
 
     def as_one():  # @NoSelf
-        '''Switch to chainsawing incoming things as one individual thing.'''
+        '''
+        Switch to performing operations on incoming things as one whole
+        individual thing.
+        '''
 
     def as_many():  # @NoSelf
         '''
-        Switch to chainsawing each incoming thing as one individual thing among
-        many individual things.
+        Switch to performing operations on each incoming thing as just one
+        individual thing in a series of many individual things.
         '''
 
     ###########################################################################
@@ -27,28 +30,27 @@ class KChainsaw(AppspaceKey):
 
     def as_edit():  # @NoSelf
         '''
-        Switch to editing context where incoming things can be extracted and
-        transformed in sequence of operations from their initial placement in
-        the ins to their final extraction from the out.
+        Switch to editing context where operations can be performed on incoming
+        things from initial placement to final extraction.
         '''
 
     def as_truth():  # @NoSelf
         '''
-        Switch to evaluation context where incoming things can be extracted and
-        transformed so that the results of chainsawing them can be used to
-        determine which of two potential paths should be executed. After
-        they're evaluated, the ins state is automatically returned to a
-        previously taken baseline snapshot of the incoming things so further
-        opportunities to extract and transform them aren't lost.
+        Switch to evaluation context where the results of operations on
+        incoming things determine which of two potential paths to execute.
+        After exting the evaluation context, incoming things automatically
+        revert to a prior baseline snapshot of incoming things so further
+        operations can be performed on the unmodified version.
         '''
 
     def as_view():  # @NoSelf
         '''
         Switch to query context where incoming things can be extracted and
         transformed so that the results of chainsawing them can be queried.
-        After they're queried, the ins state is automatically returned to a
-        previously taken baseline snapshot of the incoming things so further
-        opportunities to extract and transform them aren't lost.
+        Upon exit from query context by invoking `results` or `end`, all
+        incoming things automatically revert to a prior baseline snapshot of
+        incoming things so that further operations can be performed on the
+        unmodified version.
         '''
 
     ###########################################################################
@@ -56,18 +58,26 @@ class KChainsaw(AppspaceKey):
     ###########################################################################
 
     def as_auto():  # @NoSelf
-        '''Context where ins is automatically rebalanced out.'''
+        '''
+        Context where incoming things are automatically rebalanced with
+        outgoing things.
+        '''
 
     def as_manual():  # @NoSelf
-        '''Context where ins must be manually rebalanced with out.'''
+        '''
+        Context where incoming must be manually rebalanced with outgoing
+        things.
+        '''
 
     def shift_in():  # @NoSelf
-        '''Manually copy outgoing things to ins.'''
+        '''Manually copy outgoing things to incoming things.'''
 
     def shift_out():  # @NoSelf
-        '''Manually copy incoming things to out.'''
+        '''Manually copy incoming things to outgoing things.'''
 
-    balanced = Attribute('''Determine if ins and out are in balance''')
+    balanced = Attribute(
+        'Determine if incoming and outgoing things are in balance'
+    )
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -75,7 +85,7 @@ class KChainsaw(AppspaceKey):
 
     def snapshot(baseline=False, original=False):  # @NoSelf
         '''
-        Take a snapshot of incoming things currently in ins.
+        Take a snapshot of current incoming things.
 
         @param baseline: make snapshot baseline version (default: False)
         @param original: make snapshot original version (default: False)
@@ -83,7 +93,7 @@ class KChainsaw(AppspaceKey):
 
     def undo(snapshot=0, baseline=False, original=False):  # @NoSelf
         '''
-        Revert incoming things to a previous version within ins.
+        Revert incoming things to a previous snapshot of incoming things.
 
         @param snapshot: steps ago 1, 2, 3 steps, etc.. (default: 0)
         @param baseline: return ins to baseline version (default: False)
@@ -101,9 +111,11 @@ class KChainsaw(AppspaceKey):
 
     def tap(call, alt=None, factory=False):  # @NoSelf
         '''
-        Assign current callable and/or alternative callable.
+        Assign current callable and, optionally, an alternative callable. If
+        `factory` flag is set, use the `call` argument as a factory for
+        building the current callable.
 
-        @param call: callable to assign
+        @param call: primary callable to assign
         @param alt: alternative callable to assign (default: None)
         @param factor: whether `call` is a callable factory (default: False)
         '''
@@ -119,32 +131,28 @@ class KChainsaw(AppspaceKey):
 
     def extend(things):  # @NoSelf
         '''
-        Place many `things` after any incoming `things` already in current
-        ins.
+        Place `things` after any current incoming things.
 
         @param things: wannabe incoming things
         '''
 
-    def extendfront(things):  # @NoSelf
-        '''
-        Place many `things` before any incoming `things` already in current
-        ins.
-
-        @param thing: wannabe incoming things
-        '''
-
     def append(thing):  # @NoSelf
         '''
-        Place one `thing` after any incoming `things` already in current
-        ins.
+        Place `things` after any current incoming thing.
 
         @param thing: one wannabe incoming thing
         '''
 
+    def extendfront(things):  # @NoSelf
+        '''
+        Place `things` before any current incoming things.
+
+        @param thing: wannabe incoming things
+        '''
+
     def appendfront(thing):  # @NoSelf
         '''
-        Place one `thing` before any incoming `things` already in current
-        ins.
+        Place `thing` before any current incoming things.
 
         @param thing: one wannabe incoming thing
         '''
@@ -154,14 +162,17 @@ class KChainsaw(AppspaceKey):
     ###########################################################################
 
     def __bool__():  # @NoSelf
-        '''Return results build while in truth context or length of ins.'''
+        '''
+        Return results built up while in truth context or return the length of
+        incoming things.
+        '''
 
     ###########################################################################
     ## know things ############################################################
     ###########################################################################
 
     def __repr__():  # @NoSelf
-        '''object representation'''
+        '''Object representation.'''
 
     def __len__():  # @NoSelf
         '''Number of incoming things.'''
@@ -195,17 +206,17 @@ class KOutchain(KChainsaw):
 
     def which(call=None, alt=None):  # @NoSelf
         '''
-        choose current callable based on results of CONDITION mode
+        Choose current callable based on results of condition mode
 
         @param call: external callable to use if condition is `True`
-        @param alt: external callable  to use if condition if `False`
+        @param alt: external callable to use if condition if `False`
         '''
 
     def end():  # @NoSelf
-        '''Return outgoing things and clear out everything.'''
+        '''Return outgoing things and clear out every last thing.'''
 
     def results():  # @NoSelf
-        '''Return outgoing things and clear out.'''
+        '''Return outgoing things and clear outgoing things.'''
 
     def preview():  # @NoSelf
         '''Take a peek at the current state of outgoing things.'''
@@ -216,10 +227,13 @@ class KOutchain(KChainsaw):
 
     def wrap(wrapper):  # @NoSelf
         '''
-        wrapper for out
+        Iterable wrapper for outgoing things.
 
-        @param wrapper: an iterator class
+        @param wrapper: an iterable wrapper
         '''
+
+    def unwrap():  # @NoSelf
+        '''Reset current wrapper to default.'''
 
     ###########################################################################
     ## string wrapping things #################################################
@@ -227,25 +241,31 @@ class KOutchain(KChainsaw):
 
     def as_ascii(errors='strict'):  # @NoSelf
         '''
-        encode each incoming thing as ascii string (regardless of type)
+        Set wrapper to encode each thing in a series of things as string/byte
+        type encoded as `ascii` (regardless of type)
 
-        @param errors: error handling (default: 'strict')
+        @param errors: error handling for encoding stringish things
+            (default: 'strict')
         '''
 
     def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        encode each incoming thing as byte string (regardless of type)
+        Set wrapper to encode each thing in a series of things as `byte` type
+        (regardless of type).
 
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
+        @param encoding: encoding for stringish things (default: 'utf-8')
+        @param errors: error handling for encoding stringish things
+            (default: 'strict')
         '''
 
     def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        decode each incoming thing as unicode string (regardless of type)
+        Set wrapper to decode each thing in a series of things as `unicode`
+        type (regardless of type).
 
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
+        @param encoding: encoding for stringish things (default: 'utf-8')
+        @param errors: error handling for decoding stringish things
+            (default: 'strict')
         '''
 
     ###########################################################################
@@ -253,49 +273,46 @@ class KOutchain(KChainsaw):
     ###########################################################################
 
     def as_list():  # @NoSelf
-        '''clear current wrapper'''
-
-    def unwrap():  # @NoSelf
-        '''clear current wrapper'''
+        '''Set wrapper to `list` type.'''
 
     def as_deque():  # @NoSelf
-        '''set wrapper to `deque`'''
+        '''Set wrapper to `deque` type.'''
 
     def as_tuple():  # @NoSelf
-        '''set wrapper to `tuple`'''
+        '''Set wrapper to `tuple` type.'''
 
     ###########################################################################
     ## map wrapping things ####################################################
     ###########################################################################
 
     def as_dict():  # @NoSelf
-        '''set wrapper to `dict`'''
+        '''Set wrapper to `dict` type.'''
 
     def as_ordereddict():  # @NoSelf
-        '''set wrapper to `OrderedDict`'''
+        '''Set wrapper to `OrderedDict` type.'''
 
     ###########################################################################
     ## stuf wrapping things ###################################################
     ###########################################################################
 
     def as_frozenstuf():  # @NoSelf
-        '''set wrapper to `frozenstuf`'''
+        '''Set wrapper to `frozenstuf` type.'''
 
     def as_orderedstuf():  # @NoSelf
-        '''set wrapper to `orderedstuf`'''
+        '''Set iterable wrapper to `orderedstuf` type.'''
 
     def as_stuf():  # @NoSelf
-        '''set wrapper to `stuf`'''
+        '''Set iterable wrapper to `stuf` type.'''
 
     ###########################################################################
     ## set wrapping things ####################################################
     ###########################################################################
 
     def as_frozenset():  # @NoSelf
-        '''set wrapper to `frozenset`'''
+        '''Set iterable wrapper to `frozenset` type.'''
 
     def as_set():  # @NoSelf
-        '''set wrapper to `set`'''
+        '''Set iterable wrapper to `set` type.'''
 
 
 class KReduce(AppspaceKey):
@@ -303,36 +320,40 @@ class KReduce(AppspaceKey):
     '''reduce key'''
 
     def concat():  # @NoSelf
-        '''concatenate incoming together'''
+        '''Concatenate a series of things into one series of things.'''
 
     def flatten():  # @NoSelf
-        '''flatten nested incoming'''
+        '''Flatten a series of nested things into a flat series of things.'''
 
-    def join(sep='', encoding='utf-8', errors='strict'):  # @NoSelf
+    def join(separator='', encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        join incoming into one unicode string (regardless of type)
+        Combine a series of stringish things join into one unicode string
+        (regardless of the original string type).
 
-        @param sep: join separator (default: '')
-        @param encoding: encoding for things (default: 'utf-8')
-        @param errors: error handling (default: 'strict')
+        @param separator: string to join at (default: '')
+        @param encoding: encoding for stringish things (default: 'utf-8')
+        @param errors: error handling when encoding stringish things
+            (default: 'strict')
         '''
 
     def reduce(initial=None, reverse=False):  # @NoSelf
         '''
-        reduce incoming to one thing using current callable (from left
-        side of incoming)
+        Reduce a series of things down to one thing using the current callable.
+        If `reverse` flag is set, reduction will come from the right side of
+        the series. Otherwise, reduction will come from the left side of the
+        series.
 
-        @param initial: initial thing (default: None)
-        @param reverse: reduce from right side of incoming things
+        @param initial: initial thing (default: `None`)
+        @param reverse: reduce from right side of things (default: `False`)
         '''
 
     def weave():  # @NoSelf
-        '''interleave incoming into one thing'''
+        '''Interleave a series of things into one thing.'''
 
     def zip():  # @NoSelf
         '''
-        smash incoming into one single thing, pairing things by iterable
-        position
+        Reduce of a series of things down to one thing, pairing each things by
+        their position in the series.
         '''
 
 
@@ -342,48 +363,57 @@ class KSlice(AppspaceKey):
 
     def first(n=0):  # @NoSelf
         '''
-        first `n` things of incoming or just the first thing
+        Return either the specified number of things from the beginning of a
+        series of things or just the first thing.
 
         @param n: number of things (default: 0)
         '''
 
     def initial():  # @NoSelf
-        '''all incoming except the last thing'''
+        '''
+        Return everything within a series of things except the very last thing
+        within the series of things.
+        '''
 
     def last(n=0):  # @NoSelf
         '''
-        last `n` things of incoming or just the last thing
+        Return either the specified number of things from the end of a series
+        of things or just the last thing.
 
         @param n: number of things (default: 0)
         '''
 
-    def nth(n, default=None):  # @NoSelf
+    def index(n, default=None):  # @NoSelf
         '''
-        `nth` incoming thing in incoming or default thing
+        Return each thing at a specified index in a series of incoming things
+        or the passed default thing.
 
-        @param n: number of things
-        @param default: default thing (default: None)
+        @param n: index of thing
+        @param default: default thing (default: `None`)
         '''
 
     def rest():  # @NoSelf
-        '''all incoming except the first thing'''
+        '''
+        Return everything within a series of things except the very first thing
+        within the series of things.
+        '''
 
     def slice(start, stop=None, step=None):  # @NoSelf
         '''
-        split incoming into sequences of length `n`, using `fill` thing
-        to pad incomplete sequences
+        Slice a series of things down to a certain size.
 
-        @param n: number of things
-        @param fill: fill thing (default: None)
+        @param start: starting point of slice
+        @param stop: stopping point of slice (default: `None`)
+        @param step: size of step in slice (default: `None`)
         '''
 
     def split(n, fill=None):  # @NoSelf
         '''
-        split incoming into sequences of length `n`, using `fill` thing
-        to pad incomplete sequences
+        Split a series of things into series of things of a specified length
+        using `fill` argument to pad out incomplete series.
 
-        @param n: number of things
-        @param fill: fill thing (default: None)
+        @param n: number of things per split
+        @param fill: value to pad out incomplete things (default: `None`)
         '''
 
 
@@ -393,33 +423,36 @@ class KRepeat(AppspaceKey):
 
     def combinations(n):  # @NoSelf
         '''
-        repeat every combination for `n` of incoming
+        Each possible combinations for every number of things within a series
+        of things.
 
-        @param n: number of repetitions
+        @param n: number of things to derive combinations from
         '''
 
     def copy():  # @NoSelf
-        '''copy each incoming thing'''
+        '''Duplicate each thing in a series of things'''
 
     def product(n=1):  # @NoSelf
         '''
-        nested for each loops repeated `n` times
+        Results of nested for each loops repeated a certain number of times.
 
-        @param n: number of repetitions (default: 1)
+        @param n: number of loops to repeat (default: 1)
         '''
 
     def permutations(n):  # @NoSelf
         '''
-        repeat every permutation for every `n` of incoming
+        Each possible permutation for every number of things within a series of
+        things.
 
-        @param n: length of thing to permutate
+        @param n: number of things to derive permutations from
         '''
 
     def repeat(n=None, call=False):  # @NoSelf
         '''
-        repeat incoming `n` times by itself or with current callable
+        Repeat a series of things or the results of the current callable.
 
-        @param n: repeat call n times on incoming (default: None)
+        @param n: number of times to repeat (default: `None`)
+        @param call: repeat result of current callable (default: `False`)
         '''
 
 
@@ -429,18 +462,27 @@ class KMap(AppspaceKey):
 
     def invoke(name):  # @NoSelf
         '''
-        invoke method `name` on each incoming thing with passed arguments,
-        keywords but return incoming thing instead if method returns `None`
+        Invoke method `name` on each thing within a series of things with the
+        current positio nnd keyword arguments but return the thing as the
+        result if the method returns `None`.
 
-        @param name: name of method
+        @param name: method name
         '''
 
-    def map(args=False, kwargs=False):  # @NoSelf
+    def map(args=False, kwargs=False, current=False):  # @NoSelf
         '''
-        invoke call on each incoming thing
+        Invoke current callable on each thing within a series of things. Pass
+        results of iterable as *args to current callable if `args` flag is set.
+        Pass results of iterable to current callable as tuple of *args and
+        **kwargs if `kwargs` flag is set.
 
-        @param args: map each incoming thing as python *args for call
-        @param kwargs: map each incoming thing as python **kwargs for call
+        @param args: map each thing as a tuple of Python *args for current
+            callable (default: `False`)
+        @param kwargs: map each thing as a tuple of Python *args and
+            **kwargs for current callable (default: `False`)
+        @param current: map each thing as a tuple of Python *args and **kwargs
+            including current positional and keyword arguments for current
+            callable (default: `False`)
         '''
 
 
@@ -448,32 +490,30 @@ class KCollect(AppspaceKey):
 
     '''collecting key'''
 
-    def attributes(*names):  # @NoSelf
+    def attributes(deep=False, ancestors=False, *names):  # @NoSelf
         '''
-        extract object attributes from incoming by their `*names`
+        Collect attributes from a series of objects by their attribute names.
 
-        extract object members from incoming
-
-        extract ancestors of things by method resolution order
-        '''
-
-    def extract(pattern, flags=0):  # @NoSelf
-        '''
-        extract patterns from incoming strings
-
-        @param pattern: search pattern
+        @param deep: traverse deep inside an object (default: `False`)
+        @param ancestors: traverse deep inside classes within method resolution
+            order (default: `False`)
+        @param *keys: item keys
         '''
 
-    def mapping():  # @NoSelf
+    def mapping(keys=False, values=False):  # @NoSelf
         '''
-        invoke call on each mapping to get key, value pairs
+        Collect keys and values from a series of mappings.
 
-        invoke call on each mapping to get keys
-        invoke call on each mapping to get values
+        @param keys: gather keys only (default: `False`)
+        @param values: gather values only (default: `False`)
         '''
 
     def items(*keys):  # @NoSelf
-        '''extract object items from incoming by item `*keys`'''
+        '''
+        Collect object items from a series of things matching their keys.
+
+        @param *keys: item keys
+        '''
 
 
 class KFilter(AppspaceKey):
@@ -482,55 +522,84 @@ class KFilter(AppspaceKey):
 
     def filter(pattern=None, reverse=False, flags=0):  # @NoSelf
         '''
-        incoming for which current callable returns `True`
+        Things within a series of things that pass a filter. By default things
+        that evaluate to `True` pass the filter but if the `reverse` flag is
+        set to `True` than things that evaluate to `False` pass the filter
+        while things that evaluate to False do not. If a `pattern` is supplied
+        the filter will be a regular expression. Otherwise the current callable
+        will be used.
 
-        @param pattern: search pattern expression (default: None)
-        @param reverse: reduce from right side (default: False)
+        @param pattern: regular expression search pattern (default: `None`)
+        @param reverse: return things for which filter is `False` rather than
+            `True` (default: `False`)
+        @param flags: regular expression flags (default: 0)
         '''
 
     def find(pattern=None, reverse=False, flags=0):  # @NoSelf
-        '''first incoming thing for which current callable returns `True`'''
+        '''
+        The first in a series of things that pass a filter. By default things
+        that evaluate to `True` pass the filter but if the `reverse` flag is
+        set to `True` than things that evaluate to `False` pass the filter
+        while things that evaluate to False do not. If a `pattern` is supplied
+        the filter will be a regular expression. Otherwise the current callable
+        will be used.
+
+        @param pattern: regular expression search pattern (default: `None`)
+        @param reverse: return things for which filter is `False` rather than
+            `True` (default: `False`)
+        @param flags: regular expression flags (default: 0)
+        '''
 
     def replace(pattern, new, count=0, flags=0):  # @NoSelf
         '''
-        replace incoming strings matching pattern with replacement string
+        Replace segments within a series of strings with a new string segment
+        if they match a pattern.
 
-        @param pattern: search pattern
+        @param pattern: regular expression search pattern
         @param new: replacement string
+        @param count: number of replacements to make in a string (default: 0)
+        @param flags: regular expression flags (default: 0)
         '''
 
     def difference(symmetric=False):  # @NoSelf
         '''
-        difference between incoming
+        The difference between a series of things.
 
-        @param symmetric: use symmetric difference
+        @param symmetric: use symmetric difference (default: `False`)
         '''
 
     def disjointed():  # @NoSelf
-        '''disjoint between incoming'''
+        '''The disjoint between a series of things.'''
 
     def intersection():  # @NoSelf
-        '''intersection between incoming'''
+        '''The intersection between a series of things.'''
 
     def partition(pattern=None, flags=0):  # @NoSelf
         '''
-        split incoming into `True` and `False` things based on results
-        of call
+        Divide a series of things into `True` and `False` things based on the
+        results returned by the current callable.
+
+        @param pattern: regular expression search pattern (default: `None`)
+        @param flags: regular expression flags (default: 0)
         '''
 
     def subset():  # @NoSelf
-        '''incoming that are subsets of incoming'''
+        '''
+        Tell if a series of things is a subset of other series of things.
+        '''
 
     def superset():  # @NoSelf
-        '''incoming that are supersets of incoming'''
+        '''
+        Tell if a series of things is a superset of another series of things.
+        '''
 
     def union():  # @NoSelf
-        '''union between incoming'''
+        '''The union between two series of things.'''
 
     def unique():  # @NoSelf
         '''
-        list unique incoming, preserving order and remember all incoming things
-        ever seen
+        Get unique things within a series of things while preserving order and
+        remember everything ever encountered.
         '''
 
 
@@ -539,32 +608,32 @@ class KMath(AppspaceKey):
     '''math key'''
 
     def average():  # @NoSelf
-        '''average value of incoming'''
+        '''Average value within a series of things.'''
 
     def max():  # @NoSelf
         '''
-        find maximum value among incoming using current callable as key
-        function
+        Maximum value within a series of things using current callable as the
+        key function.
         '''
 
     def median():  # @NoSelf
-        '''median value of incoming'''
+        '''Median value within a series of things.'''
 
     def min():  # @NoSelf
         '''
-        find minimum value among incoming using current callable as key
-        function
+        Minimum value within a series of things using the current callable as
+        the key function.
         '''
 
     def minmax():  # @NoSelf
-        '''minimum and maximum values among incoming'''
+        '''Minimum and maximum values within a series of things.'''
 
     def range():  # @NoSelf
-        '''statistical range of incoming'''
+        '''Statistical range within a series of things.'''
 
     def sum(start=0, floats=False):  # @NoSelf
         '''
-        total incoming together
+        Add the value of a series of things together.
 
         @param start: starting number (default: 0)
         @param floats: incoming are floats (default: False)
@@ -576,17 +645,18 @@ class KTruth():
     '''truth mixin'''
 
     def all():  # @NoSelf
-        '''if `all` incoming are `True`'''
+        '''Tell if everthing in a series of things is `True`.'''
 
     def any():  # @NoSelf
-        '''if `any` incoming are `True`'''
+        '''Tell if anything in a series of things is `True`'''
 
     def frequency():  # @NoSelf
-        '''frequency of each incoming thing'''
+        '''Count of each thing in a series of things.'''
 
     def quantify():  # @NoSelf
         '''
-        how many times current callable returns `True` for incoming
+        Number of how many times current callable evaluates to `True` in a
+        series of things.
         '''
 
 
@@ -595,27 +665,27 @@ class KOrder(AppspaceKey):
     '''order mixin'''
 
     def choice():  # @NoSelf
-        '''random choice of/from incoming'''
+        '''Select a random choice from a series of things.'''
 
     def groupby():  # @NoSelf
         '''
-        Group things together, using the current callable as the key function.
+        Group things together using the current callable as the key function.
         '''
 
     def reverse():  # @NoSelf
-        '''reverse order of incoming'''
+        '''Reverse the order of a series of things.'''
 
     def sort():  # @NoSelf
         '''
-        sort incoming, optionally using current call as key function
+        Sort a series of things using the current callable as the key function.
         '''
 
     def sample(n):  # @NoSelf
         '''
-        random sampling drawn from `n` incoming things
+        Take a random sample drawn from a series of things.
 
-        @param n: number of incoming
+        @param n: sample size
         '''
 
     def shuffle():  # @NoSelf
-        '''randomly order incoming'''
+        '''Randomly reorder a series of things.'''
