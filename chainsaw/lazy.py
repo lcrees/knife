@@ -60,11 +60,31 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
+    @contextmanager
+    def _auto(self, **kw):
+        '''switch to an automatically balanced four-link chain'''
+        self._as_chain(chain=self._auto, **kw)
+        # move ins things up to work link
+        work, ins = tee(getattr(self, self._IN))
+        setattr(self, self._WORK, work)
+        setattr(self, self._IN, ins)
+        yield
+        # move things from holding link to inchain and outs
+        ins, outs = tee(getattr(self, self._HOLD))
+        setattr(
+            self,
+            self._OUT,
+            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
+        )
+        setattr(self, self._IN, ins)
+        # clear work, holding links & return to current selected chain
+        self._rechain()._clearworking()
+
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def snapshot(self, baseline=False, original=False, snapshot=True):
+    def snapshot(self, baseline=False, original=False):
         '''
         Take a snapshot of current incoming things.
 

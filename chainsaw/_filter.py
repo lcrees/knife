@@ -46,31 +46,31 @@ class _CollectMixin(local):
 #        return members_
 
     @staticmethod
-    def _mapping(call, key, value, m=imap, c=ichain, k=ikeys, i=iitems, v=ivalues, s=istarmap): #@IgnorePep8
+    def _mapping(call, key, value, k=ikeys, i=iitems, v=ivalues):
         if key:
-            def keys(iterable):
-                return s(call, c(m(k, iterable)))
+            def keys(iterable, ichain=ichain, imap=imap, istarmap=istarmap):
+                return istarmap(call, ichain(imap(k, iterable)))
             return keys
         elif value:
-            def values(iterable):
-                return s(call, c(m(v, iterable)))
+            def values(iterable, ichain=ichain, imap=imap, istarmap=istarmap):
+                return istarmap(call, ichain(imap(v, iterable)))
             return values
         else:
-            def items(iterable):
-                return s(call, c(m(i, iterable)))
+            def items(iterable, ichain=ichain, imap=imap, istarmap=istarmap):
+                return istarmap(call, ichain(imap(i, iterable)))
             return items
 
     @staticmethod
     def _items(keys, _itemgetter=itemgetter):
         itemfind = _itemgetter(*keys)
-        def pluck(iterable, get=itemfind): #@IgnorePep8
+        def items(iterable, get=itemfind): #@IgnorePep8
+            IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
             for thing in iterable:
-                IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
                 try:
                     yield get(thing)
                 except (IndexErr_, KeyErr_, TypeErr_):
                     pass
-        return pluck
+        return items
 
 
 class _FilterMixin(local):

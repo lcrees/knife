@@ -10,8 +10,8 @@ from contextlib import contextmanager
 from chainsaw._compat import imap
 
 SLOTS = [
-     '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_ss',
-     '_out', '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth',
+     '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_out',
+     '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth', '_ss',
      '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_original',
      '_baseline',
 ]
@@ -150,7 +150,8 @@ class _ChainsawMixin(local):
         # retain chain-specific settings between chain switching
         self._CHAINCFG = kw if kw.get('hard', False) else {}
         # take snapshot
-        self.snapshot(self._chain, kw.get('snap', True))
+        if kw.get('snap', True):
+            self.snapshot()
         # set current chain
         self._chain = kw.get('chain', getattr(self, self._DEFAULT_CHAIN))
         # if clear outgoing things before adding more things

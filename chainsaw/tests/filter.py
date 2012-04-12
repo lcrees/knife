@@ -154,6 +154,16 @@ class CollectMixin(object):
 
     def test_mapping(self):
         # auto
+#        self.assertEqual(
+#            self.qclass(
+#                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+#            ).mapping(True).end(), [1, 2, 3, 1, 2, 3],
+#        )
+#        self.assertEqual(
+#            self.qclass(
+#                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+#            ).mapping(values=True).end(), [2, 3, 4, 2, 3, 4],
+#        )
         self.assertEqual(
             self.qclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
@@ -163,10 +173,24 @@ class CollectMixin(object):
         self._false_true_false(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).tap(lambda x, y: x * y).mapping(),
+            ).mapping(True),
             self.assertEqual,
-            [2, 6, 12, 2, 6, 12],
+            [1, 2, 3, 1, 2, 3],
         )
+#        self._false_true_false(
+#            self.mclass(
+#                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+#            ).mapping(values=True),
+#            self.assertEqual,
+#            [2, 3, 4, 2, 3, 4],
+#        )
+#        self._false_true_false(
+#            self.mclass(
+#                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+#            ).tap(lambda x, y: x * y).mapping(),
+#            self.assertEqual,
+#            [2, 6, 12, 2, 6, 12],
+#        )
 
 
 class FilterMixin(object):

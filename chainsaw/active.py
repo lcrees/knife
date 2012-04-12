@@ -62,11 +62,32 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
+    @contextmanager
+    def _auto(self, **kw):
+        '''switch to an automatically balanced four-link chain'''
+        self._as_chain(chain=self._auto, **kw)
+        inchain = getattr(self, self._IN)
+        # move incoming things up to work link
+        getattr(self, self._WORK).extend(inchain)
+        yield
+        out = getattr(self, self._OUT)
+        # clear out
+        if self._buildup:
+            out.clear()
+        # extend outgoing things with holding link
+        hold = getattr(self, self._HOLD)
+        out.extend(hold)
+        # extend incoming things with holding link
+        inchain.clear()
+        inchain.extend(hold)
+        # clear work, holding links & return to current selected chain
+        self._rechain()._clearworking()
+
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def snapshot(self, baseline=False, original=False, snapshot=True):
+    def snapshot(self, baseline=False, original=False):
         '''
         Take a snapshot of current incoming things.
 
