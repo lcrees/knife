@@ -1,5 +1,5 @@
-:class:`chainsaw.active.reducesaw` --- Active Reducing Chainsaw
-===============================================================
+:class:`chainsaw.active.reducesaw` --- Reducing chainsaw
+========================================================
 
 .. module:: chainsaw.active
 

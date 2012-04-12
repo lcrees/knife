@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.truthsaw` --- Lazily Evaluated Truthing Chainsaw
-======================================================================
+:class:`chainsaw.lazy.truthsaw` --- Truthing chainsaw
+=====================================================
 
 .. module:: chainsaw.lazy
 

@@ -91,10 +91,10 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''
         Take a snapshot of current incoming things.
 
-        :param baseline: make this snapshot the baseline snapshot (*default*:
-          ``False``)
-        :param original: make this snapshot the original snapshot (*default*:
-          ``False``)
+        :param baseline: make this snapshot the baseline snapshot (*default:*
+          :const:`False`)
+        :param original: make this snapshot the original snapshot (*default:*
+          :const:`False`)
         '''
         # take snapshot
         snapshot = self._in.__copy__()
@@ -113,11 +113,11 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         Revert incoming things to a previous snapshot of incoming things.
 
         :param snapshot: number of steps ago e.g. ``1``, ``2``, ``3``, etc.
-          (*default*: ``0``)
+          (*default:* ``0``)
         :param baseline: revert incoming things to baseline snapshot (
-          *default:* ``False``)
+          *default:* :const:`False`)
         :param original: revert incoming things to original snapshot (
-          *default:* ``False``)
+          *default:* :const:`False`)
         '''
         # clear everything
         self.clear()

@@ -1,5 +1,5 @@
-:class:`chainsaw.active.mapsaw` --- Active Mapping Chainsaw
-===========================================================
+:class:`chainsaw.active.mapsaw` --- Mapping chainsaw
+====================================================
 
 .. module:: chainsaw.active
 

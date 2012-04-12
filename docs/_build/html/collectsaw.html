@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.active.collectsaw — Active Collecting Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.active.collectsaw — Collecting chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.lazy.filtersaw — Lazily Evaluated Filtering Chainsaw" href="filtersaw.html" />
-    <link rel="prev" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw" href="lazysaw.html" /> 
+    <link rel="next" title="chainsaw.lazy.filtersaw — Filtering chainsaw" href="filtersaw.html" />
+    <link rel="prev" title="chainsaw.lazy.lazysaw — Lazily evaluated chainsaw" href="lazysaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Lazily Evaluated Filtering Chainsaw"
+          <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Filtering chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw"
+          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily evaluated chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.active">
-<span id="chainsaw-active-collectsaw-active-collecting-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.collectsaw" title="chainsaw.active.collectsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.collectsaw</span></tt></a> &#8212; Active Collecting Chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-active-collectsaw-collecting-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.collectsaw" title="chainsaw.active.collectsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.collectsaw</span></tt></a> &#8212; Collecting chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.active.collectsaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">collectsaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#collectsaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.collectsaw" title="Permalink to this definition">¶</a></dt>
@@ -64,12 +64,28 @@
 <dt id="chainsaw.active.collectsaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.collectsaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -296,31 +312,47 @@ unmodified baseline version.</p>
 <dt id="chainsaw.active.collectsaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.collectsaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.collectsaw.items">
 <tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect object items from a series of things matching their <cite>keys</cite>.</p>
+<dd><p>Collect object items from a series of things matching their <cite>*keys</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.collectsaw.mapping">
 <tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.collectsaw.mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect keys and values from a series of mappings.</p>
+<dd><p>Collect <cite>keys</cite> and <cite>values</cite> from a series of mappings.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>keys</strong> &#8211; gather keys only (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>values</strong> &#8211; gather values only (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>keys</strong> &#8211; gather keys only (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>values</strong> &#8211; gather values only (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -361,9 +393,9 @@ unmodified baseline version.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -405,7 +437,7 @@ unmodified baseline version.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -476,10 +508,10 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="lazysaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">chainsaw.lazy.lazysaw</span></tt> &#8212; Lazily Evaluated Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">chainsaw.lazy.lazysaw</span></tt> &#8212; Lazily evaluated chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="filtersaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.filtersaw</span></tt> &#8212; Lazily Evaluated Filtering Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.filtersaw</span></tt> &#8212; Filtering chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/collectsaw.txt"
@@ -512,10 +544,10 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Lazily Evaluated Filtering Chainsaw"
+          <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Filtering chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily Evaluated Chainsaw"
+          <a href="lazysaw.html" title="chainsaw.lazy.lazysaw — Lazily evaluated chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

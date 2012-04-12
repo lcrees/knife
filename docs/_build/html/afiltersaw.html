@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.active.filtersaw — Active Filtering Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.active.filtersaw — Filtering chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.active.mapsaw — Active Mapping Chainsaw" href="amapsaw.html" />
-    <link rel="prev" title="chainsaw.active.collectsaw — Active Collecting Chainsaw" href="acollectsaw.html" /> 
+    <link rel="next" title="chainsaw.active.mapsaw — Mapping chainsaw" href="amapsaw.html" />
+    <link rel="prev" title="chainsaw.active.collectsaw — Collecting chainsaw" href="acollectsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Active Mapping Chainsaw"
+          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Mapping chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="acollectsaw.html" title="chainsaw.active.collectsaw — Active Collecting Chainsaw"
+          <a href="acollectsaw.html" title="chainsaw.active.collectsaw — Collecting chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.active">
-<span id="chainsaw-active-filtersaw-active-filtering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.filtersaw" title="chainsaw.active.filtersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.filtersaw</span></tt></a> &#8212; Active Filtering Chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-active-filtersaw-filtering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.filtersaw" title="chainsaw.active.filtersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.filtersaw</span></tt></a> &#8212; Filtering chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.active.filtersaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">filtersaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#filtersaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.filtersaw" title="Permalink to this definition">¶</a></dt>
@@ -64,12 +64,28 @@
 <dt id="chainsaw.active.filtersaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -289,12 +305,13 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.difference">
 <tt class="descname">difference</tt><big>(</big><em>symmetric=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.difference" title="Permalink to this definition">¶</a></dt>
-<dd><p>The difference between a series of things.</p>
+<dd><p>Collect differences within a series of
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> &#8211; use symmetric difference (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> &#8211; use symmetric difference (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
 </tr>
 </tbody>
 </table>
@@ -303,7 +320,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.disjointed">
 <tt class="descname">disjointed</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.disjointed" title="Permalink to this definition">¶</a></dt>
-<dd><p>The disjoint between a series of things.</p>
+<dd><p>Collect disjoints within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -316,32 +333,51 @@ unmodified baseline version.</p>
 <dt id="chainsaw.active.filtersaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.filter">
 <tt class="descname">filter</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Things within a series of things that pass a filter. By default things
-that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
-set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
-while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
-supplied the filter will be a regular expression. Otherwise the current
-callable is used.</p>
+<dd><p>Collect anything within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> that
+passes a filter. Usually the first thing that the filter evaluates as
+<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> is returned. If <cite>reverse</cite> is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, things that
+the filter evaluates as <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> are returned. The current
+callable is used as the filter unless regular expression <cite>pattern</cite>
+is supplied, in which case <cite>pattern</cite> is used as the filter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> rather than
-<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather
+than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">regular expression flags</a> (<em>default:</em>
+<tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -352,21 +388,25 @@ callable is used.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.find">
 <tt class="descname">find</tt><big>(</big><em>pattern=None</em>, <em>invert=False</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.find" title="Permalink to this definition">¶</a></dt>
-<dd><p>The first in a series of things that pass a filter. By default things
-that evaluate to <tt class="docutils literal"><span class="pre">True</span></tt> pass the filter but if the <cite>reverse</cite> flag is
-set to <tt class="docutils literal"><span class="pre">True</span></tt> than things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> pass the filter
-while things that evaluate to <tt class="docutils literal"><span class="pre">False</span></tt> do not. If a <cite>pattern</cite> is
-supplied the filter will be a regular expression. Otherwise the current
-callable will be used.</p>
+<dd><p>Collect the first thing within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> that
+passes a filter. Usually the first thing that the filter evaluates as
+<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> is returned. If <cite>reverse</cite> is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, the first
+thing that the filter evaluates as <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> is returned.
+The current callable is used as the filter unless regular expression
+<cite>pattern</cite> is supplied, in which case <cite>pattern</cite> is used as the filter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> &#8211; regular expression search pattern (default: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>invert</strong> &#8211; return things for which filter is <tt class="docutils literal"><span class="pre">False</span></tt> and not
-<tt class="docutils literal"><span class="pre">True</span></tt> (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>invert</strong> &#8211; return things for which filter is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather
+than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>flags</strong> &#8211; <p><a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">regular expression flags</a> (<em>default:</em>
+<tt class="docutils literal"><span class="pre">0</span></tt>)</p>
+</li>
 </ul>
 </td>
 </tr>
@@ -377,21 +417,28 @@ callable will be used.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.intersection">
 <tt class="descname">intersection</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.intersection" title="Permalink to this definition">¶</a></dt>
-<dd><p>The intersection between a series of things.</p>
+<dd><p>Collect intersections within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.partition">
 <tt class="descname">partition</tt><big>(</big><em>pattern=None</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.partition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lump a series of things into <tt class="docutils literal"><span class="pre">True</span></tt> and <tt class="docutils literal"><span class="pre">False</span></tt> things based on
-the results of the current callable.</p>
+<dd><p>Collect two <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> divided into
+<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> and <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> based on whether the current callable
+returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> or <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> for each thing within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.
+The current callable is used as the filter unless regular expression
+<cite>pattern</cite> is supplied, in which case <cite>pattern</cite> is used as the filter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>pattern</strong> &#8211; regular expression search pattern (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>flags</strong> &#8211; <p><a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">regular expression flags</a> (<em>default:</em>
+<tt class="docutils literal"><span class="pre">0</span></tt>)</p>
+</li>
 </ul>
 </td>
 </tr>
@@ -408,18 +455,21 @@ the results of the current callable.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.replace">
 <tt class="descname">replace</tt><big>(</big><em>pattern</em>, <em>new</em>, <em>count=0</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.replace" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace segments within a series of strings with a new string segment
-if they match a pattern.</p>
+<dd><p>Replace parts of string things within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> with a
+new string thing if they match regular expression <cite>pattern</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> &#8211; regular expression search pattern</li>
+<li><strong>pattern</strong> &#8211; regular expression pattern</li>
 <li><strong>new</strong> &#8211; replacement string</li>
-<li><strong>count</strong> &#8211; number of replacements to make in a string
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>flags</strong> &#8211; regular expression flags (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>count</strong> &#8211; maximum number of replacements to make within a string
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>flags</strong> &#8211; <p><a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">regular expression flags</a> (<em>default:</em>
+<tt class="docutils literal"><span class="pre">0</span></tt>)</p>
+</li>
 </ul>
 </td>
 </tr>
@@ -454,9 +504,9 @@ if they match a pattern.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -468,13 +518,15 @@ if they match a pattern.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.subset">
 <tt class="descname">subset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.subset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if a series of things is a subset of other series of things.</p>
+<dd><p>Collect <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> is a
+subset of another <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.superset">
 <tt class="descname">superset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.superset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if a series of things is a superset of another series of things.</p>
+<dd><p>Collect <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> is
+a superset of another <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -510,7 +562,7 @@ if they match a pattern.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -525,14 +577,14 @@ if they match a pattern.</p>
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.union">
 <tt class="descname">union</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.union" title="Permalink to this definition">¶</a></dt>
-<dd><p>The union between two series of things.</p>
+<dd><p>Collect the union of things within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.filtersaw.unique">
 <tt class="descname">unique</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.filtersaw.unique" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get unique things within a series of things while preserving order and
-remember everything ever encountered.</p>
+<dd><p>Collect unique things within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -594,10 +646,10 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="acollectsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.collectsaw</span></tt> &#8212; Active Collecting Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.collectsaw</span></tt> &#8212; Collecting chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="amapsaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.mapsaw</span></tt> &#8212; Active Mapping Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.mapsaw</span></tt> &#8212; Mapping chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/afiltersaw.txt"
@@ -630,10 +682,10 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Active Mapping Chainsaw"
+          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Mapping chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="acollectsaw.html" title="chainsaw.active.collectsaw — Active Collecting Chainsaw"
+          <a href="acollectsaw.html" title="chainsaw.active.collectsaw — Collecting chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

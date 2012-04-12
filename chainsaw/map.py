@@ -10,8 +10,9 @@ class RepeatMixin(local):
 
     def combinations(self, n):
         '''
-        Each possible combinations for every number of things within a series
-        of things.
+        Collect every possible combination of every `n` things within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+
 
         :param n: number of things to derive combinations from
         '''
@@ -19,23 +20,28 @@ class RepeatMixin(local):
             return self._many(self._combinations(n))
 
     def copy(self):
-        '''Duplicate each thing in a series of things'''
+        '''
+        Collect duplicates of each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
+        '''
         with self._chain():
             return self._many(self._copy)
 
     def product(self, n=1):
         '''
-        Results of nested for each loops repeated a certain number of times.
+        Collect results of nested `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ repeated `n`
+        times.
 
-        :param n: number of loops to repeat (*default*: ``1``)
+        :param n: number of loops to repeat (*default:* ``1``)
         '''
         with self._chain():
             return self._many(self._product(n))
 
     def permutations(self, n):
         '''
-        Each possible permutation for every number of things within a series of
-        things.
+        Collect every possible permutation of every `n` things within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: number of things to derive permutations from
         '''
@@ -44,11 +50,14 @@ class RepeatMixin(local):
 
     def repeat(self, n=None, call=False):
         '''
-        Repeat a series of things or the results of the current callable.
+        Collect the results of repeating an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ or results
+        of invoking the current callable `n` times.
 
-        :param n: number of times to repeat (*default*: ``None``)
+        :param n: number of times to repeat (*default:* :const:`None`)
 
-        :param call: repeat result of current callable (*default*: ``False``)
+        :param call: repeat result of current callable (*default:*
+          :const:`False`)
         '''
         with self._chain():
             return self._many(self._repeat(n, call, self._identity))
@@ -60,9 +69,15 @@ class MapMixin(local):
 
     def invoke(self, name):
         '''
-        Invoke method `name` on each thing within a series of things with the
-        current positio nnd keyword arguments but return the thing as the
-        result if the method returns ``None``.
+        Invoke method `name` on each thing within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ with
+        the currently assigned `positional
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+        `keyword arguments
+        <http://docs.python.org/glossary.html#term-keyword-argument>`_ and
+        collect the results but
+        collect the original thing instead of the value returned after calling
+        the method the return value is :const:`None`.
 
         :param name: method name
         '''
@@ -73,18 +88,31 @@ class MapMixin(local):
 
     def map(self, args=False, kwargs=False, current=False):
         '''
-        Invoke current callable on each thing in an iterable. Pass
-        results of iterable as `*args` to current callable if `args` flag is
-        set. Pass results of iterable to current callable as a :class:`tuple`
-        of `*args` and `**kwargs` if `kwargs` flag is set.
+        Invoke the current callable on each thing within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param args: map each thing as a :class:`tuple` of Python `*args` for
-          the current callable (*default*: ``False``)
-        :param kwargs: map each thing as a :class:`tuple` of Python `*args` and
-          `**kwargs` for the current callable (*default*: ``False``)
-        :param current: map each thing as a :class"`tuple` of Python `*args`
-          and `**kwargs` and any assigned positional and/or keyword arguments
-          for the current callable (*default*: ``False``)
+        :param args: pass each thing within an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ as `*args
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ to
+          the current callable (*default:* :const:`False`)
+        :param kwargs: pass each thing within an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ to the current
+          callable as a :class:`tuple` of `*args
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+          `**kwargs
+          <http://docs.python.org/glossary.html#term-keyword-argument>`_
+          (*default:* :const:`False`)
+        :param current: pass each thing within an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ as a
+          :class:`tuple` of `*args
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+          `**kwargs
+          <http://docs.python.org/glossary.html#term-keyword-argument>`_
+          combined with any assigned `positional
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ or
+          `keyword arguments
+          <http://docs.python.org/glossary.html#term-keyword-argument>`_ for
+          the current callable (*default:* :const:`False`)
         '''
         args = kwargs if kwargs else args
         with self._chain():

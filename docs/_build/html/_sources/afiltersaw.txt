@@ -1,5 +1,5 @@
-:class:`chainsaw.active.filtersaw` --- Active Filtering Chainsaw
-================================================================
+:class:`chainsaw.active.filtersaw` --- Filtering chainsaw
+=========================================================
 
 .. module:: chainsaw.active
 

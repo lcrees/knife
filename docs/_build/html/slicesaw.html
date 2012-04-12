@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.lazy.slicesaw — Lazily Evaluated Slicing Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.lazy.slicesaw — Slicing chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.lazy.truthsaw — Lazily Evaluated Truthing Chainsaw" href="truthsaw.html" />
-    <link rel="prev" title="chainsaw.lazy.repeatsaw — Lazily Evaluated Repeating Chainsaw" href="repeatsaw.html" /> 
+    <link rel="next" title="chainsaw.lazy.truthsaw — Truthing chainsaw" href="truthsaw.html" />
+    <link rel="prev" title="chainsaw.lazy.repeatsaw — Repeating chainsaw" href="repeatsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="truthsaw.html" title="chainsaw.lazy.truthsaw — Lazily Evaluated Truthing Chainsaw"
+          <a href="truthsaw.html" title="chainsaw.lazy.truthsaw — Truthing chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="repeatsaw.html" title="chainsaw.lazy.repeatsaw — Lazily Evaluated Repeating Chainsaw"
+          <a href="repeatsaw.html" title="chainsaw.lazy.repeatsaw — Repeating chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.lazy">
-<span id="chainsaw-lazy-slicesaw-lazily-evaluated-slicing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.slicesaw" title="chainsaw.lazy.slicesaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.slicesaw</span></tt></a> &#8212; Lazily Evaluated Slicing Chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-lazy-slicesaw-slicing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.slicesaw" title="chainsaw.lazy.slicesaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.slicesaw</span></tt></a> &#8212; Slicing chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.lazy.slicesaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.lazy.</tt><tt class="descname">slicesaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/lazy.html#slicesaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.lazy.slicesaw" title="Permalink to this definition">¶</a></dt>
@@ -64,12 +64,28 @@
 <dt id="chainsaw.lazy.slicesaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -253,15 +269,15 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.at">
 <tt class="descname">at</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return thing at <cite>n</cite> index within an iterable or <cite>default</cite> if nothing is
-found at <cite>n</cite> index.</p>
+<dd><p>Collect thing found at <cite>n</cite> position within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or <cite>default</cite> if
+nothing is found at <cite>n</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> &#8211; index of some thing</li>
-<li><strong>default</strong> &#8211; default thing (<em>default:</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>default</strong> &#8211; default thing (<em>default:</em>: <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -315,19 +331,35 @@ found at <cite>n</cite> index.</p>
 <dt id="chainsaw.lazy.slicesaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.first">
 <tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.first" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return either <cite>n</cite> things from the start of an iterable or just the
-first thing in the iterable.</p>
+<dd><p>Collect either <cite>n</cite> things from the starting end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
+<strong>first</strong> thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -341,14 +373,15 @@ first thing in the iterable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.initial">
 <tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.initial" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return everything in an iterable except the very <strong>last</strong> thing.</p>
+<dd><p>Collect everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the very
+<strong>last</strong> thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.last">
 <tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.last" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return either <cite>n</cite> things from the end of an iterable or just the
-<strong>last</strong> thing.</p>
+<dd><p>Collect either <cite>n</cite> things from the trailing end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
+<strong>last</strong> thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -368,7 +401,8 @@ first thing in the iterable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.rest">
 <tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.rest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return everything in an iterable except the very <strong>first</strong> thing.</p>
+<dd><p>Collect everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the very
+<strong>first</strong> thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -392,15 +426,18 @@ first thing in the iterable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.slice">
 <tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slice an iterable down to a certain size.</p>
+<dd><p>Collect a <a class="reference external" href="http://docs.python.org/glossary.html#term-slice">slice</a> of
+things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>start</strong> &#8211; starting index of slice</li>
-<li><strong>stop</strong> &#8211; stopping index of slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>step</strong> &#8211; size of step in slice (<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>stop</strong> &#8211; stopping index of slice
+(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>step</strong> &#8211; size of step in slice
+(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -417,9 +454,9 @@ first thing in the iterable.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -431,16 +468,18 @@ first thing in the iterable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.slicesaw.split">
 <tt class="descname">split</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.slicesaw.split" title="Permalink to this definition">¶</a></dt>
-<dd><p>Split an iterable into multiple iterables of length <cite>n</cite> while using
-<cite>fill</cite> value to pad out any incomplete iterables.</p>
+<dd><p>Split an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into multiple
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> of
+<cite>n</cite> things while using <cite>fill</cite> to pad out results that fall short of
+<cite>n</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> &#8211; number of things per split (<em>default:</em>  <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>fill</strong> &#8211; value to pad out incomplete iterables with (<em>default</em>:
-<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>n</strong> &#8211; number of things per split</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete things (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -481,7 +520,7 @@ first thing in the iterable.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -552,10 +591,10 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="repeatsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.repeatsaw</span></tt> &#8212; Lazily Evaluated Repeating Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.repeatsaw</span></tt> &#8212; Repeating chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="truthsaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.truthsaw</span></tt> &#8212; Lazily Evaluated Truthing Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.truthsaw</span></tt> &#8212; Truthing chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/slicesaw.txt"
@@ -588,10 +627,10 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="truthsaw.html" title="chainsaw.lazy.truthsaw — Lazily Evaluated Truthing Chainsaw"
+          <a href="truthsaw.html" title="chainsaw.lazy.truthsaw — Truthing chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="repeatsaw.html" title="chainsaw.lazy.repeatsaw — Lazily Evaluated Repeating Chainsaw"
+          <a href="repeatsaw.html" title="chainsaw.lazy.repeatsaw — Repeating chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

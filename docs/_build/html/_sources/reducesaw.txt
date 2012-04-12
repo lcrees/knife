@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.reducesaw` --- Lazily Evaluated Reducing Chainsaw
-=======================================================================
+:class:`chainsaw.lazy.reducesaw` --- Reducing chainsaw
+======================================================
 
 .. module:: chainsaw.lazy
 

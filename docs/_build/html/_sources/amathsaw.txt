@@ -1,5 +1,5 @@
-:class:`chainsaw.active.mathsaw` --- Active Mathing Chainsaw
-============================================================
+:class:`chainsaw.active.mathsaw` --- Mathing chainsaw
+=====================================================
 
 .. module:: chainsaw.active
 

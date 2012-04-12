@@ -127,16 +127,16 @@ class ChainsawMixin(local):
     def tap(self, call, alt=None, factory=False):
         '''
         Assign current callable. Optionally assign an alternative callable. If
-        `factory` flag is set to ``True``, use the callable passed with the
-        `call` argument as a factory to build the current callable.
+        `factory` flag is set to :const:`True`, use the callable passed with
+        the `call` argument as a factory to build the current callable.
 
         :param call: callable assigned as current callable
 
-        :param alt: callable assigned as alternative callable (*default*:
-          ``None``)
+        :param alt: callable assigned as alternative callable (*default:*
+          :const:`None`)
 
         :param factory: whether `call` is a factory that produces callables
-          (*default*: ``False``)
+          (*default:* :const:`False`)
         '''
         # reset stored position arguments
         self._args = ()
@@ -174,22 +174,38 @@ class ChainsawMixin(local):
     ###########################################################################
 
     def extend(self, things):
-        '''Insert `things` **after** any other incoming things.'''
+        '''
+        Insert `things` **after** any other incoming things.
+
+        :param things: incoming things
+        '''
         with self._man1():
             return self._xtend(things)
 
     def extendstart(self, things):
-        '''Insert `things` **before** any other incoming things.'''
+        '''
+        Insert `things` **before** any other incoming things.
+
+        :param things: incoming things
+        '''
         with self._man1():
             return self._xtendfront(things)
 
     def append(self, thing):
-        '''Insert `thing` **after** any other incoming things.'''
+        '''
+        Insert `thing` **after** any other incoming things.
+
+        :param thing: one incoming thing
+        '''
         with self._man1():
             return self._append(thing)
 
     def appendstart(self, thing):
-        '''Insert `thing` **before** any other incoming things.'''
+        '''
+        Insert `thing` **before** any other incoming things.
+
+        :param thing: one incoming thing
+        '''
         with self._man1():
             return self._appendfront(thing)
 
@@ -222,10 +238,10 @@ class OutchainMixin(local):
         '''
         Choose current callable based on results of condition mode.
 
-        :param call: new callable to use if condition is ``True``
-          (*default*: ``None``)
-        :param alt: new external callable to use if condition is ``False``
-          (*default*: ``None``)
+        :param call: new callable to use if condition is :const:`True`
+          (*default:* :const:`None`)
+        :param alt: new external callable to use if condition is :const:`False`
+          (*default:* :const:`None`)
         '''
         if self.__bool__():
             # use external call or current callable
@@ -261,7 +277,8 @@ class OutchainMixin(local):
 
     def wrap(self, wrapper):
         '''
-        Iterable wrapper for outgoing things.
+        `Iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper for outgoing things.
 
         :param wrapper: an iterable wrapper
         '''
@@ -274,7 +291,8 @@ class OutchainMixin(local):
 
     def as_ascii(self, errors='strict'):
         '''
-        Set wrapper to :class:`byte` encode each incoming thing with the
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`byte` encode each incoming thing with the
         ``'ascii'`` codec (*regardless of its original type*)
 
         :param errors: error handling for decoding issues (*default*:
@@ -284,24 +302,26 @@ class OutchainMixin(local):
 
     def as_bytes(self, encoding='utf-8', errors='strict'):
         '''
-        Set wrapper to :class:`byte` encode each incoming thing (*regardless of
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`byte` encode each incoming thing (*regardless of
         its original type*).
 
-        :param encoding: Unicode encoding (*default*: ``'utf-8'``)
+        :param encoding: Unicode encoding (*default:* ``'utf-8'``)
 
-        :param errors: error handling for encoding issues (*default*:
+        :param errors: error handling for encoding issues (*default:*
           ``'strict'``)
         '''
         return self.wrap(lambda x: tobytes(x, encoding, errors))
 
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set wrapper to :class:`unicode` (:class:`str`` under Python 3) decode
+        Set`iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`unicode` (:class:`str`` under Python 3) decode
         each incoming thing (*regardless of its original type*).
 
-        :param encoding: Unicode encoding (*default*: ``'utf-8'``)
+        :param encoding: Unicode encoding (*default:* ``'utf-8'``)
 
-        :param errors: error handling for decoding issues (*default*:
+        :param errors: error handling for decoding issues (*default:*
           ``'strict'``)
         '''
         return self.wrap(lambda x: tounicode(x, encoding, errors))
@@ -311,17 +331,26 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_list(self):
-        '''Set wrapper to :class:`list`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`list`.
+        '''
         return self.wrap(list)
 
     unwrap = as_list
 
     def as_deque(self):
-        '''Set wrapper to :class:`deque`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`deque`.
+        '''
         return self.wrap(deque)
 
     def as_tuple(self):
-        '''Set wrapper to :class:`tuple`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`tuple`.
+        '''
         return self.wrap(tuple)
 
     ###########################################################################
@@ -329,11 +358,17 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_dict(self):
-        '''Set wrapper to :class:`dict`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`dict`.
+        '''
         return self.wrap(dict)
 
     def as_ordereddict(self):
-        '''Set wrapper to :class:`OrderedDict`.'''
+        '''
+        Set `iterable  <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`OrderedDict`.
+        '''
         return self.wrap(OrderedDict)
 
     ###########################################################################
@@ -341,15 +376,25 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_frozenstuf(self):
-        '''Set wrapper to :class:`frozenstuf`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`frozenstuf`.
+        '''
         return self.wrap(frozenstuf)
 
     def as_orderedstuf(self):
-        '''Set iterable wrapper to :class:`orderedstuf`.'''
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`frozenstuf`.
+        '''
         return self.wrap(orderedstuf)
 
     def as_stuf(self):
-        '''Set iterable wrapper to :class:`stuf`.'''
+        '''
+        Set `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        :class:`stuf`.
+        '''
         return self.wrap(stuf)
 
     ###########################################################################
@@ -357,9 +402,17 @@ class OutchainMixin(local):
     ###########################################################################
 
     def as_frozenset(self):
-        '''Set iterable wrapper to :class:`frozenset`.'''
+        '''
+        Set `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        :class:`frozenset`.
+        '''
         return self.wrap(frozenset)
 
     def as_set(self):
-        '''Set iterable wrapper to :class:`set`.'''
+        '''
+        Set `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        :class:`set`.
+        '''
         return self.wrap(set)

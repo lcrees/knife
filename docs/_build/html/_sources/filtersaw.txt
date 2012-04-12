@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.filtersaw` --- Lazily Evaluated Filtering Chainsaw
-========================================================================
+:class:`chainsaw.lazy.filtersaw` --- Filtering chainsaw
+=======================================================
 
 .. module:: chainsaw.lazy
 

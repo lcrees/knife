@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.active.mathsaw — Active Mathing Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.active.mathsaw — Mathing chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.active.ordersaw — Active Ordering Chainsaw" href="aordersaw.html" />
-    <link rel="prev" title="chainsaw.active.mapsaw — Active Mapping Chainsaw" href="amapsaw.html" /> 
+    <link rel="next" title="chainsaw.active.ordersaw — Ordering chainsaw" href="aordersaw.html" />
+    <link rel="prev" title="chainsaw.active.mapsaw — Mapping chainsaw" href="amapsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="aordersaw.html" title="chainsaw.active.ordersaw — Active Ordering Chainsaw"
+          <a href="aordersaw.html" title="chainsaw.active.ordersaw — Ordering chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Active Mapping Chainsaw"
+          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Mapping chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.active">
-<span id="chainsaw-active-mathsaw-active-mathing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.mathsaw" title="chainsaw.active.mathsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt></a> &#8212; Active Mathing Chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-active-mathsaw-mathing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.mathsaw" title="chainsaw.active.mathsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt></a> &#8212; Mathing chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.active.mathsaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">mathsaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#mathsaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.mathsaw" title="Permalink to this definition">¶</a></dt>
@@ -64,12 +64,28 @@
 <dt id="chainsaw.active.mathsaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -253,7 +269,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.average">
 <tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.average" title="Permalink to this definition">¶</a></dt>
-<dd><p>Average value within a series of things.</p>
+<dd><p>Collect average thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -302,38 +318,55 @@ unmodified baseline version.</p>
 <dt id="chainsaw.active.mathsaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.max">
 <tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maximum value within a series of things using current callable as the
-key function.</p>
+<dd><p>Collect maximum thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.median">
 <tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.median" title="Permalink to this definition">¶</a></dt>
-<dd><p>Median value within a series of things.</p>
+<dd><p>Collect median thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.min">
 <tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Minimum value within a series of things using the current callable as
-the key function.</p>
+<dd><p>Collect minimum thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.minmax">
 <tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.minmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Minimum and maximum values within a series of things.</p>
+<dd><p>Collect minimum and maximum things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>minimum value</em>, <em>maximum value</em>).</p>
 </dd></dl>
 
 <dl class="method">
@@ -345,7 +378,8 @@ the key function.</p>
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.range">
 <tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Statistical range within a series of things.</p>
+<dd><p>Collect length of the smallest interval that can contain each thing
+within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -375,9 +409,9 @@ the key function.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -389,14 +423,15 @@ the key function.</p>
 <dl class="method">
 <dt id="chainsaw.active.mathsaw.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>floats=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.mathsaw.sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add the value of a series of things together.</p>
+<dd><p>Collect total from adding up <cite>start</cite> and each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>start</strong> &#8211; starting number (<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>floats</strong> &#8211; incoming are floats (<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>start</strong> &#8211; starting number (<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>floats</strong> &#8211; add floats with extended precision (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -437,7 +472,7 @@ the key function.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -508,10 +543,10 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="amapsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mapsaw</span></tt> &#8212; Active Mapping Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mapsaw</span></tt> &#8212; Mapping chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="aordersaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.ordersaw</span></tt> &#8212; Active Ordering Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.ordersaw</span></tt> &#8212; Ordering chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/amathsaw.txt"
@@ -544,10 +579,10 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="aordersaw.html" title="chainsaw.active.ordersaw — Active Ordering Chainsaw"
+          <a href="aordersaw.html" title="chainsaw.active.ordersaw — Ordering chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Active Mapping Chainsaw"
+          <a href="amapsaw.html" title="chainsaw.active.mapsaw — Mapping chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

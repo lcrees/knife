@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.slicesaw` --- Lazily Evaluated Slicing Chainsaw
-=====================================================================
+:class:`chainsaw.lazy.slicesaw` --- Slicing chainsaw
+====================================================
 
 .. module:: chainsaw.lazy
 

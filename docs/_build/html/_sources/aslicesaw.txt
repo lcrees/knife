@@ -1,5 +1,5 @@
-:class:`chainsaw.active.slicesaw` --- Active Slicing Chainsaw
-=============================================================
+:class:`chainsaw.active.slicesaw` --- Slicing chainsaw
+======================================================
 
 .. module:: chainsaw.active
 

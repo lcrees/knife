@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.lazy.truthsaw — Lazily Evaluated Truthing Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.lazy.truthsaw — Truthing chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="prev" title="chainsaw.lazy.slicesaw — Lazily Evaluated Slicing Chainsaw" href="slicesaw.html" /> 
+    <link rel="prev" title="chainsaw.lazy.slicesaw — Slicing chainsaw" href="slicesaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,7 +39,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="slicesaw.html" title="chainsaw.lazy.slicesaw — Lazily Evaluated Slicing Chainsaw"
+          <a href="slicesaw.html" title="chainsaw.lazy.slicesaw — Slicing chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -51,7 +51,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.lazy">
-<span id="chainsaw-lazy-truthsaw-lazily-evaluated-truthing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.truthsaw" title="chainsaw.lazy.truthsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.truthsaw</span></tt></a> &#8212; Lazily Evaluated Truthing Chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-lazy-truthsaw-truthing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.truthsaw" title="chainsaw.lazy.truthsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.truthsaw</span></tt></a> &#8212; Truthing chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.lazy.truthsaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.lazy.</tt><tt class="descname">truthsaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/lazy.html#truthsaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.lazy.truthsaw" title="Permalink to this definition">¶</a></dt>
@@ -59,25 +59,47 @@
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.all">
 <tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if everthing in a series of things is <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+<dd><p>Collect <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the current callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
+<strong>everything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
+the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+is empty).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.any">
 <tt class="descname">any</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.any" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tell if anything in a series of things is <tt class="docutils literal"><span class="pre">True</span></tt></p>
+<dd><p>Collect <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the current callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
+<strong>anything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
+the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+is empty).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -304,18 +326,37 @@ unmodified baseline version.</p>
 <dt id="chainsaw.lazy.truthsaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.frequency">
 <tt class="descname">frequency</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.frequency" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count of each thing within a series of things.</p>
+<dd><p>Collect the number of times each thing occurs within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Returns a
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>, <em>most common
+thing</em>, <em>count of everything</em> consisting of a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</p>
 </dd></dl>
 
 <dl class="method">
@@ -327,8 +368,8 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.quantify">
 <tt class="descname">quantify</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.quantify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of how many times current callable evaluates to <tt class="docutils literal"><span class="pre">True</span></tt> within
-a series of things.</p>
+<dd><p>Collect the number of times the current callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
+for <em>anything</em> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -358,9 +399,9 @@ a series of things.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -402,7 +443,7 @@ a series of things.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -473,7 +514,7 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="slicesaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.slicesaw</span></tt> &#8212; Lazily Evaluated Slicing Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.slicesaw</span></tt> &#8212; Slicing chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/truthsaw.txt"
@@ -506,7 +547,7 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="slicesaw.html" title="chainsaw.lazy.slicesaw — Lazily Evaluated Slicing Chainsaw"
+          <a href="slicesaw.html" title="chainsaw.lazy.slicesaw — Slicing chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

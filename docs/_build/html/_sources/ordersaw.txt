@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.ordersaw` --- Lazily Evaluated Ordering Chainsaw
-======================================================================
+:class:`chainsaw.lazy.ordersaw` --- Ordering chainsaw
+=====================================================
 
 .. module:: chainsaw.lazy
 

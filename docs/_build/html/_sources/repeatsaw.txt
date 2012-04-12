@@ -1,5 +1,5 @@
-:class:`chainsaw.lazy.repeatsaw` --- Lazily Evaluated Repeating Chainsaw
-========================================================================
+:class:`chainsaw.lazy.repeatsaw` --- Repeating chainsaw
+=======================================================
 
 .. module:: chainsaw.lazy
 

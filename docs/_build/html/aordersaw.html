@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.active.ordersaw — Active Ordering Chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.active.ordersaw — Ordering chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.active.reducesaw — Active Reducing Chainsaw" href="areducesaw.html" />
-    <link rel="prev" title="chainsaw.active.mathsaw — Active Mathing Chainsaw" href="amathsaw.html" /> 
+    <link rel="next" title="chainsaw.active.reducesaw — Reducing chainsaw" href="areducesaw.html" />
+    <link rel="prev" title="chainsaw.active.mathsaw — Mathing chainsaw" href="amathsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Active Reducing Chainsaw"
+          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Active Mathing Chainsaw"
+          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-chainsaw.active">
-<span id="chainsaw-active-ordersaw-active-ordering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.ordersaw" title="chainsaw.active.ordersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.ordersaw</span></tt></a> &#8212; Active Ordering Chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+<span id="chainsaw-active-ordersaw-ordering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.ordersaw" title="chainsaw.active.ordersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.ordersaw</span></tt></a> &#8212; Ordering chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="chainsaw.active.ordersaw">
 <em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">ordersaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#ordersaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.ordersaw" title="Permalink to this definition">¶</a></dt>
@@ -64,12 +64,28 @@
 <dt id="chainsaw.active.ordersaw.append">
 <tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.appendstart">
 <tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -259,7 +275,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.choice">
 <tt class="descname">choice</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.choice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a random choice from a series of things.</p>
+<dd><p>Collect a randomly selected thing from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -302,18 +318,35 @@ unmodified baseline version.</p>
 <dt id="chainsaw.active.ordersaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.extendstart">
 <tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.groupby">
 <tt class="descname">groupby</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.groupby" title="Permalink to this definition">¶</a></dt>
-<dd><p>Group things together using the current callable as the <cite>key</cite> function.</p>
+<dd><p>Collect things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> grouped using
+the current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -331,18 +364,18 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.reverse">
 <tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.reverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reverse the order of a series of things.</p>
+<dd><p>Collect the current order of things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.sample">
 <tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a random sample drawn from a series of things.</p>
+<dd><p>Collect a randomly sample of <cite>n</cite> size from things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; sample size</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; size of sample</td>
 </tr>
 </tbody>
 </table>
@@ -363,7 +396,8 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.shuffle">
 <tt class="descname">shuffle</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.shuffle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Randomly reorder a series of things.</p>
+<dd><p>Collect things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> that have been
+randomly rearranged from their previous order.</p>
 </dd></dl>
 
 <dl class="method">
@@ -375,9 +409,9 @@ unmodified baseline version.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default</em>:
+<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default</em>:
+<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -389,8 +423,8 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.sort">
 <tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.sort" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sort a series of things using the current callable as the <cite>key</cite>
-function.</p>
+<dd><p>Collect things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> sorted using the
+current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -426,7 +460,7 @@ function.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
 <em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
@@ -497,10 +531,10 @@ or keywork arguments.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="amathsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt> &#8212; Active Mathing Chainsaw</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt> &#8212; Mathing chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="areducesaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.reducesaw</span></tt> &#8212; Active Reducing Chainsaw</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.reducesaw</span></tt> &#8212; Reducing chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/aordersaw.txt"
@@ -533,10 +567,10 @@ or keywork arguments.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Active Reducing Chainsaw"
+          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Active Mathing Chainsaw"
+          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

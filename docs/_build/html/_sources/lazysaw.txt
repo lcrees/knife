@@ -1,4 +1,4 @@
-:class:`chainsaw.lazy.lazysaw` --- Lazily Evaluated Chainsaw
+:class:`chainsaw.lazy.lazysaw` --- Lazily evaluated chainsaw
 ============================================================
 
 .. module:: chainsaw.lazy
