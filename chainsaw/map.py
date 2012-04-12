@@ -13,7 +13,6 @@ class RepeatMixin(local):
         Collect every possible combination of every `n` things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
-
         :param n: number of things to derive combinations from
         '''
         with self._chain():

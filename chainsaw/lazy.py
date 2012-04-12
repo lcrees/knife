@@ -60,31 +60,11 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
-    @contextmanager
-    def _auto(self, **kw):
-        '''switch to an automatically balanced four-link chain'''
-        self._as_chain(chain=self._auto, **kw)
-        # move ins things up to work link
-        work, ins = tee(getattr(self, self._IN))
-        setattr(self, self._WORK, work)
-        setattr(self, self._IN, ins)
-        yield
-        # move things from holding link to inchain and outs
-        ins, outs = tee(getattr(self, self._HOLD))
-        setattr(
-            self,
-            self._OUT,
-            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
-        )
-        setattr(self, self._IN, ins)
-        # clear work, holding links & return to current selected chain
-        self._rechain()._clearworking()
-
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def snapshot(self, baseline=False, original=False):
+    def snapshot(self, baseline=False, original=False, snapshot=True):
         '''
         Take a snapshot of current incoming things.
 
@@ -187,7 +167,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
     ## know things ############################################################
     ###########################################################################
 
-    def __repr__(self, tee_=tee, setattr_=setattr, getattr_=getattr, l=list):
+    def _repr(self, tee_=tee, setattr_=setattr, getattr_=getattr, l=list):
         '''Object representation.'''
         in1, in2 = tee_(getattr(self, self._IN))
         setattr_(self, self._IN, in1)
@@ -197,7 +177,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         setattr_(self, self._WORK, work1)
         hold1, hold2 = tee_(getattr(self, self._HOLD))
         setattr_(self, self._HOLD, hold1)
-        return self._repr(
+        return self._REPR.format(
             self.__module__,
             clsname(self),
             self._IN,

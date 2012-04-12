@@ -236,10 +236,11 @@ class KOutchain(KChainsaw):
 
     def wrap(wrapper):  # @NoSelf
         '''
-        `Iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
 
-        :param wrapper: an iterable wrapper
+        :param wrapper: an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
         '''
 
     def unwrap():  # @NoSelf
@@ -253,9 +254,9 @@ class KOutchain(KChainsaw):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`byte` encode each incoming thing with the
-        ``'ascii'`` codec (*regardless of its original type*)
+        ``'ascii'`` codec (*regardless of its original type*).
 
-        :param errors: error handling for decoding issues (*default:*
+        :param errors: error handling for decoding issues (*default*:
           ``'strict'``)
         '''
 
@@ -273,8 +274,8 @@ class KOutchain(KChainsaw):
 
     def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        Set`iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`unicode` (:class:`str`` under Python 3) decode
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
         each incoming thing (*regardless of its original type*).
 
         :param encoding: Unicode encoding (*default:* ``'utf-8'``)
@@ -443,7 +444,7 @@ class KSlice(AppspaceKey):
         '''
         Collect either `n` things from the starting end of an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or just the
-        **first* thing within an `iterable
+        **first** thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: number of things (*default:*: ``0``)
@@ -492,9 +493,10 @@ class KSlice(AppspaceKey):
 
         :param start: starting index of slice
 
-        :param stop: stopping index of slice (*default:* :const:`False`)
-
-        :param step: size of step in slice (*default:* :const:`False`)
+        :param stop: stopping index of slice
+          (*default:* :const:`False`)
+        :param step: size of step in slice
+          (*default:* :const:`False`)
         '''
 
     def split(n, fill=None):  # @NoSelf
@@ -518,7 +520,7 @@ class KRepeat(AppspaceKey):
     def combinations(n):  # @NoSelf
         '''
         Collect every possible combination of every `n` things within an
-        `iterable` <http://docs.python.org/glossary.html#term-iterable>`_.
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: number of things to derive combinations from
         '''
@@ -548,7 +550,7 @@ class KRepeat(AppspaceKey):
 
     def repeat(n=None, call=False):  # @NoSelf
         '''
-        Collect the results of repeat an `iterable
+        Collect the results of repeating an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or results
         of invoking the current callable `n` times.
 
@@ -567,7 +569,7 @@ class KMap(AppspaceKey):
         '''
         Invoke method `name` on each thing within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ with
-        currently assigned `positional
+        the currently assigned `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ and
@@ -585,14 +587,14 @@ class KMap(AppspaceKey):
 
         :param args: pass each thing within an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ as `*args
-          <http://docs.python.org/glossary.html#term-positional-argument>`_` to
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ to
           the current callable (*default:* :const:`False`)
         :param kwargs: pass each thing within an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ to the current
           callable as a :class:`tuple` of `*args
           <http://docs.python.org/glossary.html#term-positional-argument>`_ and
           `**kwargs
-          <http://docs.python.org/glossary.html#term-keyword-argument>
+          <http://docs.python.org/glossary.html#term-keyword-argument>`_
           (*default:* :const:`False`)
         :param current: pass each thing within an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ as a
@@ -669,9 +671,9 @@ class KFilter(AppspaceKey):
           :const:`None`)
         :param invert: return things for which filter is :const:`False` rather
           than :const:`True` (*default:* :const:`False`)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
-         ``0``)
+          ``0``)
         '''
 
     def find(pattern=None, invert=False, flags=0):  # @NoSelf
@@ -684,13 +686,13 @@ class KFilter(AppspaceKey):
         The current callable is used as the filter unless regular expression
         `pattern` is supplied, in which case `pattern` is used as the filter.
 
-        :param pattern: regular expression search pattern (default:
+        :param pattern: regular expression search pattern (*default:*
           :const:`None`)
-        :param invert: return things for which filter is :const:`False` and not
-          :const:`True` (*default:* :const:`False`)
-        :param flags: `regular expression flags
+        :param invert: return things for which filter is :const:`False` rather
+          than :const:`True` (*default:* :const:`False`)
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
-         ``0``)
+          ``0``)
         '''
 
     def replace(pattern, new, count=0, flags=0):  # @NoSelf
@@ -705,7 +707,7 @@ class KFilter(AppspaceKey):
 
         :param count: maximum number of replacements to make within a string
           (*default:* ``0``)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''
@@ -742,14 +744,14 @@ class KFilter(AppspaceKey):
 
         :param pattern: regular expression search pattern (*default:*
           :const:`None`)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''
 
     def subset():  # @NoSelf
         '''
-        Collect :const:True: if an `iterable
+        Collect :const:`True` if an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ is a
         subset of another `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
@@ -757,7 +759,7 @@ class KFilter(AppspaceKey):
 
     def superset():  # @NoSelf
         '''
-        Collect :const:True: if an `iterable
+        Collect :const:`True` if an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ is
         a superset of another `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.

@@ -21,6 +21,9 @@ class _ChainsawMixin(local):
 
     '''base chainsaw mixin'''
 
+    _REPR = '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => ' \
+        'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>'
+
     def __init__(self, ins, out, **kw):
         '''
         init
@@ -147,8 +150,7 @@ class _ChainsawMixin(local):
         # retain chain-specific settings between chain switching
         self._CHAINCFG = kw if kw.get('hard', False) else {}
         # take snapshot
-        if kw.get('snap', True):
-            self.snapshot()
+        self.snapshot(self._chain, kw.get('snap', True))
         # set current chain
         self._chain = kw.get('chain', getattr(self, self._DEFAULT_CHAIN))
         # if clear outgoing things before adding more things
@@ -165,9 +167,7 @@ class _ChainsawMixin(local):
 
     def _rechain(self):
         '''switch to currently selected chain'''
-        return self._as_chain(
-            keep=False, snap=False, **self._CHAINCFG
-        )
+        return self._as_chain(keep=False, snap=False, **self._CHAINCFG)
 
     def _unchain(self):
         '''switch to default chain'''
@@ -209,18 +209,6 @@ class _ChainsawMixin(local):
         callable is assigned.
         '''
         return self._call if self._call is not None else truth
-
-    ###########################################################################
-    ## knowing things #########################################################
-    ###########################################################################
-
-    @staticmethod
-    def _repr(*args):
-        '''Object representation.'''
-        return (
-            '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => '
-            'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>'
-        ).format(*args)
 
     ###########################################################################
     ## clearing things up #####################################################

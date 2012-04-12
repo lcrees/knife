@@ -112,8 +112,9 @@ current callable or alternative callable is invoked.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>)</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -135,15 +136,16 @@ with outgoing things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
 its original type</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
-<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default</em>:
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default:</em> <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default:</em>
 <tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
 </ul>
 </td>
@@ -155,13 +157,15 @@ its original type</em>).</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_deque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -174,19 +178,22 @@ things from initial placement to final extraction.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
+<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -212,25 +219,29 @@ individual thing in a series of many individual things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_ordereddict">
 <tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
+<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_stuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set iterable wrapper to <tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
+<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -247,21 +258,23 @@ version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.as_unicode">
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.as_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str`</span></tt> under Python 3) decode
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
 each incoming thing (<em>regardless of its original type</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
-<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
+<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default:</em> <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
+<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default:</em>
 <tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
 </ul>
 </td>
@@ -283,7 +296,7 @@ unmodified baseline version.</p>
 <dl class="attribute">
 <dt id="chainsaw.lazy.truthsaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.truthsaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine if incoming and outgoing things are in balance</p>
+<dd><p>If incoming and outgoing things are in balance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -392,7 +405,7 @@ for <em>anything</em> within an <a class="reference external" href="http://docs.
 
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.snapshot">
-<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em>, <em>snapshot=True</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -400,9 +413,9 @@ for <em>anything</em> within an <a class="reference external" href="http://docs.
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
-<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
-<tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -414,18 +427,18 @@ for <em>anything</em> within an <a class="reference external" href="http://docs.
 <dt id="chainsaw.lazy.truthsaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.tap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign current callable. Optionally assign an alternative callable. If
-<cite>factory</cite> flag is set to <tt class="docutils literal"><span class="pre">True</span></tt>, use the callable passed with the
-<cite>call</cite> argument as a factory to build the current callable.</p>
+<cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
+the <cite>call</cite> argument as a factory to build the current callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>call</strong> &#8211; callable assigned as current callable</li>
-<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default</em>:
-<tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 <li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
-(<em>default</em>: <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -445,9 +458,9 @@ for <em>anything</em> within an <a class="reference external" href="http://docs.
 <li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
 (<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
 <li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
-<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; revert incoming things to original snapshot (
-<em>default:</em> <tt class="docutils literal"><span class="pre">False</span></tt>)</li>
+<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -465,7 +478,8 @@ or keywork arguments.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.unwrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -477,10 +491,10 @@ or keywork arguments.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="docutils literal"><span class="pre">True</span></tt>
-(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="docutils literal"><span class="pre">False</span></tt>
-(<em>default</em>: <tt class="docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
+(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
+(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -491,12 +505,14 @@ or keywork arguments.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.truthsaw.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.truthsaw.wrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterable wrapper for outgoing things.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper for outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an iterable wrapper</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; <p>an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper</p>
+</td>
 </tr>
 </tbody>
 </table>

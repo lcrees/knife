@@ -18,19 +18,19 @@ class ChainsawMixin(local):
     ## things in process ######################################################
     ###########################################################################
 
-    def as_one(self):
-        '''
-        Switch to performing operations on incoming things as one whole thing.
-        '''
-        self._mode = self._ONE
-        return self
-
     def as_many(self):
         '''
         Switch to performing operations on each incoming thing as just one
         individual thing in a series of many individual things.
         '''
         self._mode = self._MANY
+        return self
+
+    def as_one(self):
+        '''
+        Switch to performing operations on incoming things as one whole thing.
+        '''
+        self._mode = self._ONE
         return self
 
     ###########################################################################
@@ -106,7 +106,7 @@ class ChainsawMixin(local):
 
     @property
     def balanced(self):
-        '''Determine if incoming and outgoing things are in balance'''
+        '''If incoming and outgoing things are in balance.'''
         return self.count_out() == self.__len__()
 
     ###########################################################################
@@ -218,7 +218,11 @@ class ChainsawMixin(local):
         Return either results built up while in truth context or return the
         number of incoming things.
         '''
-        return (self._truth if self._truth is not None else self.__len__())
+        return self._truth if self._truth is not None else self.__len__()
+
+    def __repr__(self):
+        '''Object representation.'''
+        return self._repr()
 
     ###########################################################################
     ## clearing things up #####################################################
@@ -233,6 +237,23 @@ class ChainsawMixin(local):
 class OutchainMixin(local):
 
     '''chainsaw output mixin'''
+
+    def end(self):
+        '''Return outgoing things, cleaning out everything afterwards.'''
+        value = self._unchain()._output()
+        # clear every last thing
+        self.clear()._clearsp()
+        return value
+
+    def results(self):
+        '''Return outgoing things, clearing outgoing things afterwards.'''
+        value = self._unchain()._output()
+        # clear out
+        self.clear_out()
+        # restore baseline if in query context
+        if self._context == self._QUERY:
+            self.undo(baseline=True)
+        return value
 
     def which(self, call=None, alt=None):
         '''
@@ -252,35 +273,17 @@ class OutchainMixin(local):
         # return to edit mode
         return self.as_edit()
 
-    def end(self):
-        '''Return outgoing things, cleaning out everything afterwards.'''
-        self._unchain()
-        value = self._output()
-        # clear every last thing
-        self.clear()._clearsp()
-        return value
-
-    def results(self):
-        '''Return outgoing things, clearing outgoing things afterwards.'''
-        self._unchain()
-        value = self._output()
-        # clear out
-        self.clear_out()
-        # restore baseline if in query context
-        if self._context == self._QUERY:
-            self.undo(baseline=True)
-        return value
-
     ###########################################################################
     ## wrapping things ########################################################
     ###########################################################################
 
     def wrap(self, wrapper):
         '''
-        `Iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
 
-        :param wrapper: an iterable wrapper
+        :param wrapper: an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
         '''
         self._wrapper = wrapper
         return self
@@ -293,7 +296,7 @@ class OutchainMixin(local):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`byte` encode each incoming thing with the
-        ``'ascii'`` codec (*regardless of its original type*)
+        ``'ascii'`` codec (*regardless of its original type*).
 
         :param errors: error handling for decoding issues (*default*:
           ``'strict'``)
@@ -315,8 +318,8 @@ class OutchainMixin(local):
 
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set`iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`unicode` (:class:`str`` under Python 3) decode
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
         each incoming thing (*regardless of its original type*).
 
         :param encoding: Unicode encoding (*default:* ``'utf-8'``)
@@ -330,6 +333,13 @@ class OutchainMixin(local):
     ## sequence wrapping things ###############################################
     ###########################################################################
 
+    def as_deque(self):
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`deque`.
+        '''
+        return self.wrap(deque)
+
     def as_list(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
@@ -338,13 +348,6 @@ class OutchainMixin(local):
         return self.wrap(list)
 
     unwrap = as_list
-
-    def as_deque(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`deque`.
-        '''
-        return self.wrap(deque)
 
     def as_tuple(self):
         '''

@@ -1,8 +1,8 @@
-:class:`chainsaw.active.collectsaw` --- Collecting chainsaw
-===========================================================
+:class:`chainsaw.lazy.collectsaw` --- Lazy collecting chainsaw
+==============================================================
 
-.. module:: chainsaw.active
+.. module:: chainsaw.lazy
     
 .. autoclass:: collectsaw
-    :members:
+    :members: __init__, __bool__, __iter__, __len__
     :inherited-members:

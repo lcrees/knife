@@ -22,18 +22,26 @@ class CollectMixin(local):
 
     def mapping(self, keys=False, values=False):
         '''
-        Collect `keys` and `values` from a series of mappings.
+        Collect `keys` and `values` from an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ of
+        `mappings <http://docs.python.org/glossary.html#term-mapping>`_.
 
-        :param keys: gather keys only (*default:* ``False``)
+        :param keys: gather keys only (*default:* :const:`False`)
 
-        :param values: gather values only (*default:* ``False``)
+        :param values: gather values only (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._mapping(self._call, keys, values))
 
     def items(self, *keys):
         '''
-        Collect object items from a series of things matching their `*keys`.
+        Collect things from things (usually `sequences
+        <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
+        <http://docs.python.org/glossary.html#term-mapping>`_) within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        by matching their `*keys`.
+
+        :param `*keys`: item keys or indexes
         '''
         with self._chain():
             return self._iter(self._items(keys))
@@ -57,7 +65,7 @@ class FilterMixin(local):
           :const:`None`)
         :param invert: return things for which filter is :const:`False` rather
           than :const:`True` (*default:* :const:`False`)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''
@@ -80,7 +88,7 @@ class FilterMixin(local):
           :const:`None`)
         :param invert: return things for which filter is :const:`False` rather
           than :const:`True` (*default:* :const:`False`)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''
@@ -99,7 +107,7 @@ class FilterMixin(local):
 
         :param count: maximum number of replacements to make within a string
           (*default:* ``0``)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''
@@ -144,7 +152,7 @@ class FilterMixin(local):
 
         :param pattern: regular expression search pattern (*default:*
           :const:`None`)
-        :param flags: `regular expression flags
+        :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
         '''

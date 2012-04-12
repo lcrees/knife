@@ -4,4 +4,5 @@
 .. module:: chainsaw.active
 
 .. autoclass:: activesaw
+    :members:
     :inherited-members:

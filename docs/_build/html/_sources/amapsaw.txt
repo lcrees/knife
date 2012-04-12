@@ -4,4 +4,5 @@
 .. module:: chainsaw.active
 
 .. autoclass:: mapsaw
-    :inherited-members:    
+    :members: __init__, __bool__, __iter__, __len__
+    :inherited-members:

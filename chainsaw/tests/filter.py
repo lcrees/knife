@@ -176,7 +176,7 @@ class FilterMixin(object):
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).filter(reverse=True).end(), [1, 3, 5]
+            ).filter(invert=True).end(), [1, 3, 5]
         )
         self.assertEqual(
             self.qclass(1, 2, 3, 4, 5, 6).tap(
@@ -192,7 +192,7 @@ class FilterMixin(object):
         self._false_true_false(
             self.mclass(1, 2, 3, 4, 5, 6).tap(
                 lambda x: x % 2 == 0
-            ).filter(reverse=True),
+            ).filter(invert=True),
             self.assertEqual,
             [1, 3, 5],
         )

@@ -27,7 +27,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''
         init
 
-        :params *things: incoming things
+        :params `*things`: incoming things
         '''
         # if just one thing, put it in inchain or put everything in inchain
         try:
@@ -43,7 +43,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         self._hold = deque()
 
     ###########################################################################
-    ## chain things ###########################################################
+    ## things in chains #######################################################
     ###########################################################################
 
     @contextmanager
@@ -62,32 +62,11 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
-    @contextmanager
-    def _auto(self, **kw):
-        '''switch to an automatically balanced four-link chain'''
-        self._as_chain(chain=self._auto, **kw)
-        inchain = getattr(self, self._IN)
-        # move incoming things up to work link
-        getattr(self, self._WORK).extend(inchain)
-        yield
-        out = getattr(self, self._OUT)
-        # clear out
-        if self._buildup:
-            out.clear()
-        # extend outgoing things with holding link
-        hold = getattr(self, self._HOLD)
-        out.extend(hold)
-        # extend incoming things with holding link
-        inchain.clear()
-        inchain.extend(hold)
-        # clear work, holding links & return to current selected chain
-        self._rechain()._clearworking()
-
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def snapshot(self, baseline=False, original=False):
+    def snapshot(self, baseline=False, original=False, snapshot=True):
         '''
         Take a snapshot of current incoming things.
 
@@ -143,7 +122,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         return self
 
     ###########################################################################
-    ## iterate things #########################################################
+    ## stepping through things ################################################
     ###########################################################################
 
     @property
@@ -165,7 +144,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
             pass
 
     ###########################################################################
-    ## extend things ##########################################################
+    ## adding things ##########################################################
     ###########################################################################
 
     def _xtend(self, things, getattr_=getattr):
@@ -198,9 +177,9 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
     ## know things ############################################################
     ###########################################################################
 
-    def __repr__(self, getattr_=getattr, clsname_=clsname, list_=list):
+    def _repr(self, getattr_=getattr, clsname_=clsname, list_=list):
         '''Object representation.'''
-        return self._repr(
+        return self._REPR.format(
             self.__module__,
             clsname_(self),
             self._IN,
