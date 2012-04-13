@@ -141,7 +141,7 @@ class ReduceMixin(local):
     def weave(self):
         '''
         Interleave every other thing from multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ to make one
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
         iterable.
         '''
         with self._chain():
