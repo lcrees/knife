@@ -4,7 +4,34 @@
 
 class FilterMixin(object):
 
-    def test_attributes(self):
+    def test_pattern(self):
+        self.assertEqual(
+            self.qclass(
+                'This is the first test',
+                'This is the second test',
+                'This is the third test'
+            ).pattern('{} first {}').filter().end(), 'This is the first test'
+        )
+        self.assertEqual(
+            self.qclass(
+                'This is the first test',
+                'This is the second test',
+                'This is the third test'
+            ).pattern(
+                '. third .', type='regex'
+            ).filter().end(), 'This is the third test'
+        )
+        self.assertEqual(
+            self.qclass(
+                'This is the first test',
+                'This is the second test',
+                'This is the third test'
+            ).pattern(
+                '*second*', type='glob'
+            ).filter().end(), 'This is the second test'
+        )
+
+    def test_traverse(self):
         from inspect import isclass
         class stooges: #@IgnorePep8
             name = 'moe'
@@ -22,7 +49,7 @@ class FilterMixin(object):
         test = lambda x: not x[0].startswith('__')
         out = self.qclass(
             stooges, stoog2, stoog3
-        ).tap(test, isclass).as_tuple().attributes(deep=True).untap().end(),
+        ).tap(test, isclass).as_tuple().traverse().untap().end(),
         self.assertEqual(
             out,
             ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
@@ -34,7 +61,7 @@ class FilterMixin(object):
         self._true_true_false(
             self.mclass(
                 stooges, stoog2, stoog3
-            ).tap(test, isclass).as_tuple().members().untap().shift_in(),
+            ).tap(test, isclass).as_tuple().traverse().untap().shift_in(),
             self.assertEqual,
             (('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),
             ('age', 60), ('name', 'curly'), ('stoog4', (('age', 969),
@@ -58,10 +85,12 @@ class FilterMixin(object):
         )
         # man
         self._true_true_false(
-            self.mclass(stoog3).mro(),
+            self.mclass(stoog3).traverse(ancestors=True),
             self.assertEqual,
             [stoog3, stoog2, stooges],
         )
+
+    def test_attributes(self):
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
@@ -221,18 +250,17 @@ class FilterMixin(object):
     def test_duality(self):
         # auto
         self.assertEqual(
-            self.qclass(
-                'moe', 'larry', 'curly', 30, 40, 50, True
-            ).duality().end(),
-             [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
+            self.qclass(1, 2, 3, 4, 5, 6).tap(
+                lambda x: x % 2 == 0
+            ).duality().end(), [[2, 4, 6], [1, 3, 5]]
         )
         # man
         self._false_true_false(
             self.mclass(
-                'moe', 'larry', 'curly', 30, 40, 50, True,
-            ).duality(),
+                1, 2, 3, 4, 5, 6
+            ).tap(lambda x: x % 2 == 0).duality(),
             self.assertEqual,
-            [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')],
+            [[2, 4, 6], [1, 3, 5]],
         )
 
 
@@ -241,17 +269,18 @@ class SliceMixin(object):
     def test_dice(self):
         # auto
         self.assertEqual(
-            self.qclass(1, 2, 3, 4, 5, 6).tap(
-                lambda x: x % 2 == 0
-            ).dice(2).end(), [[2, 4, 6], [1, 3, 5]]
+            self.qclass(
+                'moe', 'larry', 'curly', 30, 40, 50, True
+            ).dice(2, 'x').end(),
+            [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
         )
         # man
         self._false_true_false(
             self.mclass(
-                1, 2, 3, 4, 5, 6
-            ).tap(lambda x: x % 2 == 0).dice(2),
+                'moe', 'larry', 'curly', 30, 40, 50, True,
+            ).dice(2, 'x'),
             self.assertEqual,
-            [[2, 4, 6], [1, 3, 5]],
+            [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')],
         )
 
     def test_first(self):
@@ -372,6 +401,23 @@ class ReduceMixin(object):
             self.mclass([[1, [2], [3, [[4]]]], 'here']).flatten(),
             self.assertEqual,
             [1, 2, 3, 4, 'here'],
+        )
+
+    def test_merge(self):
+        # auto
+        self.assertEqual(
+            self.qclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
+            ).merge().end(),
+            ['moe', 'larry', 'curly', 30, 40, 50, True, False, False],
+        )
+        # man
+        self._false_true_false(
+            self.mclass(
+                ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
+            ).merge(),
+            self.assertEqual,
+            ['moe', 'larry', 'curly', 30, 40, 50, True, False, False],
         )
 
     def test_reduce(self):

@@ -91,7 +91,7 @@ class CompareMixin(local):
 
 class NumberMixin(local):
 
-    '''number mixin'''
+    '''numbering mixin'''
 
     def average(self):
         '''
@@ -128,7 +128,7 @@ class NumberMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._one(self._median)
+            return self._iter(self._median)
 
     def min(self):
         '''
@@ -147,7 +147,7 @@ class NumberMixin(local):
         as a :class:`tuple` consisting of (*minimum value*, *maximum value*).
         '''
         with self._chain():
-            return self._many(self._minmax)
+            return self._iter(self._minmax)
 
     def range(self):
         '''
@@ -156,7 +156,7 @@ class NumberMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._one(self._range)
+            return self._iter(self._range)
 
     def sum(self, start=0, precision=False):
         '''
@@ -174,7 +174,7 @@ class NumberMixin(local):
 
 class OrderMixin(local):
 
-    '''order mixin'''
+    '''ordering key'''
 
     def group(self):
         '''
@@ -188,11 +188,11 @@ class OrderMixin(local):
 
     def reverse(self):
         '''
-        Reverse the current order of things within an `iterable
+        Reverse the order of things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._many(self._reverse)
+            return self._iter(self._reverse)
 
     def shuffle(self):
         '''
@@ -202,7 +202,7 @@ class OrderMixin(local):
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
-            return self._many(self._shuffle)
+            return self._iter(self._shuffle)
 
     def sort(self):
         '''

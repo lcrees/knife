@@ -239,10 +239,10 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.attributes">
 <tt class="descname">attributes</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.attributes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect <a class="reference external" href="http://docs.python.org/glossary.html#term-attribute">attributes</a> from things
-within an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> by
-by matching their attribute <cite>names</cite>.</p>
+<dd><p>Collect <a class="reference external" href="http://docs.python.org/glossary.html#term-attribute">attribute</a> values from
+things within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> that
+matches an attribute name value in <cite>names</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -280,9 +280,10 @@ by matching their attribute <cite>names</cite>.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.duality">
 <tt class="descname">duality</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.duality" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divide an iterable into two <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> based on whether
-the active callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> or <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> for each
-thing within an iterable.</p>
+<dd><p>Divide one iterable into two <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>, the first
+iterable being everything the active callable evaluates as
+<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> and the second iterable being everythin the active
+callable evaluates as <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -322,9 +323,8 @@ thing within an iterable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.filter">
 <tt class="descname">filter</tt><big>(</big><em>invert=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect everthing within an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-matched by the active callable.</p>
+<dd><p>Collect each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
+active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -339,9 +339,9 @@ rather than <tt class="xref py py-const docutils literal"><span class="pre">True
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.items">
 <tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect everything from things (usually <a class="reference external" href="http://docs.python.org/glossary.html#term-sequence">sequences</a> or <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>) within an
+<dd><p>Collect values from things (usually <a class="reference external" href="http://docs.python.org/glossary.html#term-sequence">sequences</a> or <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>) within an
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-that matches <cite>keys</cite>.</p>
+that match a key value in <cite>keys</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -355,7 +355,7 @@ that matches <cite>keys</cite>.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.mapping">
 <tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect all items, keys, or` within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> of <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>.</p>
+<dd><p>Collect items, keys, or values from things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> of <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -372,7 +372,7 @@ that matches <cite>keys</cite>.</p>
 
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.pattern">
-<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>flags=0</em>, <em>compiler='parse'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.pattern" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile a search pattern to use as the active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -380,10 +380,10 @@ that matches <cite>keys</cite>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>pattern</strong> &#8211; search pattern</li>
+<li><strong>type</strong> &#8211; engine to compile pattern with. Valid options are
+<tt class="docutils literal"><span class="pre">'parse'</span></tt>, <tt class="docutils literal"><span class="pre">'regex'</span></tt>, or <tt class="docutils literal"><span class="pre">'glob'</span></tt> (default: <tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
 <li><strong>flags</strong> &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a> (<em>default:</em>
 <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>compiler</strong> &#8211; engine to compile pattern with. Valid options are
-<tt class="docutils literal"><span class="pre">'parse'</span></tt>, <tt class="docutils literal"><span class="pre">'re'</span></tt>, or <tt class="docutils literal"><span class="pre">'glob'</span></tt> (default: <tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -461,7 +461,7 @@ the <cite>call</cite> argument as a factory to build the active callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.filtersaw.traverse">
 <tt class="descname">traverse</tt><big>(</big><em>ancestors=False</em>, <em>invert=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.filtersaw.traverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect things from things or their ancestors within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
+<dd><p>Collect nested values from each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
 active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

@@ -261,10 +261,9 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.repeatsaw.combine">
-<tt class="descname">combine</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.combine" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find every possible combination of each <cite>n</cite> things within an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dt id="chainsaw.active.repeatsaw.combinations">
+<tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find combinations of every <cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -316,15 +315,14 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.repeatsaw.permutate">
-<tt class="descname">permutate</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.permutate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find every possible permutation of each <cite>n</cite> things within an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dt id="chainsaw.active.repeatsaw.permutations">
+<tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.permutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find permutations of every <cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; length of things to derive permutate from</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; length of things to derive permutations from</td>
 </tr>
 </tbody>
 </table>
@@ -337,24 +335,10 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.repeatsaw.product">
-<tt class="descname">product</tt><big>(</big><em>n=1</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.product" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeat results of nested <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> <cite>n</cite> times.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of nested loops to repeat (<em>default:</em> <tt class="docutils literal"><span class="pre">1</span></tt>)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.repeatsaw.repeat">
 <tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.repeatsaw.repeat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or the results
-of invoking the active callable <cite>n</cite> times.</p>
+<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or results of
+invoking active callable <cite>n</cite> times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

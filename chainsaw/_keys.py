@@ -363,28 +363,29 @@ class KFilter(AppspaceKey):
 
     def attributes(*names):  # @NoSelf
         '''
-        Collect `attributes
-        <http://docs.python.org/glossary.html#term-attribute>`_ from things
-        within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ by
-        by matching their attribute `names`.
+        Collect `attribute
+        <http://docs.python.org/glossary.html#term-attribute>`_ values from
+        things within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ that
+        matches an attribute name value in `names`.
 
         :param names: attribute names
         '''
 
     def duality():  # @NoSelf
         '''
-        Divide an iterable into two `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ based on whether
-        the active callable returns :const:`True` or :const:`False` for each
-        thing within an iterable.
+        Divide one iterable into two `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_, the first
+        iterable being everything the active callable evaluates as
+        :const:`True` and the second iterable being everythin the active
+        callable evaluates as :const:`False`.
         '''
 
     def filter(invert=False):  # @NoSelf
         '''
-        Collect everthing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        matched by the active callable.
+        Collect each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        active callable.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -392,18 +393,18 @@ class KFilter(AppspaceKey):
 
     def items(*keys):  # @NoSelf
         '''
-        Collect everything from things (usually `sequences
+        Collect values from things (usually `sequences
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that matches `keys`.
+        that match a key value in `keys`.
 
         :param keys: item keys (or indexes)
         '''
 
     def mapping(keys=False, values=False):  # @NoSelf
         '''
-        Collect all items, keys, or` within an `iterable
+        Collect items, keys, or values from things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ of `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_.
 
@@ -428,7 +429,7 @@ class KFilter(AppspaceKey):
 
     def traverse(ancestors=False, invert=False):  # @NoSelf
         '''
-        Collect things from things or their ancestors within an `iterable
+        Collect nested values from each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
         active callable.
 
@@ -463,7 +464,7 @@ class KReduce(AppspaceKey):
         '''
         Reduce an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ to one
-        thing with active callable.
+        thing with the active callable.
 
         :param initial: starting value (*default:*: :const:`None`)
 
@@ -475,7 +476,7 @@ class KReduce(AppspaceKey):
     def weave():  # @NoSelf
         '''
         Interleave every other thing from multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ to make one
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
         iterable.
         '''
 
@@ -492,30 +493,30 @@ class KSlice(AppspaceKey):
 
     '''slicing key'''
 
-    def at(n, default=None):  # @NoSelf
+    def at(n):  # @NoSelf
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off a thing
-        found at `n` position within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or `default` if
-        nothing is found at `n`.
+        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off one
+        thing found at `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ index `n` .
 
         :param n: index of some thing
 
-        :param default: default thing (*default:*: :const:`None`)
+        :param default: default thing collected if nothing is found at `n`
+          (*default:*: :const:`None`)
         '''
 
     def choice():  # @NoSelf
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off a thing
-        at random from an `iterable
+        `Randomly slice <http://docs.python.org/glossary.html#term-slice>`_ off
+        one thing from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def dice(n, fill=None):  # @NoSelf
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ into multiple
-        iterables of `n` things.
+        `Split <http://docs.python.org/glossary.html#term-slice>`_ one
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        into multiple iterables of size `n` things.
 
         :param n: number of things per split
 
@@ -525,9 +526,9 @@ class KSlice(AppspaceKey):
 
     def first(n=0):  # @NoSelf
         '''
-        Slice off either `n` things from the starting end of an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or the
-        **first** thing within an iterable.
+        Slice off `n` things from the starting end of an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ or just the very
+        **first** thing.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -535,7 +536,7 @@ class KSlice(AppspaceKey):
     def initial():  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
-        everything within an `iterable
+        everything from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ except the very
         **last** thing.
         '''
@@ -544,8 +545,8 @@ class KSlice(AppspaceKey):
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off either
         `n` things from the tail end of an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or just the
-        **last** thing within an iterable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ or just the very
+        **last** thing.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -553,26 +554,25 @@ class KSlice(AppspaceKey):
     def rest():  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
-        everything within an `iterable
+        everything from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ except the very
         **first** thing.
         '''
 
     def sample(n):  # @NoSelf
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off a
-        random sample of `n` things within an `iterable
+        Randomly `slice <http://docs.python.org/glossary.html#term-slice>`_ off
+        `n` things from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: sample size
+        :param n: size of sample
         '''
 
     def slice(start, stop=False, step=False):  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off things
-        within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ from `start` to
-        (optionally) `stop` in `step` steps.
+        from `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param start: starting index of slice
 
@@ -588,8 +588,7 @@ class KRepeat(AppspaceKey):
 
     def combinations(n):  # @NoSelf
         '''
-        Find every possible combination of each `n` things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Find combinations of every `n` things from an `iterable
 
         :param n: length of things to derive combinations from
         '''
@@ -600,18 +599,10 @@ class KRepeat(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
-    def product(n=1):  # @NoSelf
-        '''
-        Repeat results of nested `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ `n` times.
-
-        :param n: number of nested loops to repeat (*default:* ``1``)
-        '''
-
     def permutations(n):  # @NoSelf
         '''
-        Find every possible permutation of each `n` things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Find permutations of every `n` things from an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: length of things to derive permutations from
         '''
@@ -619,8 +610,8 @@ class KRepeat(AppspaceKey):
     def repeat(n=None, call=False):  # @NoSelf
         '''
         Repeat either an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or the results
-        of invoking the active callable `n` times.
+        <http://docs.python.org/glossary.html#term-iterable>`_ or results of
+        invoking active callable `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
@@ -831,7 +822,7 @@ class KOrder(AppspaceKey):
 
     def reverse():  # @NoSelf
         '''
-        Reverse the current order of things within an `iterable
+        Reverse the order of things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 

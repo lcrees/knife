@@ -36,13 +36,15 @@ class _FilterMixin(local):
     @staticmethod
     def _duality(true, f=ifilter, ff=ifilterfalse, l=list, t=tee):
         def duality(iterable): #@IgnorePep8
-            falsy, truey = t(iterable)
-            return iter((l(f(true, truey)), l(ff(true, falsy))))
+            truth_, false_ = t(iterable)
+            return iter((l(f(true, truth_)), l(ff(true, false_))))
         return duality
 
     @staticmethod
-    def _filter(true, false, filt=ifilter, ff=ifilterfalse):
-        return lambda x: filt(true, x) if false else lambda x: ff(true, x)
+    def _filter(true, false, ifilter_=ifilter, ifilterfalse_=ifilterfalse):
+        if false:
+            return lambda x: ifilterfalse_(true, x)
+        return lambda x: ifilter_(true, x)
 
     @staticmethod
     def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
@@ -65,17 +67,17 @@ class _FilterMixin(local):
         return items
 
     @staticmethod
-    def _pattern(pat, flag, compile, t=translate, r=rcompile, p=pcompile):
-        if compile == 'glob':
+    def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
+        if type == 'glob':
             pat = t(pat)
-            compile = 're'
-        return r(pat, flag).search if compile == 're' else p(pat).search
+            type = 'regex'
+        return r(pat, flag).search if type == 'regex' else p(pat).search
 
     @staticmethod
     def _traverse(call, deep, anc, alt, wrap):
         mro = lambda i: ichain(imap(getmro, i))  # @UnusedVariable
         def members(true, iterable): #@IgnorePep8
-            for k in ifilter(lambda x: x, dir(iterable)):
+            for k in ifilter(true, dir(iterable)):
                 try:
                     v = getattr(iterable, k)
                 except AttributeError:

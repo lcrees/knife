@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 '''base chainsaw mixins'''
 
-from itertools import tee
 from operator import truth
 from threading import local
 from collections import deque
@@ -21,8 +20,8 @@ class _ChainsawMixin(local):
 
     '''base chainsaw mixin'''
 
-    _REPR = '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => ' \
-        'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>'
+    _REPR = ('{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => '
+        'OUT: {8}: ({9})]) <<mode: {10}/context: {11}>>')
 
     def __init__(self, ins, out, **kw):
         '''
@@ -63,9 +62,6 @@ class _ChainsawMixin(local):
         maxlen = kw.pop('snapshots', 5)
         # snapshot stack
         self._ss = deque(maxlen=maxlen) if maxlen is not None else maxlen
-        # take snapshot of original incoming things
-        if self._ss is not None:
-            self.snapshot(original=True)
         ## callable defaults ##################################################
         # active callable
         self._call = None
@@ -181,15 +177,6 @@ class _ChainsawMixin(local):
         self._as_chain(work=q, hold=q, chain=self._man1, **kw)
         yield
         self._rechain()
-
-    @staticmethod
-    def _clone(iterable, n=2, tee_=tee):
-        '''
-        clone an iterable
-
-        @param n: number of clones
-        '''
-        return tee_(iterable, n)
 
     ###########################################################################
     ## things called ##########################################################

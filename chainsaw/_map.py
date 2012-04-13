@@ -4,7 +4,7 @@
 from copy import deepcopy
 from threading import local
 from operator import methodcaller
-from itertools import starmap, repeat, product, combinations, permutations
+from itertools import starmap, repeat, combinations, permutations
 
 from chainsaw._compat import imap
 
@@ -20,10 +20,6 @@ class _RepeatMixin(local):
     @staticmethod
     def _copy(iterable, deepcopy_=deepcopy, imap_=imap):
         return imap_(deepcopy_, iterable)
-
-    @staticmethod
-    def _product(n=1, product_=product):
-        return lambda x: product_(*x, repeat=n)
 
     @staticmethod
     def _permutations(n, permutations_=permutations):

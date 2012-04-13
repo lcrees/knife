@@ -53,18 +53,18 @@ class NumberMixin(object):
 
     def test_minmax(self):
         # auto
-        self.assertEqual(self.qclass(1, 2, 4).minmax().end(), [1, 4])
+        self.assertEqual(self.qclass(1, 2, 4).minmax().end(), (1, 4))
         self.assertEqual(
-            self.qclass(10, 5, 100, 2, 1000).minmax().end(), [2, 1000],
+            self.qclass(10, 5, 100, 2, 1000).minmax().end(), (2, 1000),
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 4).minmax(), self.assertEqual, [1, 4],
+            self.mclass(1, 2, 4).minmax(), self.assertEqual, (1, 4),
         )
         self._false_true_false(
             self.mclass(10, 5, 100, 2, 1000).minmax(),
             self.assertEqual,
-            [2, 1000],
+            (2, 1000),
         )
 
     def test_sum(self):
@@ -282,7 +282,7 @@ class OrderMixin(object):
         )
         # man
         manchainsaw = self.mclass(1, 2, 3, 4, 5, 6).shuffle()
-        self.assertTrue(manchainsaw.balanced)
+        self.assertFalse(manchainsaw.balanced)
         manchainsaw.shift_in()
         self.assertTrue(manchainsaw.balanced)
         manchainsaw.end()
@@ -317,7 +317,7 @@ class OrderMixin(object):
             self.qclass(5, 4, 3, 2, 1).reverse().end(), [1, 2, 3, 4, 5],
         )
         # man
-        self._true_true_false(
+        self._false_true_false(
             self.mclass(5, 4, 3, 2, 1).reverse(),
             self.assertEqual,
             [1, 2, 3, 4, 5],

@@ -94,17 +94,17 @@ class _NumberMixin(local):
         i = l(s(iterable))
         e = d(len(i) - 1, 2)
         p = int(e)
-        return i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
+        yield i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
 
     @staticmethod
     def _minmax(iterable, iter_=iter, imin=min, imax=max, tee_=tee):
         i1, i2 = tee_(iterable)
-        return iter_((imin(i1), imax(i2)))
+        yield imin(i1), imax(i2)
 
     @staticmethod
     def _range(iterable, list_=list, sorted_=sorted):
         i1 = list_(sorted_(iterable))
-        return i1[-1] - i1[0]
+        yield i1[-1] - i1[0]
 
     @staticmethod
     def _min(key, imin_=min):
@@ -112,7 +112,8 @@ class _NumberMixin(local):
 
     @staticmethod
     def _sum(start, floats, isum=sum, fsum_=fsum):
-        return lambda x: (fsum_ if floats else lambda x: isum(x, start))(x)
+        summer = fsum_ if floats else lambda x: isum(x, start)
+        return lambda x: summer(x)
 
 
 class _OrderMixin(local):
@@ -126,13 +127,13 @@ class _OrderMixin(local):
 
     @staticmethod
     def _reverse(iterable, list_=list, reversed_=reversed):
-        return reversed_(list_(iterable))
+        yield list(reversed_(list_(iterable)))
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
         iterable = list_(iterable)
         shuffle_(iterable)
-        return iterable
+        yield iterable
 
     @staticmethod
     def _sort(key, sorted_=sorted):

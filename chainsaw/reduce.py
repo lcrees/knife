@@ -10,11 +10,11 @@ class FilterMixin(local):
 
     def attributes(self, *names):
         '''
-        Collect `attributes
-        <http://docs.python.org/glossary.html#term-attribute>`_ from things
-        within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ by
-        by matching their attribute `names`.
+        Collect `attribute
+        <http://docs.python.org/glossary.html#term-attribute>`_ values from
+        things within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ that
+        matches an attribute name value in `names`.
 
         :param names: attribute names
         '''
@@ -23,19 +23,20 @@ class FilterMixin(local):
 
     def duality(self):  # @NoSelf
         '''
-        Divide an iterable into two `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ based on whether
-        the active callable returns :const:`True` or :const:`False` for each
-        thing within an iterable.
+        Divide one iterable into two `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_, the first
+        iterable being everything the active callable evaluates as
+        :const:`True` and the second iterable being everythin the active
+        callable evaluates as :const:`False`.
         '''
         with self._chain():
             return self._many(self._duality(self._test))
 
     def filter(self, invert=False):
         '''
-        Collect everthing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        matched by the active callable.
+        Collect each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        active callable.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -45,11 +46,11 @@ class FilterMixin(local):
 
     def items(self, *keys):
         '''
-        Collect everything from things (usually `sequences
+        Collect values from things (usually `sequences
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that matches `keys`.
+        that match a key value in `keys`.
 
         :param keys: item keys (or indexes)
         '''
@@ -58,7 +59,7 @@ class FilterMixin(local):
 
     def mapping(self, keys=False, values=False):
         '''
-        Collect all items, keys, or` within an `iterable
+        Collect items, keys, or values from things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ of `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_.
 
@@ -69,24 +70,24 @@ class FilterMixin(local):
         with self._chain():
             return self._many(self._mapping(self._identity, keys, values))
 
-    def pattern(self, pattern, flags=0, compiler='parse'):  # @NoSelf
+    def pattern(self, pattern, type='parse', flags=0):  # @NoSelf
         '''
         Compile a search pattern to use as the active callable.
 
         :param pattern: search pattern
 
+        :param type: engine to compile pattern with. Valid options are
+          ``'parse'``, ``'regex'``, or ``'glob'`` (default: ``'parse'``)
+
         :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
-
-        :param compiler: engine to compile pattern with. Valid options are
-          ``'parse'``, ``'re'``, or ``'glob'`` (default: ``'parse'``)
         '''
-        return self.tap(self._pattern(pattern, flags, compiler))
+        return self.tap(self._pattern(pattern, type, flags))
 
     def traverse(self, ancestors=False, invert=False):  # @NoSelf
         '''
-        Collect things from things or their ancestors within an `iterable
+        Collect nested values from each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
         active callable.
 
@@ -99,7 +100,9 @@ class FilterMixin(local):
           :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
         with self._chain():
-            return self._many(self._traverse(self._test, ancestors, invert))
+            return self._many(self._traverse(
+                self._test, self._alt, self._wrapper, ancestors, invert,
+            ))
 
 
 class ReduceMixin(local):

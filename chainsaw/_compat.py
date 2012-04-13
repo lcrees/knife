@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 '''chainsaw support'''
 
-try:
-    import __builtin__ as builtins
-except ImportError:
-    import builtins
-from itertools import (
-    starmap, repeat, product, combinations, permutations, chain)
-from operator import contains
+from itertools import chain
 from collections import Iterable
 try:
     import unittest2 as unittest
@@ -20,26 +14,12 @@ from stuf.six.moves import (
     map, filterfalse, filter, zip, zip_longest)  # @UnresolvedImport @UnusedImport @IgnorePep8
 # pylint: enable-msg=f0401
 
-iall = builtins.all
-iany = builtins.any
 ichain = chain.from_iterable
-icontains = contains
 ifilter = filter
 ifilterfalse = filterfalse
 imap = map
-imax = builtins.max
-imin = builtins.min
-isum = builtins.sum
-items = six.items
 izip = zip
-istarmap = starmap
-irepeat = repeat
-iproduct = product
-icombinations = combinations
-ipermutations = permutations
-iitems = six.items
-ivalues = six.values
-ikeys = six.keys
+items = six.items
 
 
 class port(object):
@@ -129,6 +109,16 @@ isbinary = port.isbinary
 isstring = port.isstring
 isunicode = port.isunicode
 texts = six.texts
+
+
+def deferrediter(func, wrap, noniter):
+    murk = wrap(noniter)
+    func(murk)
+    yield murk
+
+
+def iterthing(iterator, wrap, noniter):
+    yield wrap(iterator(wrap(noniter)))
 
 
 def makeiter(wrap, thing):

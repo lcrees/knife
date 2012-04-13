@@ -6,12 +6,13 @@ from threading import local
 
 class RepeatMixin(local):
 
-    '''repetition mixin'''
+    '''repeating mixin'''
 
-    def combine(self, n):
+    def combinations(self, n):
         '''
-        Find every possible combination of each `n` things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Find combinations of every `n` things from an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
+
 
         :param n: length of things to derive combinations from
         '''
@@ -26,22 +27,12 @@ class RepeatMixin(local):
         with self._chain():
             return self._many(self._copy)
 
-    def product(self, n=1):
+    def permutations(self, n):
         '''
-        Repeat results of nested `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ `n` times.
+        Find permutations of every `n` things from an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: number of nested loops to repeat (*default:* ``1``)
-        '''
-        with self._chain():
-            return self._many(self._product(n))
-
-    def permutate(self, n):
-        '''
-        Find every possible permutation of each `n` things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
-
-        :param n: length of things to derive permutate from
+        :param n: length of things to derive permutations from
         '''
         with self._chain():
             return self._many(self._permutations(n))
@@ -49,8 +40,8 @@ class RepeatMixin(local):
     def repeat(self, n=None, call=False):
         '''
         Repeat either an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or the results
-        of invoking the active callable `n` times.
+        <http://docs.python.org/glossary.html#term-iterable>`_ or results of
+        invoking active callable `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
@@ -73,7 +64,7 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
         the active callable.
 
-        :param merge: combine global positional arguments with wildcard
+        :param merge: combinations global positional arguments with wildcard
           positional arguments from an iterable (*default:* :const:`False`)
         '''
         with self._chain():
@@ -107,7 +98,7 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
         active callable.
 
-        :param merge: combine global positional and keyword arguments with
+        :param merge: combinations global positional and keyword arguments with
           positional and keyword arguments from an iterable into a single
           :class:`tuple` of wildcard positional and keyword arguments for the
           active callable (*default:* :const:`False`)

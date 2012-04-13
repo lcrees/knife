@@ -58,12 +58,12 @@ class RepeatMixin(object):
     def test_permutations(self):
         # auto
         self.assertEqual(
-            self.qclass(40, 50, 60).permutate(2).end(),
+            self.qclass(40, 50, 60).permutations(2).end(),
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
         # man
         self._false_true_false(
-            self.mclass(40, 50, 60).permutate(2),
+            self.mclass(40, 50, 60).permutations(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
@@ -71,31 +71,14 @@ class RepeatMixin(object):
     def test_combination(self):
         # auto
         self.assertEqual(
-            self.qclass(40, 50, 60).combine(2).end(),
+            self.qclass(40, 50, 60).combinations(2).end(),
             [(40, 50), (40, 60), (50, 60)],
         )
         # man
         self._true_true_false(
-            self.mclass(40, 50, 60).combine(2),
+            self.mclass(40, 50, 60).combinations(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 60)],
-        )
-
-    def test_product(self):
-        # auto
-        foo = self.qclass('ABCD', 'xy').product().end()
-        self.assertEqual(
-            foo,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')],
-            foo,
-        )
-        # man
-        self._false_true_false(
-            self.mclass('ABCD', 'xy').product(),
-            self.assertListEqual,
-            [('A', 'x'), ('A', 'y'), ('B', 'x'), ('B', 'y'), ('C', 'x'),
-            ('C', 'y'), ('D', 'x'), ('D', 'y')]
         )
 
 
@@ -118,43 +101,83 @@ class MapMixin(object):
             [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)],
         )
 
-    def test_map(self):
+    def test_kwargmap(self):
         # auto
         def test(*args, **kw):
-            return sum(args) * kw['a']
+            return sum(args) * sum(kw.values())
         self.assertEqual(
             self.qclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).map(kwargs=True).end(),
+            ).tap(test).kwargmap().end(),
             [6, 10, 14],
         )
         self.assertEqual(
-            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
-        )
-        self.assertEqual(
             self.qclass(
-                (1, 2), (2, 3), (3, 4)
-            ).tap(lambda x, y: x * y).map(args=True).end(), [2, 6, 12],
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).tap(test).arguments(
+                1, 2, 3, b=5, w=10, y=13
+            ).kwargmap(True).end(),
+            [270, 330, 390],
         )
         # man
         self._true_true_false(
             self.mclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).tap(test).map(kwargs=True),
+            ).tap(test).kwargmap(),
             self.assertEqual,
             [6, 10, 14],
         )
         self._true_true_false(
-            self.mclass(1, 2, 3).tap(lambda x: x * 3).map(),
+            self.mclass(
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).tap(test).arguments(1, 2, 3, b=5, w=10, y=13).kwargmap(True),
             self.assertEqual,
-            [3, 6, 9],
+            [270, 330, 390],
+        )
+
+    def test_argmap(self):
+        # auto
+        self.assertEqual(
+            self.qclass(
+                (1, 2), (2, 3), (3, 4)
+            ).tap(lambda x, y: x * y).argmap().end(), [2, 6, 12],
+        )
+        self.assertEqual(
+            self.mclass(
+                (1, 2), (2, 3), (3, 4)
+            ).tap(
+                lambda x, y, z, a, b: x * y * z * a * b
+            ).arguments(7, 8, 9).argmap(True).end(),
+            [1008, 3024, 6048],
+        )
+        # man
+        self._true_true_false(
+            self.mclass(
+                (1, 2), (2, 3), (3, 4)
+            ).tap(lambda x, y: x * y).arguments(7, 8, 9).argmap(),
+            self.assertEqual,
+            [2, 6, 12],
         )
         self._true_true_false(
             self.mclass(
                 (1, 2), (2, 3), (3, 4)
-            ).tap(lambda x, y: x * y).map(args=True),
+            ).tap(
+                lambda x, y, z, a, b: x * y * z * a * b
+            ).arguments(7, 8, 9).argmap(True),
             self.assertEqual,
-            [2, 6, 12],
+            [1008, 3024, 6048],
+        )
+
+    def test_map(self):
+        # auto
+        self.assertEqual(
+            self.qclass(1, 2, 3).tap(lambda x: x * 3).map().end(), [3, 6, 9],
+        )
+        # man
+        self._true_true_false(
+            self.mclass(1, 2, 3).tap(lambda x: x * 3).map(),
+            self.assertEqual,
+            [3, 6, 9],
         )
 
     def test_invoke(self):

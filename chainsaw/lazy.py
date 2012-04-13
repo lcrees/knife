@@ -58,25 +58,25 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
-    @contextmanager
-    def _auto(self, **kw):
-        '''switch to an automatically balanced four-link chain'''
-        self._as_chain(chain=self._auto, **kw)
-        # move ins things up to work link
-        work, ins = tee(getattr(self, self._IN))
-        setattr(self, self._WORK, work)
-        setattr(self, self._IN, ins)
-        yield
-        # move things from holding link to inchain and outs
-        ins, outs = tee(getattr(self, self._HOLD))
-        setattr(
-            self,
-            self._OUT,
-            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
-        )
-        setattr(self, self._IN, ins)
-        # clear work, holding links & return to current selected chain
-        self._rechain()._clearworking()
+#    @contextmanager
+#    def _auto(self, **kw):
+#        '''switch to an automatically balanced four-link chain'''
+#        self._as_chain(chain=self._auto, **kw)
+#        # move ins things up to work link
+#        work, ins = tee(getattr(self, self._IN))
+#        setattr(self, self._WORK, work)
+#        setattr(self, self._IN, ins)
+#        yield
+#        # move things from holding link to inchain and outs
+#        ins, outs = tee(getattr(self, self._HOLD))
+#        setattr(
+#            self,
+#            self._OUT,
+#            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
+#        )
+#        setattr(self, self._IN, ins)
+#        # clear work, holding links & return to current selected chain
+#        self._rechain()._clearworking()
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -93,12 +93,13 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         '''
         # take snapshot
         snapshot, self._in = tee(self._in)
-        # make this snapshot the baseline snapshot
-        if self._context == self._EDIT or baseline:
-            self._baseline = snapshot
-        # make this snapshot the original snapshot
-        if original:
+        test = (self._ss is not None and len(self._ss) == 0)
+        # make snapshot original snapshot?
+        if test or original:
             self._original = snapshot
+        # make this snapshot the baseline snapshot
+        if test or self._context == self._EDIT or baseline:
+            self._baseline = snapshot
         # place snapshot at beginning of snapshot stack
         self._ss.appendleft(snapshot)
         return self
@@ -155,7 +156,8 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         setattr(
             self,
             self._HOLD,
-            chain_(things, getattr_(self, self._HOLD)))
+            chain_(things, getattr_(self, self._HOLD))
+        )
         return self
 
     def _xtendfront(self, things, reversed_=reversed):
@@ -228,34 +230,28 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
     def _clearworking(self, iter_=iter):
         '''clear working and holding links'''
         # clear work link
-        delattr(self, self._WORK)
         setattr(self, self._WORK, iter_([]))
         # clear holding link
-        delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter_([]))
         return self
 
     def _clearh(self):
         '''Clear holding link.'''
-        delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter([]))
         return self
 
     def _clearw(self):
         '''Clear work link.'''
-        delattr(self, self._WORK)
         setattr(self, self._WORK, iter([]))
         return self
 
     def clear_in(self):
         '''Clear incoming things.'''
-        delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
     def clear_out(self):
         '''Clear outgoing things.'''
-        delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
 
