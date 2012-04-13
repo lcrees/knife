@@ -34,7 +34,7 @@ class _FilterMixin(local):
         return attributes
 
     @staticmethod
-    def _duality(true, pat, flag, f=ifilter, ff=ifilterfalse, l=list, t=tee):
+    def _duality(true, f=ifilter, ff=ifilterfalse, l=list, t=tee):
         def duality(iterable): #@IgnorePep8
             falsy, truey = t(iterable)
             return iter((l(f(true, truey)), l(ff(true, falsy))))
@@ -72,26 +72,20 @@ class _FilterMixin(local):
         return r(pat, flag).search if compile == 're' else p(pat).search
 
     @staticmethod
-    def _traverse(call, deep, anc, alt, wrap, i=imap, f=ifilter, g=getmro):
-        def _mro(iterable, ichain_=ichain, imap_=imap):
-            return ichain_(imap_(g, iterable))
-        def members(truth_, iterable): #@IgnorePep8
-            f, s, t, i = truth_, alt, wrap, iterable
-            d, w, g, e = dir, extract, getattr, AttributeError
-            test = lambda x: x.startswith('__') or x.startswith('mro')
-            for k in ifilterfalse(test, d(i)):
+    def _traverse(call, deep, anc, alt, wrap):
+        mro = lambda i: ichain(imap(getmro, i))
+        def members(true, iterable):
+            for k in ifilter(lambda x: x, dir(iterable)):
                 try:
-                    v = g(i, k)
-                except e:
+                    v = getattr(iterable, k)
+                except AttributeError:
                     pass
                 else:
-                    yield k, t(w(f, v)) if s(v) else k, v
-        def extract(truth_, iterable): #@IgnorePep8
-            for member in f(truth, members(truth_, iterable)):
+                    yield k, wrap(extract(true, v)) if alt(v) else k, v
+        def extract(true, iterable):
+            for member in ifilter(truth, members(true, iterable)):
                 yield member
-        def members_(iterable): #@IgnorePep8
-            return ichain(i(lambda x: extract(call, x), iterable))
-        return members_
+        return lambda i: ichain(imap(lambda x: extract(call, x), i))
 
 
 class _ReduceMixin(local):
