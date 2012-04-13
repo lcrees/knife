@@ -217,6 +217,11 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         '''Number of incoming things.'''
         return len(self._in)
 
+    @property
+    def balanced(self):
+        '''Number of outgoing things.'''
+        return len(self._out) == len(self._in)
+
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################

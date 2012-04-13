@@ -110,7 +110,7 @@ class NumberMixin(local):
         :class:`tuple` pairs of (*thing*, *count*).
         '''
         with self._chain():
-            return self._one(self._frequency)
+            return self._one(self._count)
 
     def max(self):
         '''

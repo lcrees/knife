@@ -145,35 +145,6 @@ class Mixin(object):
             set([1, 2, 3, 4, 5, 6]),
         )
 
-    def test_deque_wrap(self):
-        from collections import deque
-        self.assertIsInstance(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).as_deque().shift_out().results(),
-            deque,
-        )
-        self.assertEqual(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).as_deque().shift_out().results(),
-            deque([1, 2, 3, 4, 5, 6]),
-        )
-
-    def test_frozenset_wrap(self):
-        self.assertIsInstance(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).as_frozenset().shift_out().results(),
-            frozenset,
-        )
-        self.assertSetEqual(
-            self.qclass(
-                1, 2, 3, 4, 5, 6
-            ).as_frozenset().shift_out().results(),
-            frozenset([1, 2, 3, 4, 5, 6]),
-        )
-
     def test_dict_wrap(self):
         self.assertIsInstance(
             self.qclass(
@@ -186,66 +157,6 @@ class Mixin(object):
                 (1, 2), (3, 4), (5, 6)
             ).as_dict().shift_out().results(),
             {1: 2, 3: 4, 5: 6},
-        )
-
-    def test_frozenstuf_wrap(self):
-        from stuf import frozenstuf
-        self.assertIsInstance(
-            self.qclass(
-                ('a1', 2), ('a3', 4), ('a5', 6)
-            ).as_frozenstuf().shift_out().results(),
-            frozenstuf,
-        )
-        self.assertEqual(
-            self.qclass(
-                ('a1', 2), ('a3', 4), ('a5', 6)
-            ).as_frozenstuf().shift_out().results(),
-           frozenstuf({'a1': 2, 'a3': 4, 'a5': 6}),
-        )
-
-    def test_ordereddict_wrap(self):
-        from stuf.utils import OrderedDict
-        self.assertIsInstance(
-            self.qclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_ordereddict().shift_out().results(),
-            OrderedDict,
-        )
-        self.assertDictEqual(
-            self.qclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_ordereddict().shift_out().results(),
-            OrderedDict({1: 2, 3: 4, 5: 6}),
-        )
-
-    def test_orderedstuf_wrap(self):
-        from stuf import orderedstuf
-        self.assertIsInstance(
-            self.qclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_orderedstuf().shift_out().results(),
-            orderedstuf,
-        )
-        self.assertEqual(
-            self.qclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_orderedstuf().shift_out().results(),
-           orderedstuf({1: 2, 3: 4, 5: 6}),
-        )
-
-    def test_stuf_wrap(self):
-        from stuf import stuf
-        self.assertIsInstance(
-            self.qclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_stuf().shift_out().results(),
-            stuf,
-        )
-        self.assertDictEqual(
-            self.mclass(
-                (1, 2), (3, 4), (5, 6)
-            ).as_stuf().shift_out().results(),
-           stuf({1: 2, 3: 4, 5: 6}),
         )
 
     def test_ascii(self):

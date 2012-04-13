@@ -58,12 +58,12 @@ class RepeatMixin(object):
     def test_permutations(self):
         # auto
         self.assertEqual(
-            self.qclass(40, 50, 60).permutations(2).end(),
+            self.qclass(40, 50, 60).permutate(2).end(),
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
         # man
         self._false_true_false(
-            self.mclass(40, 50, 60).permutations(2),
+            self.mclass(40, 50, 60).permutate(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
@@ -71,12 +71,12 @@ class RepeatMixin(object):
     def test_combination(self):
         # auto
         self.assertEqual(
-            self.qclass(40, 50, 60).combinations(2).end(),
+            self.qclass(40, 50, 60).combine(2).end(),
             [(40, 50), (40, 60), (50, 60)],
         )
         # man
         self._true_true_false(
-            self.mclass(40, 50, 60).combinations(2),
+            self.mclass(40, 50, 60).combine(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 60)],
         )

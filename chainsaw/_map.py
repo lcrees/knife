@@ -22,7 +22,7 @@ class _RepeatMixin(local):
         return imap_(deepcopy_, iterable)
 
     @staticmethod
-    def _loops(n=1, product_=product):
+    def _product(n=1, product_=product):
         return lambda x: product_(*x, repeat=n)
 
     @staticmethod

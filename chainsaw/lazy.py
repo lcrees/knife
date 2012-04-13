@@ -215,6 +215,12 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         self._in, incoming = tee(self._in)
         return len(list(incoming))
 
+    @property
+    def balanced(self):
+        '''Number of outgoing things.'''
+        self._out, outs = tee(self._out)
+        return len(tuple(outs)) == self.__len__()
+
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################

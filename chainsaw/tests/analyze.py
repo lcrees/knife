@@ -2,7 +2,7 @@
 '''ordering test mixins'''
 
 
-class MathMixin(object):
+class NumberMixin(object):
 
     def test_max(self):
         # auto
@@ -74,7 +74,7 @@ class MathMixin(object):
         self.assertEqual(
             self.qclass(
                 .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
-            ).sum(floats=True).end(),
+            ).sum(precision=True).end(),
             1.0,
         )
         # man
@@ -87,7 +87,7 @@ class MathMixin(object):
         self._false_true_false(
             self.mclass(
                 .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
-            ).sum(floats=True),
+            ).sum(precision=True),
             self.assertEqual,
             1.0,
         )
@@ -124,8 +124,23 @@ class MathMixin(object):
             self.mclass(3, 5, 7, 3, 11).range(), self.assertEqual, 8,
         )
 
+    def test_count(self):
+        # auto
+        common = self.qclass(11, 3, 5, 11, 7, 3, 11).count().end()
+        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
+        # most common
+        self.assertEqual(common[1], 11)
+        # least common
+        self.assertEqual(common[0], 7)
+        # man
+        self._false_true_false(
+            self.mclass(11, 3, 5, 11, 7, 3, 11).count(),
+            self.assertEqual,
+            (7, 11, [(11, 3), (3, 2), (5, 1), (7, 1)]),
+        )
 
-class TruthMixin(object):
+
+class CompareMixin(object):
 
     def test_all(self):
         # auto
@@ -149,67 +164,115 @@ class TruthMixin(object):
             self.assertTrue,
         )
 
-    def test_quantify(self):
+    def test_difference(self):
         # auto
         self.assertEqual(
-            self.qclass(True, 1, None, 'yes').tap(bool).quantify().end(), 3,
+            self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).difference().end(),
+            [1, 3, 4],
         )
         self.assertEqual(
-            self.qclass(None, 0, 'yes', False).tap(bool).quantify().end(), 1,
+            self.qclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(True).end(),
+            [1, 3, 4, 10]
         )
         # man
         self._false_true_false(
-            self.mclass(True, 1, None, 'yes').tap(bool).quantify(),
+            self.mclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(),
             self.assertEqual,
-            3,
+            [1, 3, 4]
         )
         self._false_true_false(
-            self.mclass(None, 0, 'yes', False).tap(bool).quantify(),
+            self.mclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(True),
             self.assertEqual,
-            1,
+            [1, 3, 4, 10]
         )
 
-    def test_frequency(self):
+    def test_disjointed(self):
         # auto
-        common = self.qclass(11, 3, 5, 11, 7, 3, 11).frequency().end()
-        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
-        # most common
-        self.assertEqual(common[1], 11)
-        # least common
-        self.assertEqual(common[0], 7)
+        self.assertTrue(
+            self.qclass([1, 2, 3], [5, 4, 10]).disjointed().end()
+        )
+        self.assertFalse(
+            self.qclass([1, 2, 3], [5, 2, 10]).disjointed().end()
+        )
         # man
         self._false_true_false(
-            self.mclass(11, 3, 5, 11, 7, 3, 11).frequency(),
+            self.mclass([1, 2, 3], [5, 4, 10]).disjointed(), self.assertTrue,
+        )
+        self._false_true_false(
+            self.mclass([1, 2, 3], [5, 2, 10]).disjointed(), self.assertFalse,
+        )
+
+    def test_intersection(self):
+        # auto
+        self.assertEqual(
+            self.qclass(
+                [1, 2, 3], [101, 2, 1, 10], [2, 1]
+            ).intersection().end(), [1, 2],
+        )
+        # man
+        self._false_true_false(
+            self.mclass([1, 2, 3], [101, 2, 1, 10], [2, 1]).intersection(),
             self.assertEqual,
-            (7, 11, [(11, 3), (3, 2), (5, 1), (7, 1)]),
+            [1, 2],
+        )
+
+    def test_subset(self):
+        # auto
+        self.assertTrue(
+            self.qclass([1, 2, 3], [101, 2, 1, 3]).subset().end(),
+        )
+        # man
+        self._false_true_false(
+            self.mclass([1, 2, 3], [101, 2, 1, 3]).subset(),
+            self.assertTrue,
+        )
+
+    def test_superset(self):
+        # auto
+        diff = self.qclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset().end()
+        self.assertTrue(diff)
+        # man
+        self._false_true_false(
+            self.mclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset(),
+            self.assertTrue,
+        )
+
+    def test_union(self):
+        # auto
+        self.assertEqual(
+            self.qclass([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().end(),
+            [1, 10, 3, 2, 101],
+        )
+        # man
+        self._false_true_false(
+            self.mclass([1, 2, 3], [101, 2, 1, 10], [2, 1]).union(),
+            self.assertEqual,
+            [1, 10, 3, 2, 101],
+        )
+
+    def test_unique(self):
+        # auto
+        self.assertEqual(
+            self.qclass(1, 2, 1, 3, 1, 4).unique().end(), [1, 2, 3, 4],
+        )
+        self.assertEqual(
+            self.qclass(1, 2, 1, 3, 1, 4).tap(round).unique().end(),
+            [1, 2, 3, 4],
+        )
+        # man
+        self._false_true_false(
+            self.mclass(1, 2, 1, 3, 1, 4).unique(),
+            self.assertEqual,
+            [1, 2, 3, 4],
+        )
+        self._false_true_false(
+            self.mclass(1, 2, 1, 3, 1, 4).tap(round).unique(),
+            self.assertEqual,
+            [1, 2, 3, 4],
         )
 
 
 class OrderMixin(object):
-
-    def test_choice(self):
-        # auto
-        self.assertEqual(len(list(self.qclass(1, 2, 3, 4, 5, 6).choice())), 1)
-        # man
-        manchainsaw = self.mclass(1, 2, 3, 4, 5, 6).choice()
-        self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
-        self.assertTrue(manchainsaw.balanced)
-        manchainsaw.end()
-        self.assertTrue(manchainsaw.balanced)
-
-    def test_sample(self):
-        #auto
-        self.assertEqual(
-            len(self.qclass(1, 2, 3, 4, 5, 6).sample(3).end()), 3,
-        )
-        # man
-        manchainsaw = self.mclass(1, 2, 3, 4, 5, 6).sample(3)
-        self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
-        self.assertTrue(manchainsaw.balanced)
-        manchainsaw.end()
-        self.assertTrue(manchainsaw.balanced)
 
     def test_shuffle(self):
         # auto
@@ -229,21 +292,21 @@ class OrderMixin(object):
         # auto
         from math import floor
         self.assertEqual(
-        self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby().end(),
+        self.qclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).group().end(),
             [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self.assertEqual(
-            self.qclass(1.3, 2.1, 2.4).groupby().end(),
+            self.qclass(1.3, 2.1, 2.4).group().end(),
             [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
         # man
         self._false_true_false(
-            self.mclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).groupby(),
+            self.mclass(1.3, 2.1, 2.4).tap(lambda x: floor(x)).group(),
             self.assertListEqual,
             [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self._true_true_false(
-            self.mclass(1.3, 2.1, 2.4).groupby(),
+            self.mclass(1.3, 2.1, 2.4).group(),
             self.assertListEqual,
             [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )

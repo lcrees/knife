@@ -100,11 +100,6 @@ class ChainsawMixin(local):
         with self._auto(snap=False):
             return self._xtend(self._iterable)
 
-    @property
-    def balanced(self):
-        '''If incoming and outgoing things are in balance.'''
-        return self.count_out() == self.__len__()
-
     ###########################################################################
     ## things called ##########################################################
     ###########################################################################

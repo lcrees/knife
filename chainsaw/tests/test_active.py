@@ -5,14 +5,13 @@ from chainsaw._compat import unittest
 
 from chainsaw.tests.base import Mixin
 from chainsaw.tests.map import MapMixin, RepeatMixin
-from chainsaw.tests.reduce import ReduceMixin, SliceMixin
-from chainsaw.tests.filter import FilterMixin, CollectMixin
-from chainsaw.tests.analyze import OrderMixin, MathMixin, TruthMixin
+from chainsaw.tests.reduce import ReduceMixin, SliceMixin, FilterMixin
+from chainsaw.tests.analyze import OrderMixin, NumberMixin, CompareMixin
 
 
 class TestMain(
     unittest.TestCase, Mixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    SliceMixin, CollectMixin, RepeatMixin, MathMixin, TruthMixin
+    SliceMixin, RepeatMixin, NumberMixin, CompareMixin
 ):
 
     def setUp(self):
@@ -70,7 +69,7 @@ class TestReduce(unittest.TestCase, Mixin, ReduceMixin):
         self.mclass = reducesaw.as_manual()
 
 
-class TestMath(unittest.TestCase, Mixin, MathMixin):
+class TestMath(unittest.TestCase, Mixin, NumberMixin):
 
     def setUp(self):
         from chainsaw.active import numbersaw
@@ -78,7 +77,7 @@ class TestMath(unittest.TestCase, Mixin, MathMixin):
         self.mclass = numbersaw.as_manual()
 
 
-class TestCompare(unittest.TestCase, Mixin, TruthMixin):
+class TestCompare(unittest.TestCase, Mixin, CompareMixin):
 
     def setUp(self):
         from chainsaw.active import comparesaw

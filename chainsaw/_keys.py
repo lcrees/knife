@@ -511,7 +511,7 @@ class KSlice(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
-    def dice(n, fill=None):
+    def dice(n, fill=None):  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ into multiple
@@ -584,7 +584,7 @@ class KSlice(AppspaceKey):
 
 class KRepeat(AppspaceKey):
 
-    '''repeat key'''
+    '''repeating key'''
 
     def combinations(n):  # @NoSelf
         '''
@@ -752,7 +752,7 @@ class KCompare(AppspaceKey):
 
 class KNumber(AppspaceKey):
 
-    '''number key'''
+    '''numbering key'''
 
     def average():  # @NoSelf
         '''
@@ -819,7 +819,7 @@ class KNumber(AppspaceKey):
 
 class KOrder(AppspaceKey):
 
-    '''order mixin'''
+    '''ordering mixin'''
 
     def group():  # @NoSelf
         '''
