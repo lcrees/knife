@@ -7,16 +7,14 @@ from contextlib import contextmanager
 from stuf.utils import clsname
 
 from chainsaw.map import RepeatMixin, MapMixin
-from chainsaw.reduce import SliceMixin, ReduceMixin
-from chainsaw.filter import FilterMixin, CollectMixin
 from chainsaw.base import ChainsawMixin, OutchainMixin
-from chainsaw.analyze import MathMixin, TruthMixin, OrderMixin
+from chainsaw.reduce import SliceMixin, ReduceMixin, FilterMixin
+from chainsaw.analyze import NumberMixin, CompareMixin, OrderMixin
 
 from chainsaw._base import SLOTS, _ChainsawMixin
 from chainsaw._map import _RepeatMixin, _MapMixin
-from chainsaw._reduce import _SliceMixin, _ReduceMixin
-from chainsaw._filter import _FilterMixin, _CollectMixin
-from chainsaw._analyze import _MathMixin, _TruthMixin, _OrderMixin
+from chainsaw._reduce import _SliceMixin, _ReduceMixin, _FilterMixin
+from chainsaw._analyze import _NumberMixin, _CompareMixin, _OrderMixin
 
 
 class LazyMixin(ChainsawMixin, _ChainsawMixin):
@@ -38,7 +36,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         self._hold = iter([])
 
     ###########################################################################
-    ## chain things ###########################################################
+    ## things in chains #######################################################
     ###########################################################################
 
     @contextmanager
@@ -140,7 +138,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         return self
 
     ###########################################################################
-    ## iterate things #########################################################
+    ## stepping through things ################################################
     ###########################################################################
 
     @property
@@ -149,7 +147,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         return getattr_(self, self._WORK)
 
     ###########################################################################
-    ## extend things ##########################################################
+    ## adding things ##########################################################
     ###########################################################################
 
     def _xtend(self, things, chain_=chain, getattr_=getattr):
@@ -217,13 +215,6 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         self._in, incoming = tee(self._in)
         return len(list(incoming))
 
-    count = __len__
-
-    def count_out(self):
-        '''Number of outgoing things.'''
-        self._out, outs = tee(self._out)
-        return len(list(outs))
-
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################
@@ -286,19 +277,12 @@ class OutputMixin(LazyMixin, OutchainMixin):
 
 class lazysaw(
     OutputMixin, FilterMixin, _FilterMixin, MapMixin, _MapMixin, ReduceMixin,
-    _ReduceMixin, OrderMixin, _OrderMixin, CollectMixin, _CollectMixin,
-    SliceMixin, _SliceMixin, TruthMixin, _TruthMixin, MathMixin, _MathMixin,
-    RepeatMixin, _RepeatMixin,
+    _ReduceMixin, OrderMixin, _OrderMixin, SliceMixin, _SliceMixin,
+    CompareMixin, _CompareMixin, NumberMixin, _NumberMixin, RepeatMixin,
+    _RepeatMixin,
 ):
 
     '''lazy chainsaw'''
-
-    __slots__ = SLOTS
-
-
-class collectsaw(OutputMixin, CollectMixin, _CollectMixin):
-
-    '''collecting chainsaw'''
 
     __slots__ = SLOTS
 
@@ -338,16 +322,16 @@ class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
     __slots__ = SLOTS
 
 
-class mathsaw(OutputMixin, MathMixin, _MathMixin):
+class numbersaw(OutputMixin, NumberMixin, _NumberMixin):
 
-    '''mathing chainsaw'''
+    '''number chainsaw'''
 
     __slots__ = SLOTS
 
 
-class truthsaw(OutputMixin, TruthMixin, _TruthMixin):
+class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
 
-    '''truthing chainsaw'''
+    '''comparing chainsaw'''
 
     __slots__ = SLOTS
 

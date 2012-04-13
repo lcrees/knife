@@ -116,7 +116,7 @@ class ChainsawMixin(local):
     def arguments(self, *args, **kw):
         '''
         Assign any positional and/or keyword arguments to be used anytime the
-        current callable or alternative callable is invoked.
+        active callable or alternative callable is invoked.
         '''
         # position arguments
         self._args = args
@@ -126,11 +126,11 @@ class ChainsawMixin(local):
 
     def tap(self, call, alt=None, factory=False):
         '''
-        Assign current callable. Optionally assign an alternative callable. If
+        Assign active callable. Optionally assign an alternative callable. If
         `factory` flag is set to :const:`True`, use the callable passed with
-        the `call` argument as a factory to build the current callable.
+        the `call` argument as a factory to build the active callable.
 
-        :param call: callable assigned as current callable
+        :param call: callable assigned as active callable
 
         :param alt: callable assigned as alternative callable (*default:*
           :const:`None`)
@@ -142,12 +142,12 @@ class ChainsawMixin(local):
         self._args = ()
         # reset stored keyword arguments
         self._kw = {}
-        # if callable is a factory for building current callable, configure
+        # if callable is a factory for building active callable, configure
         if factory:
             def factory_(*args, **kw):
                 return call(*args, **kw)
             self._call = factory_
-        # or just assign current callable
+        # or just assign active callable
         else:
             self._call = call
         # set any alternative callable
@@ -156,14 +156,14 @@ class ChainsawMixin(local):
 
     def untap(self):
         '''
-        Clear any current callable, alternative callable, or assigned position
+        Clear any active callable, alternative callable, or assigned position
         or keywork arguments.
         '''
         # reset position arguments
         self._args = ()
         # reset keyword arguments
         self._kw = {}
-        # reset current callable
+        # reset active callable
         self._call = None
         # reset alternative callable
         self._alt = None
@@ -257,7 +257,7 @@ class OutchainMixin(local):
 
     def which(self, call=None, alt=None):
         '''
-        Choose current callable based on results of condition mode.
+        Choose active callable based on results of condition mode.
 
         :param call: new callable to use if condition is :const:`True`
           (*default:* :const:`None`)
@@ -265,7 +265,7 @@ class OutchainMixin(local):
           (*default:* :const:`None`)
         '''
         if self.__bool__():
-            # use external call or current callable
+            # use external call or active callable
             self._call = call if call is not None else self._call
         else:
             # use external callable or current alternative callable
@@ -296,7 +296,7 @@ class OutchainMixin(local):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`byte` encode each incoming thing with the
-        ``'ascii'`` codec (*regardless of its original type*).
+        ``'ascii'`` codec.
 
         :param errors: error handling for decoding issues (*default*:
           ``'strict'``)
@@ -306,8 +306,7 @@ class OutchainMixin(local):
     def as_bytes(self, encoding='utf-8', errors='strict'):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode each incoming thing (*regardless of
-        its original type*).
+        wrapper to :class:`byte` encode each incoming thing.
 
         :param encoding: Unicode encoding (*default:* ``'utf-8'``)
 
@@ -320,7 +319,7 @@ class OutchainMixin(local):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`unicode` (:class:`str` under Python 3) decode
-        each incoming thing (*regardless of its original type*).
+        each incoming thing.
 
         :param encoding: Unicode encoding (*default:* ``'utf-8'``)
 
@@ -336,14 +335,14 @@ class OutchainMixin(local):
     def as_deque(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`deque`.
+        wrapper to :class:`list` each incoming thing.
         '''
         return self.wrap(deque)
 
     def as_list(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`list`.
+        wrapper to :class:`deque` each incoming thing.
         '''
         return self.wrap(list)
 
@@ -352,7 +351,7 @@ class OutchainMixin(local):
     def as_tuple(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`tuple`.
+        wrapper to :class:`tuple` each incoming thing.
         '''
         return self.wrap(tuple)
 
@@ -363,7 +362,7 @@ class OutchainMixin(local):
     def as_dict(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`dict`.
+        wrapper to :class:`dict` each incoming thing.
         '''
         return self.wrap(dict)
 
@@ -381,14 +380,14 @@ class OutchainMixin(local):
     def as_frozenstuf(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`frozenstuf`.
+        wrapper to :class:`frozenstuf` each incoming thing.
         '''
         return self.wrap(frozenstuf)
 
     def as_orderedstuf(self):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`frozenstuf`.
+        wrapper to :class:`orderedstuf` each incoming thing.
         '''
         return self.wrap(orderedstuf)
 
@@ -396,7 +395,7 @@ class OutchainMixin(local):
         '''
         Set `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`stuf`.
+        :class:`stuf` each incoming thing.
         '''
         return self.wrap(stuf)
 
@@ -408,7 +407,7 @@ class OutchainMixin(local):
         '''
         Set `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`frozenset`.
+        :class:`frozenset` each incoming thing.
         '''
         return self.wrap(frozenset)
 
@@ -416,6 +415,6 @@ class OutchainMixin(local):
         '''
         Set `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`set`.
+        :class:`set` each incoming thing.
         '''
         return self.wrap(set)

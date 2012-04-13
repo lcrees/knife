@@ -1,22 +1,102 @@
 # -*- coding: utf-8 -*-
 '''chainsaw reducing mixins'''
 
+from inspect import getmro
 from threading import local
 from collections import deque
+from fnmatch import translate
+from random import choice, sample
+from re import compile as rcompile
 from functools import partial, reduce
-from itertools import cycle, islice
+from itertools import cycle, islice, tee, starmap
+from operator import itemgetter, attrgetter, truth
 
-from stuf.six import strings
-from chainsaw._compat import imap, ichain, tounicode, zip_longest
+from parse import compile as pcompile
+from stuf.six import strings, items, values, keys
+
+from chainsaw._compat import ifilter, ichain, imap, ifilterfalse, zip_longest
+
+
+class _FilterMixin(local):
+
+    '''filtering mixin'''
+
+    @staticmethod
+    def _attributes(names, _attrgetter=attrgetter):
+        attrfind = _attrgetter(*names)
+        def attributes(iterable, get=attrfind): #@IgnorePep8
+            AttrErr_ = AttributeError
+            for thing in iterable:
+                try:
+                    yield get(thing)
+                except AttrErr_:
+                    pass
+        return attributes
+
+    @staticmethod
+    def _duality(true, pat, flag, f=ifilter, ff=ifilterfalse, l=list, t=tee):
+        def duality(iterable): #@IgnorePep8
+            falsy, truey = t(iterable)
+            return iter((l(f(true, truey)), l(ff(true, falsy))))
+        return duality
+
+    @staticmethod
+    def _filter(true, false, filt=ifilter, ff=ifilterfalse):
+        return lambda x: filt(true, x) if false else lambda x: ff(true, x)
+
+    @staticmethod
+    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
+        if key:
+            return lambda x: imap(call, c(imap(k, x)))
+        elif value:
+            return lambda x: imap(call, c(imap(v, x)))
+        return lambda x: starmap(call, c(imap(i, x)))
+
+    @staticmethod
+    def _items(keys, _itemgetter=itemgetter):
+        itemfind = _itemgetter(*keys)
+        def items(iterable, get=itemfind): #@IgnorePep8
+            IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
+            for thing in iterable:
+                try:
+                    yield get(thing)
+                except (IndexErr_, KeyErr_, TypeErr_):
+                    pass
+        return items
+
+    @staticmethod
+    def _pattern(pat, flag, compile, t=translate, r=rcompile, p=pcompile):
+        if compile == 'glob':
+            pat = t(pat)
+            compile = 're'
+        return r(pat, flag).search if compile == 're' else p(pat).search
+
+    @staticmethod
+    def _traverse(call, deep, anc, alt, wrap, i=imap, f=ifilter, g=getmro):
+        def _mro(iterable, ichain_=ichain, imap_=imap):
+            return ichain_(imap_(g, iterable))
+        def members(truth_, iterable): #@IgnorePep8
+            f, s, t, i = truth_, alt, wrap, iterable
+            d, w, g, e = dir, extract, getattr, AttributeError
+            test = lambda x: x.startswith('__') or x.startswith('mro')
+            for k in ifilterfalse(test, d(i)):
+                try:
+                    v = g(i, k)
+                except e:
+                    pass
+                else:
+                    yield k, t(w(f, v)) if s(v) else k, v
+        def extract(truth_, iterable): #@IgnorePep8
+            for member in f(truth, members(truth_, iterable)):
+                yield member
+        def members_(iterable): #@IgnorePep8
+            return ichain(i(lambda x: extract(call, x), iterable))
+        return members_
 
 
 class _ReduceMixin(local):
 
     '''reduce mixin'''
-
-    @staticmethod
-    def _concat(iterable, ichain_=ichain):
-        return ichain_(iterable)
 
     @classmethod
     def _flatten(cls, iterable, strings_=strings, isinstance_=isinstance):
@@ -35,37 +115,24 @@ class _ReduceMixin(local):
                 yield item
 
     @staticmethod
-    def _join(sep, encoding, errors, imap_=imap, tounicode_=tounicode):
-        def join(iterable):
-            return tounicode(
-                sep.join(imap_(tounicode_, iterable)), encoding, errors,
-            )
-        return join
+    def _merge(iterable, ichain_=ichain):
+        return ichain_(iterable)
 
     @staticmethod
     def _reduce(call, initial, reverse, reduce_=reduce):
         if reverse:
             if initial is None:
-                def reduceright(iterable):
-                    return reduce_(lambda x, y: call(y, x), iterable)
-                return reduceright
-            else:
-                def reduceright(iterable):
-                    return reduce_(lambda x, y: call(y, x), iterable, initial)
-                return reduceright
+                return lambda i: reduce_(lambda x, y: call(y, x), i)
+            return lambda i: reduce_(lambda x, y: call(y, x), i, initial)
         if initial is None:
-            def _reduce(iterable):
-                return reduce_(call, iterable)
-        else:
-            def _reduce(iterable):
-                return reduce_(call, iterable, initial)
-        return _reduce
+            return lambda x: reduce_(call, x)
+        return lambda x: reduce_(call, x, initial)
 
-    @classmethod
-    def _roundrobin(cls, itrble, i=iter, n=next, s=islice, c=cycle, p=partial):
-        work, measure = cls._clone(itrble)
+    @staticmethod
+    def _weave(b, i=iter, n=next, s=islice, c=cycle, p=partial, t=tee, l=list):
+        work, measure = t(b)
         nexts = c(p(n, i(item)) for item in work)
-        pending = len(list(measure))
+        pending = len(l(measure))
         while pending:
             try:
                 for nextz in nexts:
@@ -84,48 +151,45 @@ class _SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
-    def _first(n=0, islice_=islice, next_=next):
-        def first(iterable):
-            return islice_(iterable, n) if n else next_(iterable)
-        return first
-
-    @classmethod
-    def _initial(cls, iterable, islice_=islice, len_=len, list_=list):
-        i1, i2 = cls._clone(iterable)
-        return islice_(i1, len_(list_(i2)) - 1)
-
-    @classmethod
-    def _last(cls, n, s=islice, d=deque, ln=len, l=list):
-        def last(iterable):
-            i1, i2 = cls._clone(iterable)
-            return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()
-        return last
+    def _at(n, default, islice_=islice, next_=next):
+        return lambda x: next_(islice_(x, n, None), default)
 
     @staticmethod
-    def _nth(n, default, islice_=islice, next_=next):
-        def nth(iterable):
-            return next_(islice_(iterable, n, None), default)
-        return nth
+    def _choice(iterable, choice_=choice, list_=list):
+        return choice_(list_(iterable))
+
+    @staticmethod
+    def _dice(n, fill, zip_longest_=zip_longest, iter_=iter):
+        return lambda x: zip_longest_(fillvalue=fill, *[iter_(x)] * n)
+
+    @staticmethod
+    def _first(n=0, islice_=islice, next_=next):
+        return lambda x: islice_(x, n) if n else next_(x)
+
+    @staticmethod
+    def _initial(iterable, islice_=islice, len_=len, list_=list, t=tee):
+        i1, i2 = t(iterable)
+        return islice_(i1, len_(list_(i2)) - 1)
+
+    @staticmethod
+    def _last(n, s=islice, d=deque, ln=len, l=list, t=tee):
+        def last(iterable):
+            i1, i2 = t(iterable)
+            return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()
+        return last
 
     @staticmethod
     def _rest(iterable, _islice=islice):
         return _islice(iterable, 1, None)
 
     @staticmethod
-    def _slice(start, stop, step, _islice=islice):
-        if stop and step:
-            def slice_(iterable):
-                return _islice(iterable, start, stop, step)
-        elif stop:
-            def slice_(iterable):
-                return _islice(iterable, start, stop)
-        else:
-            def slice_(iterable):
-                return _islice(iterable, start)
-        return slice_
+    def _sample(n, sample=sample, list_=list):
+        return lambda x: sample(list_(x), n)
 
     @staticmethod
-    def _split(n, fill, zip_longest_=zip_longest, iter_=iter):
-        def grouper(iterable):
-            return zip_longest_(fillvalue=fill, *[iter_(iterable)] * n)
-        return grouper
+    def _slice(start, stop, step, _islice=islice):
+        if stop and step:
+            return lambda x: _islice(x, start, stop, step)
+        elif stop:
+            return lambda x: _islice(x, start, stop)
+        return lambda x: _islice(x, start)

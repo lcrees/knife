@@ -67,7 +67,7 @@ class _ChainsawMixin(local):
         if self._ss is not None:
             self.snapshot(original=True)
         ## callable defaults ##################################################
-        # current callable
+        # active callable
         self._call = None
         # position arguments
         self._args = ()
@@ -198,7 +198,7 @@ class _ChainsawMixin(local):
     @property
     def _identity(self):
         '''
-        Substitute generic identity function for current callable if no current
+        Substitute generic identity function for active callable if no current
         callable is assigned.
         '''
         return self._call if self._call is not None else lambda x: x
@@ -206,7 +206,7 @@ class _ChainsawMixin(local):
     @property
     def _test(self):
         '''
-        Substitute truth operator function for current callable is no current
+        Substitute truth operator function for active callable is no current
         callable is assigned.
         '''
         return self._call if self._call is not None else truth

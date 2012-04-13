@@ -92,7 +92,7 @@
 <dt id="chainsaw.lazy.reducesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign any positional and/or keyword arguments to be used anytime the
-current callable or alternative callable is invoked.</p>
+active callable or alternative callable is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -100,7 +100,7 @@ current callable or alternative callable is invoked.</p>
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>).</p>
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -123,8 +123,7 @@ with outgoing things.</p>
 <dt id="chainsaw.lazy.reducesaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
-its original type</em>).</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -144,14 +143,14 @@ its original type</em>).</p>
 <dt id="chainsaw.lazy.reducesaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_deque" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -165,21 +164,21 @@ things from initial placement to final extraction.</p>
 <dt id="chainsaw.lazy.reducesaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -213,21 +212,21 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">Order
 <dt id="chainsaw.lazy.reducesaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_stuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -245,7 +244,7 @@ version.</p>
 <dt id="chainsaw.lazy.reducesaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -253,7 +252,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each incoming thing (<em>regardless of its original type</em>).</p>
+each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -304,26 +303,6 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.reducesaw.concat">
-<tt class="descname">concat</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.concat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect one
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-created by merge multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> together.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.reducesaw.count">
-<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.reducesaw.count_out">
-<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.count_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of outgoing things.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.lazy.reducesaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return outgoing things, cleaning out everything afterwards.</p>
@@ -360,31 +339,14 @@ created by merge multiple <a class="reference external" href="http://docs.python
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.flatten">
 <tt class="descname">flatten</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.flatten" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the result of reducing an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> of nested things
-to an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-of unnested things because <a class="reference external" href="http://www.python.org/dev/peps/pep-0020/">flat is better than nested</a>.</p>
+<dd><p>Flatten nested things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.reducesaw.join">
-<tt class="descname">join</tt><big>(</big><em>separator=u''</em>, <em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.join" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the result of combining an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> of multiple
-things into one <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> on Python 3) decoded
-thing.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>separator</strong> &#8211; string to join at (<em>default:</em>: <tt class="docutils literal"><span class="pre">''</span></tt>)</li>
-<li><strong>encoding</strong> &#8211; Unicode encoding for things (<em>default:</em>: <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
-<li><strong>errors</strong> &#8211; error handling when encoding things (<em>default:</em>:
-<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="chainsaw.lazy.reducesaw.merge">
+<tt class="descname">merge</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> of multiple
+things into one thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -396,18 +358,16 @@ thing.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.reduce">
 <tt class="descname">reduce</tt><big>(</big><em>initial=None</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.reduce" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the result of reducing an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> down to one
-thing using the current callable. If <tt class="docutils literal"><span class="pre">reverse</span></tt> is set to
-<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, reduction <a class="reference external" href="http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html">comes from the right side</a> of an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.
-Otherwise, reduction comes from the left side of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Reduce an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> down to one
+thing using the active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>initial</strong> &#8211; starting value (<em>default:</em>: <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>reverse</strong> &#8211; <p>reduce from right side of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (<em>default:</em>:
+<li><strong>reverse</strong> &#8211; <p>reduce from <a class="reference external" href="http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html">the right side</a>
+of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (<em>default:</em>:
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</p>
 </li>
 </ul>
@@ -437,7 +397,7 @@ Otherwise, reduction comes from the left side of an <a class="reference external
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.snapshot">
-<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em>, <em>snapshot=True</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -458,15 +418,15 @@ Otherwise, reduction comes from the left side of an <a class="reference external
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<dd><p>Assign active callable. Optionally assign an alternative callable. If
 <cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
-the <cite>call</cite> argument as a factory to build the current callable.</p>
+the <cite>call</cite> argument as a factory to build the active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>call</strong> &#8211; callable assigned as active callable</li>
 <li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 <li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
@@ -503,7 +463,7 @@ the <cite>call</cite> argument as a factory to build the current callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any current callable, alternative callable, or assigned position
+<dd><p>Clear any active callable, alternative callable, or assigned position
 or keywork arguments.</p>
 </dd></dl>
 
@@ -511,20 +471,20 @@ or keywork arguments.</p>
 <dt id="chainsaw.lazy.reducesaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.weave">
 <tt class="descname">weave</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.weave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the result of interleaving multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
+<dd><p>Interleave every other thing from multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> to make one
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose current callable based on results of condition mode.</p>
+<dd><p>Choose active callable based on results of condition mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -560,7 +520,7 @@ wrapper for outgoing things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.reducesaw.zip">
 <tt class="descname">zip</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.reducesaw.zip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the result of reducing a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> to one <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> where every two
+<dd><p>Reduce multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> to one <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> where every two
 things are paired in a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>thing1</em>, <em>thing2</em>) based on
 where they were found within the original <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>

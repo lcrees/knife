@@ -13,15 +13,14 @@ Active Chainsaws
    :maxdepth: 2
 
    activesaw
-   acollectsaw
+   acomparesaw
    afiltersaw
    amapsaw
-   amathsaw
+   anumbersaw
    aordersaw
    areducesaw
    arepeatsaw
    aslicesaw
-   atruthsaw
    
 Lazy Chainsaws
 --------------
@@ -30,15 +29,14 @@ Lazy Chainsaws
    :maxdepth: 2
 
    lazysaw
-   collectsaw
+   comparesaw
    filtersaw
    mapsaw
-   mathsaw
+   numbersaw
    ordersaw
    reducesaw
    repeatsaw
    slicesaw
-   truthsaw
 
 Indices and tables
 ==================

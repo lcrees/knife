@@ -92,7 +92,7 @@
 <dt id="chainsaw.lazy.repeatsaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign any positional and/or keyword arguments to be used anytime the
-current callable or alternative callable is invoked.</p>
+active callable or alternative callable is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -100,7 +100,7 @@ current callable or alternative callable is invoked.</p>
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>).</p>
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -123,8 +123,7 @@ with outgoing things.</p>
 <dt id="chainsaw.lazy.repeatsaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
-its original type</em>).</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -144,14 +143,14 @@ its original type</em>).</p>
 <dt id="chainsaw.lazy.repeatsaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_deque" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -165,21 +164,21 @@ things from initial placement to final extraction.</p>
 <dt id="chainsaw.lazy.repeatsaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -213,21 +212,21 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">Order
 <dt id="chainsaw.lazy.repeatsaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_stuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -245,7 +244,7 @@ version.</p>
 <dt id="chainsaw.lazy.repeatsaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -253,7 +252,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each incoming thing (<em>regardless of its original type</em>).</p>
+each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -306,13 +305,13 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.combinations">
 <tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.combinations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect every possible combination of every <cite>n</cite> things within an
+<dd><p>Find every possible combination of each <cite>n</cite> things within an
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things to derive combinations from</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; length of things to derive combinations from</td>
 </tr>
 </tbody>
 </table>
@@ -321,19 +320,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.copy">
 <tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.copy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect duplicates of each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.repeatsaw.count">
-<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.repeatsaw.count_out">
-<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.count_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of outgoing things.</p>
+<dd><p>Duplicate each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -373,13 +360,13 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.permutations">
 <tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.permutations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect every possible permutation of every <cite>n</cite> things within an
+<dd><p>Find every possible permutation of each <cite>n</cite> things within an
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things to derive permutations from</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; length of things to derive permutations from</td>
 </tr>
 </tbody>
 </table>
@@ -394,8 +381,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.product">
 <tt class="descname">product</tt><big>(</big><em>n=1</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.product" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect results of nested <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> repeated <cite>n</cite>
-times.</p>
+<dd><p>Repeat results of nested <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> <cite>n</cite> times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -409,15 +395,15 @@ times.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.repeat">
 <tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.repeat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect the results of repeating an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or results
-of invoking the current callable <cite>n</cite> times.</p>
+<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or the results
+of invoking the active callable <cite>n</cite> times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> &#8211; number of times to repeat (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>call</strong> &#8211; repeat result of current callable (<em>default:</em>
+<li><strong>call</strong> &#8211; repeat result of active callable (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -446,7 +432,7 @@ of invoking the current callable <cite>n</cite> times.</p>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.snapshot">
-<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em>, <em>snapshot=True</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -467,15 +453,15 @@ of invoking the current callable <cite>n</cite> times.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<dd><p>Assign active callable. Optionally assign an alternative callable. If
 <cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
-the <cite>call</cite> argument as a factory to build the current callable.</p>
+the <cite>call</cite> argument as a factory to build the active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>call</strong> &#8211; callable assigned as active callable</li>
 <li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 <li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
@@ -512,7 +498,7 @@ the <cite>call</cite> argument as a factory to build the current callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any current callable, alternative callable, or assigned position
+<dd><p>Clear any active callable, alternative callable, or assigned position
 or keywork arguments.</p>
 </dd></dl>
 
@@ -520,13 +506,13 @@ or keywork arguments.</p>
 <dt id="chainsaw.lazy.repeatsaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.repeatsaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.repeatsaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose current callable based on results of condition mode.</p>
+<dd><p>Choose active callable based on results of condition mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

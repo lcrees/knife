@@ -10,27 +10,26 @@ class RepeatMixin(local):
 
     def combinations(self, n):
         '''
-        Collect every possible combination of every `n` things within an
+        Find every possible combination of each `n` things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: number of things to derive combinations from
+        :param n: length of things to derive combinations from
         '''
         with self._chain():
             return self._many(self._combinations(n))
 
     def copy(self):
         '''
-        Collect duplicates of each thing within an `iterable
+        Duplicate each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
             return self._many(self._copy)
 
-    def product(self, n=1):
+    def loops(self, n=1):
         '''
-        Collect results of nested `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ repeated `n`
-        times.
+        Repeat results of nested `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ `n` times.
 
         :param n: number of loops to repeat (*default:* ``1``)
         '''
@@ -39,23 +38,23 @@ class RepeatMixin(local):
 
     def permutations(self, n):
         '''
-        Collect every possible permutation of every `n` things within an
+        Find every possible permutation of each `n` things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: number of things to derive permutations from
+        :param n: length of things to derive permutations from
         '''
         with self._chain():
             return self._many(self._permutations(n))
 
     def repeat(self, n=None, call=False):
         '''
-        Collect the results of repeating an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or results
-        of invoking the current callable `n` times.
+        Repeat either an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ or the results
+        of invoking the active callable `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
-        :param call: repeat result of current callable (*default:*
+        :param call: repeat result of active callable (*default:*
           :const:`False`)
         '''
         with self._chain():
@@ -66,55 +65,79 @@ class MapMixin(local):
 
     '''mapping mixin'''
 
+    def argmap(self, merge=False):  # @NoSelf
+        '''
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ as wildcard
+        `positional arguments
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ to
+        the active callable.
+
+        :param merge: combine global `positional
+          <http://docs.python.org/glossary.html#term-positional-argument>`_
+          arguments with wildcard `positional
+          <http://docs.python.org/glossary.html#term-positional-argument>`_
+          arguments from an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ (*default:*
+          :const:`False`)
+        '''
+        with self._chain():
+            return self._many(self._argmap(
+                self._call, merge, self._args, self._kw,
+            ))
+
     def invoke(self, name):
         '''
-        Invoke method `name` on each thing within an
+        Call method `name` from each thing within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ with
-        the currently assigned `positional
+        the global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
-        <http://docs.python.org/glossary.html#term-keyword-argument>`_ and
-        collect the results but
-        collect the original thing instead of the value returned after calling
-        the method the return value is :const:`None`.
+        <http://docs.python.org/glossary.html#term-keyword-argument>`_ but
+        collect the original thing instead of the value returned by calling the
+        method if the return value of the method call is :const:`None`.
 
         :param name: method name
         '''
         with self._chain():
-            return self._many(
-                self._invoke(name, (self._args, self._kw))
-            )
+            return self._many(self._invoke(name, (self._args, self._kw)))
 
-    def map(self, args=False, kwargs=False, current=False):
+    def kwargmap(self, merge=False):  # @NoSelf
         '''
-        Invoke the current callable on each thing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ as a
+        :class:`tuple` of wildcard `positional
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+        `keyword arguments
+        <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
+        active callable.
 
-        :param args: pass each thing within an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ as `*args
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ to
-          the current callable (*default:* :const:`False`)
-        :param kwargs: pass each thing within an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ to the current
-          callable as a :class:`tuple` of `*args
+        :param merge: combine global `positional
           <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `**kwargs
+          `keyword
           <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          (*default:* :const:`False`)
-        :param current: pass each thing within an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ as a
-          :class:`tuple` of `*args
+          arguments with `positional
           <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `**kwargs
+          `keyword
           <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          combined with any assigned `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ or
+          arguments from an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ into a single
+          tuple of wildcard `positional
+          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
           `keyword arguments
           <http://docs.python.org/glossary.html#term-keyword-argument>`_ for
-          the current callable (*default:* :const:`False`)
+          the active callable (*default:* :const:`False`)
         '''
-        args = kwargs if kwargs else args
         with self._chain():
-            return self._many(self._map(
-                self._call, args, kwargs, current, self._args, self._kw,
+            return self._many(self._kwargmap(
+                self._call, merge, self._args, self._kw,
             ))
+
+    def map(self):
+        '''
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ to the active
+        callable.
+        '''
+        with self._chain():
+            return self._many(self._map(self._call))

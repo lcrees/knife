@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
     <link rel="next" title="chainsaw.active.reducesaw — Reducing chainsaw" href="areducesaw.html" />
-    <link rel="prev" title="chainsaw.active.mathsaw — Mathing chainsaw" href="amathsaw.html" /> 
+    <link rel="prev" title="chainsaw.active.numbersaw — Numbering chainsaw" href="anumbersaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,7 +43,7 @@
           <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
+          <a href="anumbersaw.html" title="chainsaw.active.numbersaw — Numbering chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -92,7 +92,7 @@
 <dt id="chainsaw.active.ordersaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign any positional and/or keyword arguments to be used anytime the
-current callable or alternative callable is invoked.</p>
+active callable or alternative callable is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -100,7 +100,7 @@ current callable or alternative callable is invoked.</p>
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec (<em>regardless of its original type</em>).</p>
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -123,8 +123,7 @@ with outgoing things.</p>
 <dt id="chainsaw.active.ordersaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing (<em>regardless of
-its original type</em>).</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -144,14 +143,14 @@ its original type</em>).</p>
 <dt id="chainsaw.active.ordersaw.as_deque">
 <tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_deque" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -165,21 +164,21 @@ things from initial placement to final extraction.</p>
 <dt id="chainsaw.active.ordersaw.as_frozenset">
 <tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.as_frozenstuf">
 <tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -213,21 +212,21 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">Order
 <dt id="chainsaw.active.ordersaw.as_orderedstuf">
 <tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.as_stuf">
 <tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_stuf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt>.</p>
+<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -245,7 +244,7 @@ version.</p>
 <dt id="chainsaw.active.ordersaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -253,7 +252,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each incoming thing (<em>regardless of its original type</em>).</p>
+each incoming thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -286,12 +285,6 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.choice">
-<tt class="descname">choice</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.choice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect a randomly selected thing from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.ordersaw.clear">
 <tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear out everything.</p>
@@ -307,18 +300,6 @@ unmodified baseline version.</p>
 <dt id="chainsaw.active.ordersaw.clear_out">
 <tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.clear_out" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear outgoing things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.count">
-<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.count_out">
-<tt class="descname">count_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.count_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -356,10 +337,10 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.groupby">
-<tt class="descname">groupby</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.groupby" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.active.ordersaw.group">
+<tt class="descname">group</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> grouped using
-the current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+the active callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -378,20 +359,6 @@ the current callable as the <a class="reference external" href="http://docs.pyth
 <dt id="chainsaw.active.ordersaw.reverse">
 <tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.reverse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect the current order of things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.sample">
-<tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect a randomly sample of <cite>n</cite> size from things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; size of sample</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
@@ -415,7 +382,7 @@ randomly rearranged from their previous order.</p>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.snapshot">
-<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em>, <em>snapshot=True</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -437,21 +404,21 @@ randomly rearranged from their previous order.</p>
 <dt id="chainsaw.active.ordersaw.sort">
 <tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> sorted using the
-current callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+active callable as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.tap">
 <tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign current callable. Optionally assign an alternative callable. If
+<dd><p>Assign active callable. Optionally assign an alternative callable. If
 <cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
-the <cite>call</cite> argument as a factory to build the current callable.</p>
+the <cite>call</cite> argument as a factory to build the active callable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; callable assigned as current callable</li>
+<li><strong>call</strong> &#8211; callable assigned as active callable</li>
 <li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 <li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
@@ -488,7 +455,7 @@ the <cite>call</cite> argument as a factory to build the current callable.</p>
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any current callable, alternative callable, or assigned position
+<dd><p>Clear any active callable, alternative callable, or assigned position
 or keywork arguments.</p>
 </dd></dl>
 
@@ -496,13 +463,13 @@ or keywork arguments.</p>
 <dt id="chainsaw.active.ordersaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.ordersaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose current callable based on results of condition mode.</p>
+<dd><p>Choose active callable based on results of condition mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -546,8 +513,8 @@ wrapper for outgoing things.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="amathsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt> &#8212; Mathing chainsaw</a></p>
+  <p class="topless"><a href="anumbersaw.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.numbersaw</span></tt> &#8212; Numbering chainsaw</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="areducesaw.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.reducesaw</span></tt> &#8212; Reducing chainsaw</a></p>
@@ -586,7 +553,7 @@ wrapper for outgoing things.</p>
           <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
+          <a href="anumbersaw.html" title="chainsaw.active.numbersaw — Numbering chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
