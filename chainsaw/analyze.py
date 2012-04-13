@@ -13,8 +13,7 @@ class CompareMixin(local):
         :const:`True` if the active callable returns :const:`True` for
         **everything** within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
-        the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        is empty).
+        the iterable is empty).
         '''
         with self._chain():
             return self._one(self._all(self._test))
@@ -23,9 +22,8 @@ class CompareMixin(local):
         '''
         :const:`True` if the active callable returns :const:`True` for
         **anything** within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ (or if
-        the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        is empty).
+        <http://docs.python.org/glossary.html#term-iterable>`_ (or if the
+        iterable is empty).
         '''
         with self._chain():
             return self._one(self._any(self._test))
@@ -68,9 +66,8 @@ class CompareMixin(local):
     def superset(self):
         '''
         :const:`True` if an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ is
-        a superset of another `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ is a superset of
+        another iterable.
         '''
         with self._chain():
             return self._one(self._superset)
@@ -98,7 +95,7 @@ class NumberMixin(local):
 
     def average(self):
         '''
-        Average thing within an `iterable
+        Take average of things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -106,7 +103,7 @@ class NumberMixin(local):
 
     def count(self):
         '''
-        Number of times each thing occurs within an `iterable
+        Count the number of times each thing occurs within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_. Returns a
         :class:`tuple` consisting of (*least common thing*, *most common
         thing*, *count of everything* consisting of a :class:`list` of
@@ -117,7 +114,7 @@ class NumberMixin(local):
 
     def max(self):
         '''
-        Maximum thing within an `iterable
+        Take the maximum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         active callable as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
@@ -127,7 +124,7 @@ class NumberMixin(local):
 
     def median(self):
         '''
-        Median thing within an `iterable
+        Take the median thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -135,7 +132,7 @@ class NumberMixin(local):
 
     def min(self):
         '''
-        Minimum thing within an `iterable
+        Take the minimum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         active callable as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
@@ -145,7 +142,7 @@ class NumberMixin(local):
 
     def minmax(self):
         '''
-        Minimum and maximum things within an `iterable
+        Take the minimum and maximum things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_
         as a :class:`tuple` consisting of (*minimum value*, *maximum value*).
         '''
@@ -154,7 +151,7 @@ class NumberMixin(local):
 
     def range(self):
         '''
-        Length of the smallest interval that can contain each thing
+        Take the length of the smallest interval that can contain each thing
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
@@ -163,12 +160,12 @@ class NumberMixin(local):
 
     def sum(self, start=0, precision=False):
         '''
-        Total from adding up `start` and each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        Take the total from adding up `start` and each thing within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param start: starting number (*default:* ``0``)
 
-        :param floats: add floats with extended precision (*default:*
+        :param precision: add floats with extended precision (*default:*
           :const:`False`)
         '''
         with self._chain():

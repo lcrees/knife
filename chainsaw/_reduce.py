@@ -73,8 +73,8 @@ class _FilterMixin(local):
 
     @staticmethod
     def _traverse(call, deep, anc, alt, wrap):
-        mro = lambda i: ichain(imap(getmro, i))
-        def members(true, iterable):
+        mro = lambda i: ichain(imap(getmro, i))  # @UnusedVariable
+        def members(true, iterable): #@IgnorePep8
             for k in ifilter(lambda x: x, dir(iterable)):
                 try:
                     v = getattr(iterable, k)
@@ -82,7 +82,7 @@ class _FilterMixin(local):
                     pass
                 else:
                     yield k, wrap(extract(true, v)) if alt(v) else k, v
-        def extract(true, iterable):
+        def extract(true, iterable): #@IgnorePep8
             for member in ifilter(truth, members(true, iterable)):
                 yield member
         return lambda i: ichain(imap(lambda x: extract(call, x), i))

@@ -140,13 +140,6 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.slicesaw.as_deque">
-<tt class="descname">as_deque</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_deque" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> each incoming thing.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.slicesaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
@@ -158,20 +151,6 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict<
 <tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to editing context where operations can be performed on incoming
 things from initial placement to final extraction.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.as_frozenset">
-<tt class="descname">as_frozenset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_frozenset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">frozenset</span></tt> each incoming thing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.as_frozenstuf">
-<tt class="descname">as_frozenstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_frozenstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">frozenstuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -202,31 +181,10 @@ individual thing in a series of many individual things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.slicesaw.as_ordereddict">
-<tt class="descname">as_ordereddict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_ordereddict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">OrderedDict</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.as_orderedstuf">
-<tt class="descname">as_orderedstuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_orderedstuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">orderedstuf</span></tt> each incoming thing.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.slicesaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
 <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.as_stuf">
-<tt class="descname">as_stuf</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_stuf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">stuf</span></tt> each incoming thing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -330,6 +288,26 @@ at random from an <a class="reference external" href="http://docs.python.org/glo
 </dd></dl>
 
 <dl class="method">
+<dt id="chainsaw.active.slicesaw.dice">
+<tt class="descname">dice</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.dice" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into multiple
+iterables of <cite>n</cite> things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> &#8211; number of things per split</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete things (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="chainsaw.active.slicesaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return outgoing things, cleaning out everything afterwards.</p>
@@ -366,8 +344,8 @@ at random from an <a class="reference external" href="http://docs.python.org/glo
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.first">
 <tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.first" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slice either <cite>n</cite> things from the start end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or the
-<strong>first</strong> thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Slice off either <cite>n</cite> things from the starting end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or the
+<strong>first</strong> thing within an iterable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -391,7 +369,7 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.last" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off either
 <cite>n</cite> things from the tail end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
-<strong>last</strong> thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<strong>last</strong> thing within an iterable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -431,7 +409,7 @@ random sample of <cite>n</cite> things within an <a class="reference external" h
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; size of sample</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; sample size</td>
 </tr>
 </tbody>
 </table>
@@ -453,17 +431,16 @@ random sample of <cite>n</cite> things within an <a class="reference external" h
 <dt id="chainsaw.active.slicesaw.slice">
 <tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.slice" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off things
-within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> from <cite>start</cite> to
+(optionally) <cite>stop</cite> in <cite>step</cite> steps.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>start</strong> &#8211; starting index of slice</li>
-<li><strong>stop</strong> &#8211; stopping index of slice
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>step</strong> &#8211; size of step in slice
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>stop</strong> &#8211; stopping index of slice (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>step</strong> &#8211; size of step in slice (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -484,28 +461,6 @@ within an <a class="reference external" href="http://docs.python.org/glossary.ht
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 <li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.split">
-<tt class="descname">split</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.split" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into multiple
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> of
-<cite>n</cite> things while using <cite>fill</cite> to pad out results that fall short of
-<cite>n</cite>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> &#8211; number of things per split</li>
-<li><strong>fill</strong> &#8211; value to pad out incomplete things (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>

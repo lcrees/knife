@@ -367,8 +367,9 @@ class KFilter(AppspaceKey):
         <http://docs.python.org/glossary.html#term-attribute>`_ from things
         within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ by
-        by matching their `attribute
-        <http://docs.python.org/glossary.html#term-attribute>`_ `names`.
+        by matching their attribute `names`.
+
+        :param names: attribute names
         '''
 
     def duality():  # @NoSelf
@@ -376,15 +377,14 @@ class KFilter(AppspaceKey):
         Divide an iterable into two `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ based on whether
         the active callable returns :const:`True` or :const:`False` for each
-        thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        thing within an iterable.
         '''
 
     def filter(invert=False):  # @NoSelf
         '''
         Collect everthing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ that
-        the active callable matches.
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        matched by the active callable.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -396,9 +396,9 @@ class KFilter(AppspaceKey):
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that matches `*keys`.
+        that matches `keys`.
 
-        :param *keys: item keys or indexes
+        :param keys: item keys (or indexes)
         '''
 
     def mapping(keys=False, values=False):  # @NoSelf
@@ -414,34 +414,37 @@ class KFilter(AppspaceKey):
 
     def pattern(pattern, flags=0, compiler='parse'):  # @NoSelf
         '''
-        Compile a pattern and use it as the active callable.
+        Compile a search pattern to use as the active callable.
 
-        :param pattern: regular expression search pattern
+        :param pattern: search pattern
+
         :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
-        :param compiler: which engine to compile the pattern with. Valid
-          options are 'parse', 're', or 'glob' (default: 'parse')
+
+        :param compiler: engine to compile pattern with. Valid options are
+          ``'parse'``, ``'re'``, or ``'glob'`` (default: ``'parse'``)
         '''
 
     def traverse(ancestors=False, invert=False):  # @NoSelf
         '''
-        Collect everthing from things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ or
-        their ancestors that the active callable matches.
+        Collect things from things or their ancestors within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        active callable.
 
         :param ancestors: collect things from parents of a thing based on
           `method resolution order (MRO)
           <http://docs.python.org/glossary.html#term-method-resolution-order>`_
           (default: :const:`False`)
-        :param invert: return things for which the filter is :const:`False`
-          rather than :const:`True` (*default:* :const:`False`)
+
+        :param invert: return things active callable evaluates as
+          :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
 
 
 class KReduce(AppspaceKey):
 
-    '''reduce key'''
+    '''reducing key'''
 
     def flatten():  # @NoSelf
         '''
@@ -451,41 +454,37 @@ class KReduce(AppspaceKey):
 
     def merge():  # @NoSelf
         '''
-        Combine an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ of multiple
-        things into one thing.
+        Combine multiple `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
+        iterable.
         '''
 
     def reduce(initial=None, reverse=False):  # @NoSelf
         '''
         Reduce an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ down to one
-        thing using the active callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to one
+        thing with active callable.
 
         :param initial: starting value (*default:*: :const:`None`)
 
         :param reverse: reduce from `the right side
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
-          of an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ (*default:*:
-          :const:`False`)
+          of an iterable (*default:* :const:`False`)
         '''
 
     def weave():  # @NoSelf
         '''
         Interleave every other thing from multiple `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ to make one
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        iterable.
         '''
 
     def zip():  # @NoSelf
         '''
         Reduce multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ to one `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ where every two
-        things are paired in a :class:`tuple` of (*thing1*, *thing2*) based on
-        where they were found within the original `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to one iterable
+        by pairing every two things in a :class:`tuple` of
+        (*thing1*, *thing2*).
         '''
 
 
@@ -512,12 +511,23 @@ class KSlice(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
+    def dice(n, fill=None):
+        '''
+        `Slice <http://docs.python.org/glossary.html#term-slice>`_ an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ into multiple
+        iterables of `n` things.
+
+        :param n: number of things per split
+
+        :param fill: value to pad out incomplete things (*default:*
+          :const:`None`)
+        '''
+
     def first(n=0):  # @NoSelf
         '''
-        Slice either `n` things from the start end of an `iterable
+        Slice off either `n` things from the starting end of an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or the
-        **first** thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        **first** thing within an iterable.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -535,8 +545,7 @@ class KSlice(AppspaceKey):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off either
         `n` things from the tail end of an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or just the
-        **last** thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        **last** thing within an iterable.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -555,34 +564,21 @@ class KSlice(AppspaceKey):
         random sample of `n` things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: size of sample
+        :param n: sample size
         '''
 
     def slice(start, stop=False, step=False):  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off things
         within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ from `start` to
+        (optionally) `stop` in `step` steps.
 
         :param start: starting index of slice
 
-        :param stop: stopping index of slice
-          (*default:* :const:`False`)
-        :param step: size of step in slice
-          (*default:* :const:`False`)
-        '''
+        :param stop: stopping index of slice (*default:* :const:`False`)
 
-    def split(n, fill=None):  # @NoSelf
-        '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ into multiple
-        `iterables <http://docs.python.org/glossary.html#term-iterable>`_ of
-        `n` things while using `fill` to pad out results that fall short of
-        `n`.
-
-        :param n: number of things per split
-        :param fill: value to pad out incomplete things (*default:*
-          :const:`None`)
+        :param step: size of step in slice (*default:* :const:`False`)
         '''
 
 
@@ -609,7 +605,7 @@ class KRepeat(AppspaceKey):
         Repeat results of nested `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ `n` times.
 
-        :param n: number of loops to repeat (*default:* ``1``)
+        :param n: number of nested loops to repeat (*default:* ``1``)
         '''
 
     def permutations(n):  # @NoSelf
@@ -635,23 +631,18 @@ class KRepeat(AppspaceKey):
 
 class KMap(AppspaceKey):
 
-    '''map key'''
+    '''mapping key'''
 
     def argmap(merge=False):  # @NoSelf
         '''
-        Pass each thing within an `iterable
+        Feed each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ as wildcard
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
         the active callable.
 
-        :param merge: combine global `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_
-          arguments with wildcard `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_
-          arguments from an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ (*default:*
-          :const:`False`)
+        :param merge: combine global positional arguments with wildcard
+          positional arguments from an iterable (*default:* :const:`False`)
         '''
 
     def invoke(name):  # @NoSelf
@@ -662,42 +653,31 @@ class KMap(AppspaceKey):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ but
-        collect the original thing instead of the value returned by calling the
-        method if the return value of the method call is :const:`None`.
+        take the original thing if the return value of the method call is
+        :const:`None`.
 
         :param name: method name
         '''
 
     def kwargmap(merge=False):  # @NoSelf
         '''
-          Pass each thing within an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ as a
-          :class:`tuple` of wildcard `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword arguments
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
-          active callable.
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ as a
+        :class:`tuple` of wildcard `positional
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+        `keyword arguments
+        <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
+        active callable.
 
-        :param merge: combine global `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          arguments with `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          arguments from an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ into a single
-          tuple of wildcard `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          ``keyword arguments
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_ for
-          the active callable (*default:* :const:`False`)
+        :param merge: combine global positional and keyword arguments with
+          positional and keyword arguments from an iterable into a single
+          :class:`tuple` of wildcard positional and keyword arguments for the
+          active callable (*default:* :const:`False`)
         '''
 
     def map():  # @NoSelf
         '''
-        Pass each thing within an `iterable
+        Feed each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ to the active
         callable.
         '''
@@ -712,17 +692,15 @@ class KCompare(AppspaceKey):
         :const:`True` if the active callable returns :const:`True` for
         **everything** within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
-        the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        is empty).
+        the iterable is empty).
         '''
 
     def any():  # @NoSelf
         '''
         :const:`True` if the active callable returns :const:`True` for
         **anything** within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ (or if
-        the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        is empty).
+        <http://docs.python.org/glossary.html#term-iterable>`_ (or if the
+        iterable is empty).
         '''
 
     def difference(symmetric=False):  # @NoSelf
@@ -730,8 +708,7 @@ class KCompare(AppspaceKey):
         Differences within a series of
         `iterables <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param symmetric: collect symmetric difference (*default:*
-          :const:`False`)
+        :param symmetric: use symmetric difference (*default:* :const:`False`)
         '''
 
     def disjoint():  # @NoSelf
@@ -756,9 +733,8 @@ class KCompare(AppspaceKey):
     def superset():  # @NoSelf
         '''
         :const:`True` if an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ is
-        a superset of another `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ is a superset of
+        another iterable.
         '''
 
     def union():  # @NoSelf
@@ -780,13 +756,13 @@ class KNumber(AppspaceKey):
 
     def average():  # @NoSelf
         '''
-        Average thing within an `iterable
+        Take average of things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def count():  # @NoSelf
         '''
-        Number of times each thing occurs within an `iterable
+        Count the number of times each thing occurs within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_. Returns a
         :class:`tuple` consisting of (*least common thing*, *most common
         thing*, *count of everything* consisting of a :class:`list` of
@@ -795,7 +771,7 @@ class KNumber(AppspaceKey):
 
     def max():  # @NoSelf
         '''
-        Maximum thing within an `iterable
+        Take the maximum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         active callable as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
@@ -803,13 +779,13 @@ class KNumber(AppspaceKey):
 
     def median():  # @NoSelf
         '''
-        Median thing within an `iterable
+        Take the median thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def min():  # @NoSelf
         '''
-        Minimum thing within an `iterable
+        Take the minimum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         active callable as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
@@ -817,26 +793,26 @@ class KNumber(AppspaceKey):
 
     def minmax():  # @NoSelf
         '''
-        Minimum and maximum things within an `iterable
+        Take the minimum and maximum things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_
         as a :class:`tuple` consisting of (*minimum value*, *maximum value*).
         '''
 
     def range():  # @NoSelf
         '''
-        Length of the smallest interval that can contain each thing
+        Take the length of the smallest interval that can contain each thing
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
-    def sum(start=0, floats=False):  # @NoSelf
+    def sum(start=0, precision=False):  # @NoSelf
         '''
-        Total from adding up `start` and each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        Take the total from adding up `start` and each thing within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param start: starting number (*default:* ``0``)
 
-        :param floats: add floats with extended precision (*default:*
+        :param precision: add floats with extended precision (*default:*
           :const:`False`)
         '''
 

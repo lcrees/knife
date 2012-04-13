@@ -14,10 +14,9 @@ class FilterMixin(local):
         <http://docs.python.org/glossary.html#term-attribute>`_ from things
         within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ by
-        by matching their `attribute
-        <http://docs.python.org/glossary.html#term-attribute>`_ `names`.
+        by matching their attribute `names`.
 
-        :param *names: attribute names
+        :param names: attribute names
         '''
         with self._chain():
             return self._iter(self._attributes(names))
@@ -27,8 +26,7 @@ class FilterMixin(local):
         Divide an iterable into two `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ based on whether
         the active callable returns :const:`True` or :const:`False` for each
-        thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        thing within an iterable.
         '''
         with self._chain():
             return self._many(self._duality(self._test))
@@ -36,8 +34,8 @@ class FilterMixin(local):
     def filter(self, invert=False):
         '''
         Collect everthing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ that
-        the active callable matches.
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        matched by the active callable.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -51,9 +49,9 @@ class FilterMixin(local):
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that matches `*keys`.
+        that matches `keys`.
 
-        :param *keys: item keys or indexes
+        :param keys: item keys (or indexes)
         '''
         with self._chain():
             return self._iter(self._items(keys))
@@ -73,29 +71,32 @@ class FilterMixin(local):
 
     def pattern(self, pattern, flags=0, compiler='parse'):  # @NoSelf
         '''
-        Compile a pattern and use it as the active callable.
+        Compile a search pattern to use as the active callable.
 
-        :param pattern: regular expression search pattern
+        :param pattern: search pattern
+
         :param flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
           ``0``)
-        :param compiler: which engine to compile the pattern with. Valid
-          options are 'parse', 're', or 'glob' (default: 'parse')
+
+        :param compiler: engine to compile pattern with. Valid options are
+          ``'parse'``, ``'re'``, or ``'glob'`` (default: ``'parse'``)
         '''
         return self.tap(self._pattern(pattern, flags, compiler))
 
     def traverse(self, ancestors=False, invert=False):  # @NoSelf
         '''
-        Collect things from things within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ or
-        their ancestors that the active callable matches.
+        Collect things from things or their ancestors within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        active callable.
 
         :param ancestors: collect things from parents of a thing based on
           `method resolution order (MRO)
           <http://docs.python.org/glossary.html#term-method-resolution-order>`_
           (default: :const:`False`)
-        :param invert: return things for which the filter is :const:`False`
-          rather than :const:`True` (*default:* :const:`False`)
+
+        :param invert: return things active callable evaluates as
+          :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._traverse(self._test, ancestors, invert))
@@ -103,7 +104,7 @@ class FilterMixin(local):
 
 class ReduceMixin(local):
 
-    '''reduce mixin'''
+    '''reducing mixin'''
 
     def flatten(self):
         '''
@@ -115,9 +116,9 @@ class ReduceMixin(local):
 
     def merge(self):
         '''
-        Combine an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ of multiple
-        things into one thing.
+        Combine multiple `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
+        iterable.
         '''
         with self._chain():
             return self._many(self._merge)
@@ -125,16 +126,14 @@ class ReduceMixin(local):
     def reduce(self, initial=None, reverse=False):
         '''
         Reduce an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ down to one
-        thing using the active callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to one
+        thing with active callable.
 
         :param initial: starting value (*default:*: :const:`None`)
 
         :param reverse: reduce from `the right side
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
-          of an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ (*default:*:
-          :const:`False`)
+          of an iterable (*default:* :const:`False`)
         '''
         with self._chain():
             return self._one(self._reduce(self._call, initial, reverse))
@@ -143,7 +142,7 @@ class ReduceMixin(local):
         '''
         Interleave every other thing from multiple `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ to make one
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        iterable.
         '''
         with self._chain():
             return self._many(self._weave)
@@ -151,11 +150,9 @@ class ReduceMixin(local):
     def zip(self):
         '''
         Reduce multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ to one `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ where every two
-        things are paired in a :class:`tuple` of (*thing1*, *thing2*) based on
-        where they were found within the original `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to one iterable
+        by pairing every two things in a :class:`tuple` of
+        (*thing1*, *thing2*).
         '''
         with self._chain():
             return self._many(self._zip)
@@ -192,11 +189,10 @@ class SliceMixin(local):
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ into multiple
-        `iterables <http://docs.python.org/glossary.html#term-iterable>`_ of
-        `n` things while using `fill` to pad out results that fall short of
-        `n`.
+        iterables of `n` things.
 
         :param n: number of things per split
+
         :param fill: value to pad out incomplete things (*default:*
           :const:`None`)
         '''
@@ -205,10 +201,9 @@ class SliceMixin(local):
 
     def first(self, n=0):
         '''
-        Slice either `n` things from the start end of an `iterable
+        Slice off either `n` things from the starting end of an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or the
-        **first** thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        **first** thing within an iterable.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -231,8 +226,7 @@ class SliceMixin(local):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off either
         `n` things from the tail end of an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or just the
-        **last** thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        **last** thing within an iterable.
 
         :param n: number of things (*default:*: ``0``)
         '''
@@ -255,7 +249,7 @@ class SliceMixin(local):
         random sample of `n` things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: size of sample
+        :param n: sample size
         '''
         with self._chain():
             return self._many(self._sample(n))
@@ -264,14 +258,14 @@ class SliceMixin(local):
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off things
         within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_.
+        <http://docs.python.org/glossary.html#term-iterable>`_ from `start` to
+        (optionally) `stop` in `step` steps.
 
         :param start: starting index of slice
 
-        :param stop: stopping index of slice
-          (*default:* :const:`False`)
-        :param step: size of step in slice
-          (*default:* :const:`False`)
+        :param stop: stopping index of slice (*default:* :const:`False`)
+
+        :param step: size of step in slice (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._slice(start, stop, step))

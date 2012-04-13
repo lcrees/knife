@@ -8,7 +8,7 @@ class RepeatMixin(local):
 
     '''repetition mixin'''
 
-    def combinations(self, n):
+    def combine(self, n):
         '''
         Find every possible combination of each `n` things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
@@ -26,22 +26,22 @@ class RepeatMixin(local):
         with self._chain():
             return self._many(self._copy)
 
-    def loops(self, n=1):
+    def product(self, n=1):
         '''
         Repeat results of nested `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ `n` times.
 
-        :param n: number of loops to repeat (*default:* ``1``)
+        :param n: number of nested loops to repeat (*default:* ``1``)
         '''
         with self._chain():
             return self._many(self._product(n))
 
-    def permutations(self, n):
+    def permutate(self, n):
         '''
         Find every possible permutation of each `n` things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: length of things to derive permutations from
+        :param n: length of things to derive permutate from
         '''
         with self._chain():
             return self._many(self._permutations(n))
@@ -73,13 +73,8 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
         the active callable.
 
-        :param merge: combine global `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_
-          arguments with wildcard `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_
-          arguments from an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ (*default:*
-          :const:`False`)
+        :param merge: combine global positional arguments with wildcard
+          positional arguments from an iterable (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._argmap(
@@ -94,8 +89,8 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ but
-        collect the original thing instead of the value returned by calling the
-        method if the return value of the method call is :const:`None`.
+        take the original thing if the return value of the method call is
+        :const:`None`.
 
         :param name: method name
         '''
@@ -112,21 +107,10 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
         active callable.
 
-        :param merge: combine global `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          arguments with `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_
-          arguments from an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ into a single
-          tuple of wildcard `positional
-          <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-          `keyword arguments
-          <http://docs.python.org/glossary.html#term-keyword-argument>`_ for
-          the active callable (*default:* :const:`False`)
+        :param merge: combine global positional and keyword arguments with
+          positional and keyword arguments from an iterable into a single
+          :class:`tuple` of wildcard positional and keyword arguments for the
+          active callable (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._kwargmap(

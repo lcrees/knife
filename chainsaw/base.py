@@ -2,10 +2,6 @@
 '''base chainsaw mixins'''
 
 from threading import local
-from collections import deque
-
-from stuf.utils import OrderedDict
-from stuf.core import stuf, frozenstuf, orderedstuf
 
 from chainsaw._compat import tounicode, tobytes
 
@@ -288,10 +284,6 @@ class OutchainMixin(local):
         self._wrapper = wrapper
         return self
 
-    ###########################################################################
-    ## string wrapping things #################################################
-    ###########################################################################
-
     def as_ascii(self, errors='strict'):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
@@ -315,6 +307,37 @@ class OutchainMixin(local):
         '''
         return self.wrap(lambda x: tobytes(x, encoding, errors))
 
+    def as_dict(self):
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`dict` each incoming thing.
+        '''
+        return self.wrap(dict)
+
+    def as_list(self):
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`deque` each incoming thing.
+        '''
+        return self.wrap(list)
+
+    unwrap = as_list
+
+    def as_set(self):
+        '''
+        Set `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        :class:`set` each incoming thing.
+        '''
+        return self.wrap(set)
+
+    def as_tuple(self):
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`tuple` each incoming thing.
+        '''
+        return self.wrap(tuple)
+
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
@@ -327,94 +350,3 @@ class OutchainMixin(local):
           ``'strict'``)
         '''
         return self.wrap(lambda x: tounicode(x, encoding, errors))
-
-    ###########################################################################
-    ## sequence wrapping things ###############################################
-    ###########################################################################
-
-    def as_deque(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`list` each incoming thing.
-        '''
-        return self.wrap(deque)
-
-    def as_list(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`deque` each incoming thing.
-        '''
-        return self.wrap(list)
-
-    unwrap = as_list
-
-    def as_tuple(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`tuple` each incoming thing.
-        '''
-        return self.wrap(tuple)
-
-    ###########################################################################
-    ## map wrapping things ####################################################
-    ###########################################################################
-
-    def as_dict(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`dict` each incoming thing.
-        '''
-        return self.wrap(dict)
-
-    def as_ordereddict(self):
-        '''
-        Set `iterable  <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`OrderedDict`.
-        '''
-        return self.wrap(OrderedDict)
-
-    ###########################################################################
-    ## stuf wrapping things ###################################################
-    ###########################################################################
-
-    def as_frozenstuf(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`frozenstuf` each incoming thing.
-        '''
-        return self.wrap(frozenstuf)
-
-    def as_orderedstuf(self):
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`orderedstuf` each incoming thing.
-        '''
-        return self.wrap(orderedstuf)
-
-    def as_stuf(self):
-        '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`stuf` each incoming thing.
-        '''
-        return self.wrap(stuf)
-
-    ###########################################################################
-    ## set wrapping things ####################################################
-    ###########################################################################
-
-    def as_frozenset(self):
-        '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`frozenset` each incoming thing.
-        '''
-        return self.wrap(frozenset)
-
-    def as_set(self):
-        '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`set` each incoming thing.
-        '''
-        return self.wrap(set)

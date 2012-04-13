@@ -38,14 +38,6 @@ class TestSlice(unittest.TestCase, Mixin, SliceMixin):
         self.mclass = slicesaw.as_manual()
 
 
-class TestCollect(unittest.TestCase, Mixin, CollectMixin):
-
-    def setUp(self):
-        from chainsaw.lazy import collectsaw
-        self.qclass = collectsaw.as_auto()
-        self.mclass = collectsaw.as_manual()
-
-
 class TestMap(unittest.TestCase, Mixin, MapMixin):
 
     def setUp(self):
@@ -78,20 +70,20 @@ class TestReduce(unittest.TestCase, Mixin, ReduceMixin):
         self.mclass = reducesaw.as_manual()
 
 
-class TestMath(unittest.TestCase, Mixin, MathMixin):
+class TestNumber(unittest.TestCase, Mixin, MathMixin):
 
     def setUp(self):
-        from chainsaw.lazy import mathsaw
-        self.qclass = mathsaw.as_auto()
-        self.mclass = mathsaw.as_manual()
+        from chainsaw.lazy import numbersaw
+        self.qclass = numbersaw.as_auto()
+        self.mclass = numbersaw.as_manual()
 
 
 class TestTruth(unittest.TestCase, Mixin, TruthMixin):
 
     def setUp(self):
-        from chainsaw.lazy import truthsaw
-        self.qclass = truthsaw.as_auto()
-        self.mclass = truthsaw.as_manual()
+        from chainsaw.lazy import comparesaw
+        self.qclass = comparesaw.as_auto()
+        self.mclass = comparesaw.as_manual()
 
 if __name__ == '__main__':
     unittest.main()
