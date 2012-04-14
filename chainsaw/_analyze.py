@@ -68,15 +68,15 @@ class _NumberMixin(local):
     '''number mixin'''
 
     @staticmethod
-    def _average(iterable, s=sum, t=truediv, n=len, tee_=tee):
-        i1, i2 = tee_(iterable)
-        return t(s(i1, 0.0), n(list(i2)))
+    def _average(iterable, s=sum, t=truediv, n=len, e=tee, l=list):
+        i1, i2 = e(iterable)
+        yield t(s(i1, 0.0), n(l(i2)))
 
     @staticmethod
     def _count(iterable, counter=Counter):
         count = counter(iterable)
         commonality = count.most_common()
-        return (
+        yield (
             # least common
             commonality[:-2:-1][0][0],
             # most common (mode)
@@ -87,7 +87,9 @@ class _NumberMixin(local):
 
     @staticmethod
     def _max(key, imax_=max):
-        return lambda x: imax_(x, key=key)
+        def imax(iterable):
+            yield imax_(iterable, key=key)
+        return imax
 
     @staticmethod
     def _median(iterable, s=sorted, l=list, d=truediv, int=int, len=len):
@@ -108,12 +110,16 @@ class _NumberMixin(local):
 
     @staticmethod
     def _min(key, imin_=min):
-        return lambda x: imin_(x, key=key)
+        def imin(iterable):
+            yield imin_(iterable, key=key)
+        return imin
 
     @staticmethod
-    def _sum(start, floats, isum=sum, fsum_=fsum):
-        summer = fsum_ if floats else lambda x: isum(x, start)
-        return lambda x: summer(x)
+    def _sum(start, floats, isum_=sum, fsum_=fsum):
+        summer = fsum_ if floats else lambda x: isum_(x, start)
+        def isum(iterable): #@IgnorePep8
+            yield summer(iterable)
+        return isum
 
 
 class _OrderMixin(local):
@@ -127,7 +133,7 @@ class _OrderMixin(local):
 
     @staticmethod
     def _reverse(iterable, list_=list, reversed_=reversed):
-        yield list(reversed_(list_(iterable)))
+        yield list_(reversed_(list_(iterable)))
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
@@ -137,4 +143,6 @@ class _OrderMixin(local):
 
     @staticmethod
     def _sort(key, sorted_=sorted):
-        return lambda x: sorted_(x, key=key)
+        def isort(iterable):
+            yield sorted_(iterable, key=key)
+        return isort

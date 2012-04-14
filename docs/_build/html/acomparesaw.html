@@ -63,7 +63,7 @@
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.all">
 <tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.all" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the active callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
+<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the assigned function returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
 <strong>everything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
 the iterable is empty).</p>
 </dd></dl>
@@ -71,7 +71,7 @@ the iterable is empty).</p>
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.any">
 <tt class="descname">any</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.any" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the active callable returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
+<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the assigned function returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
 <strong>anything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if the
 iterable is empty).</p>
 </dd></dl>
@@ -107,8 +107,8 @@ iterable is empty).</p>
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign any positional and/or keyword arguments to be used anytime the
-active callable or alternative callable is invoked.</p>
+<dd><p>Assign positional or keyword arguments used anytime assigned function
+(or its alternative) is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -350,18 +350,6 @@ unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.comparesaw.shift_in">
-<tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.shift_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things back to incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.comparesaw.shift_out">
-<tt class="descname">shift_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.shift_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy incoming things to outgoing things.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.comparesaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of current incoming things.</p>
@@ -397,20 +385,15 @@ another iterable.</p>
 
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign active callable. Optionally assign an alternative callable. If
-<cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
-the <cite>call</cite> argument as a factory to build the active callable.</p>
+<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign assigned function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; callable assigned as active callable</li>
-<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>call</strong> &#8211; function to assign</li>
+<li><strong>alt</strong> &#8211; alternative function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -456,8 +439,7 @@ the <cite>call</cite> argument as a factory to build the active callable.</p>
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any active callable, alternative callable, or assigned position
-or keywork arguments.</p>
+<dd><p>Clear assigned function, alternative function, and arguments.</p>
 </dd></dl>
 
 <dl class="method">
@@ -470,15 +452,15 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque
 <dl class="method">
 <dt id="chainsaw.active.comparesaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.comparesaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose active callable based on results of condition mode.</p>
+<dd><p>Choose assigned function based on results of condition mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
+<li><strong>call</strong> &#8211; new function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
 (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
+<li><strong>alt</strong> &#8211; new external function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
 (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>

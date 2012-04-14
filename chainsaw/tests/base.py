@@ -6,7 +6,7 @@ class Mixin(object):
 
     def _false_true_false(self, manchainsaw, expr, comp=None):
         self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         if comp is not None:
             expr(manchainsaw.results(), comp)
@@ -16,7 +16,7 @@ class Mixin(object):
 
     def _true_true_false(self, manchainsaw, expr, comp=None):
         self.assertTrue(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         if comp is not None:
             out = manchainsaw.results()
@@ -27,7 +27,7 @@ class Mixin(object):
 
     def _false_true_true(self, manchainsaw, expr, comp=None):
         self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         if comp is not None:
             expr(manchainsaw.results(), comp)
@@ -42,17 +42,17 @@ class Mixin(object):
         )
 
     def test_preview(self):
-        initial = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
+        initial = self.qclass(1, 2, 3, 4, 5, 6).in_out()
         self.assertListEqual(initial.preview(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 6)
-        self.assertListEqual(initial.shift_out().end(), [1, 2, 3, 4, 5, 6])
+        self.assertListEqual(initial.in_out().end(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertListEqual(
             self.qclass().extend(
                 [1, 2, 3, 4, 5, 6]
-            ).shift_out().end(),
+            ).in_out().end(),
             [1, 2, 3, 4, 5, 6],
         )
 
@@ -60,18 +60,18 @@ class Mixin(object):
         self.assertListEqual(
             self.qclass().extendstart(
                 [1, 2, 3, 4, 5, 6]
-            ).shift_out().end(),
+            ).in_out().end(),
             [6, 5, 4, 3, 2, 1]
         )
 
     def test_append(self):
         self.assertEqual(
-            self.qclass().append('foo').shift_out().end(), 'foo'
+            self.qclass().append('foo').in_out().end(), 'foo'
         )
 
     def test_appendfront(self):
         self.assertEqual(
-            self.qclass().appendstart('foo').shift_out().end(),
+            self.qclass().appendstart('foo').in_out().end(),
             'foo'
         )
 
@@ -86,34 +86,34 @@ class Mixin(object):
     def test_undo(self):
         queue = self.qclass(1, 2, 3).extendstart(
             [1, 2, 3, 4, 5, 6]
-        ).shift_out()
+        ).in_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
-        queue.append(1).undo().shift_out()
+        queue.append(1).undo().in_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
-        queue.append(1).append(2).undo().shift_out()
+        queue.append(1).append(2).undo().in_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.append(1).append(2).undo(2).shift_out()
+        queue.append(1).append(2).undo(2).in_out()
         self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.append(1).append(2).undo(baseline=True).shift_out()
+        queue.append(1).append(2).undo(baseline=True).in_out()
         self.assertListEqual(
             queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1]
         )
-        queue.undo(original=True).shift_out()
+        queue.undo(original=True).in_out()
         self.assertListEqual(queue.end(), [1, 2, 3])
 
     def test_insync(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).shift_in().clear_in().shift_in()
+        q = self.qclass(1, 2, 3, 4, 5, 6).out_in().clear_in().out_in()
         self.assertEqual(list(q._in), list(q._out))
 
     def test_outsync(self):
-        q = self.qclass(1, 2, 3, 4, 5, 6).shift_out()
+        q = self.qclass(1, 2, 3, 4, 5, 6).in_out()
         self.assertEqual(list(q._in), list(q._out))
 
     def test_results(self):
         self.assertListEqual(
             list(self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).shift_out().results()),
+            ).in_out().results()),
             [1, 2, 3, 4, 5, 6]
         )
 
@@ -121,13 +121,13 @@ class Mixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).as_tuple().shift_out().results(),
+            ).as_tuple().in_out().results(),
             tuple,
         )
         self.assertTupleEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).as_tuple().shift_out().results(),
+            ).as_tuple().in_out().results(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -135,13 +135,13 @@ class Mixin(object):
         self.assertIsInstance(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).as_set().shift_out().results(),
+            ).as_set().in_out().results(),
             set,
         )
         self.assertSetEqual(
             self.qclass(
                 1, 2, 3, 4, 5, 6
-            ).as_set().shift_out().results(),
+            ).as_set().in_out().results(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
@@ -149,13 +149,13 @@ class Mixin(object):
         self.assertIsInstance(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).as_dict().shift_out().results(),
+            ).as_dict().in_out().results(),
             dict,
         )
         self.assertDictEqual(
             self.qclass(
                 (1, 2), (3, 4), (5, 6)
-            ).as_dict().shift_out().results(),
+            ).as_dict().in_out().results(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -165,14 +165,14 @@ class Mixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_ascii().shift_out().end(),
+            ).as_many().as_ascii().in_out().end(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_ascii().shift_out(),
+            ).as_many().as_ascii().in_out(),
             self.assertEqual,
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
@@ -183,14 +183,14 @@ class Mixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't',  b('i'), u('g'), None, (1,)
-            ).as_many().as_bytes().shift_out().end(),
+            ).as_many().as_bytes().in_out().end(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_bytes().shift_out(),
+            ).as_many().as_bytes().in_out(),
             self.assertEqual,
             (
         b('[1]'), b('True'), b('t'), b('i'),  b('g'), b('None'), b('(1,)')
@@ -203,14 +203,14 @@ class Mixin(object):
         self.assertEqual(
             self.qclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_unicode().shift_out().end(),
+            ).as_many().as_unicode().in_out().end(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_unicode().shift_out(),
+            ).as_many().as_unicode().in_out(),
             self.assertEqual,
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

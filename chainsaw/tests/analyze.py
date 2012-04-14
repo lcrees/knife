@@ -6,7 +6,7 @@ class NumberMixin(object):
 
     def test_max(self):
         # auto
-        self.assertEqual(self.qclass.as_auto()(1, 2, 4).max().end(), 4)
+        self.assertEqual(self.qclass(1, 2, 4).max().end(), 4)
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
@@ -28,7 +28,7 @@ class NumberMixin(object):
         ]
         manchainsaw = self.mclass(*stooges).tap(lambda x: x.age).max()
         self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         self.assertEqual(stuf(manchainsaw.end()), stuf(name='curly', age=60))
         self.assertTrue(manchainsaw.balanced)
@@ -283,7 +283,7 @@ class OrderMixin(object):
         # man
         manchainsaw = self.mclass(1, 2, 3, 4, 5, 6).shuffle()
         self.assertFalse(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         manchainsaw.end()
         self.assertTrue(manchainsaw.balanced)
@@ -337,12 +337,12 @@ class OrderMixin(object):
             [2, 3, 4, 4, 6, 63, 65],
         )
         # man
-        self._true_true_false(
+        self._false_true_false(
             self.mclass(1, 2, 3, 4, 5, 6).tap(lambda x: sin(x)).sort(),
            self.assertListEqual,
             [5, 4, 6, 3, 1, 2],
         )
-        self._true_true_false(
+        self._false_true_false(
             self.mclass(4, 6, 65, 3, 63, 2, 4).sort(),
           self.assertListEqual,
             [2, 3, 4, 4, 6, 63, 65],

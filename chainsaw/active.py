@@ -60,27 +60,6 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
-#    @contextmanager
-#    def _auto(self, **kw):
-#        '''switch to an automatically balanced four-link chain'''
-#        self._as_chain(chain=self._auto, **kw)
-#        inchain = getattr(self, self._IN)
-#        # move incoming things up to work link
-#        getattr(self, self._WORK).extend(inchain)
-#        yield
-#        out = getattr(self, self._OUT)
-#        # clear out
-#        if self._buildup:
-#            out.clear()
-#        # extend outgoing things with holding link
-#        hold = getattr(self, self._HOLD)
-#        out.extend(hold)
-#        # extend incoming things with holding link
-#        inchain.clear()
-#        inchain.extend(hold)
-#        # clear work, holding links & return to current selected chain
-#        self._rechain()._clearworking()
-
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
@@ -235,16 +214,6 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         self._hold.clear()
         return self
 
-    def _clearh(self):
-        '''Clear holding link.'''
-        self._hold.clear()
-        return self
-
-    def _clearw(self):
-        '''Clear work link.'''
-        self._work.clear()
-        return self
-
     def clear_in(self):
         '''Clear incoming things.'''
         self._in.clear()
@@ -288,9 +257,9 @@ class activesaw(
     __slots__ = SLOTS
 
 
-class slicesaw(OutputMixin, SliceMixin, _SliceMixin):
+class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
 
-    '''slicing chainsaw'''
+    '''comparing chainsaw'''
 
     __slots__ = SLOTS
 
@@ -302,23 +271,9 @@ class filtersaw(OutputMixin, FilterMixin, _FilterMixin):
     __slots__ = SLOTS
 
 
-class repeatsaw(OutputMixin, RepeatMixin, _RepeatMixin):
-
-    '''repeating chainsaw'''
-
-    __slots__ = SLOTS
-
-
 class mapsaw(OutputMixin, MapMixin, _MapMixin):
 
     '''mapping chainsaw'''
-
-    __slots__ = SLOTS
-
-
-class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
-
-    '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
@@ -330,9 +285,9 @@ class numbersaw(OutputMixin, NumberMixin, _NumberMixin):
     __slots__ = SLOTS
 
 
-class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
+class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
 
-    '''comparing chainsaw'''
+    '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
@@ -340,5 +295,19 @@ class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
 class reducesaw(OutputMixin, ReduceMixin, _ReduceMixin):
 
     '''reducing chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class repeatsaw(OutputMixin, RepeatMixin, _RepeatMixin):
+
+    '''repeating chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class slicesaw(OutputMixin, SliceMixin, _SliceMixin):
+
+    '''slicing chainsaw'''
 
     __slots__ = SLOTS

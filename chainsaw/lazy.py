@@ -58,25 +58,15 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # clear work, holding links & return to current selected chain
         self._rechain()._clearworking()
 
-#    @contextmanager
-#    def _auto(self, **kw):
-#        '''switch to an automatically balanced four-link chain'''
-#        self._as_chain(chain=self._auto, **kw)
-#        # move ins things up to work link
-#        work, ins = tee(getattr(self, self._IN))
-#        setattr(self, self._WORK, work)
-#        setattr(self, self._IN, ins)
-#        yield
-#        # move things from holding link to inchain and outs
-#        ins, outs = tee(getattr(self, self._HOLD))
-#        setattr(
-#            self,
-#            self._OUT,
-#            outs if self._buildup else chain(outs, getattr(self, self._OUT)),
-#        )
-#        setattr(self, self._IN, ins)
-#        # clear work, holding links & return to current selected chain
-#        self._rechain()._clearworking()
+    def out_in(self):
+        '''Manually copy outgoing things back to incoming things.'''
+        self._in, self._out = tee(self._out)
+        return self
+
+    def in_out(self):
+        '''Manually copy incoming things to outgoing things.'''
+        self._in, self._out = tee(self._in)
+        return self
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -92,7 +82,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
           :const:`False`)
         '''
         # take snapshot
-        snapshot, self._in = tee(self._in)
+        self._in, snapshot = tee(self._in)
         test = (self._ss is not None and len(self._ss) == 0)
         # make snapshot original snapshot?
         if test or original:
@@ -102,6 +92,9 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
             self._baseline = snapshot
         # place snapshot at beginning of snapshot stack
         self._ss.appendleft(snapshot)
+        # rebalance incoming with outcoming
+        if self._AUTO and not test:
+            self._in, self._out = tee(self._out)
         return self
 
     def undo(self, snapshot=0, baseline=False, original=False):
@@ -235,23 +228,13 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         setattr(self, self._HOLD, iter_([]))
         return self
 
-    def _clearh(self):
-        '''Clear holding link.'''
-        setattr(self, self._HOLD, iter([]))
-        return self
-
-    def _clearw(self):
-        '''Clear work link.'''
-        setattr(self, self._WORK, iter([]))
-        return self
-
     def clear_in(self):
-        '''Clear incoming things.'''
+        '''Remove all incoming things.'''
         setattr(self, self._IN, iter([]))
         return self
 
     def clear_out(self):
-        '''Clear outgoing things.'''
+        '''Remove all outgoing things.'''
         setattr(self, self._OUT, iter([]))
         return self
 
@@ -289,9 +272,9 @@ class lazysaw(
     __slots__ = SLOTS
 
 
-class slicesaw(OutputMixin, SliceMixin, _SliceMixin):
+class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
 
-    '''slicing chainsaw'''
+    '''comparing chainsaw'''
 
     __slots__ = SLOTS
 
@@ -303,23 +286,9 @@ class filtersaw(OutputMixin, FilterMixin, _FilterMixin):
     __slots__ = SLOTS
 
 
-class repeatsaw(OutputMixin, RepeatMixin, _RepeatMixin):
-
-    '''repeating chainsaw'''
-
-    __slots__ = SLOTS
-
-
 class mapsaw(OutputMixin, MapMixin, _MapMixin):
 
     '''mapping chainsaw'''
-
-    __slots__ = SLOTS
-
-
-class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
-
-    '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
@@ -331,9 +300,9 @@ class numbersaw(OutputMixin, NumberMixin, _NumberMixin):
     __slots__ = SLOTS
 
 
-class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
+class ordersaw(OutputMixin, OrderMixin, _OrderMixin):
 
-    '''comparing chainsaw'''
+    '''ordering chainsaw'''
 
     __slots__ = SLOTS
 
@@ -341,5 +310,19 @@ class comparesaw(OutputMixin, CompareMixin, _CompareMixin):
 class reducesaw(OutputMixin, ReduceMixin, _ReduceMixin):
 
     '''reducing chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class repeatsaw(OutputMixin, RepeatMixin, _RepeatMixin):
+
+    '''repeating chainsaw'''
+
+    __slots__ = SLOTS
+
+
+class slicesaw(OutputMixin, SliceMixin, _SliceMixin):
+
+    '''slicing chainsaw'''
 
     __slots__ = SLOTS

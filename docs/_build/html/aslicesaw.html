@@ -91,8 +91,8 @@
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign any positional and/or keyword arguments to be used anytime the
-active callable or alternative callable is invoked.</p>
+<dd><p>Assign positional or keyword arguments used anytime assigned function
+(or its alternative) is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -416,18 +416,6 @@ random sample of <cite>n</cite> things within an <a class="reference external" h
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.slicesaw.shift_in">
-<tt class="descname">shift_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.shift_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things back to incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.slicesaw.shift_out">
-<tt class="descname">shift_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.shift_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy incoming things to outgoing things.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.active.slicesaw.slice">
 <tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.slice" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off things
@@ -470,20 +458,15 @@ within an <a class="reference external" href="http://docs.python.org/glossary.ht
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em>, <em>factory=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign active callable. Optionally assign an alternative callable. If
-<cite>factory</cite> flag is set to <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, use the callable passed with
-the <cite>call</cite> argument as a factory to build the active callable.</p>
+<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign assigned function.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; callable assigned as active callable</li>
-<li><strong>alt</strong> &#8211; callable assigned as alternative callable (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>factory</strong> &#8211; whether <cite>call</cite> is a factory that produces callables
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>call</strong> &#8211; function to assign</li>
+<li><strong>alt</strong> &#8211; alternative function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -516,8 +499,7 @@ the <cite>call</cite> argument as a factory to build the active callable.</p>
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any active callable, alternative callable, or assigned position
-or keywork arguments.</p>
+<dd><p>Clear assigned function, alternative function, and arguments.</p>
 </dd></dl>
 
 <dl class="method">
@@ -530,15 +512,15 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.which">
 <tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose active callable based on results of condition mode.</p>
+<dd><p>Choose assigned function based on results of condition mode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; new callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
+<li><strong>call</strong> &#8211; new function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
 (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>alt</strong> &#8211; new external callable to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
+<li><strong>alt</strong> &#8211; new external function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
 (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
 </ul>
 </td>

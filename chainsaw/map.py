@@ -41,11 +41,11 @@ class RepeatMixin(local):
         '''
         Repeat either an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ or results of
-        invoking active callable `n` times.
+        invoking assigned function `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
-        :param call: repeat result of active callable (*default:*
+        :param call: repeat result of assigned function (*default:*
           :const:`False`)
         '''
         with self._chain():
@@ -62,7 +62,7 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ as wildcard
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
-        the active callable.
+        the assigned function.
 
         :param merge: combinations global positional arguments with wildcard
           positional arguments from an iterable (*default:* :const:`False`)
@@ -96,12 +96,12 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
-        active callable.
+        assigned function.
 
         :param merge: combinations global positional and keyword arguments with
           positional and keyword arguments from an iterable into a single
           :class:`tuple` of wildcard positional and keyword arguments for the
-          active callable (*default:* :const:`False`)
+          assigned function (*default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._kwargmap(

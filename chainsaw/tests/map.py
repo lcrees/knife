@@ -44,7 +44,7 @@ class RepeatMixin(object):
         testlist = [[1, [2, 3]], [4, [5, 6]]]
         manchainsaw = self.mclass(testlist).copy()
         self.assertTrue(manchainsaw.balanced)
-        manchainsaw.shift_in()
+        manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
         newlist = manchainsaw.end()
         self.assertFalse(newlist is testlist)
@@ -89,7 +89,7 @@ class MapMixin(object):
         # auto
         thing = self.qclass(
             [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
-        ).tap(stuf, factory=True).map().end()
+        ).tap(stuf).map().end()
         self.assertEqual(
             thing, [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)], thing
         )
@@ -97,7 +97,7 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
-            ).tap(stuf, factory=True).map().end(),
+            ).tap(stuf).map().end(),
             [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)],
         )
 

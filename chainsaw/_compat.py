@@ -111,10 +111,12 @@ isunicode = port.isunicode
 texts = six.texts
 
 
-def deferrediter(func, wrap, noniter):
-    murk = wrap(noniter)
-    func(murk)
-    yield murk
+def deferfunc(func):
+    yield func()
+
+
+def deferiter(iterz):
+    yield next(iterz)
 
 
 def iterthing(iterator, wrap, noniter):

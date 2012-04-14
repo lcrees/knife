@@ -21,22 +21,22 @@ class FilterMixin(local):
         with self._chain():
             return self._iter(self._attributes(names))
 
-    def duality(self):  # @NoSelf
+    def duality(self):
         '''
         Divide one iterable into two `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_, the first
-        iterable being everything the active callable evaluates as
+        iterable being everything assigned function evaluates as
         :const:`True` and the second iterable being everythin the active
         callable evaluates as :const:`False`.
         '''
         with self._chain():
-            return self._many(self._duality(self._test))
+            return self._iter(self._duality(self._test))
 
     def filter(self, invert=False):
         '''
         Collect each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        active callable.
+        assigned function.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -70,9 +70,9 @@ class FilterMixin(local):
         with self._chain():
             return self._many(self._mapping(self._identity, keys, values))
 
-    def pattern(self, pattern, type='parse', flags=0):  # @NoSelf
+    def pattern(self, pattern, type='parse', flags=0):
         '''
-        Compile a search pattern to use as the active callable.
+        Compile a search pattern to use as assigned function.
 
         :param pattern: search pattern
 
@@ -85,18 +85,18 @@ class FilterMixin(local):
         '''
         return self.tap(self._pattern(pattern, type, flags))
 
-    def traverse(self, ancestors=False, invert=False):  # @NoSelf
+    def traverse(self, ancestors=False, invert=False):
         '''
         Collect nested values from each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        active callable.
+        assigned function.
 
         :param ancestors: collect things from parents of a thing based on
           `method resolution order (MRO)
           <http://docs.python.org/glossary.html#term-method-resolution-order>`_
           (default: :const:`False`)
 
-        :param invert: return things active callable evaluates as
+        :param invert: return things assigned function evaluates as
           :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
         with self._chain():
@@ -130,7 +130,7 @@ class ReduceMixin(local):
         '''
         Reduce an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ to one
-        thing with active callable.
+        thing with assigned function.
 
         :param initial: starting value (*default:*: :const:`None`)
 
@@ -211,8 +211,7 @@ class SliceMixin(local):
         :param n: number of things (*default:*: ``0``)
         '''
         with self._chain():
-            first = self._first
-            return self._many(first(n)) if n else self._one(first(n))
+            return self._iter(self._first(n))
 
     def initial(self):
         '''
@@ -234,7 +233,7 @@ class SliceMixin(local):
         :param n: number of things (*default:*: ``0``)
         '''
         with self._chain():
-            return self._many(self._last(n)) if n else self._one(self._last(n))
+            return self._iter(self._last(n))
 
     def rest(self):
         '''
@@ -255,14 +254,14 @@ class SliceMixin(local):
         :param n: sample size
         '''
         with self._chain():
-            return self._many(self._sample(n))
+            return self._iter(self._sample(n))
 
     def slice(self, start, stop=False, step=False):
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off things
-        within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ from `start` to
-        (optionally) `stop` in `step` steps.
+        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off part of
+        an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ based on
+        indexes.
 
         :param start: starting index of slice
 

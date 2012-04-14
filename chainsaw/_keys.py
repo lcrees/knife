@@ -68,10 +68,10 @@ class KChainsaw(AppspaceKey):
         with outgoing things.
         '''
 
-    def shift_in():  # @NoSelf
+    def out_in():  # @NoSelf
         '''Manually copy outgoing things back to incoming things.'''
 
-    def shift_out():  # @NoSelf
+    def in_out():  # @NoSelf
         '''Manually copy incoming things to outgoing things.'''
 
     balanced = Attribute(

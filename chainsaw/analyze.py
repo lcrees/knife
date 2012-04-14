@@ -10,7 +10,7 @@ class CompareMixin(local):
 
     def all(self):
         '''
-        :const:`True` if the active callable returns :const:`True` for
+        :const:`True` if the assigned function returns :const:`True` for
         **everything** within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
@@ -20,7 +20,7 @@ class CompareMixin(local):
 
     def any(self):
         '''
-        :const:`True` if the active callable returns :const:`True` for
+        :const:`True` if the assigned function returns :const:`True` for
         **anything** within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if the
         iterable is empty).
@@ -99,7 +99,7 @@ class NumberMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._one(self._average)
+            return self._iter(self._average)
 
     def count(self):
         '''
@@ -110,17 +110,17 @@ class NumberMixin(local):
         :class:`tuple` pairs of (*thing*, *count*).
         '''
         with self._chain():
-            return self._one(self._count)
+            return self._iter(self._count)
 
     def max(self):
         '''
         Take the maximum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        assigned function as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
-            return self._one(self._max(self._identity))
+            return self._iter(self._max(self._identity))
 
     def median(self):
         '''
@@ -134,11 +134,11 @@ class NumberMixin(local):
         '''
         Take the minimum thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        assigned function as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
-            return self._one(self._min(self._identity))
+            return self._iter(self._min(self._identity))
 
     def minmax(self):
         '''
@@ -169,7 +169,7 @@ class NumberMixin(local):
           :const:`False`)
         '''
         with self._chain():
-            return self._one(self._sum(start, precision))
+            return self._iter(self._sum(start, precision))
 
 
 class OrderMixin(local):
@@ -180,7 +180,7 @@ class OrderMixin(local):
         '''
         Group things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using
-        the active callable as the `key function
+        the assigned function as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
@@ -198,7 +198,7 @@ class OrderMixin(local):
         '''
         Sort things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        assigned function as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
@@ -210,4 +210,4 @@ class OrderMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._many(self._sort(self._identity))
+            return self._iter(self._sort(self._identity))

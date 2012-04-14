@@ -14,7 +14,8 @@ from operator import itemgetter, attrgetter, truth
 from parse import compile as pcompile
 from stuf.six import strings, items, values, keys
 
-from chainsaw._compat import ifilter, ichain, imap, ifilterfalse, zip_longest
+from chainsaw._compat import (
+    ifilter, ichain, imap, ifilterfalse, zip_longest, deferiter, deferfunc)
 
 
 class _FilterMixin(local):
@@ -37,7 +38,7 @@ class _FilterMixin(local):
     def _duality(true, f=ifilter, ff=ifilterfalse, l=list, t=tee):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
-            return iter((l(f(true, truth_)), l(ff(true, false_))))
+            yield l(f(true, truth_)), l(ff(true, false_))
         return duality
 
     @staticmethod
@@ -152,14 +153,14 @@ class _SliceMixin(local):
 
     @staticmethod
     def _choice(iterable, choice_=choice, list_=list):
-        return choice_(list_(iterable))
+        yield choice_(list_(iterable))
 
     @staticmethod
     def _dice(n, fill, zip_longest_=zip_longest, iter_=iter):
         return lambda x: zip_longest_(fillvalue=fill, *[iter_(x)] * n)
 
     @staticmethod
-    def _first(n=0, islice_=islice, next_=next):
+    def _first(n=0, islice_=islice, next_=deferiter):
         return lambda x: islice_(x, n) if n else next_(x)
 
     @staticmethod
@@ -168,19 +169,23 @@ class _SliceMixin(local):
         return islice_(i1, len_(list_(i2)) - 1)
 
     @staticmethod
-    def _last(n, s=islice, d=deque, ln=len, l=list, t=tee):
-        def last(iterable):
-            i1, i2 = t(iterable)
-            return s(i1, ln(l(i2)) - n, None) if n else d(i1, maxlen=1).pop()
-        return last
+    def _last(n, s=islice, d=deque, ln=len, l=list, t=tee, f=deferfunc):
+        if n:
+            def last(iterable):
+                i1, i2 = t(iterable)
+                return s(i1, ln(l(i2)) - n, None)
+            return last
+        return lambda x: f(d(x, maxlen=1).pop)
 
     @staticmethod
     def _rest(iterable, _islice=islice):
         return _islice(iterable, 1, None)
 
     @staticmethod
-    def _sample(n, sample=sample, list_=list):
-        return lambda x: sample(list_(x), n)
+    def _sample(n, sample_=sample, list_=list):
+        def sample(iterable):
+            yield sample_(list_(iterable), n)
+        return sample
 
     @staticmethod
     def _slice(start, stop, step, _islice=islice):
