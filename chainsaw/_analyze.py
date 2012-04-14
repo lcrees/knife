@@ -5,6 +5,7 @@ from math import fsum
 from random import shuffle
 from threading import local
 from operator import truediv
+from functools import reduce
 from itertools import groupby, tee
 
 from chainsaw._compat import Counter, imap

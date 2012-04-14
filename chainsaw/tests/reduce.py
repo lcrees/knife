@@ -365,7 +365,9 @@ class SliceMixin(object):
 
     def test_choice(self):
         # auto
-        self.assertEqual(len(list(self.qclass(1, 2, 3, 4, 5, 6).choice())), 1)
+        self.assertEqual(
+            len(self.qclass(1, 2, 3, 4, 5, 6).choice().out_in()), 1
+        )
         # man
         manchainsaw = self.mclass(1, 2, 3, 4, 5, 6).choice()
         self.assertFalse(manchainsaw.balanced)

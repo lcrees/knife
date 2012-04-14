@@ -53,8 +53,10 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         setattr(
             self,
             self._OUT,
-            hold if self._buildup else chain(hold, getattr(self, self._OUT)),
+            hold if self._nokeep else chain(hold, getattr(self, self._OUT)),
         )
+        # clear work, holding links & return to current selected chain
+        self._clearworking()
 
     def out_in(self):
         '''Manually copy outgoing things back to incoming things.'''
@@ -82,6 +84,9 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # take snapshot
         self._in, snapshot = tee(self._in)
         test = (self._ss is not None and len(self._ss) == 0)
+        # rebalance incoming with outcoming
+        if self._AUTO and not test:
+            self._in, self._out = tee(self._out)
         # make snapshot original snapshot?
         if test or original:
             self._original = snapshot
@@ -90,9 +95,7 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
             self._baseline = snapshot
         # place snapshot at beginning of snapshot stack
         self._ss.appendleft(snapshot)
-        # rebalance incoming with outcoming
-        if self._AUTO and not test:
-            self._in, self._out = tee(self._out)
+
         return self
 
     def undo(self, snapshot=0, baseline=False, original=False):
@@ -218,13 +221,25 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
     ## clear things ###########################################################
     ###########################################################################
 
+    def _clearworking(self, iter_=iter):
+        '''clear working and holding links'''
+        # clear work link
+        delattr(self, self._WORK)
+        setattr(self, self._WORK, iter_([]))
+        # clear holding link
+        delattr(self, self._HOLD)
+        setattr(self, self._HOLD, iter_([]))
+        return self
+
     def clear_in(self):
-        '''Remove all incoming things.'''
+        '''Clear incoming things.'''
+        delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         return self
 
     def clear_out(self):
-        '''Remove all outgoing things.'''
+        '''Clear outgoing things.'''
+        delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         return self
 
@@ -241,12 +256,16 @@ class LazyMixin(ChainsawMixin, _ChainsawMixin):
         # default output class
         self._wrapper = list
         # remove all outgoing things
+        delattr(self, self._OUT)
         setattr(self, self._OUT, iter([]))
         # remove all incoming things
+        delattr(self, self._IN)
         setattr(self, self._IN, iter([]))
         # clear work link
+        delattr(self, self._WORK)
         setattr(self, self._WORK, iter([]))
         # clear holding link
+        delattr(self, self._HOLD)
         setattr(self, self._HOLD, iter([]))
         return self
 

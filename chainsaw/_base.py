@@ -10,7 +10,7 @@ from chainsaw._compat import imap
 
 SLOTS = [
      '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_out',
-     '_buildup',  '_mode', '_CHAINCFG',  '_chain', '_truth', '_ss',
+     '_nokeep',  '_mode', '_CHAINCFG',  '_chain', '_truth', '_ss',
      '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_original',
      '_baseline',
 ]
@@ -51,7 +51,7 @@ class _ChainsawMixin(local):
         # default chain configuration
         self._CHAINCFG = {}
         # clear things out of out link before adding other things to it?
-        self._buildup = True
+        self._nokeep = True
         ## snapshot defaults ##################################################
         # original and baseline snapshots
         self._original = self._baseline = None
@@ -109,8 +109,8 @@ class _ChainsawMixin(local):
         # take snapshot
         if kw.get('snap', True):
             self.snapshot()
-        # if clear outgoing things before adding more things
-        self._buildup = kw.get('keep', True)
+        # clear outgoing things before adding more things?
+        self._nokeep = kw.get('keep', True)
         # 1. assign "ins" link
         self._IN = kw.get(self._INCFG, self._INVAR)
         # 2. assign "work" link

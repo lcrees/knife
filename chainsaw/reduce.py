@@ -85,24 +85,24 @@ class FilterMixin(local):
         '''
         return self.tap(self._pattern(pattern, type, flags))
 
-    def traverse(self, ancestors=False, invert=False):
-        '''
-        Collect nested values from each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        assigned function.
-
-        :param ancestors: collect things from parents of a thing based on
-          `method resolution order (MRO)
-          <http://docs.python.org/glossary.html#term-method-resolution-order>`_
-          (default: :const:`False`)
-
-        :param invert: return things assigned function evaluates as
-          :const:`False` rather than :const:`True` (*default:* :const:`False`)
-        '''
-        with self._chain():
-            return self._many(self._traverse(
-                self._test, self._alt, self._wrapper, ancestors, invert,
-            ))
+#    def traverse(self, ancestors=False, invert=False):
+#        '''
+#        Collect nested values from each thing within an `iterable
+#        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+#        assigned function.
+#
+#        :param ancestors: collect things from parents of a thing based on
+#          `method resolution order (MRO)
+#          <http://docs.python.org/glossary.html#term-method-resolution-order>`
+#          (default: :const:`False`)
+#
+#        :param invert: return things assigned function evaluates as
+#          :const:`False` rather than :const:`True` (*default:* :const:`False`)
+#        '''
+#        with self._chain():
+#            return self._many(self._traverse(
+#                self._test, self._alt, self._wrapper, ancestors, invert,
+#            ))
 
 
 class ReduceMixin(local):
@@ -186,7 +186,7 @@ class SliceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
-            return self._one(self._choice)
+            return self._iter(self._choice)
 
     def dice(self, n, fill=None):
         '''

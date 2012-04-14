@@ -104,10 +104,10 @@
         <span class="nb">setattr</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span>
-            <span class="n">hold</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buildup</span> <span class="k">else</span> <span class="n">chain</span><span class="p">(</span><span class="n">hold</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)),</span>
+            <span class="n">hold</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nokeep</span> <span class="k">else</span> <span class="n">chain</span><span class="p">(</span><span class="n">hold</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)),</span>
         <span class="p">)</span>
         <span class="c"># clear work, holding links &amp; return to current selected chain</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rechain</span><span class="p">()</span><span class="o">.</span><span class="n">_clearworking</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clearworking</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">out_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Manually copy outgoing things back to incoming things.&#39;&#39;&#39;</span>
@@ -274,19 +274,49 @@
     <span class="k">def</span> <span class="nf">_clearworking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iter_</span><span class="o">=</span><span class="nb">iter</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;clear working and holding links&#39;&#39;&#39;</span>
         <span class="c"># clear work link</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="n">iter_</span><span class="p">([]))</span>
         <span class="c"># clear holding link</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span> <span class="n">iter_</span><span class="p">([]))</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="nf">clear_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Remove all incoming things.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Clear incoming things.&#39;&#39;&#39;</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="nf">clear_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Remove all outgoing things.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Clear outgoing things.&#39;&#39;&#39;</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Clear out everything.&#39;&#39;&#39;</span>
+        <span class="c"># active callable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_call</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c"># position arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="c"># keyword arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c"># current alternate callable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alt</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c"># default output class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="nb">list</span>
+        <span class="c"># remove all outgoing things</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
+        <span class="c"># remove all incoming things</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
+        <span class="c"># clear work link</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
+        <span class="c"># clear holding link</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
         <span class="k">return</span> <span class="bp">self</span>
 
 

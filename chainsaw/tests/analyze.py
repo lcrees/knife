@@ -6,13 +6,13 @@ class NumberMixin(object):
 
     def test_max(self):
         # auto
-        self.assertEqual(self.qclass(1, 2, 4).max().end(), 4)
         from stuf import stuf
         stooges = [
             stuf(name='moe', age=40),
             stuf(name='larry', age=50),
             stuf(name='curly', age=60),
         ]
+        self.assertEqual(self.qclass(1, 2, 4).max().end(), 4)
         self.assertEqual(
             stuf(self.qclass(*stooges).tap(lambda x: x.age).max().end()),
             stuf(name='curly', age=60),
@@ -21,17 +21,11 @@ class NumberMixin(object):
         self._false_true_false(
             self.mclass.as_manual()(1, 2, 4).max(), self.assertEqual, 4,
         )
-        stooges = [
-            stuf(name='moe', age=40),
-            stuf(name='larry', age=50),
-            stuf(name='curly', age=60),
-        ]
-        manchainsaw = self.mclass(*stooges).tap(lambda x: x.age).max()
-        self.assertFalse(manchainsaw.balanced)
-        manchainsaw.out_in()
-        self.assertTrue(manchainsaw.balanced)
-        self.assertEqual(stuf(manchainsaw.end()), stuf(name='curly', age=60))
-        self.assertTrue(manchainsaw.balanced)
+        self._false_true_false(
+            self.mclass(*stooges).tap(lambda x: x.age).max(),
+            self.assertEqual,
+            stuf(name='curly', age=60)
+        )
 
     def test_min(self):
         # auto
@@ -56,6 +50,13 @@ class NumberMixin(object):
         self.assertEqual(self.qclass(1, 2, 4).minmax().end(), (1, 4))
         self.assertEqual(
             self.qclass(10, 5, 100, 2, 1000).minmax().end(), (2, 1000),
+        )
+        achainsaw = self.qclass(
+            10, 5, 100, 2, 1000
+        ).as_view().minmax().min()
+        self.assertEqual(achainsaw.end(), 2)
+        self.assertEqual(
+            achainsaw.as_edit().in_out().preview(), [10, 5, 100, 2, 1000]
         )
         # man
         self._false_true_false(

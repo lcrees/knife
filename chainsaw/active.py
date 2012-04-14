@@ -54,12 +54,24 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         yield
         out = getattr(self, self._OUT)
         # clear out
-        if self._buildup:
+        if self._nokeep:
             out.clear()
         # extend outgoing things with holding link
         out.extend(getattr(self, self._HOLD))
         # clear work, holding links & return to current selected chain
-#        self._rechain()._clearworking()
+        self._clearworking()._rechain()
+
+    def out_in(self):
+        '''Manually copy outgoing things back to incoming things.'''
+        self._in.clear()
+        self._in.extend(self._out)
+        return self
+
+    def in_out(self):
+        '''Manually copy incoming things to outgoing things.'''
+        self._out.clear()
+        self._out.extend(self._in)
+        return self
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -77,6 +89,10 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # take snapshot
         snapshot = pickle.dumps(self._in)
         test = (self._ss is not None and len(self._ss) == 0)
+        # rebalance incoming with outcoming
+        if self._AUTO and not test:
+            self._in.clear()
+            self._in.extend(self._out)
         # make snapshot original snapshot?
         if test or original:
             self._original = snapshot
@@ -115,10 +131,10 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # if specified, use a specific snapshot
         elif snapshot:
             self._ss.rotate(-(snapshot - 1))
-            snapshot = self._ss.popleft()
+            snapshot = pickle.loads(self._ss.popleft())
         # by default revert to most recent snapshot
         else:
-            snapshot = self._ss.popleft()
+            snapshot = pickle.loads(self._ss.popleft())
         self._in.extend(snapshot)
         return self
 

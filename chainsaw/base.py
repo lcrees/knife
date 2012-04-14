@@ -240,9 +240,6 @@ class OutchainMixin(local):
         value = self._unchain()._output()
         # clear out
         self.clear_out()
-        # restore baseline if in query context
-        if self._context == self._QUERY:
-            self.undo(baseline=True)
         return value
 
     def which(self, call=None, alt=None):
