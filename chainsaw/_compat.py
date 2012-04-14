@@ -7,6 +7,10 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest  # @UnusedImport
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle  # @UnusedImport
 
 from stuf import six
 # pylint: disable-msg=f0401,w0611

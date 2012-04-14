@@ -6,6 +6,7 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
+from chainsaw._compat import pickle
 from chainsaw.map import RepeatMixin, MapMixin
 from chainsaw.base import ChainsawMixin, OutchainMixin
 from chainsaw.reduce import SliceMixin, ReduceMixin, FilterMixin
@@ -58,7 +59,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
         # extend outgoing things with holding link
         out.extend(getattr(self, self._HOLD))
         # clear work, holding links & return to current selected chain
-        self._rechain()._clearworking()
+#        self._rechain()._clearworking()
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -74,7 +75,7 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
           :const:`False`)
         '''
         # take snapshot
-        snapshot = self._in.__copy__()
+        snapshot = pickle.dumps(self._in)
         test = (self._ss is not None and len(self._ss) == 0)
         # make snapshot original snapshot?
         if test or original:
@@ -105,19 +106,20 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            self._in = self._original.__copy__()
+            snapshot = pickle.loads(self._original)
         elif baseline:
             # clear snapshots
             self._clearsp()
             # restore baseline version of incoming things
-            self._in = self._baseline.__copy__()
+            snapshot = pickle.loads(self._baseline)
         # if specified, use a specific snapshot
         elif snapshot:
             self._ss.rotate(-(snapshot - 1))
-            self._in = self._ss.popleft()
+            snapshot = self._ss.popleft()
         # by default revert to most recent snapshot
         else:
-            self._in = self._ss.popleft()
+            snapshot = self._ss.popleft()
+        self._in.extend(snapshot)
         return self
 
     ###########################################################################
@@ -222,6 +224,28 @@ class ActiveMixin(ChainsawMixin, _ChainsawMixin):
     def clear_out(self):
         '''Clear outgoing things.'''
         self._out.clear()
+        return self
+
+    def clear(self):
+        '''Clear out everything.'''
+        # active callable
+        self._call = None
+        # position arguments
+        self._args = ()
+        # keyword arguments
+        self._kw = {}
+        # current alternate callable
+        self._alt = None
+        # default output class
+        self._wrapper = list
+        # remove all outgoing things
+        self._out.clear()
+        # remove all incoming things
+        self._in.clear()
+        # clear work link
+        self._work.clear()
+        # clear holding link
+        self._hold.clear()
         return self
 
 

@@ -150,12 +150,12 @@ class _ChainsawMixin(local):
         return self._call if self._call is not None else lambda x: x
 
     @property
-    def _test(self):
+    def _test(self, truth_=truth):
         '''
         Substitute truth operator function for active callable is no current
         callable is assigned.
         '''
-        return self._call if self._call is not None else truth
+        return self._call if self._call is not None else truth_
 
     ###########################################################################
     ## clearing things up #####################################################

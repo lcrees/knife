@@ -223,15 +223,6 @@ class ChainsawMixin(local):
         '''Object representation.'''
         return self._repr()
 
-    ###########################################################################
-    ## clearing things up #####################################################
-    ###########################################################################
-
-    def clear(self):
-        '''Clear out everything.'''
-        self._truth = None
-        return self.untap().unwrap().clear_out().clear_in()._clearworking()
-
 
 class OutchainMixin(local):
 
