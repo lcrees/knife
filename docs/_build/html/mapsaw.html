@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.lazy.numbersaw — Numbering chainsaw" href="numbersaw.html" />
+    <link rel="next" title="chainsaw.lazy.mathsaw — Mathing chainsaw" href="mathsaw.html" />
     <link rel="prev" title="chainsaw.lazy.filtersaw — Filtering chainsaw" href="filtersaw.html" /> 
   </head>
   <body>
@@ -40,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="numbersaw.html" title="chainsaw.lazy.numbersaw — Numbering chainsaw"
+          <a href="mathsaw.html" title="chainsaw.lazy.mathsaw — Mathing chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Filtering chainsaw"
@@ -68,7 +68,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; incoming thing</td>
 </tr>
 </tbody>
 </table>
@@ -82,7 +82,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; incoming thing</td>
 </tr>
 </tbody>
 </table>
@@ -93,12 +93,12 @@
 <tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.argmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as wildcard
 <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional arguments</a> to
-the assigned function.</p>
+the worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; combinations global positional arguments with wildcard
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; merge global positional arguments with wildcard
 positional arguments from an iterable (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
 </tr>
 </tbody>
@@ -108,15 +108,15 @@ positional arguments from an iterable (<em>default:</em> <tt class="xref py py-c
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign positional or keyword arguments used anytime assigned function
-(or its alternative) is invoked.</p>
+<dd><p>Assign positional or keyword arguments used anytime the worker
+is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -140,7 +140,7 @@ with outgoing things.</p>
 <dt id="chainsaw.lazy.mapsaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -160,7 +160,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 <dt id="chainsaw.lazy.mapsaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> each incoming thing.</p>
+wrapper to cast each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -174,7 +174,7 @@ things from initial placement to final extraction.</p>
 <dt id="chainsaw.lazy.mapsaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
+wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -198,28 +198,26 @@ individual thing in a series of many individual things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.mapsaw.as_set">
-<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
+<dt id="chainsaw.lazy.mapsaw.as_query">
+<tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to context where, upon exiting it by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
+or <tt class="docutils literal"><span class="pre">end</span></tt> method, incoming things automatically revert to the baseline
+snapshot so the unmodified baseline version of incoming things can be
+worked with.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.mapsaw.as_truth">
-<tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_truth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to evaluation context where the results of operations on
-incoming things determine which of two potential paths to execute.
-After exiting the evaluation context by invoking <tt class="docutils literal"><span class="pre">which</span></tt>, incoming
-things automatically revert to a prior baseline snapshot of incoming
-things so further operations can be performed on an unmodified baseline
-version.</p>
+<dt id="chainsaw.lazy.mapsaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to cast
+each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> each incoming thing.</p>
+wrapper to cast each outgoing thing to a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -227,7 +225,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each incoming thing.</p>
+each outgoing thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -243,44 +241,35 @@ each incoming thing.</p>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="chainsaw.lazy.mapsaw.as_view">
-<tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.as_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to query context where the results of operations on incoming
-things queried. Upon exit from query context by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
-or <tt class="docutils literal"><span class="pre">end</span></tt>, incoming things automatically revert to a prior baseline
-snapshot of so that further operations can be performed on an
-unmodified baseline version.</p>
-</dd></dl>
-
 <dl class="attribute">
 <dt id="chainsaw.lazy.mapsaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.mapsaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of outgoing things.</p>
+<dd><p>Whether outgoing things and incoming things are in balance.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.clear">
 <tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear out everything.</p>
+<dd><p>Remove everything.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.clear_in">
 <tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.clear_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear incoming things.</p>
+<dd><p>Remove incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.clear_out">
 <tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.clear_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear outgoing things.</p>
+<dd><p>Remove outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things, cleaning out everything afterwards.</p>
+<dd><p>End the current chainsaw session and return outgoing things, wrapped
+with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
@@ -314,7 +303,7 @@ unmodified baseline version.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.in_out">
 <tt class="descname">in_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.in_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy incoming things to outgoing things.</p>
+<dd><p>Copy incoming things to outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -342,15 +331,15 @@ take the original thing if the return value of the method call is
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as a
 <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
 <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword arguments</a> to the
-assigned function.</p>
+worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; combinations global positional and keyword arguments with
-positional and keyword arguments from an iterable into a single
-<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments for the
-assigned function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; merge global positional or keyword arguments with
+positional and keyword arguments within an iterable into a single
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments (
+<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
 </tr>
 </tbody>
 </table>
@@ -359,14 +348,39 @@ assigned function (<em>default:</em> <tt class="xref py py-const docutils litera
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.map">
 <tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the active
-callable.</p>
+<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.out_in">
 <tt class="descname">out_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.out_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things back to incoming things.</p>
+<dd><p>Copy outgoing things to incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mapsaw.pattern">
+<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile a search pattern and use it as the worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> &#8211; search pattern</li>
+<li><strong>type</strong> &#8211; engine to compile pattern with. Valid options are
+<tt class="docutils literal"><span class="pre">'parse'</span></tt>, <tt class="docutils literal"><span class="pre">'regex'</span></tt>, or <tt class="docutils literal"><span class="pre">'glob'</span></tt> (default: <tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
+<li><strong>flags</strong> &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a> (<em>default:</em>
+<tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>compiler</strong> &#8211; engine to compile pattern with. Valid options are
+<tt class="docutils literal"><span class="pre">'`parse</span> <span class="pre">&lt;http://pypi.python.org/pypi/parse/&gt;_`</span></tt>, <tt class="docutils literal"><span class="pre">'`re</span>
+<span class="pre">&lt;http://docs.python.org/library/re.html&gt;_`'</span></tt>, or <tt class="docutils literal"><span class="pre">'`glob</span>
+<span class="pre">&lt;http://docs.python.org/library/fnmatch.html&gt;_`'</span></tt> (default:
+<tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -378,13 +392,13 @@ callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.results">
 <tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things, clearing outgoing things afterwards.</p>
+<dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a snapshot of current incoming things.</p>
+<dd><p>Take a snapshot of the current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -403,17 +417,13 @@ callable.</p>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign assigned function.</p>
+<tt class="descname">tap</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; function to assign</li>
-<li><strong>alt</strong> &#8211; alternative function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a callable</td>
 </tr>
 </tbody>
 </table>
@@ -422,7 +432,7 @@ callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
+<dd><p>Revert incoming things to a previous snapshot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -444,34 +454,14 @@ callable.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear assigned function, alternative function, and arguments.</p>
+<dd><p>Clear any active callable and global positional or keyword arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.mapsaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.mapsaw.which">
-<tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mapsaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose assigned function based on results of condition mode.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; new function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>alt</strong> &#8211; new external function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -504,8 +494,8 @@ wrapper for outgoing things.</p>
   <p class="topless"><a href="filtersaw.html"
                         title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.filtersaw</span></tt> &#8212; Filtering chainsaw</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="numbersaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.numbersaw</span></tt> &#8212; Numbering chainsaw</a></p>
+  <p class="topless"><a href="mathsaw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.mathsaw</span></tt> &#8212; Mathing chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/mapsaw.txt"
@@ -538,7 +528,7 @@ wrapper for outgoing things.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="numbersaw.html" title="chainsaw.lazy.numbersaw — Numbering chainsaw"
+          <a href="mathsaw.html" title="chainsaw.lazy.mathsaw — Mathing chainsaw"
              >next</a> |</li>
         <li class="right" >
           <a href="filtersaw.html" title="chainsaw.lazy.filtersaw — Filtering chainsaw"

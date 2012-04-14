@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>chainsaw.active.ordersaw — Ordering chainsaw &mdash; chainsaw 0.5.0 documentation</title>
+    <title>chainsaw.lazy.mathsaw — Mathing chainsaw &mdash; chainsaw 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="chainsaw 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="chainsaw.active.reducesaw — Reducing chainsaw" href="areducesaw.html" />
-    <link rel="prev" title="chainsaw.active.mathsaw — Mathing chainsaw" href="amathsaw.html" /> 
+    <link rel="next" title="chainsaw.lazy.ordersaw — Ordering chainsaw" href="ordersaw.html" />
+    <link rel="prev" title="chainsaw.lazy.mapsaw — Mapping chainsaw" href="mapsaw.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
+          <a href="ordersaw.html" title="chainsaw.lazy.ordersaw — Ordering chainsaw"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
+          <a href="mapsaw.html" title="chainsaw.lazy.mapsaw — Mapping chainsaw"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -54,15 +54,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-chainsaw.active">
-<span id="chainsaw-active-ordersaw-ordering-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.active.ordersaw" title="chainsaw.active.ordersaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.active.ordersaw</span></tt></a> &#8212; Ordering chainsaw<a class="headerlink" href="#module-chainsaw.active" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-chainsaw.lazy">
+<span id="chainsaw-lazy-mathsaw-mathing-chainsaw"></span><h1><a class="reference internal" href="#chainsaw.lazy.mathsaw" title="chainsaw.lazy.mathsaw"><tt class="xref py py-class docutils literal"><span class="pre">chainsaw.lazy.mathsaw</span></tt></a> &#8212; Mathing chainsaw<a class="headerlink" href="#module-chainsaw.lazy" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="chainsaw.active.ordersaw">
-<em class="property">class </em><tt class="descclassname">chainsaw.active.</tt><tt class="descname">ordersaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/active.html#ordersaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.active.ordersaw" title="Permalink to this definition">¶</a></dt>
-<dd><p>ordering chainsaw</p>
+<dt id="chainsaw.lazy.mathsaw">
+<em class="property">class </em><tt class="descclassname">chainsaw.lazy.</tt><tt class="descname">mathsaw</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/chainsaw/lazy.html#mathsaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chainsaw.lazy.mathsaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>number chainsaw</p>
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.append">
-<tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.append" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.append">
+<tt class="descname">append</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>after</strong> any other incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -75,8 +75,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.appendstart">
-<tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.appendstart" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.appendstart">
+<tt class="descname">appendstart</tt><big>(</big><em>thing</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.appendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>thing</cite> <strong>before</strong> any other incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -89,15 +89,15 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.arguments">
-<tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.arguments" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.arguments">
+<tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign positional or keyword arguments used anytime the worker
 is invoked.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_ascii">
-<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
@@ -113,15 +113,15 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="chainsaw.active.ordersaw.as_auto">
-<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_auto" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_auto">
+<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_auto" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to context where incoming things are automatically rebalanced
 with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_bytes">
-<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -140,49 +140,49 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_dict">
-<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to cast each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_edit">
-<tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_edit" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_edit">
+<tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to editing context where operations can be performed on incoming
 things from initial placement to final extraction.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_list">
-<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_list" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="chainsaw.active.ordersaw.as_manual">
-<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_manual" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_manual">
+<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_manual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to context where incoming things must be manually rebalanced
 with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_many">
-<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_many" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_many">
+<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_many" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to performing operations on each incoming thing as just one
 individual thing in a series of many individual things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_one">
-<tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_one" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_one">
+<tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_one" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to performing operations on incoming things as one whole thing.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_query">
-<tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_query" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_query">
+<tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch to context where, upon exiting it by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
 or <tt class="docutils literal"><span class="pre">end</span></tt> method, incoming things automatically revert to the baseline
 snapshot so the unmodified baseline version of incoming things can be
@@ -190,22 +190,22 @@ worked with.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_set">
-<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to cast
 each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_tuple">
-<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to cast each outgoing thing to a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.as_unicode">
-<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
 each outgoing thing.</p>
@@ -224,40 +224,55 @@ each outgoing thing.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.average">
+<tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.average" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the average value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+</dd></dl>
+
 <dl class="attribute">
-<dt id="chainsaw.active.ordersaw.balanced">
-<tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.active.ordersaw.balanced" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.balanced">
+<tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.mathsaw.balanced" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether outgoing things and incoming things are in balance.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.clear">
-<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.clear" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove everything.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.clear_in">
-<tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.clear_in" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.clear_in">
+<tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.clear_in" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.clear_out">
-<tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.clear_out" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.clear_out">
+<tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.clear_out" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.end">
-<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.end" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count how many times each thing occurs within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Result is a
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>, <em>most common
+thing</em>, <em>count of everything</em> consisting of a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.end">
+<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>End the current chainsaw session and return outgoing things, wrapped
 with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.extend">
-<tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.extend" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.extend">
+<tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -270,8 +285,8 @@ with the <a class="reference external" href="http://docs.python.org/glossary.htm
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.extendstart">
-<tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.extendstart" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.extendstart">
+<tt class="descname">extendstart</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.extendstart" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -284,27 +299,47 @@ with the <a class="reference external" href="http://docs.python.org/glossary.htm
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.group">
-<tt class="descname">group</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Group things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.in_out">
-<tt class="descname">in_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.in_out" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.in_out">
+<tt class="descname">in_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.in_out" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy incoming things to outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.out_in">
-<tt class="descname">out_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.out_in" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.max">
+<tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the maximum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.median">
+<tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the median value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.min">
+<tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the minimum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.minmax">
+<tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.minmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the minimum and maximum values within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Result is a
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>minimum value</em>, <em>maximum value</em>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.out_in">
+<tt class="descname">out_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.out_in" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy outgoing things to incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.pattern">
-<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.pattern" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.pattern">
+<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile a search pattern and use it as the worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -329,33 +364,27 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.preview">
-<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.preview" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.preview">
+<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.preview" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a peek at the current state of outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.results">
-<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.results" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.range">
+<tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the length of the smallest interval that can contain everything
+within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.mathsaw.results">
+<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.reverse">
-<tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.reverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reverse the order of things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.shuffle">
-<tt class="descname">shuffle</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.shuffle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sort things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.ordersaw.snapshot">
-<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.snapshot" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a snapshot of the current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -374,14 +403,27 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.sort">
-<tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.sort" title="Permalink to this definition">¶</a></dt>
-<dd><p>Randomly reorder things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dt id="chainsaw.lazy.mathsaw.sum">
+<tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>precision=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total up by adding <cite>start</cite> and everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> together.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; starting number (<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>precision</strong> &#8211; add floats with extended precision (<em>default:</em>
+<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.tap" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.tap">
+<tt class="descname">tap</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.tap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -394,8 +436,8 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.undo">
-<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.undo" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Revert incoming things to a previous snapshot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -416,21 +458,21 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.untap">
-<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.untap" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.untap">
+<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.untap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear any active callable and global positional or keyword arguments.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.unwrap">
-<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.unwrap" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.unwrap">
+<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.ordersaw.wrap">
-<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.active.ordersaw.wrap" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.mathsaw.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.mathsaw.wrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper for outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -455,14 +497,14 @@ wrapper for outgoing things.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="amathsaw.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.active.mathsaw</span></tt> &#8212; Mathing chainsaw</a></p>
+  <p class="topless"><a href="mapsaw.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">chainsaw.lazy.mapsaw</span></tt> &#8212; Mapping chainsaw</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="areducesaw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.active.reducesaw</span></tt> &#8212; Reducing chainsaw</a></p>
+  <p class="topless"><a href="ordersaw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">chainsaw.lazy.ordersaw</span></tt> &#8212; Ordering chainsaw</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/aordersaw.txt"
+    <li><a href="_sources/mathsaw.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -492,10 +534,10 @@ wrapper for outgoing things.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="areducesaw.html" title="chainsaw.active.reducesaw — Reducing chainsaw"
+          <a href="ordersaw.html" title="chainsaw.lazy.ordersaw — Ordering chainsaw"
              >next</a> |</li>
         <li class="right" >
-          <a href="amathsaw.html" title="chainsaw.active.mathsaw — Mathing chainsaw"
+          <a href="mapsaw.html" title="chainsaw.lazy.mapsaw — Mapping chainsaw"
              >previous</a> |</li>
         <li><a href="index.html">chainsaw 0.5.0 documentation</a> &raquo;</li> 
       </ul>

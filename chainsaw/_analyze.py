@@ -64,7 +64,7 @@ class _CompareMixin(local):
         return unique
 
 
-class _NumberMixin(local):
+class _MathMixin(local):
 
     '''number mixin'''
 

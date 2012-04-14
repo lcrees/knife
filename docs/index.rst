@@ -16,7 +16,7 @@ Active Chainsaws
    acomparesaw
    afiltersaw
    amapsaw
-   anumbersaw
+   amathsaw
    aordersaw
    areducesaw
    arepeatsaw
@@ -32,7 +32,7 @@ Lazy Chainsaws
    comparesaw
    filtersaw
    mapsaw
-   numbersaw
+   mathsaw
    ordersaw
    reducesaw
    repeatsaw

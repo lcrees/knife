@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 '''chainsaw reducing mixins'''
 
-#from inspect import getmro
+from inspect import getmro
 from threading import local
 from collections import deque
-from fnmatch import translate
 from random import choice, sample
-from re import compile as rcompile
+
 from functools import partial, reduce
 from itertools import cycle, islice, tee, starmap
-from operator import itemgetter, attrgetter  # , truth
+from operator import itemgetter, attrgetter, truth
 
-from parse import compile as pcompile
 from stuf.six import strings, items, values, keys
 
 from chainsaw._compat import (
@@ -68,27 +66,20 @@ class _FilterMixin(local):
         return items
 
     @staticmethod
-    def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
-        if type == 'glob':
-            pat = t(pat)
-            type = 'regex'
-        return r(pat, flag).search if type == 'regex' else p(pat).search
-
-#    @staticmethod
-#    def _traverse(call, deep, anc, alt, wrap):
-#        mro = lambda i: ichain(imap(getmro, i))  # @UnusedVariable
-#        def members(true, iterable): #@IgnorePep8
-#            for k in ifilter(true, dir(iterable)):
-#                try:
-#                    v = getattr(iterable, k)
-#                except AttributeError:
-#                    pass
-#                else:
-#                    yield k, wrap(extract(true, v)) if alt(v) else k, v
-#        def extract(true, iterable): #@IgnorePep8
-#            for member in ifilter(truth, members(true, iterable)):
-#                yield member
-#        return lambda i: ichain(imap(lambda x: extract(call, x), i))
+    def _traverse(call, deep, anc, alt, wrap):
+        mro = lambda i: ichain(imap(getmro, i))  # @UnusedVariable
+        def members(true, iterable): #@IgnorePep8
+            for k in ifilter(true, dir(iterable)):
+                try:
+                    v = getattr(iterable, k)
+                except AttributeError:
+                    pass
+                else:
+                    yield k, wrap(extract(true, v)) if alt(v) else k, v
+        def extract(true, iterable): #@IgnorePep8
+            for member in ifilter(truth, members(true, iterable)):
+                yield member
+        return lambda i: ichain(imap(lambda x: extract(call, x), i))
 
 
 class _ReduceMixin(local):

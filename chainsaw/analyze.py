@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-'''chainsaw reducing mixins'''
+'''chainsaw analyzing mixins'''
 
 from threading import local
 
 
 class CompareMixin(local):
 
-    '''compare mixin'''
+    '''comparing mixin'''
 
     def all(self):
         '''
-        :const:`True` if the assigned function returns :const:`True` for
-        **everything** within an `iterable
+        Discover if the worker returns :const:`True` for **everything** within
+        an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
         '''
@@ -20,17 +20,16 @@ class CompareMixin(local):
 
     def any(self):
         '''
-        :const:`True` if the assigned function returns :const:`True` for
-        **anything** within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ (or if the
-        iterable is empty).
+        Discover if the worker returns :const:`True` for **anything** within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ (or if
+        the iterable is empty).
         '''
         with self._chain():
             return self._one(self._any(self._test))
 
     def difference(self, symmetric=False):
         '''
-        Differences within a series of
+        Find differences within a series of
         `iterables <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param symmetric: use symmetric difference (*default:* :const:`False`)
@@ -40,7 +39,7 @@ class CompareMixin(local):
 
     def disjointed(self):
         '''
-        Disjoints within a series of `iterables
+        Find disjoints within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -48,7 +47,7 @@ class CompareMixin(local):
 
     def intersection(self):
         '''
-        Intersections within a series of `iterables
+        Find intersections within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -56,25 +55,25 @@ class CompareMixin(local):
 
     def subset(self):
         '''
-        :const:`True` if `iterables
+        Find out if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are subsets
-        each other.
+        other iterables.
         '''
         with self._chain():
             return self._one(self._subset)
 
     def superset(self):
         '''
-        :const:`True` if an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ is a superset of
-        another iterable.
+        Find out if `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ are supersets of
+        others iterables.
         '''
         with self._chain():
             return self._one(self._superset)
 
     def union(self):
         '''
-        Union of things within a series of `iterables
+        Find unions within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -82,20 +81,20 @@ class CompareMixin(local):
 
     def unique(self):
         '''
-        Unique things within an
+        Find unique things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
             return self._iter(self._unique(self._identity))
 
 
-class NumberMixin(local):
+class MathMixin(local):
 
-    '''numbering mixin'''
+    '''mathing mixin'''
 
     def average(self):
         '''
-        Take average of things within an `iterable
+        Find the average value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -103,8 +102,8 @@ class NumberMixin(local):
 
     def count(self):
         '''
-        Count the number of times each thing occurs within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_. Returns a
+        Count how many times each thing occurs within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_. Result is a
         :class:`tuple` consisting of (*least common thing*, *most common
         thing*, *count of everything* consisting of a :class:`list` of
         :class:`tuple` pairs of (*thing*, *count*).
@@ -114,9 +113,9 @@ class NumberMixin(local):
 
     def max(self):
         '''
-        Take the maximum thing within an `iterable
+        Find the maximum value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        assigned function as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
@@ -124,7 +123,7 @@ class NumberMixin(local):
 
     def median(self):
         '''
-        Take the median thing within an `iterable
+        Find the median value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain():
@@ -132,9 +131,9 @@ class NumberMixin(local):
 
     def min(self):
         '''
-        Take the minimum thing within an `iterable
+        Find the minimum value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        assigned function as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
@@ -142,16 +141,16 @@ class NumberMixin(local):
 
     def minmax(self):
         '''
-        Take the minimum and maximum things within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_
-        as a :class:`tuple` consisting of (*minimum value*, *maximum value*).
+        Find the minimum and maximum values within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_. Result is a
+        :class:`tuple` of (*minimum value*, *maximum value*).
         '''
         with self._chain():
             return self._iter(self._minmax)
 
     def range(self):
         '''
-        Take the length of the smallest interval that can contain each thing
+        Find the length of the smallest interval that can contain everything
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
@@ -160,8 +159,8 @@ class NumberMixin(local):
 
     def sum(self, start=0, precision=False):
         '''
-        Take the total from adding up `start` and each thing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Total up by adding `start` and everything within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ together.
 
         :param start: starting number (*default:* ``0``)
 
@@ -179,8 +178,8 @@ class OrderMixin(local):
     def group(self):
         '''
         Group things within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ using
-        the assigned function as the `key function
+        <http://docs.python.org/glossary.html#term-iterable>`_ using the
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():
@@ -198,7 +197,7 @@ class OrderMixin(local):
         '''
         Sort things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        assigned function as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
         with self._chain():

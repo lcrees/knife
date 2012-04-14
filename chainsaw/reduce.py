@@ -25,7 +25,7 @@ class FilterMixin(local):
         '''
         Divide one iterable into two `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_, the first
-        iterable being everything assigned function evaluates as
+        iterable being everything worker evaluates as
         :const:`True` and the second iterable being everythin the active
         callable evaluates as :const:`False`.
         '''
@@ -36,7 +36,7 @@ class FilterMixin(local):
         '''
         Collect each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        assigned function.
+        worker.
 
         :param invert: return things for which the filter is :const:`False`
           rather than :const:`True` (*default:* :const:`False`)
@@ -70,39 +70,24 @@ class FilterMixin(local):
         with self._chain():
             return self._many(self._mapping(self._identity, keys, values))
 
-    def pattern(self, pattern, type='parse', flags=0):
+    def traverse(self, ancestors=False, invert=False):
         '''
-        Compile a search pattern to use as assigned function.
+        Collect nested values from each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        worker.
 
-        :param pattern: search pattern
+        :param ancestors: collect things from parents of a thing based on
+          `method resolution order (MRO)
+          <http://docs.python.org/glossary.html#term-method-resolution-order>`
+          (default: :const:`False`)
 
-        :param type: engine to compile pattern with. Valid options are
-          ``'parse'``, ``'regex'``, or ``'glob'`` (default: ``'parse'``)
-
-        :param flags: regular expression `flags
-          <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
-          ``0``)
+        :param invert: return things worker evaluates as
+          :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
-        return self.tap(self._pattern(pattern, type, flags))
-
-#    def traverse(self, ancestors=False, invert=False):
-#        '''
-#        Collect nested values from each thing within an `iterable
-#        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-#        assigned function.
-#
-#        :param ancestors: collect things from parents of a thing based on
-#          `method resolution order (MRO)
-#          <http://docs.python.org/glossary.html#term-method-resolution-order>`
-#          (default: :const:`False`)
-#
-#        :param invert: return things assigned function evaluates as
-#          :const:`False` rather than :const:`True` (*default:* :const:`False`)
-#        '''
-#        with self._chain():
-#            return self._many(self._traverse(
-#                self._test, self._alt, self._wrapper, ancestors, invert,
-#            ))
+        with self._chain():
+            return self._many(self._traverse(
+                self._test, self._alt, self._wrapper, ancestors, invert,
+            ))
 
 
 class ReduceMixin(local):
@@ -130,7 +115,7 @@ class ReduceMixin(local):
         '''
         Reduce an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ to one
-        thing with assigned function.
+        thing with worker.
 
         :param initial: starting value (*default:*: :const:`None`)
 
@@ -247,21 +232,20 @@ class SliceMixin(local):
 
     def sample(self, n):
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off a
-        random sample of `n` things within an `iterable
+        Randomly `slice <http://docs.python.org/glossary.html#term-slice>`_ off
+        `n` things from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
-        :param n: sample size
+        :param n: size of sample
         '''
         with self._chain():
             return self._iter(self._sample(n))
 
     def slice(self, start, stop=False, step=False):
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off part of
-        an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ based on
-        indexes.
+        `Slice <http://docs.python.org/glossary.html#term-slice>`_ off things
+        from `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param start: starting index of slice
 

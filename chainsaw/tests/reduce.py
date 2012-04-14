@@ -49,7 +49,7 @@ class FilterMixin(object):
 #        test = lambda x: not x[0].startswith('__')
 #        out = self.qclass(
 #            stooges, stoog2, stoog3
-#        ).tap(test, isclass).as_tuple().traverse().untap().end(),
+#        ).tap(test).as_tuple().traverse().untap().end(),
 #        self.assertEqual(
 #            out,
 #            ((('age', 40), ('name', 'moe'), ('age', 50), ('name', 'larry'),

@@ -2,7 +2,7 @@
 '''ordering test mixins'''
 
 
-class NumberMixin(object):
+class MathMixin(object):
 
     def test_max(self):
         # auto
@@ -53,7 +53,7 @@ class NumberMixin(object):
         )
         achainsaw = self.qclass(
             10, 5, 100, 2, 1000
-        ).as_view().minmax().min()
+        ).as_query().minmax().min()
         self.assertEqual(achainsaw.end(), 2)
         self.assertEqual(
             achainsaw.as_edit().in_out().preview(), [10, 5, 100, 2, 1000]

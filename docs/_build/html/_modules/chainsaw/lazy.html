@@ -52,300 +52,23 @@
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="sd">&#39;&#39;&#39;lazily evaluated chainsaws&#39;&#39;&#39;</span>
 
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">tee</span><span class="p">,</span> <span class="n">chain</span>
-<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
-
-<span class="kn">from</span> <span class="nn">stuf.utils</span> <span class="kn">import</span> <span class="n">clsname</span>
-
+<span class="kn">from</span> <span class="nn">chainsaw.base</span> <span class="kn">import</span> <span class="n">OutputMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw.map</span> <span class="kn">import</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">MapMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw.base</span> <span class="kn">import</span> <span class="n">ChainsawMixin</span><span class="p">,</span> <span class="n">OutchainMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw.reduce</span> <span class="kn">import</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">FilterMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw.analyze</span> <span class="kn">import</span> <span class="n">NumberMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span>
+<span class="kn">from</span> <span class="nn">chainsaw.analyze</span> <span class="kn">import</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span>
 
+<span class="kn">from</span> <span class="nn">chainsaw._lazy</span> <span class="kn">import</span> <span class="n">_OutputMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._base</span> <span class="kn">import</span> <span class="n">SLOTS</span><span class="p">,</span> <span class="n">_ChainsawMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._map</span> <span class="kn">import</span> <span class="n">_RepeatMixin</span><span class="p">,</span> <span class="n">_MapMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._reduce</span> <span class="kn">import</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw._analyze</span> <span class="kn">import</span> <span class="n">_NumberMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span>
-
-
-<span class="k">class</span> <span class="nc">LazyMixin</span><span class="p">(</span><span class="n">ChainsawMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">):</span>
-
-    <span class="sd">&#39;&#39;&#39;lazy chainsaw mixin&#39;&#39;&#39;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">things</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        init</span>
-
-<span class="sd">        :params *things: incoming things</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c"># if just one thing, put it in inchain or put everything in inchain</span>
-        <span class="n">inchain</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">things</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">things</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="nb">iter</span><span class="p">(</span><span class="n">things</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LazyMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">inchain</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]),</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-        <span class="c"># work link</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_work</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
-        <span class="c"># holding link</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hold</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([])</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## things in chains #######################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="nd">@contextmanager</span>
-    <span class="k">def</span> <span class="nf">_man4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;switch to a manually balanced four-link chain&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_as_chain</span><span class="p">(</span><span class="n">chain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_man4</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-        <span class="c"># move incoming things up to work link</span>
-        <span class="n">work</span><span class="p">,</span> <span class="n">incoming</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">))</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="n">work</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="n">incoming</span><span class="p">)</span>
-        <span class="k">yield</span>
-        <span class="c"># extend outgoing things with holding link</span>
-        <span class="n">hold</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span>
-            <span class="n">hold</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nokeep</span> <span class="k">else</span> <span class="n">chain</span><span class="p">(</span><span class="n">hold</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)),</span>
-        <span class="p">)</span>
-        <span class="c"># clear work, holding links &amp; return to current selected chain</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_clearworking</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">out_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Manually copy outgoing things back to incoming things.&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">in_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Manually copy incoming things to outgoing things.&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## snapshot of things #####################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="k">def</span> <span class="nf">snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Take a snapshot of current incoming things.</span>
-
-<span class="sd">        :param baseline: make this snapshot the baseline snapshot (*default:*</span>
-<span class="sd">          :const:`False`)</span>
-<span class="sd">        :param original: make this snapshot the original snapshot (*default:*</span>
-<span class="sd">          :const:`False`)</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c"># take snapshot</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="n">snapshot</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">)</span>
-        <span class="n">test</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ss</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="c"># make snapshot original snapshot?</span>
-        <span class="k">if</span> <span class="n">test</span> <span class="ow">or</span> <span class="n">original</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_original</span> <span class="o">=</span> <span class="n">snapshot</span>
-        <span class="c"># make this snapshot the baseline snapshot</span>
-        <span class="k">if</span> <span class="n">test</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EDIT</span> <span class="ow">or</span> <span class="n">baseline</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_baseline</span> <span class="o">=</span> <span class="n">snapshot</span>
-        <span class="c"># place snapshot at beginning of snapshot stack</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ss</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="c"># rebalance incoming with outcoming</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AUTO</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">test</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Revert incoming things to a previous snapshot of incoming things.</span>
-
-<span class="sd">        :param snapshot: number of steps ago e.g. ``1``, ``2``, ``3``, etc.</span>
-<span class="sd">          (*default:* ``0``)</span>
-<span class="sd">        :param baseline: revert incoming things to baseline snapshot (</span>
-<span class="sd">          *default:* :const:`False`)</span>
-<span class="sd">        :param original: revert incoming things to original snapshot (</span>
-<span class="sd">          *default:* :const:`False`)</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c"># clear everything</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">original</span><span class="p">:</span>
-            <span class="c"># clear snapshots</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_clearsp</span><span class="p">()</span>
-            <span class="c"># clear baseline</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_baseline</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="c"># restore original version of incoming things</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">baseline</span><span class="p">:</span>
-            <span class="c"># clear snapshots</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_clearsp</span><span class="p">()</span>
-            <span class="c"># revert to baseline version of incoming things</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_baseline</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_baseline</span><span class="p">)</span>
-        <span class="c"># if specified, use a specific snapshot</span>
-        <span class="k">elif</span> <span class="n">snapshot</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ss</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">snapshot</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ss</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
-        <span class="c"># by default revert to most recent snapshot</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ss</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## stepping through things ################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_iterable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">getattr_</span><span class="o">=</span><span class="nb">getattr</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;some iterable derived from a link in the chain&#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">getattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">)</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## adding things ##########################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="k">def</span> <span class="nf">_xtend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">things</span><span class="p">,</span> <span class="n">chain_</span><span class="o">=</span><span class="n">chain</span><span class="p">,</span> <span class="n">getattr_</span><span class="o">=</span><span class="nb">getattr</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;extend the holding link with `things`&#39;&#39;&#39;</span>
-        <span class="nb">setattr</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span>
-            <span class="n">chain_</span><span class="p">(</span><span class="n">things</span><span class="p">,</span> <span class="n">getattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">))</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">_xtendfront</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">things</span><span class="p">,</span> <span class="n">reversed_</span><span class="o">=</span><span class="nb">reversed</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        extend holding link with `things` placed in front of anything already</span>
-<span class="sd">        in the holding link</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xtend</span><span class="p">(</span><span class="n">reversed_</span><span class="p">(</span><span class="n">things</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">_append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">things</span><span class="p">,</span> <span class="n">chain_</span><span class="o">=</span><span class="n">chain</span><span class="p">,</span> <span class="n">iter_</span><span class="o">=</span><span class="nb">iter</span><span class="p">,</span> <span class="n">getattr_</span><span class="o">=</span><span class="nb">getattr</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;append `things` to holding link&#39;&#39;&#39;</span>
-        <span class="nb">setattr</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span>
-            <span class="n">chain_</span><span class="p">(</span><span class="n">getattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">),</span> <span class="n">iter_</span><span class="p">([</span><span class="n">things</span><span class="p">])),</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">_appendfront</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">things</span><span class="p">,</span> <span class="n">iter_</span><span class="o">=</span><span class="nb">iter</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        append `things` to the holding link in front of anything already in</span>
-<span class="sd">        the holding link</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xtend</span><span class="p">(</span><span class="n">iter_</span><span class="p">([</span><span class="n">things</span><span class="p">]))</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## know things ############################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="k">def</span> <span class="nf">_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tee_</span><span class="o">=</span><span class="n">tee</span><span class="p">,</span> <span class="n">setattr_</span><span class="o">=</span><span class="nb">setattr</span><span class="p">,</span> <span class="n">getattr_</span><span class="o">=</span><span class="nb">getattr</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Object representation.&#39;&#39;&#39;</span>
-        <span class="n">in1</span><span class="p">,</span> <span class="n">in2</span> <span class="o">=</span> <span class="n">tee_</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">))</span>
-        <span class="n">setattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="n">in1</span><span class="p">)</span>
-        <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span> <span class="o">=</span> <span class="n">tee_</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">))</span>
-        <span class="n">setattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span> <span class="n">out1</span><span class="p">)</span>
-        <span class="n">work1</span><span class="p">,</span> <span class="n">work2</span> <span class="o">=</span> <span class="n">tee_</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">))</span>
-        <span class="n">setattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="n">work1</span><span class="p">)</span>
-        <span class="n">hold1</span><span class="p">,</span> <span class="n">hold2</span> <span class="o">=</span> <span class="n">tee_</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">))</span>
-        <span class="n">setattr_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span> <span class="n">hold1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_REPR</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span>
-            <span class="n">clsname</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span>
-            <span class="n">l</span><span class="p">(</span><span class="n">in2</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span>
-            <span class="n">l</span><span class="p">(</span><span class="n">work2</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span>
-            <span class="n">l</span><span class="p">(</span><span class="n">hold2</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span>
-            <span class="n">l</span><span class="p">(</span><span class="n">out2</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Number of incoming things.&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">,</span> <span class="n">incoming</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">incoming</span><span class="p">))</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">balanced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Number of outgoing things.&#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="p">,</span> <span class="n">outs</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">outs</span><span class="p">))</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__len__</span><span class="p">()</span>
-
-    <span class="c">###########################################################################</span>
-    <span class="c">## clear things ###########################################################</span>
-    <span class="c">###########################################################################</span>
-
-    <span class="k">def</span> <span class="nf">_clearworking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iter_</span><span class="o">=</span><span class="nb">iter</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;clear working and holding links&#39;&#39;&#39;</span>
-        <span class="c"># clear work link</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="n">iter_</span><span class="p">([]))</span>
-        <span class="c"># clear holding link</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span> <span class="n">iter_</span><span class="p">([]))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">clear_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Clear incoming things.&#39;&#39;&#39;</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">clear_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Clear outgoing things.&#39;&#39;&#39;</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Clear out everything.&#39;&#39;&#39;</span>
-        <span class="c"># active callable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_call</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="c"># position arguments</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="p">()</span>
-        <span class="c"># keyword arguments</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_kw</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c"># current alternate callable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_alt</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="c"># default output class</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="nb">list</span>
-        <span class="c"># remove all outgoing things</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="c"># remove all incoming things</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_IN</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="c"># clear work link</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WORK</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="c"># clear holding link</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HOLD</span><span class="p">,</span> <span class="nb">iter</span><span class="p">([]))</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-
-<span class="k">class</span> <span class="nc">OutputMixin</span><span class="p">(</span><span class="n">LazyMixin</span><span class="p">,</span> <span class="n">OutchainMixin</span><span class="p">):</span>
-
-    <span class="sd">&#39;&#39;&#39;active output chainsaw mixin&#39;&#39;&#39;</span>
-
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Yield outgoing things.&#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OUT</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Take a peek at the current state of outgoing things.&#39;&#39;&#39;</span>
-        <span class="n">outs</span><span class="p">,</span> <span class="n">tell</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out</span><span class="p">)</span>
-        <span class="n">wrap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MANY</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">outs</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">outs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">tell</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">value</span>
-
-    <span class="n">preview</span> <span class="o">=</span> <span class="n">_output</span>
+<span class="kn">from</span> <span class="nn">chainsaw._analyze</span> <span class="kn">import</span> <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span>
 
 
 <div class="viewcode-block" id="lazysaw"><a class="viewcode-back" href="../../lazysaw.html#chainsaw.lazy.lazysaw">[docs]</a><span class="k">class</span> <span class="nc">lazysaw</span><span class="p">(</span>
-    <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span>
-    <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span>
-    <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">NumberMixin</span><span class="p">,</span> <span class="n">_NumberMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span>
-    <span class="n">_RepeatMixin</span><span class="p">,</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span>
+    <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
+    <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span>
+    <span class="n">MathMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;lazy chainsaw&#39;&#39;&#39;</span>
@@ -353,56 +76,70 @@
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="comparesaw"><a class="viewcode-back" href="../../comparesaw.html#chainsaw.lazy.comparesaw">[docs]</a><span class="k">class</span> <span class="nc">comparesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="comparesaw"><a class="viewcode-back" href="../../comparesaw.html#chainsaw.lazy.comparesaw">[docs]</a><span class="k">class</span> <span class="nc">comparesaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;comparing chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="filtersaw"><a class="viewcode-back" href="../../filtersaw.html#chainsaw.lazy.filtersaw">[docs]</a><span class="k">class</span> <span class="nc">filtersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="filtersaw"><a class="viewcode-back" href="../../filtersaw.html#chainsaw.lazy.filtersaw">[docs]</a><span class="k">class</span> <span class="nc">filtersaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;filtering chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="mapsaw"><a class="viewcode-back" href="../../mapsaw.html#chainsaw.lazy.mapsaw">[docs]</a><span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="mapsaw"><a class="viewcode-back" href="../../mapsaw.html#chainsaw.lazy.mapsaw">[docs]</a><span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;mapping chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="numbersaw"><a class="viewcode-back" href="../../numbersaw.html#chainsaw.lazy.numbersaw">[docs]</a><span class="k">class</span> <span class="nc">numbersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">NumberMixin</span><span class="p">,</span> <span class="n">_NumberMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="mathsaw"><a class="viewcode-back" href="../../mathsaw.html#chainsaw.lazy.mathsaw">[docs]</a><span class="k">class</span> <span class="nc">mathsaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;number chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="ordersaw"><a class="viewcode-back" href="../../ordersaw.html#chainsaw.lazy.ordersaw">[docs]</a><span class="k">class</span> <span class="nc">ordersaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="ordersaw"><a class="viewcode-back" href="../../ordersaw.html#chainsaw.lazy.ordersaw">[docs]</a><span class="k">class</span> <span class="nc">ordersaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;ordering chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="reducesaw"><a class="viewcode-back" href="../../reducesaw.html#chainsaw.lazy.reducesaw">[docs]</a><span class="k">class</span> <span class="nc">reducesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="reducesaw"><a class="viewcode-back" href="../../reducesaw.html#chainsaw.lazy.reducesaw">[docs]</a><span class="k">class</span> <span class="nc">reducesaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;reducing chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="repeatsaw"><a class="viewcode-back" href="../../repeatsaw.html#chainsaw.lazy.repeatsaw">[docs]</a><span class="k">class</span> <span class="nc">repeatsaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="repeatsaw"><a class="viewcode-back" href="../../repeatsaw.html#chainsaw.lazy.repeatsaw">[docs]</a><span class="k">class</span> <span class="nc">repeatsaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;repeating chainsaw&#39;&#39;&#39;</span>
 
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="slicesaw"><a class="viewcode-back" href="../../slicesaw.html#chainsaw.lazy.slicesaw">[docs]</a><span class="k">class</span> <span class="nc">slicesaw</span><span class="p">(</span><span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="slicesaw"><a class="viewcode-back" href="../../slicesaw.html#chainsaw.lazy.slicesaw">[docs]</a><span class="k">class</span> <span class="nc">slicesaw</span><span class="p">(</span>
+    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span>
+<span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;slicing chainsaw&#39;&#39;&#39;</span>
 

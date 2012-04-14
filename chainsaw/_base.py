@@ -4,15 +4,18 @@
 from operator import truth
 from threading import local
 from collections import deque
+from fnmatch import translate
+from re import compile as rcompile
 from contextlib import contextmanager
+
+from parse import compile as pcompile
 
 from chainsaw._compat import imap
 
 SLOTS = [
      '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_out',
-     '_nokeep',  '_mode', '_CHAINCFG',  '_chain', '_truth', '_ss',
-     '_context', '_call', '_alt', '_wrapper', '_args', '_kw', '_original',
-     '_baseline',
+     '_nokeep',  '_mode', '_CHAINCFG',  '_chain', '_ss', '_context', '_call',
+     '_wrapper', '_args', '_kw', '_original', '_baseline',
 ]
 
 
@@ -36,8 +39,6 @@ class _ChainsawMixin(local):
         self._context = self._DEFAULT_CONTEXT
         # default mode
         self._mode = self._DEFAULT_MODE
-        # no truth value to override default `__bool__` response
-        self._truth = None
         ## chain defaults #####################################################
         self._chain = getattr(self, self._DEFAULT_CHAIN)
         # 1. default chain in
@@ -60,14 +61,12 @@ class _ChainsawMixin(local):
         # snapshot stack
         self._ss = deque(maxlen=maxlen) if maxlen is not None else maxlen
         ## callable defaults ##################################################
-        # active callable
+        # worker
         self._call = None
         # position arguments
         self._args = ()
         # keyword arguments
         self._kw = {}
-        # current alternate callable
-        self._alt = None
         # default output class
         self._wrapper = list
 
@@ -144,18 +143,25 @@ class _ChainsawMixin(local):
     @property
     def _identity(self):
         '''
-        Substitute generic identity function for active callable if no current
-        callable is assigned.
+        Substitute generic identity function for worker if no other
+        function is assigned.
         '''
         return self._call if self._call is not None else lambda x: x
 
     @property
     def _test(self, truth_=truth):
         '''
-        Substitute truth operator function for active callable is no current
-        callable is assigned.
+        Substitute truth operator function for worker if no other
+        function assigned.
         '''
         return self._call if self._call is not None else truth_
+
+    @staticmethod
+    def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
+        if type == 'glob':
+            pat = t(pat)
+            type = 'regex'
+        return r(pat, flag).search if type == 'regex' else p(pat).search
 
     ###########################################################################
     ## clearing things up #####################################################

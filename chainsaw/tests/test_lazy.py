@@ -6,18 +6,26 @@ from chainsaw._compat import unittest
 from chainsaw.tests.base import Mixin
 from chainsaw.tests.map import MapMixin, RepeatMixin
 from chainsaw.tests.reduce import ReduceMixin, SliceMixin, FilterMixin
-from chainsaw.tests.analyze import OrderMixin, NumberMixin, CompareMixin
+from chainsaw.tests.analyze import OrderMixin, MathMixin, CompareMixin
 
 
-class TestMain(
+class TestLazy(
     unittest.TestCase, Mixin, CompareMixin, MapMixin, ReduceMixin, OrderMixin,
-    SliceMixin, RepeatMixin, NumberMixin, FilterMixin
+    SliceMixin, RepeatMixin, MathMixin, FilterMixin
 ):
 
     def setUp(self):
         from chainsaw import lazysaw
         self.qclass = lazysaw.as_auto()
         self.mclass = lazysaw.as_manual()
+
+
+class TestCompare(unittest.TestCase, Mixin, CompareMixin):
+
+    def setUp(self):
+        from chainsaw.lazy import comparesaw
+        self.qclass = comparesaw.as_auto()
+        self.mclass = comparesaw.as_manual()
 
 
 class TestFilter(unittest.TestCase, Mixin, FilterMixin):
@@ -29,14 +37,6 @@ class TestFilter(unittest.TestCase, Mixin, FilterMixin):
         self.mclass = filtersaw.as_manual()
 
 
-class TestSlice(unittest.TestCase, Mixin, SliceMixin):
-
-    def setUp(self):
-        from chainsaw.lazy import slicesaw
-        self.qclass = slicesaw.as_auto()
-        self.mclass = slicesaw.as_manual()
-
-
 class TestMap(unittest.TestCase, Mixin, MapMixin):
 
     def setUp(self):
@@ -45,12 +45,12 @@ class TestMap(unittest.TestCase, Mixin, MapMixin):
         self.mclass = mapsaw.as_manual()
 
 
-class TestRepeat(unittest.TestCase, Mixin, RepeatMixin):
+class TestMath(unittest.TestCase, Mixin, MathMixin):
 
     def setUp(self):
-        from chainsaw.lazy import repeatsaw
-        self.qclass = repeatsaw.as_auto()
-        self.mclass = repeatsaw.as_manual()
+        from chainsaw.lazy import mathsaw
+        self.qclass = mathsaw.as_auto()
+        self.mclass = mathsaw.as_manual()
 
 
 class TestOrder(unittest.TestCase, Mixin, OrderMixin):
@@ -61,6 +61,14 @@ class TestOrder(unittest.TestCase, Mixin, OrderMixin):
         self.mclass = ordersaw.as_manual()
 
 
+class TestRepeat(unittest.TestCase, Mixin, RepeatMixin):
+
+    def setUp(self):
+        from chainsaw.lazy import repeatsaw
+        self.qclass = repeatsaw.as_auto()
+        self.mclass = repeatsaw.as_manual()
+
+
 class TestReduce(unittest.TestCase, Mixin, ReduceMixin):
 
     def setUp(self):
@@ -69,20 +77,13 @@ class TestReduce(unittest.TestCase, Mixin, ReduceMixin):
         self.mclass = reducesaw.as_manual()
 
 
-class TestNumber(unittest.TestCase, Mixin, NumberMixin):
+class TestSlice(unittest.TestCase, Mixin, SliceMixin):
 
     def setUp(self):
-        from chainsaw.lazy import numbersaw
-        self.qclass = numbersaw.as_auto()
-        self.mclass = numbersaw.as_manual()
+        from chainsaw.lazy import slicesaw
+        self.qclass = slicesaw.as_auto()
+        self.mclass = slicesaw.as_manual()
 
-
-class TestTruth(unittest.TestCase, Mixin, CompareMixin):
-
-    def setUp(self):
-        from chainsaw.lazy import comparesaw
-        self.qclass = comparesaw.as_auto()
-        self.mclass = comparesaw.as_manual()
 
 if __name__ == '__main__':
     unittest.main()

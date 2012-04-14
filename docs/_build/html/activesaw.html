@@ -63,17 +63,17 @@
 <dl class="method">
 <dt id="chainsaw.active.activesaw.all">
 <tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.all" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the assigned function returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
-<strong>everything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
+<dd><p>Discover if the worker returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for <strong>everything</strong> within
+an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
 the iterable is empty).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.any">
 <tt class="descname">any</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.any" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the assigned function returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for
-<strong>anything</strong> within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if the
-iterable is empty).</p>
+<dd><p>Discover if the worker returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for <strong>anything</strong> within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> (or if
+the iterable is empty).</p>
 </dd></dl>
 
 <dl class="method">
@@ -84,7 +84,7 @@ iterable is empty).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; incoming thing</td>
 </tr>
 </tbody>
 </table>
@@ -98,7 +98,7 @@ iterable is empty).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; one incoming thing</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>thing</strong> &#8211; incoming thing</td>
 </tr>
 </tbody>
 </table>
@@ -109,12 +109,12 @@ iterable is empty).</p>
 <tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.argmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as wildcard
 <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional arguments</a> to
-the assigned function.</p>
+the worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; combinations global positional arguments with wildcard
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; merge global positional arguments with wildcard
 positional arguments from an iterable (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
 </tr>
 </tbody>
@@ -124,15 +124,15 @@ positional arguments from an iterable (<em>default:</em> <tt class="xref py py-c
 <dl class="method">
 <dt id="chainsaw.active.activesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign positional or keyword arguments used anytime assigned function
-(or its alternative) is invoked.</p>
+<dd><p>Assign positional or keyword arguments used anytime the worker
+is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing with the
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -156,7 +156,7 @@ with outgoing things.</p>
 <dt id="chainsaw.active.activesaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each incoming thing.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -176,7 +176,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 <dt id="chainsaw.active.activesaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> each incoming thing.</p>
+wrapper to cast each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -190,7 +190,7 @@ things from initial placement to final extraction.</p>
 <dt id="chainsaw.active.activesaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
+wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -214,28 +214,26 @@ individual thing in a series of many individual things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.activesaw.as_set">
-<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to
-<tt class="xref py py-class docutils literal"><span class="pre">set</span></tt> each incoming thing.</p>
+<dt id="chainsaw.active.activesaw.as_query">
+<tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to context where, upon exiting it by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
+or <tt class="docutils literal"><span class="pre">end</span></tt> method, incoming things automatically revert to the baseline
+snapshot so the unmodified baseline version of incoming things can be
+worked with.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.active.activesaw.as_truth">
-<tt class="descname">as_truth</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_truth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to evaluation context where the results of operations on
-incoming things determine which of two potential paths to execute.
-After exiting the evaluation context by invoking <tt class="docutils literal"><span class="pre">which</span></tt>, incoming
-things automatically revert to a prior baseline snapshot of incoming
-things so further operations can be performed on an unmodified baseline
-version.</p>
+<dt id="chainsaw.active.activesaw.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to cast
+each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> each incoming thing.</p>
+wrapper to cast each outgoing thing to a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -243,7 +241,7 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">tuple
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each incoming thing.</p>
+each outgoing thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -257,16 +255,6 @@ each incoming thing.</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.activesaw.as_view">
-<tt class="descname">as_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.as_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to query context where the results of operations on incoming
-things queried. Upon exit from query context by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
-or <tt class="docutils literal"><span class="pre">end</span></tt>, incoming things automatically revert to a prior baseline
-snapshot of so that further operations can be performed on an
-unmodified baseline version.</p>
 </dd></dl>
 
 <dl class="method">
@@ -309,13 +297,13 @@ matches an attribute name value in <cite>names</cite>.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.average">
 <tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.average" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take average of things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Find the average value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="chainsaw.active.activesaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.active.activesaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of outgoing things.</p>
+<dd><p>Whether outgoing things and incoming things are in balance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -328,25 +316,25 @@ at random from an <a class="reference external" href="http://docs.python.org/glo
 <dl class="method">
 <dt id="chainsaw.active.activesaw.clear">
 <tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear out everything.</p>
+<dd><p>Remove everything.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.clear_in">
 <tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear incoming things.</p>
+<dd><p>Remove incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.clear_out">
 <tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.clear_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear outgoing things.</p>
+<dd><p>Remove outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.combinations">
 <tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.combinations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find combinations of every <cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Find combinations of every <cite>n</cite> things withing an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -366,7 +354,7 @@ at random from an <a class="reference external" href="http://docs.python.org/glo
 <dl class="method">
 <dt id="chainsaw.active.activesaw.count">
 <tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count the number of times each thing occurs within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Returns a
+<dd><p>Count how many times each thing occurs within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Result is a
 <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>, <em>most common
 thing</em>, <em>count of everything</em> consisting of a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of
 <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</p>
@@ -395,7 +383,7 @@ iterables of <cite>n</cite> things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.difference">
 <tt class="descname">difference</tt><big>(</big><em>symmetric=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.difference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Differences within a series of
+<dd><p>Find differences within a series of
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -410,14 +398,14 @@ iterables of <cite>n</cite> things.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.disjointed">
 <tt class="descname">disjointed</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.disjointed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disjoints within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
+<dd><p>Find disjoints within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.duality">
 <tt class="descname">duality</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.duality" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divide one iterable into two <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>, the first
-iterable being everything assigned function evaluates as
+iterable being everything worker evaluates as
 <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> and the second iterable being everythin the active
 callable evaluates as <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>.</p>
 </dd></dl>
@@ -425,7 +413,8 @@ callable evaluates as <tt class="xref py py-const docutils literal"><span class=
 <dl class="method">
 <dt id="chainsaw.active.activesaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things, cleaning out everything afterwards.</p>
+<dd><p>End the current chainsaw session and return outgoing things, wrapped
+with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
@@ -460,7 +449,7 @@ callable evaluates as <tt class="xref py py-const docutils literal"><span class=
 <dt id="chainsaw.active.activesaw.filter">
 <tt class="descname">filter</tt><big>(</big><em>invert=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
-assigned function.</p>
+worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -496,14 +485,14 @@ rather than <tt class="xref py py-const docutils literal"><span class="pre">True
 <dl class="method">
 <dt id="chainsaw.active.activesaw.group">
 <tt class="descname">group</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Group things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using
-the assigned function as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<dd><p>Group things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.in_out">
 <tt class="descname">in_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.in_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy incoming things to outgoing things.</p>
+<dd><p>Copy incoming things to outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -517,7 +506,7 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <dl class="method">
 <dt id="chainsaw.active.activesaw.intersection">
 <tt class="descname">intersection</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.intersection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Intersections within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
+<dd><p>Find intersections within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -561,15 +550,15 @@ that match a key value in <cite>keys</cite>.</p>
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as a
 <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
 <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword arguments</a> to the
-assigned function.</p>
+worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; combinations global positional and keyword arguments with
-positional and keyword arguments from an iterable into a single
-<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments for the
-assigned function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> &#8211; merge global positional or keyword arguments with
+positional and keyword arguments within an iterable into a single
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments (
+<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</td>
 </tr>
 </tbody>
 </table>
@@ -594,8 +583,7 @@ assigned function (<em>default:</em> <tt class="xref py py-const docutils litera
 <dl class="method">
 <dt id="chainsaw.active.activesaw.map">
 <tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the active
-callable.</p>
+<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
 </dd></dl>
 
 <dl class="method">
@@ -619,14 +607,14 @@ callable.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.max">
 <tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the maximum thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-assigned function as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<dd><p>Find the maximum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.median">
 <tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.median" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the median thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Find the median value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -639,27 +627,27 @@ iterable.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.min">
 <tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the minimum thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-assigned function as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<dd><p>Find the minimum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.minmax">
 <tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.minmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the minimum and maximum things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>minimum value</em>, <em>maximum value</em>).</p>
+<dd><p>Find the minimum and maximum values within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>. Result is a
+<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>minimum value</em>, <em>maximum value</em>).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.out_in">
 <tt class="descname">out_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.out_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manually copy outgoing things back to incoming things.</p>
+<dd><p>Copy outgoing things to incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compile a search pattern to use as assigned function.</p>
+<dd><p>Compile a search pattern and use it as the worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -670,6 +658,11 @@ as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span
 <tt class="docutils literal"><span class="pre">'parse'</span></tt>, <tt class="docutils literal"><span class="pre">'regex'</span></tt>, or <tt class="docutils literal"><span class="pre">'glob'</span></tt> (default: <tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
 <li><strong>flags</strong> &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a> (<em>default:</em>
 <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
+<li><strong>compiler</strong> &#8211; engine to compile pattern with. Valid options are
+<tt class="docutils literal"><span class="pre">'`parse</span> <span class="pre">&lt;http://pypi.python.org/pypi/parse/&gt;_`</span></tt>, <tt class="docutils literal"><span class="pre">'`re</span>
+<span class="pre">&lt;http://docs.python.org/library/re.html&gt;_`'</span></tt>, or <tt class="docutils literal"><span class="pre">'`glob</span>
+<span class="pre">&lt;http://docs.python.org/library/fnmatch.html&gt;_`'</span></tt> (default:
+<tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
 </ul>
 </td>
 </tr>
@@ -680,7 +673,7 @@ as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span
 <dl class="method">
 <dt id="chainsaw.active.activesaw.permutations">
 <tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.permutations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find permutations of every <cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Find permutations of every <cite>n</cite> things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -700,7 +693,7 @@ as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span
 <dl class="method">
 <dt id="chainsaw.active.activesaw.range">
 <tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the length of the smallest interval that can contain each thing
+<dd><p>Find the length of the smallest interval that can contain everything
 within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
@@ -708,7 +701,7 @@ within an <a class="reference external" href="http://docs.python.org/glossary.ht
 <dt id="chainsaw.active.activesaw.reduce">
 <tt class="descname">reduce</tt><big>(</big><em>initial=None</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.reduce" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduce an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to one
-thing with assigned function.</p>
+thing with worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -727,15 +720,15 @@ of an iterable (<em>default:</em> <tt class="xref py py-const docutils literal">
 <dl class="method">
 <dt id="chainsaw.active.activesaw.repeat">
 <tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.repeat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or results of
-invoking assigned function <cite>n</cite> times.</p>
+<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or invoke
+worker <cite>n</cite> times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> &#8211; number of times to repeat (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>call</strong> &#8211; repeat result of assigned function (<em>default:</em>
+<li><strong>call</strong> &#8211; repeat results of invoking worker (<em>default:</em>
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -755,7 +748,7 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <dl class="method">
 <dt id="chainsaw.active.activesaw.results">
 <tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things, clearing outgoing things afterwards.</p>
+<dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
 </dd></dl>
 
 <dl class="method">
@@ -767,13 +760,13 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <dl class="method">
 <dt id="chainsaw.active.activesaw.sample">
 <tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off a
-random sample of <cite>n</cite> things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Randomly <a class="reference external" href="http://docs.python.org/glossary.html#term-slice">slice</a> off
+<cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; sample size</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; size of sample</td>
 </tr>
 </tbody>
 </table>
@@ -783,15 +776,14 @@ random sample of <cite>n</cite> things within an <a class="reference external" h
 <dt id="chainsaw.active.activesaw.shuffle">
 <tt class="descname">shuffle</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.shuffle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-assigned function as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.slice">
 <tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.slice" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off part of
-an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> based on
-indexes.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off things
+from <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -810,7 +802,7 @@ indexes.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a snapshot of current incoming things.</p>
+<dd><p>Take a snapshot of the current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -836,15 +828,14 @@ indexes.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.subset">
 <tt class="descname">subset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.subset" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> are subsets
-each other.</p>
+<dd><p>Find out if <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> are subsets
+other iterables.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>precision=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take the total from adding up <cite>start</cite> and each thing within an
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Total up by adding <cite>start</cite> and everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> together.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -863,23 +854,19 @@ each other.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.superset">
 <tt class="descname">superset</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.superset" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> is a superset of
-another iterable.</p>
+<dd><p>Find out if <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> are supersets of
+others iterables.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign assigned function.</p>
+<tt class="descname">tap</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; function to assign</li>
-<li><strong>alt</strong> &#8211; alternative function (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a callable</td>
 </tr>
 </tbody>
 </table>
@@ -889,16 +876,17 @@ another iterable.</p>
 <dt id="chainsaw.active.activesaw.traverse">
 <tt class="descname">traverse</tt><big>(</big><em>ancestors=False</em>, <em>invert=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.traverse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect nested values from each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
-assigned function.</p>
+worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>ancestors</strong> &#8211; collect things from parents of a thing based on
-<a class="reference external" href="http://docs.python.org/glossary.html#term-method-resolution-order">method resolution order (MRO)</a>
+<cite>method resolution order (MRO)
+&lt;http://docs.python.org/glossary.html#term-method-resolution-order&gt;</cite>
 (default: <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>invert</strong> &#8211; return things assigned function evaluates as
+<li><strong>invert</strong> &#8211; return things worker evaluates as
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
 </ul>
 </td>
@@ -910,7 +898,7 @@ assigned function.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Revert incoming things to a previous snapshot of incoming things.</p>
+<dd><p>Revert incoming things to a previous snapshot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -932,27 +920,27 @@ assigned function.</p>
 <dl class="method">
 <dt id="chainsaw.active.activesaw.union">
 <tt class="descname">union</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.union" title="Permalink to this definition">¶</a></dt>
-<dd><p>Union of things within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
+<dd><p>Find unions within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.unique">
 <tt class="descname">unique</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.unique" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unique things within an
+<dd><p>Find unique things within an
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear assigned function, alternative function, and arguments.</p>
+<dd><p>Clear any active callable and global positional or keyword arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.activesaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> each incoming thing.</p>
+wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -960,26 +948,6 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">deque
 <tt class="descname">weave</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.weave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interleave every other thing from multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
 iterable.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.active.activesaw.which">
-<tt class="descname">which</tt><big>(</big><em>call=None</em>, <em>alt=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.activesaw.which" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose assigned function based on results of condition mode.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>call</strong> &#8211; new function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-<li><strong>alt</strong> &#8211; new external function to use if condition is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
-(<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">

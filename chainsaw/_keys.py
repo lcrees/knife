@@ -8,6 +8,13 @@ class KChainsaw(AppspaceKey):
 
     '''base chainsaw key'''
 
+    def __init__(*things, **kw):  # @NoSelf
+        '''
+        init
+
+        :params `*things`: incoming things
+        '''
+
     ###########################################################################
     ## things in process ######################################################
     ###########################################################################
@@ -15,12 +22,12 @@ class KChainsaw(AppspaceKey):
     def as_many():  # @NoSelf
         '''
         Switch to performing operations on each incoming thing as just one
-        individual thing in a series of many individual things.
+        individual thing.
         '''
 
     def as_one():  # @NoSelf
         '''
-        Switch to performing operations on incoming things as one whole thing.
+        Switch to performing operations on all incoming things at once.
         '''
 
     ###########################################################################
@@ -33,27 +40,16 @@ class KChainsaw(AppspaceKey):
         things from initial placement to final extraction.
         '''
 
-    def as_truth():  # @NoSelf
+    def as_query():  # @NoSelf
         '''
-        Switch to evaluation context where the results of operations on
-        incoming things determine which of two potential paths to execute.
-        After exiting the evaluation context by invoking ``which``, incoming
-        things automatically revert to a prior baseline snapshot of incoming
-        things so further operations can be performed on an unmodified baseline
-        version.
-        '''
-
-    def as_view():  # @NoSelf
-        '''
-        Switch to query context where the results of operations on incoming
-        things queried. Upon exit from query context by invoking ``results``
-        or ``end``, incoming things automatically revert to a prior baseline
-        snapshot of so that further operations can be performed on an
-        unmodified baseline version.
+        Switch to context where, upon exiting it by invoking ``results``
+        or ``end`` method, incoming things automatically revert to the baseline
+        snapshot so the unmodified baseline version of incoming things can be
+        worked with.
         '''
 
     ###########################################################################
-    ## things in chain ########################################################
+    ## things in chains #######################################################
     ###########################################################################
 
     def as_auto():  # @NoSelf
@@ -69,13 +65,19 @@ class KChainsaw(AppspaceKey):
         '''
 
     def out_in():  # @NoSelf
-        '''Manually copy outgoing things back to incoming things.'''
+        '''
+        Copy outgoing things to incoming things.
+        '''
 
     def in_out():  # @NoSelf
-        '''Manually copy incoming things to outgoing things.'''
+        '''
+        Copy incoming things to outgoing things.
+        '''
 
     balanced = Attribute(
-        '''Determine if incoming and outgoing things are in balance.'''
+        '''
+        Whether outgoing things and incoming things are in balance.
+        '''
     )
 
     ###########################################################################
@@ -84,7 +86,7 @@ class KChainsaw(AppspaceKey):
 
     def snapshot(baseline=False, original=False):  # @NoSelf
         '''
-        Take a snapshot of current incoming things.
+        Take a snapshot of the current incoming things.
 
         :param baseline: make this snapshot the baseline snapshot (*default:*
           :const:`False`)
@@ -94,7 +96,7 @@ class KChainsaw(AppspaceKey):
 
     def undo(snapshot=0, baseline=False, original=False):  # @NoSelf
         '''
-        Revert incoming things to a previous snapshot of incoming things.
+        Revert incoming things to a previous snapshot.
 
         :param snapshot: number of steps ago e.g. ``1``, ``2``, ``3``, etc.
           (*default:* ``0``)
@@ -110,29 +112,40 @@ class KChainsaw(AppspaceKey):
 
     def arguments(*args, **kw):  # @NoSelf
         '''
-        Assign any positional and/or keyword arguments to be used anytime the
-        active callable or alternative callable is invoked.
+        Assign positional or keyword arguments used anytime the worker
+        is invoked.
         '''
 
-    def tap(call, alt=None, factory=False):  # @NoSelf
+    def tap(call):  # @NoSelf
         '''
-        Assign active callable. Optionally assign an alternative callable. If
-        `factory` flag is set to :const:`True`, use the callable passed with
-        the `call` argument as a factory to build the active callable.
+        Assign worker.
 
-        :param call: callable assigned as active callable
-
-        :param alt: callable assigned as alternative callable (*default:*
-          :const:`None`)
-
-        :param factory: whether `call` is a factory that produces callables
-          (*default:* :const:`False`)
+        :param call: a callable
         '''
 
     def untap():  # @NoSelf
         '''
-        Clear any active callable, alternative callable, or assigned position
-        or keywork arguments.
+        Clear any active callable and global positional or keyword arguments.
+        '''
+
+    def pattern(pattern, flags=0, compiler='parse'):  # @NoSelf
+        '''
+        Compile a search pattern and use it as the worker.
+
+        :param pattern: search pattern
+
+        :param type: engine to compile pattern with. Valid options are
+          ``'parse'``, ``'regex'``, or ``'glob'`` (default: ``'parse'``)
+
+        :param flags: regular expression `flags
+          <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
+          ``0``)
+
+        :param compiler: engine to compile pattern with. Valid options are
+          ``'`parse <http://pypi.python.org/pypi/parse/>_```, ``'`re
+          <http://docs.python.org/library/re.html>_`'``, or ``'`glob
+          <http://docs.python.org/library/fnmatch.html>_`'`` (default:
+          ``'parse'``)
         '''
 
     ###########################################################################
@@ -157,71 +170,69 @@ class KChainsaw(AppspaceKey):
         '''
         Insert `thing` **after** any other incoming things.
 
-        :param thing: one incoming thing
+        :param thing: incoming thing
         '''
 
     def appendstart(thing):  # @NoSelf
         '''
         Insert `thing` **before** any other incoming things.
 
-        :param thing: one incoming thing
+        :param thing: incoming thing
         '''
 
     ###########################################################################
     ## knowing things #########################################################
     ###########################################################################
 
-    def __bool__():  # @NoSelf
-        '''
-        Return either results built up while in truth context or return the
-        number of incoming things.
-        '''
-
-    ###########################################################################
-    ## know things ############################################################
-    ###########################################################################
-
     def __len__():  # @NoSelf
         '''Number of incoming things.'''
 
+    def __repr__(self):
+        '''Object representation.'''
+
     ###########################################################################
-    ## clearing things up #####################################################
+    ## cleaning up things #####################################################
     ###########################################################################
 
     def clear():  # @NoSelf
-        '''Clear out everything.'''
+        '''
+        Remove everything.
+        '''
 
     def clear_in():  # @NoSelf
-        '''Clear incoming things.'''
+        '''
+        Remove incoming things.
+        '''
 
     def clear_out():  # @NoSelf
-        '''Clear outgoing things.'''
+        '''
+        Remove outgoing things.
+        '''
 
 
 class KOutchain(KChainsaw):
 
-    '''active output chainsaw mixin'''
+    '''output key'''
 
     def __iter__():  # @NoSelf
         '''Yield outgoing things.'''
 
     def end():  # @NoSelf
-        '''Return outgoing things, cleaning out everything afterwards.'''
+        '''
+        End the current chainsaw session and return outgoing things, wrapped
+        with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
 
     def results():  # @NoSelf
-        '''Return outgoing things, clearing outgoing things afterwards.'''
+        '''
+        Clear and return outgoing things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
 
     def preview():  # @NoSelf
-        '''Take a peek at the current state of outgoing things.'''
-
-    def which(call=None, alt=None):  # @NoSelf
         '''
-        Choose active callable based on results of condition mode.
-
-        :param call: new callable to use if condition is :const:`True`
-          (*default:* :const:`None`)
-        :param alt: new external callable to use if condition is :const:`False`
-          (*default:* :const:`None`)
+        Take a peek at the current state of outgoing things.
         '''
 
     ###########################################################################
@@ -238,16 +249,20 @@ class KOutchain(KChainsaw):
         '''
 
     def unwrap():  # @NoSelf
-        '''Reset current wrapper to default.'''
+        '''
+        Reset current `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        default.
+        '''
 
     ###########################################################################
-    ## string wrapping things #################################################
+    ## wrapping things up #####################################################
     ###########################################################################
 
     def as_ascii(errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode each incoming thing with the
+        wrapper to :class:`byte` encode each outgoing thing with the
         ``'ascii'`` codec.
 
         :param errors: error handling for decoding issues (*default*:
@@ -257,7 +272,7 @@ class KOutchain(KChainsaw):
     def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode each incoming thing.
+        wrapper to :class:`byte` encode each outgoing thing.
 
         :param encoding: Unicode encoding (*default:* ``'utf-8'``)
 
@@ -265,95 +280,41 @@ class KOutchain(KChainsaw):
           ``'strict'``)
         '''
 
-    def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
+    def as_dict():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
-        each incoming thing.
-
-        :param encoding: Unicode encoding (*default:* ``'utf-8'``)
-
-        :param errors: error handling for decoding issues (*default:*
-          ``'strict'``)
+        wrapper to cast each outgoing thing as a :class:`dict`.
         '''
-
-    ###########################################################################
-    ## sequence wrapping things ###############################################
-    ###########################################################################
 
     def as_list():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`list` each incoming thing.
-        '''
-
-    def as_deque():  # @NoSelf
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`deque` each incoming thing.
-        '''
-
-    def as_tuple():  # @NoSelf
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`tuple` each incoming thing.
-        '''
-
-    ###########################################################################
-    ## map wrapping things ####################################################
-    ###########################################################################
-
-    def as_dict():  # @NoSelf
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`dict` each incoming thing.
-        '''
-
-    def as_ordereddict():  # @NoSelf
-        '''
-        Set `iterable  <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`OrderedDict`.
-        '''
-
-    ###########################################################################
-    ## stuf wrapping things ###################################################
-    ###########################################################################
-
-    def as_frozenstuf():  # @NoSelf
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`frozenstuf` each incoming thing.
-        '''
-
-    def as_orderedstuf():  # @NoSelf
-        '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`orderedstuf` each incoming thing.
-        '''
-
-    def as_stuf():  # @NoSelf
-        '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`stuf` each incoming thing.
-        '''
-
-    ###########################################################################
-    ## set wrapping things ####################################################
-    ###########################################################################
-
-    def as_frozenset():  # @NoSelf
-        '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`frozenset` each incoming thing.
+        wrapper to cast each incoming thing as a :class:`list`.
         '''
 
     def as_set():  # @NoSelf
         '''
         Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        :class:`set` each incoming thing.
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to cast
+        each outgoing thing as a :class:`set`.
+        '''
+
+    def as_tuple():  # @NoSelf
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to cast each outgoing thing to a :class:`tuple`.
+        '''
+
+    def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
+        '''
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
+        each outgoing thing.
+
+        :param encoding: Unicode encoding (*default:* ``'utf-8'``)
+
+        :param errors: error handling for decoding issues (*default:*
+          ``'strict'``)
         '''
 
 
@@ -374,21 +335,21 @@ class KFilter(AppspaceKey):
 
     def duality():  # @NoSelf
         '''
-        Divide one iterable into two `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_, the first
-        iterable being everything the active callable evaluates as
-        :const:`True` and the second iterable being everythin the active
-        callable evaluates as :const:`False`.
+        Divide one `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ into two
+        iterables, the first being everything the worker evaluates as
+        :const:`True` and the second being everything the worker evaluates as
+        :const:`False`.
         '''
 
     def filter(invert=False):  # @NoSelf
         '''
         Collect each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        active callable.
+        worker.
 
-        :param invert: return things for which the filter is :const:`False`
-          rather than :const:`True` (*default:* :const:`False`)
+        :param invert: return things the worker evaluates as :const:`False`
+          instead of :const:`True` (*default:* :const:`False`)
         '''
 
     def items(*keys):  # @NoSelf
@@ -413,32 +374,18 @@ class KFilter(AppspaceKey):
         :param values: collect values only (*default:* :const:`False`)
         '''
 
-    def pattern(pattern, flags=0, compiler='parse'):  # @NoSelf
-        '''
-        Compile a search pattern to use as the active callable.
-
-        :param pattern: search pattern
-
-        :param flags: regular expression `flags
-          <http://docs.python.org/library/re.html#re.DEBUG>`_ (*default:*
-          ``0``)
-
-        :param compiler: engine to compile pattern with. Valid options are
-          ``'parse'``, ``'re'``, or ``'glob'`` (default: ``'parse'``)
-        '''
-
     def traverse(ancestors=False, invert=False):  # @NoSelf
         '''
         Collect nested values from each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
-        active callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ the worker
+        matches.
 
         :param ancestors: collect things from parents of a thing based on
           `method resolution order (MRO)
-          <http://docs.python.org/glossary.html#term-method-resolution-order>`_
+          <http://docs.python.org/glossary.html#term-method-resolution-order>`
           (default: :const:`False`)
 
-        :param invert: return things active callable evaluates as
+        :param invert: return things worker evaluates as
           :const:`False` rather than :const:`True` (*default:* :const:`False`)
         '''
 
@@ -463,8 +410,8 @@ class KReduce(AppspaceKey):
     def reduce(initial=None, reverse=False):  # @NoSelf
         '''
         Reduce an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to one
-        thing with the active callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ down to one
+        thing using the worker.
 
         :param initial: starting value (*default:*: :const:`None`)
 
@@ -475,17 +422,17 @@ class KReduce(AppspaceKey):
 
     def weave():  # @NoSelf
         '''
-        Interleave every other thing from multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ into one
-        iterable.
+        Interleave every sequence of corresponding thing from multiple
+        `iterables <http://docs.python.org/glossary.html#term-iterable>`_ into
+        one iterable.
         '''
 
     def zip():  # @NoSelf
         '''
         Reduce multiple `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ to one iterable
-        by pairing every two things in a :class:`tuple` of
-        (*thing1*, *thing2*).
+        by pairing every two things in a :class:`tuple` of (*thing1*,
+        *thing2*).
         '''
 
 
@@ -514,9 +461,9 @@ class KSlice(AppspaceKey):
 
     def dice(n, fill=None):  # @NoSelf
         '''
-        `Split <http://docs.python.org/glossary.html#term-slice>`_ one
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        into multiple iterables of size `n` things.
+        `Slice <http://docs.python.org/glossary.html#term-slice>`_ one
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ into
+        multiple iterables of size `n` things.
 
         :param n: number of things per split
 
@@ -588,7 +535,8 @@ class KRepeat(AppspaceKey):
 
     def combinations(n):  # @NoSelf
         '''
-        Find combinations of every `n` things from an `iterable
+        Find combinations of every `n` things withing an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: length of things to derive combinations from
         '''
@@ -601,7 +549,7 @@ class KRepeat(AppspaceKey):
 
     def permutations(n):  # @NoSelf
         '''
-        Find permutations of every `n` things from an `iterable
+        Find permutations of every `n` things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: length of things to derive permutations from
@@ -610,12 +558,12 @@ class KRepeat(AppspaceKey):
     def repeat(n=None, call=False):  # @NoSelf
         '''
         Repeat either an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or results of
-        invoking active callable `n` times.
+        <http://docs.python.org/glossary.html#term-iterable>`_ or invoke
+        worker `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
-        :param call: repeat result of active callable (*default:*
+        :param call: repeat results of invoking worker (*default:*
           :const:`False`)
         '''
 
@@ -630,9 +578,9 @@ class KMap(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_ as wildcard
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
-        the active callable.
+        the worker.
 
-        :param merge: combine global positional arguments with wildcard
+        :param merge: merge global positional arguments with wildcard
           positional arguments from an iterable (*default:* :const:`False`)
         '''
 
@@ -658,19 +606,18 @@ class KMap(AppspaceKey):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
-        active callable.
+        worker.
 
-        :param merge: combine global positional and keyword arguments with
-          positional and keyword arguments from an iterable into a single
-          :class:`tuple` of wildcard positional and keyword arguments for the
-          active callable (*default:* :const:`False`)
+        :param merge: merge global positional or keyword arguments with
+          positional and keyword arguments within an iterable into a single
+          :class:`tuple` of wildcard positional and keyword arguments (
+          *default:* :const:`False`)
         '''
 
     def map():  # @NoSelf
         '''
         Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the active
-        callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
         '''
 
 
@@ -680,23 +627,22 @@ class KCompare(AppspaceKey):
 
     def all():  # @NoSelf
         '''
-        :const:`True` if the active callable returns :const:`True` for
-        **everything** within an `iterable
+        Discover if the worker returns :const:`True` for **everything** within
+        an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
         '''
 
     def any():  # @NoSelf
         '''
-        :const:`True` if the active callable returns :const:`True` for
-        **anything** within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ (or if the
-        iterable is empty).
+        Discover if the worker returns :const:`True` for **anything** within an
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_ (or if
+        the iterable is empty).
         '''
 
     def difference(symmetric=False):  # @NoSelf
         '''
-        Differences within a series of
+        Find differences within a series of
         `iterables <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param symmetric: use symmetric difference (*default:* :const:`False`)
@@ -704,57 +650,57 @@ class KCompare(AppspaceKey):
 
     def disjoint():  # @NoSelf
         '''
-        Disjoints within a series of `iterables
+        Find disjoints within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def intersect():  # @NoSelf
         '''
-        Intersections within a series of `iterables
+        Find intersections within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def subset():  # @NoSelf
         '''
-        :const:`True` if `iterables
+        Find out if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are subsets
-        each other.
+        other iterables.
         '''
 
     def superset():  # @NoSelf
         '''
-        :const:`True` if an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ is a superset of
-        another iterable.
+        Find out if `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ are supersets of
+        others iterables.
         '''
 
     def union():  # @NoSelf
         '''
-        Union of things within a series of `iterables
+        Find unions within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def unique():  # @NoSelf
         '''
-        Unique things within an
+        Find unique things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
 
-class KNumber(AppspaceKey):
+class KMath(AppspaceKey):
 
-    '''numbering key'''
+    '''mathing key'''
 
     def average():  # @NoSelf
         '''
-        Take average of things within an `iterable
+        Find the average value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def count():  # @NoSelf
         '''
-        Count the number of times each thing occurs within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_. Returns a
+        Count how many times each thing occurs within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_. Result is a
         :class:`tuple` consisting of (*least common thing*, *most common
         thing*, *count of everything* consisting of a :class:`list` of
         :class:`tuple` pairs of (*thing*, *count*).
@@ -762,44 +708,44 @@ class KNumber(AppspaceKey):
 
     def max():  # @NoSelf
         '''
-        Take the maximum thing within an `iterable
+        Find the maximum value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
 
     def median():  # @NoSelf
         '''
-        Take the median thing within an `iterable
+        Find the median value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def min():  # @NoSelf
         '''
-        Take the minimum thing within an `iterable
+        Find the minimum value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
 
     def minmax():  # @NoSelf
         '''
-        Take the minimum and maximum things within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_
-        as a :class:`tuple` consisting of (*minimum value*, *maximum value*).
+        Find the minimum and maximum values within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_. Result is a
+        :class:`tuple` of (*minimum value*, *maximum value*).
         '''
 
     def range():  # @NoSelf
         '''
-        Take the length of the smallest interval that can contain each thing
+        Find the length of the smallest interval that can contain everything
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
 
     def sum(start=0, precision=False):  # @NoSelf
         '''
-        Take the total from adding up `start` and each thing within an
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
+        Total up by adding `start` and everything within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ together.
 
         :param start: starting number (*default:* ``0``)
 
@@ -815,8 +761,8 @@ class KOrder(AppspaceKey):
     def group():  # @NoSelf
         '''
         Group things within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ using
-        the active callable as the `key function
+        <http://docs.python.org/glossary.html#term-iterable>`_ using the
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
 
@@ -830,7 +776,7 @@ class KOrder(AppspaceKey):
         '''
         Sort things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
-        active callable as the `key function
+        worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
 
@@ -841,7 +787,7 @@ class KOrder(AppspaceKey):
         '''
 
 
-class KSaw(KOutchain, KCompare, KFilter, KReduce, KMap, KNumber, KSlice,
+class KSaw(KOutchain, KCompare, KFilter, KReduce, KMap, KMath, KSlice,
     KOrder, KRepeat):
 
     '''combined key'''

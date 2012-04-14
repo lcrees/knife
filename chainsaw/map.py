@@ -10,9 +10,8 @@ class RepeatMixin(local):
 
     def combinations(self, n):
         '''
-        Find combinations of every `n` things from an `iterable
+        Find combinations of every `n` things withing an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-
 
         :param n: length of things to derive combinations from
         '''
@@ -29,7 +28,7 @@ class RepeatMixin(local):
 
     def permutations(self, n):
         '''
-        Find permutations of every `n` things from an `iterable
+        Find permutations of every `n` things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
 
         :param n: length of things to derive permutations from
@@ -40,12 +39,12 @@ class RepeatMixin(local):
     def repeat(self, n=None, call=False):
         '''
         Repeat either an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ or results of
-        invoking assigned function `n` times.
+        <http://docs.python.org/glossary.html#term-iterable>`_ or invoke
+        worker `n` times.
 
         :param n: number of times to repeat (*default:* :const:`None`)
 
-        :param call: repeat result of assigned function (*default:*
+        :param call: repeat results of invoking worker (*default:*
           :const:`False`)
         '''
         with self._chain():
@@ -62,9 +61,9 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ as wildcard
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ to
-        the assigned function.
+        the worker.
 
-        :param merge: combinations global positional arguments with wildcard
+        :param merge: merge global positional arguments with wildcard
           positional arguments from an iterable (*default:* :const:`False`)
         '''
         with self._chain():
@@ -96,12 +95,12 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword arguments
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
-        assigned function.
+        worker.
 
-        :param merge: combinations global positional and keyword arguments with
-          positional and keyword arguments from an iterable into a single
-          :class:`tuple` of wildcard positional and keyword arguments for the
-          assigned function (*default:* :const:`False`)
+        :param merge: merge global positional or keyword arguments with
+          positional and keyword arguments within an iterable into a single
+          :class:`tuple` of wildcard positional and keyword arguments (
+          *default:* :const:`False`)
         '''
         with self._chain():
             return self._many(self._kwargmap(
@@ -111,8 +110,7 @@ class MapMixin(local):
     def map(self):
         '''
         Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the active
-        callable.
+        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
         '''
         with self._chain():
             return self._many(self._map(self._call))
