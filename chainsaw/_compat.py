@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 '''chainsaw support'''
 
+from inspect import getmro
 from itertools import chain
-from collections import Iterable
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest  # @UnusedImport
 try:
     import cPickle as pickle
 except ImportError:
     import pickle  # @UnusedImport
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest  # @UnusedImport
+from collections import Iterable, MutableMapping, namedtuple
 
 from stuf import six
+from stuf.utils import recursive_repr
 # pylint: disable-msg=f0401,w0611
 from stuf.six.moves import (
     map, filterfalse, filter, zip, zip_longest)  # @UnresolvedImport @UnusedImport @IgnorePep8
@@ -146,6 +148,47 @@ def tobytes(thing, encoding='utf-8', errors='strict'):
     )
 
 
+Attribute = namedtuple('Attribute', 'name defining_class object')
+
+
+def members(cls):
+    '''
+    Return list of attribute-descriptor tuples.
+
+    For each name in dir(cls), the return list contains a 4-tuple
+    with these elements:
+
+        1. The name (a string).
+
+        2. The class which defined this attribute (a class).
+
+        3. The object as obtained directly from the defining class's
+           __dict__, not via getattr.  This is especially important for
+           data attributes:  C.data is just a data object, but
+           C.__dict__['data'] may be a data descriptor with additional
+           info, like a __doc__ string.
+    '''
+
+    mro = getmro(cls)
+    names = dir(cls)
+    for name in names:
+        # Get the object associated with the name, and where it was defined.
+        # Getting an obj from the __dict__ sometimes reveals more than
+        # using getattr.  Static and class methods are dramatic examples.
+        # Furthermore, some objects may raise an Exception when fetched with
+        # getattr(). This is the case with some descriptors (bug #1785).
+        # Thus, we only use getattr() as a last resort.
+        homecls = None
+        for base in (cls,) + mro:
+            if name in base.__dict__:
+                obj = base.__dict__[name]
+                homecls = base
+                break
+        else:
+            obj = getattr(cls, name)
+            homecls = getattr(obj, "__objclass__", homecls)
+        yield Attribute(name, homecls, obj)
+
 import sys
 if not sys.version_info[0] == 2 and sys.version_info[1] < 7:
     from collections import Counter  # @UnresolvedImport
@@ -185,3 +228,130 @@ else:
                 self_get = self.get
                 for elem in iterable:
                     self[elem] = self_get(elem, 0) + 1
+
+
+try:
+    from collections import ChainMap  # @UnusedImport
+except ImportError:
+    # not until Python >= 3.3
+    class ChainMap(MutableMapping):
+
+        '''
+        ChainMap groups multiple dicts (or other mappings) together to create a
+        single, updateable view.
+
+        The underlying mappings are stored in a list.  That list is public and
+        can accessed or updated using the *maps* attribute.  There is no other
+        state.
+
+        Lookups search the underlying mappings successively until a key is
+        found. In contrast, writes, updates, and deletions only operate on the
+        first mapping.
+        '''
+
+        def __init__(self, *maps):
+            '''
+            Initialize a ChainMap by setting *maps* to the given mappings.
+            If no mappings are provided, a single empty dictionary is used.
+            '''
+            # always at least one map
+            self.maps = list(maps) or [{}]
+
+        def __missing__(self, key):
+            raise KeyError(key)
+
+        def __getitem__(self, key):
+            for mapping in self.maps:
+                try:
+                    # can't use 'key in mapping' with defaultdict
+                    return mapping[key]
+                except KeyError:
+                    pass
+            # support subclasses that define __missing__
+            return self.__missing__(key)
+
+        def get(self, key, default=None):
+            return self[key] if key in self else default
+
+        def __len__(self):
+            # reuses stored hash values if possible
+            return len(set().union(*self.maps))
+
+        def __iter__(self):
+            return iter(set().union(*self.maps))
+
+        def __contains__(self, key):
+            return any(key in m for m in self.maps)
+
+        def __bool__(self):
+            return any(self.maps)
+
+        @recursive_repr()
+        def __repr__(self):
+            return '{0.__class__.__name__}({1})'.format(
+                self, ', '.join(map(repr, self.maps))
+            )
+
+        @classmethod
+        def fromkeys(cls, iterable, *args):
+            '''
+            Create a ChainMap with a single dict created from the iterable.
+            '''
+            return cls(dict.fromkeys(iterable, *args))
+
+        def copy(self):
+            '''
+            New ChainMap or subclass with a new copy of maps[0] and refs to
+            maps[1:]
+            '''
+            return self.__class__(self.maps[0].copy(), *self.maps[1:])
+
+        __copy__ = copy
+
+        def new_child(self):
+            '''New ChainMap with a new dict followed by all previous maps.'''
+            # like Django's Context.push()
+            return self.__class__({}, *self.maps)
+
+        @property
+        def parents(self):
+            '''New ChainMap from maps[1:].'''
+            # like Django's Context.pop()
+            return self.__class__(*self.maps[1:])
+
+        def __setitem__(self, key, value):
+            self.maps[0][key] = value
+
+        def __delitem__(self, key):
+            try:
+                del self.maps[0][key]
+            except KeyError:
+                raise KeyError(
+                    'Key not found in the first mapping: {!r}'.format(key)
+                )
+
+        def popitem(self):
+            '''
+            Remove and return an item pair from maps[0]. Raise KeyError is
+            maps[0] is empty.
+            '''
+            try:
+                return self.maps[0].popitem()
+            except KeyError:
+                raise KeyError('No keys found in the first mapping.')
+
+        def pop(self, key, *args):
+            '''
+            Remove *key* from maps[0] and return its value. Raise KeyError if
+            *key* not in maps[0].
+            '''
+            try:
+                return self.maps[0].pop(key, *args)
+            except KeyError:
+                raise KeyError(
+                    'Key not found in the first mapping: {!r}'.format(key)
+                )
+
+        def clear(self):
+            '''Clear maps[0], leaving maps[1:] intact.'''
+            self.maps[0].clear()

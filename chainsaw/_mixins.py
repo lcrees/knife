@@ -3,20 +3,21 @@
 
 from math import fsum
 from copy import deepcopy
-from inspect import getmro
 from threading import local
 from collections import deque
 from functools import partial, reduce
 from random import choice, sample, shuffle
-from operator import methodcaller, itemgetter, attrgetter, truth, truediv
+from inspect import classify_class_attrs, isclass
+from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, cycle, islice, tee, starmap, repeat, combinations, permutations)
 
+#from stuf.utils import clsname
 from stuf.six import strings, items, values, keys
 
 from chainsaw._compat import (
-    Counter, ifilter, ichain, imap, ifilterfalse, zip_longest, deferiter,
-    deferfunc)
+    Counter, ChainMap, ifilter, ichain, imap, ifilterfalse, zip_longest,
+    deferiter, deferfunc)
 
 
 class _CompareMixin(local):
@@ -267,20 +268,17 @@ class _FilterMixin(local):
         return items
 
     @staticmethod
-    def _traverse(call, deep, anc, alt, wrap):
-        mro = lambda i: ichain(imap(getmro, i))  # @UnusedVariable
-        def members(true, iterable): #@IgnorePep8
-            for k in ifilter(true, dir(iterable)):
-                try:
-                    v = getattr(iterable, k)
-                except AttributeError:
-                    pass
+    def _traverse(call, cca=classify_class_attrs, cm=ChainMap):
+        test = lambda x: not x.name.startswith('__') if call is None else call
+        chainmap = cm()
+        def members(cls, cmap=chainmap): #@IgnorePep8
+            for thing in ifilter(test, cca(cls)):
+                if isclass(thing.object):
+                    cmap.maps.extend(members(thing, cmap))
                 else:
-                    yield k, wrap(extract(true, v)) if alt(v) else k, v
-        def extract(true, iterable): #@IgnorePep8
-            for member in ifilter(truth, members(true, iterable)):
-                yield member
-        return lambda i: ichain(imap(lambda x: extract(call, x), i))
+                    cmap[thing.name] = thing.object
+            return cmap
+        return members
 
 
 class _ReduceMixin(local):
