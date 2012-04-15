@@ -91,22 +91,22 @@
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.arguments">
 <tt class="descname">arguments</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.arguments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign positional or keyword arguments used anytime the worker
-is invoked.</p>
+<dd><p>Assign global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> or
+<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
+arguments used when the worker is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing with the
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> &#8211; error handling for decoding issues (<em>default</em>:
-<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
 </tr>
 </tbody>
 </table>
@@ -123,15 +123,14 @@ with outgoing things.</p>
 <dt id="chainsaw.active.slicesaw.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode each outgoing thing.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default:</em> <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
-<li><strong>errors</strong> &#8211; error handling for encoding issues (<em>default:</em>
-<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
 </ul>
 </td>
 </tr>
@@ -143,21 +142,22 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 <dt id="chainsaw.active.slicesaw.as_dict">
 <tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to cast each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_edit">
 <tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to editing context where operations can be performed on incoming
-things from initial placement to final extraction.</p>
+<dd><p>Start session where work is performed on incoming things <strong>without</strong>
+automatically reverting back to an earlier baseline snapshot when
+invoking the <a class="reference internal" href="#chainsaw.active.slicesaw.results" title="chainsaw.active.slicesaw.results"><tt class="xref py py-meth docutils literal"><span class="pre">results()</span></tt></a> or iterating over outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_list">
 <tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -170,37 +170,36 @@ with outgoing things.</p>
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_many">
 <tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_many" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to performing operations on each incoming thing as just one
-individual thing in a series of many individual things.</p>
+<dd><p>Switch to working on each incoming thing as one individual thing among
+many.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_one">
 <tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_one" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to performing operations on incoming things as one whole thing.</p>
+<dd><p>Switch to working on all incoming things as one whole thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_query">
 <tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_query" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to context where, upon exiting it by invoking <tt class="docutils literal"><span class="pre">results</span></tt>
-or <tt class="docutils literal"><span class="pre">end</span></tt> method, incoming things automatically revert to the baseline
-snapshot so the unmodified baseline version of incoming things can be
-worked with.</p>
+<dd><p>Switch to session where, upon exiting it by invoking <a class="reference internal" href="#chainsaw.active.slicesaw.results" title="chainsaw.active.slicesaw.results"><tt class="xref py py-meth docutils literal"><span class="pre">results()</span></tt></a>
+or <a class="reference internal" href="#chainsaw.active.slicesaw.end" title="chainsaw.active.slicesaw.end"><tt class="xref py py-meth docutils literal"><span class="pre">end()</span></tt></a> or iterating over outgoing things, incoming things
+<strong>automatically</strong> revert back to an earlier baseline snapshot.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to cast
-each outgoing thing as a <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.as_tuple">
 <tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to cast each outgoing thing to a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -208,15 +207,14 @@ wrapper to cast each outgoing thing to a <tt class="xref py py-class docutils li
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode
-each outgoing thing.</p>
+outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> &#8211; Unicode encoding (<em>default:</em> <tt class="docutils literal"><span class="pre">'utf-8'</span></tt>)</li>
-<li><strong>errors</strong> &#8211; error handling for decoding issues (<em>default:</em>
-<tt class="docutils literal"><span class="pre">'strict'</span></tt>)</li>
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
 </ul>
 </td>
 </tr>
@@ -227,16 +225,15 @@ each outgoing thing.</p>
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.at">
 <tt class="descname">at</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.at" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off a thing
-found at <cite>n</cite> position within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or <cite>default</cite> if
-nothing is found at <cite>n</cite>.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off thing
+found at <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> index <cite>n</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> &#8211; index of some thing</li>
-<li><strong>default</strong> &#8211; default thing (<em>default:</em>: <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>n</strong> (<em>integer</em>) &#8211; index of some thing</li>
+<li><strong>default</strong> &#8211; default thing returned if nothing is found at <cite>n</cite></li>
 </ul>
 </td>
 </tr>
@@ -253,8 +250,8 @@ nothing is found at <cite>n</cite>.</p>
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.choice">
 <tt class="descname">choice</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.choice" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off a thing
-at random from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Randomly slice</a> off
+one thing from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -278,16 +275,16 @@ at random from an <a class="reference external" href="http://docs.python.org/glo
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.dice">
 <tt class="descname">dice</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.dice" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into multiple
-iterables of <cite>n</cite> things.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> one
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into
+multiple iterables of <cite>n</cite> things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> &#8211; number of things per split</li>
-<li><strong>fill</strong> &#8211; value to pad out incomplete things (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>)</li>
+<li><strong>n</strong> (<em>integer</em>) &#8211; number of things per slice</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete things</li>
 </ul>
 </td>
 </tr>
@@ -298,8 +295,9 @@ iterables of <cite>n</cite> things.</p>
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.end">
 <tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>End the current chainsaw session and return outgoing things, wrapped
-with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
+<dd><p>End the current session and return outgoing things wrapped with the
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper.</p>
 </dd></dl>
 
 <dl class="method">
@@ -333,13 +331,13 @@ with the <a class="reference external" href="http://docs.python.org/glossary.htm
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.first">
 <tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.first" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slice off either <cite>n</cite> things from the starting end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or the
-<strong>first</strong> thing within an iterable.</p>
+<dd><p>Slice off <cite>n</cite> things from the starting end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
+<strong>first</strong> thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of things</td>
 </tr>
 </tbody>
 </table>
@@ -355,7 +353,7 @@ with the <a class="reference external" href="http://docs.python.org/glossary.htm
 <dt id="chainsaw.active.slicesaw.initial">
 <tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.initial" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off
-everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the very
+everything from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the
 <strong>last</strong> thing.</p>
 </dd></dl>
 
@@ -364,12 +362,12 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.last" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off either
 <cite>n</cite> things from the tail end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
-<strong>last</strong> thing within an iterable.</p>
+<strong>last</strong> thing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; number of things (<em>default:</em>: <tt class="docutils literal"><span class="pre">0</span></tt>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of things</td>
 </tr>
 </tbody>
 </table>
@@ -390,16 +388,10 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> &#8211; search pattern</li>
-<li><strong>type</strong> &#8211; engine to compile pattern with. Valid options are
-<tt class="docutils literal"><span class="pre">'parse'</span></tt>, <tt class="docutils literal"><span class="pre">'regex'</span></tt>, or <tt class="docutils literal"><span class="pre">'glob'</span></tt> (default: <tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
-<li><strong>flags</strong> &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a> (<em>default:</em>
-<tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>compiler</strong> &#8211; engine to compile pattern with. Valid options are
-<tt class="docutils literal"><span class="pre">'`parse</span> <span class="pre">&lt;http://pypi.python.org/pypi/parse/&gt;_`</span></tt>, <tt class="docutils literal"><span class="pre">'`re</span>
-<span class="pre">&lt;http://docs.python.org/library/re.html&gt;_`'</span></tt>, or <tt class="docutils literal"><span class="pre">'`glob</span>
-<span class="pre">&lt;http://docs.python.org/library/fnmatch.html&gt;_`'</span></tt> (default:
-<tt class="docutils literal"><span class="pre">'parse'</span></tt>)</li>
+<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
+<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile pattern with. Valid options are
+<a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
+<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
 </ul>
 </td>
 </tr>
@@ -417,14 +409,15 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <dt id="chainsaw.active.slicesaw.rest">
 <tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.rest" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off
-everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the very
+everything from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the
 <strong>first</strong> thing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.results">
 <tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.</p>
+<dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper. Also
+ends query sessions.</p>
 </dd></dl>
 
 <dl class="method">
@@ -436,7 +429,7 @@ everything within an <a class="reference external" href="http://docs.python.org/
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> &#8211; size of sample</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; size of sample</td>
 </tr>
 </tbody>
 </table>
@@ -452,9 +445,9 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>start</strong> &#8211; starting index of slice</li>
-<li><strong>stop</strong> &#8211; stopping index of slice (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>step</strong> &#8211; size of step in slice (<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>start</strong> (<em>integer</em>) &#8211; starting index of slice</li>
+<li><strong>stop</strong> (<em>integer</em>) &#8211; stopping index of slice</li>
+<li><strong>step</strong> (<em>integer</em>) &#8211; size of step in slice</li>
 </ul>
 </td>
 </tr>
@@ -465,16 +458,14 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a snapshot of the current incoming things.</p>
+<dd><p>Take a snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>baseline</strong> &#8211; make this snapshot the baseline snapshot (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; make this snapshot the original snapshot (<em>default:</em>
-<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>baseline</strong> (<em>boolean</em>) &#8211; make snapshot the baseline snapshot</li>
+<li><strong>original</strong> (<em>boolean</em>) &#8211; make snapshot the original snapshot</li>
 </ul>
 </td>
 </tr>
@@ -490,7 +481,7 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a callable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> (<em>callable</em>) &#8211; a callable</td>
 </tr>
 </tbody>
 </table>
@@ -499,18 +490,15 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em>, <em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Revert incoming things to a previous snapshot.</p>
+<dd><p>Revert incoming things back to a previous snapshot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>snapshot</strong> &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.
-(<em>default:</em> <tt class="docutils literal"><span class="pre">0</span></tt>)</li>
-<li><strong>baseline</strong> &#8211; revert incoming things to baseline snapshot (
-<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
-<li><strong>original</strong> &#8211; revert incoming things to original snapshot (
-<em>default:</em> <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>)</li>
+<li><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt></li>
+<li><strong>baseline</strong> (<em>boolean</em>) &#8211; revert incoming things to baseline snapshot</li>
+<li><strong>original</strong> (<em>boolean</em>) &#8211; revert incoming things to original snapshot</li>
 </ul>
 </td>
 </tr>
@@ -521,14 +509,16 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.untap">
 <tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear any active callable and global positional or keyword arguments.</p>
+<dd><p>Remove worker and global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
+<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
+arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.active.slicesaw.unwrap">
 <tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.active.slicesaw.unwrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to cast each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">

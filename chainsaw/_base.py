@@ -74,30 +74,40 @@ class _ChainsawMixin(local):
     ## things in process ######################################################
     ###########################################################################
 
-    def _iter(self, call, iter_=iter):
-        '''extend work link with `things` wrapped in iterator'''
-        # extend out with incoming things if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._xtend(iter_(call(self._iterable)))
-        # map incoming things and extend out if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
+    # chainsaw all incoming things as one thing
+    _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
+    # chainsaw each incoming thing as one of many individual things
+    _MANY = 'TREAT AS MANY'
 
-    def _one(self, call, _imap=imap):
-        # append incoming things to out if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._append(call(self._iterable))
-        # map incoming things and extend out if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
+    ###########################################################################
+    ## things in session ######################################################
+    ###########################################################################
 
-    def _many(self, call, _imap=imap):
-        # extend out with incoming things if chainsawing them as one thing
-        if self._mode == self._ONE:
-            return self._xtend(call(self._iterable))
-        # map incoming things and extend out if chainsawing many things
-        elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
+    # modify incoming things from input to output in one series of operations
+    _EDIT = _DEFAULT_CONTEXT = 'EDIT'
+    # reset incoming things back to a baseline snapshot after each query
+    _QUERY = 'QUERY'
+
+    ###########################################################################
+    ## things in chains #######################################################
+    ###########################################################################
+
+    # automatically balance ins with out
+    _AUTO = True
+    # manually balance ins with out
+    _DEFAULT_CHAIN = _MANUAL = '_man4'
+    # 1. link for incoming things which is chained to =>
+    _INCFG = 'chainin'
+    _INVAR = '_in'
+    # 2. link for working on incoming things which is chained to =>
+    _WORKCFG = 'work'
+    _WORKVAR = '_work'
+    # 3. link temporarily holding chainsawed things which is chained to =>
+    _HOLDCFG = 'hold'
+    _HOLDVAR = '_hold'
+    # 4. link where outgoing things can be removed from chain
+    _OUTCFG = 'chainout'
+    _OUTVAR = '_out'
 
     def _as_chain(self, **kw):
         '''switch chains'''
@@ -143,31 +153,69 @@ class _ChainsawMixin(local):
     @property
     def _identity(self):
         '''
-        Substitute generic identity function for worker if no other
-        function is assigned.
+        substitute generic identity function for worker if no other worker is
+        assigned
         '''
         return self._call if self._call is not None else lambda x: x
 
     @property
     def _test(self, truth_=truth):
         '''
-        Substitute truth operator function for worker if no other
-        function assigned.
+        substitute truth operator function for worker if no other worker
+        assigned
         '''
         return self._call if self._call is not None else truth_
 
     @staticmethod
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
+        # compile search pattern
         if type == 'glob':
             pat = t(pat)
             type = 'regex'
         return r(pat, flag).search if type == 'regex' else p(pat).search
 
     ###########################################################################
+    ## things coming in #######################################################
+    ###########################################################################
+
+    def _iter(self, call, iter_=iter):
+        # extend out with incoming things if chainsawing them as one thing
+        if self._mode == self._ONE:
+            return self._xtend(iter_(call(self._iterable)))
+        # map incoming things and extend out if chainsawing many things
+        elif self._mode == self._MANY:
+            return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
+
+    def _one(self, call, _imap=imap):
+        # append incoming things to out if chainsawing them as one thing
+        if self._mode == self._ONE:
+            return self._append(call(self._iterable))
+        # map incoming things and extend out if chainsawing many things
+        elif self._mode == self._MANY:
+            return self._xtend(imap(call, self._iterable))
+
+    def _many(self, call, _imap=imap):
+        # extend out with incoming things if chainsawing them as one thing
+        if self._mode == self._ONE:
+            return self._xtend(call(self._iterable))
+        # map incoming things and extend out if chainsawing many things
+        elif self._mode == self._MANY:
+            return self._xtend(imap(call, self._iterable))
+
+    ###########################################################################
+    ## knowing things #########################################################
+    ###########################################################################
+
+    _REPR = (
+        '{0}.{1} ([IN: {2}({3}) => WORK: {4}({5}) => UTIL: {6}({7}) => OUT: '
+        '{8}: ({9})]) <<mode: {10}/context: {11}>>'
+    )
+
+    ###########################################################################
     ## clearing things up #####################################################
     ###########################################################################
 
     def _clearsp(self):
-        '''clear out snapshots'''
+        # clear out snapshots
         self._ss.clear()
         return self

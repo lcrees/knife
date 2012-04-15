@@ -1,112 +1,90 @@
 # -*- coding: utf-8 -*-
-'''base chainsaw mixins'''
+'''reference keys'''
 
-from threading import local
-
-from chainsaw._compat import tounicode, tobytes
+from appspace.keys import AppspaceKey, Attribute
 
 
-class ChainsawMixin(local):
+class KChainsaw(AppspaceKey):
 
-    '''base chainsaw mixin'''
+    '''base chainsaw key'''
 
-    def __init__(self, *things, **kw):
+    def __init__(*things, **kw):  # @NoSelf
         '''
         init
 
         :argument `*things`: incoming things
         '''
-        super(ChainsawMixin, self).__init__(*things, **kw)
 
     ###########################################################################
     ## things in process ######################################################
     ###########################################################################
 
-    def as_many(self):
+    def as_many():  # @NoSelf
         '''
         Switch to working on each incoming thing as one individual thing among
         many.
         '''
-        self._mode = self._MANY
-        return self
 
-    def as_one(self):
+    def as_one():  # @NoSelf
         '''
         Switch to working on all incoming things as one whole thing.
         '''
-        self._mode = self._ONE
-        return self
 
     ###########################################################################
     ## things in session ######################################################
     ###########################################################################
 
-    def as_edit(self):
+    def as_edit():  # @NoSelf
         '''
         Start session where work is performed on incoming things **without**
         automatically reverting back to an earlier baseline snapshot when
         invoking the :meth:`results()` or iterating over outgoing things.
         '''
-        self._context = self._EDIT
-        self._truth = None
-        return self.clear().undo(baseline=True)._unchain()
 
-    def as_query(self):
+    def as_query():  # @NoSelf
         '''
         Switch to session where, upon exiting it by invoking :meth:`results()`
         or :meth:`end()` or iterating over outgoing things, incoming things
         **automatically** revert back to an earlier baseline snapshot.
         '''
-        self._context = self._QUERY
-        self._truth = None
-        return self.snapshot(baseline=True)._as_chain()
 
     ###########################################################################
     ## things in chains #######################################################
     ###########################################################################
 
-    @classmethod
-    def as_auto(cls):
+    def as_auto():  # @NoSelf
         '''
         Switch to context where incoming things are automatically rebalanced
         with outgoing things.
         '''
-        cls._AUTO = True
-        return cls
 
-    @classmethod
-    def as_manual(cls):
+    def as_manual():  # @NoSelf
         '''
         Switch to context where incoming things must be manually rebalanced
         with outgoing things.
         '''
-        cls._AUTO = False
-        return cls
 
-    def out_in(self):
+    def out_in():  # @NoSelf
         '''
         Copy outgoing things to incoming things.
         '''
-        return self._outin()
 
-    def in_out(self):
+    def in_out():  # @NoSelf
         '''
         Copy incoming things to outgoing things.
         '''
-        return self._inout()
 
-    @property
-    def balanced(self):
+    balanced = Attribute(
         '''
         Whether outgoing things and incoming things are in balance.
         '''
-        return self._balanced()
+    )
 
     ###########################################################################
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def snapshot(self, baseline=False, original=False):
+    def snapshot(baseline=False, original=False):  # @NoSelf
         '''
         Take a snapshot of current incoming things.
 
@@ -114,9 +92,8 @@ class ChainsawMixin(local):
 
         :keyword boolean original: make snapshot the original snapshot
         '''
-        return self._snapshot(baseline, original)
 
-    def undo(self, snapshot=0, baseline=False, original=False):
+    def undo(snapshot=0, baseline=False, original=False):  # @NoSelf
         '''
         Revert incoming things back to a previous snapshot.
 
@@ -126,55 +103,35 @@ class ChainsawMixin(local):
 
         :keyword boolean original: revert incoming things to original snapshot
         '''
-        return self._undo(snapshot, baseline, original)
 
     ###########################################################################
-    ## things are called ######################################################
+    ## things called ##########################################################
     ###########################################################################
 
-    def arguments(self, *args, **kw):
+    def arguments(*args, **kw):  # @NoSelf
         '''
         Assign global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ or
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
         arguments used when the worker is invoked.
         '''
-        # positional arguments
-        self._args = args
-        # keyword arguemnts
-        self._kw = kw
-        return self
 
-    def tap(self, call):
+    def tap(call):  # @NoSelf
         '''
         Assign worker.
 
         :argument callable call: a callable
         '''
-        # reset stored position arguments
-        self._args = ()
-        # reset stored keyword arguments
-        self._kw = {}
-        # assign worker
-        self._call = call
-        return self
 
-    def untap(self):
+    def untap():  # @NoSelf
         '''
         Remove worker and global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
         arguments.
         '''
-        # reset position arguments
-        self._args = ()
-        # reset keyword arguments
-        self._kw = {}
-        # reset worker
-        self._call = None
-        return self
 
-    def pattern(self, pattern, type='parse', flags=0):
+    def pattern(pattern, type='parse', flags=0):  # @NoSelf
         '''
         Compile a search pattern and use it as the worker.
 
@@ -188,125 +145,100 @@ class ChainsawMixin(local):
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
         '''
-        self._call = self._pattern(pattern, type, flags)
-        return self
 
     ###########################################################################
     ## things coming in #######################################################
     ###########################################################################
 
-    def extend(self, things):
+    def extend(things):  # @NoSelf
         '''
         Insert `things` **after** any other incoming things.
 
         :argument things: incoming things
         '''
-        with self._man1():
-            return self._xtend(things)
 
-    def extendstart(self, things):
+    def extendstart(things):  # @NoSelf
         '''
         Insert `things` **before** any other incoming things.
 
         :argument things: incoming things
         '''
-        with self._man1():
-            return self._xtendfront(things)
 
-    def append(self, thing):
+    def append(thing):  # @NoSelf
         '''
         Insert `thing` **after** any other incoming things.
 
         :argument thing: incoming thing
         '''
-        with self._man1():
-            return self._append(thing)
 
-    def appendstart(self, thing):
+    def appendstart(thing):  # @NoSelf
         '''
         Insert `thing` **before** any other incoming things.
 
         :argument thing: incoming thing
         '''
-        with self._man1():
-            return self._appendfront(thing)
 
     ###########################################################################
     ## knowing things #########################################################
     ###########################################################################
 
-    def __len__(self):
+    def __len__():  # @NoSelf
         '''Number of incoming things.'''
-        return self._len()
 
     def __repr__(self):
         '''Object representation.'''
-        return self._repr()
 
     ###########################################################################
     ## cleaning up things #####################################################
     ###########################################################################
 
-    def clear(self):
+    def clear():  # @NoSelf
         '''
         Remove everything.
         '''
-        return self._clear()
 
-    def clear_in(self):
+    def clear_in():  # @NoSelf
         '''
         Remove incoming things.
         '''
-        return self._clearin()
 
-    def clear_out(self):
+    def clear_out():  # @NoSelf
         '''
         Remove outgoing things.
         '''
-        return self._clearout()
 
 
-class OutputMixin(ChainsawMixin):
+class KOutchain(KChainsaw):
 
-    '''output mixin'''
+    '''output key'''
 
-    def __iter__(self):
+    def __iter__():  # @NoSelf
         '''Yield outgoing things.'''
-        return self._iterate()
 
-    def end(self):
+    def end():  # @NoSelf
         '''
         End the current session and return outgoing things wrapped with the
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper.
         '''
-        value = self._unchain()._output()
-        # remove every thing
-        self.clear()._clearsp()
-        return value
 
-    def results(self):
+    def results():  # @NoSelf
         '''
         Clear and return outgoing things wrapped with the `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper. Also
         ends query sessions.
         '''
-        value = self._unchain()._output()
-        # remove outgoing things
-        self.clear_out()
-        return value
 
-    def preview(self):
+    def preview():  # @NoSelf
         '''
         Take a peek at the current state of outgoing things.
         '''
-        return self._output()
 
     ###########################################################################
     ## wrapping things up #####################################################
     ###########################################################################
 
-    def wrap(self, wrapper):
+    def wrap(wrapper):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
@@ -314,10 +246,15 @@ class OutputMixin(ChainsawMixin):
         :argument wrapper: an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
         '''
-        self._wrapper = wrapper
-        return self
 
-    def as_ascii(self, errors='strict'):
+    def unwrap():  # @NoSelf
+        '''
+        Reset current `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
+        default iterable wrapper.
+        '''
+
+    def as_ascii(errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`byte` encode outgoing things with the
@@ -325,10 +262,8 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for decoding issues
         '''
-        self._wrapper = lambda x: tobytes(x, 'ascii', errors)
-        return self
 
-    def as_bytes(self, encoding='utf-8', errors='strict'):
+    def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`byte` encode outgoing things.
@@ -337,45 +272,33 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for encoding issues
         '''
-        self._wrapper = lambda x: tobytes(x, encoding, errors)
-        return self
 
-    def as_dict(self):
+    def as_dict():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to cast outgoing things to :class:`dict`.
         '''
-        self._wrapper = dict
-        return self
 
-    def as_list(self):
+    def as_list():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to cast outgoing things to :class:`list`.
         '''
-        self._wrapper = list
-        return self
 
-    unwrap = as_list
-
-    def as_set(self):
+    def as_set():  # @NoSelf
         '''
         Set `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to cast
         outgoing things to :class:`set`.
         '''
-        self._wrapper = set
-        return self
 
-    def as_tuple(self):
+    def as_tuple():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to cast outgoing things to :class:`tuple`.
         '''
-        self._wrapper = tuple
-        return self
 
-    def as_unicode(self, encoding='utf-8', errors='strict'):
+    def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper to :class:`unicode` (:class:`str` under Python 3) decode
@@ -385,5 +308,3 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for decoding issues
         '''
-        self._wrapper = lambda x: tounicode(x, encoding, errors)
-        return self

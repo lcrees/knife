@@ -53,15 +53,15 @@
 <span class="sd">&#39;&#39;&#39;active chainsaws&#39;&#39;&#39;</span>
 
 <span class="kn">from</span> <span class="nn">chainsaw.base</span> <span class="kn">import</span> <span class="n">OutputMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw.map</span> <span class="kn">import</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">MapMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw.reduce</span> <span class="kn">import</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">FilterMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw.analyze</span> <span class="kn">import</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span>
+<span class="kn">from</span> <span class="nn">chainsaw.mixins</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span>
+    <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">chainsaw._active</span> <span class="kn">import</span> <span class="n">_OutputMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._base</span> <span class="kn">import</span> <span class="n">SLOTS</span><span class="p">,</span> <span class="n">_ChainsawMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw._map</span> <span class="kn">import</span> <span class="n">_RepeatMixin</span><span class="p">,</span> <span class="n">_MapMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw._reduce</span> <span class="kn">import</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span>
-<span class="kn">from</span> <span class="nn">chainsaw._analyze</span> <span class="kn">import</span> <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span>
+<span class="kn">from</span> <span class="nn">chainsaw._mixins</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_RepeatMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
+    <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="activesaw"><a class="viewcode-back" href="../../activesaw.html#chainsaw.active.activesaw">[docs]</a><span class="k">class</span> <span class="nc">activesaw</span><span class="p">(</span>

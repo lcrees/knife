@@ -2,15 +2,15 @@
 '''lazily evaluated chainsaws'''
 
 from chainsaw.base import OutputMixin
-from chainsaw.map import RepeatMixin, MapMixin
-from chainsaw.reduce import SliceMixin, ReduceMixin, FilterMixin
-from chainsaw.analyze import MathMixin, CompareMixin, OrderMixin
+from chainsaw.mixins import (
+    RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
+    CompareMixin, OrderMixin)
 
 from chainsaw._lazy import _OutputMixin
 from chainsaw._base import SLOTS, _ChainsawMixin
-from chainsaw._map import _RepeatMixin, _MapMixin
-from chainsaw._reduce import _SliceMixin, _ReduceMixin, _FilterMixin
-from chainsaw._analyze import _MathMixin, _CompareMixin, _OrderMixin
+from chainsaw._mixins import (
+    _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
+    _MathMixin, _CompareMixin, _OrderMixin)
 
 
 class lazysaw(
