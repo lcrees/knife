@@ -67,7 +67,7 @@ class _ActiveMixin(local):
     def _snapshot(self, baseline=False, original=False):
         '''take snapshot of incoming things'''
         # take snapshot
-        snapshot = pickle.dumps(self._in)
+        snapshot = pickle.dumps(self._in, pickle.HIGHEST_PROTOCOL)
         test = (self._ss is not None and len(self._ss) == 0)
         # rebalance incoming with outcoming
         if self._AUTO and not test:

@@ -14,7 +14,7 @@ class CompareMixin(local):
         an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
-        
+
         :rtype: :class:`bool`
         '''
         with self._chain():
@@ -25,7 +25,7 @@ class CompareMixin(local):
         Discover if the worker returns :const:`True` for **anything** within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
-        
+
         :rtype: :class:`bool`
         '''
         with self._chain():
@@ -46,7 +46,7 @@ class CompareMixin(local):
         '''
         Find disjoints within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
         with self._chain():
@@ -67,7 +67,7 @@ class CompareMixin(local):
         Discover if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are subsets
         other iterables.
-        
+
         :rtype: :class:`bool`
         '''
         with self._chain():
@@ -78,7 +78,7 @@ class CompareMixin(local):
         Discover if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are supersets of
         others iterables.
-        
+
         :rtype: :class:`bool`
         '''
         with self._chain():
@@ -88,7 +88,7 @@ class CompareMixin(local):
         '''
         Find unions within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
         with self._chain():
@@ -98,7 +98,7 @@ class CompareMixin(local):
         '''
         Find unique things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
         with self._chain():
@@ -113,7 +113,7 @@ class MathMixin(local):
         '''
         Find average value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -123,11 +123,11 @@ class MathMixin(local):
         '''
         Count how many times each thing occurs within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
-        :returns: :class:`tuple` consisting of (*least common thing*, *most common
-          thing*, *count of everything* consisting of a :class:`list` of
-          :class:`tuple` pairs of (*thing*, *count*).
-        
+
+        :returns: :class:`tuple` consisting of (*least common thing*,
+          *most common thing*, *count of everything* consisting of a
+          :class:`list` of :class:`tuple` pairs of (*thing*, *count*).
+
         :rtype: :class:`tuple`
         '''
         with self._chain():
@@ -139,7 +139,7 @@ class MathMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -149,7 +149,7 @@ class MathMixin(local):
         '''
         Find median value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -161,7 +161,7 @@ class MathMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -171,7 +171,7 @@ class MathMixin(local):
         '''
         Find minimum and maximum values within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :returns: :class:`tuple` of (*minimum value*, *maximum value*).
         :rtype: :class:`tuple`
         '''
@@ -183,7 +183,7 @@ class MathMixin(local):
         Find length of the smallest interval that can contain everything
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -198,7 +198,7 @@ class MathMixin(local):
         :type start: integer or float
 
         :keyword boolean precision: add floats with extended precision
-        
+
         :rtype: number
         '''
         with self._chain():
@@ -305,8 +305,8 @@ class MapMixin(local):
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ .
 
-        :keyword boolean merge: merge global positional arguments with positional
-          arguments from an iterable
+        :keyword boolean merge: merge global positional arguments with
+          positional arguments derived from an iterable
         '''
         with self._chain():
             return self._many(self._argmap(
@@ -341,10 +341,10 @@ class MapMixin(local):
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
         worker.
 
-        :keyword boolean merge: merge global positional or keyword arguments with
-          positional and keyword arguments from an iterable into a single
-          :class:`tuple` of wildcard positional and keyword arguments like
-          (*iterable_args* + *global_args*, *global_kwargs* +
+        :keyword boolean merge: merge global positional or keyword arguments
+          with positional and keyword arguments derived from an iterable into
+          a single :class:`tuple` of wildcard positional and keyword arguments
+          like (*iterable_args* + *global_args*, *global_kwargs* +
           *iterable_kwargs*)
         '''
         with self._chain():
@@ -371,7 +371,7 @@ class FilterMixin(local):
         <http://docs.python.org/glossary.html#term-attribute>`_ values from
         things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ that matches an
-        attribute name value in `names`.
+        attribute name value found in `names`.
 
         :argument string names: attribute names
         '''
@@ -395,8 +395,8 @@ class FilterMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
         worker.
 
-        :keyword boolean invert: collect things the worker evaluates as :const:`False`
-          instead of :const:`True`
+        :keyword boolean invert: collect things the worker evaluates as
+          :const:`False` instead of :const:`True`
         '''
         with self._chain():
             return self._many(self._filter(self._test, invert))
@@ -407,7 +407,7 @@ class FilterMixin(local):
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that match a key value in `keys`.
+        that match a key value found in `keys`.
 
         :argument string keys: item keys (or indexes)
         '''
@@ -430,10 +430,11 @@ class FilterMixin(local):
     def traverse(self, ancestors=False, invert=False):
         '''
         Collect nested values from each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the worker.
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        worker.
 
-        :keyword boolean ancestors: collect things from parents of things based on
-          `method resolution order (MRO)
+        :keyword boolean ancestors: collect things from parents of things based
+          on `method resolution order (MRO)
           <http://docs.python.org/glossary.html#term-method-resolution-order>`_
 
         :keyword boolean invert: select things that the worker evaluates as
@@ -441,7 +442,7 @@ class FilterMixin(local):
         '''
         with self._chain():
             return self._many(self._traverse(
-                self._test, self._alt, self._wrapper, ancestors, invert,
+                self._test, ancestors, invert,
             ))
 
 

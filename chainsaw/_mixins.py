@@ -198,8 +198,8 @@ class _MapMixin(local):
     def _invoke(name, args, mc_=methodcaller, imap_=imap):
         caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
-            results = caller(thing)
-            return thing if results is None else results
+            commit = caller(thing)
+            return thing if commit is None else commit
         return lambda x: imap_(invoke, x)
 
     @staticmethod
@@ -269,16 +269,21 @@ class _FilterMixin(local):
 
     @staticmethod
     def _traverse(call, cca=classify_class_attrs, cm=ChainMap):
-        test = lambda x: not x.name.startswith('__') if call is None else call
-        chainmap = cm()
-        def members(cls, cmap=chainmap): #@IgnorePep8
-            for thing in ifilter(test, cca(cls)):
-                if isclass(thing.object):
-                    cmap.maps.extend(members(thing, cmap))
-                else:
-                    cmap[thing.name] = thing.object
-            return cmap
-        return members
+        if call is None:
+            test = lambda x: not x.name.startswith('__')
+        else:
+            test = call
+        chainmap = ChainMap()
+        def members(cls): #@IgnorePep8
+            for thing in ifilter(test, classify_class_attrs(cls)):
+#                if isclass(thing.object):
+#                    chainmap.maps.extend(members(thing))
+#                else:
+                chainmap[thing.name] = thing.object
+            return chainmap
+        def walkthru(iterable):
+            return imap(members, iterable)
+        return walkthru
 
 
 class _ReduceMixin(local):

@@ -11,10 +11,10 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest  # @UnusedImport
-from collections import Iterable, MutableMapping, namedtuple
+from collections import Iterable, namedtuple, MutableMapping
 
 from stuf import six
-from stuf.utils import recursive_repr
+#from stuf.utils import recursive_repr
 # pylint: disable-msg=f0401,w0611
 from stuf.six.moves import (
     map, filterfalse, filter, zip, zip_longest)  # @UnresolvedImport @UnusedImport @IgnorePep8
@@ -286,11 +286,11 @@ except ImportError:
         def __bool__(self):
             return any(self.maps)
 
-        @recursive_repr()
-        def __repr__(self):
-            return '{0.__class__.__name__}({1})'.format(
-                self, ', '.join(map(repr, self.maps))
-            )
+#        @recursive_repr()
+#        def __repr__(self):
+#            return '{0.__class__.__name__}({1})'.format(
+#                self, ', '.join(map(repr, self.maps))
+#            )
 
         @classmethod
         def fromkeys(cls, iterable, *args):

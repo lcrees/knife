@@ -12,7 +12,7 @@ class KChainsaw(AppspaceKey):
         '''
         init
 
-        :argument `*things`: incoming things
+        :argument `things`: incoming things
         '''
 
     ###########################################################################
@@ -21,13 +21,13 @@ class KChainsaw(AppspaceKey):
 
     def as_many():  # @NoSelf
         '''
-        Switch to working on each incoming thing as one individual thing among
-        many.
+        Treat each incoming thing as one processing unit within a series of
+        processing units.
         '''
 
     def as_one():  # @NoSelf
         '''
-        Switch to working on all incoming things as one whole thing.
+        Treat multiple incoming things as one processing unit.
         '''
 
     ###########################################################################
@@ -36,16 +36,14 @@ class KChainsaw(AppspaceKey):
 
     def as_edit():  # @NoSelf
         '''
-        Start session where work is performed on incoming things **without**
-        automatically reverting back to an earlier baseline snapshot when
-        invoking the :meth:`results()` or iterating over outgoing things.
+        Work on incoming things **without** automatically reverting back to a
+        baseline snapshot when :meth:`commit()` is invoked.
         '''
 
     def as_query():  # @NoSelf
         '''
-        Switch to session where, upon exiting it by invoking :meth:`results()`
-        or :meth:`end()` or iterating over outgoing things, incoming things
-        **automatically** revert back to an earlier baseline snapshot.
+        Work on incoming things where incoming things revert to a baseline
+        snapshot when :meth:`close()` is invoked.
         '''
 
     ###########################################################################
@@ -54,29 +52,28 @@ class KChainsaw(AppspaceKey):
 
     def as_auto():  # @NoSelf
         '''
-        Switch to context where incoming things are automatically rebalanced
-        with outgoing things.
+        Let incoming things be automatically rebalanced with outgoing things.
         '''
 
     def as_manual():  # @NoSelf
         '''
-        Switch to context where incoming things must be manually rebalanced
-        with outgoing things.
+        Disallow incoming things from being manually rebalanced with outgoing
+        things.
         '''
 
     def out_in():  # @NoSelf
         '''
-        Copy outgoing things to incoming things.
+        Copy outgoing things back to incoming things for further processing.
         '''
 
     def in_out():  # @NoSelf
         '''
-        Copy incoming things to outgoing things.
+        Copy incoming things to outgoing things for output.
         '''
 
     balanced = Attribute(
         '''
-        Whether outgoing things and incoming things are in balance.
+        If outgoing and incoming things are in balance.
         '''
     )
 
@@ -86,7 +83,7 @@ class KChainsaw(AppspaceKey):
 
     def snapshot(baseline=False, original=False):  # @NoSelf
         '''
-        Take a snapshot of current incoming things.
+        Take a snapshot of the current state of incoming things.
 
         :keyword boolean baseline: make snapshot the baseline snapshot
 
@@ -120,7 +117,7 @@ class KChainsaw(AppspaceKey):
         '''
         Assign worker.
 
-        :argument callable call: a callable
+        :argument call: a callable
         '''
 
     def untap():  # @NoSelf
@@ -194,17 +191,17 @@ class KChainsaw(AppspaceKey):
 
     def clear():  # @NoSelf
         '''
-        Remove everything.
+        Clear everything.
         '''
 
     def clear_in():  # @NoSelf
         '''
-        Remove incoming things.
+        Clear incoming things.
         '''
 
     def clear_out():  # @NoSelf
         '''
-        Remove outgoing things.
+        Clear outgoing things.
         '''
 
 
@@ -215,18 +212,18 @@ class KOutchain(KChainsaw):
     def __iter__():  # @NoSelf
         '''Yield outgoing things.'''
 
-    def end():  # @NoSelf
+    def close():  # @NoSelf
         '''
-        End the current session and return outgoing things wrapped with the
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Close current edit or query session and return outgoing things wrapped
+        in the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper.
         '''
 
-    def results():  # @NoSelf
+    def commit():  # @NoSelf
         '''
-        Clear and return outgoing things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper. Also
-        ends query sessions.
+        Close query session and return outgoing things wrapped with the
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper.
         '''
 
     def preview():  # @NoSelf
@@ -240,7 +237,7 @@ class KOutchain(KChainsaw):
 
     def wrap(wrapper):  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
 
         :argument wrapper: an `iterable

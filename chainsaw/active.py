@@ -54,7 +54,7 @@ class mathsaw(
     _OutputMixin, _ChainsawMixin, OutputMixin, MathMixin, _MathMixin,
 ):
 
-    '''number chainsaw'''
+    '''mathing chainsaw'''
 
     __slots__ = SLOTS
 

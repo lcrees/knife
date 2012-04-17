@@ -14,7 +14,7 @@ class ChainsawMixin(local):
         '''
         init
 
-        :argument `*things`: incoming things
+        :argument `things`: incoming things
         '''
         super(ChainsawMixin, self).__init__(*things, **kw)
 
@@ -24,15 +24,15 @@ class ChainsawMixin(local):
 
     def as_many(self):
         '''
-        Switch to working on each incoming thing as one individual thing among
-        many.
+        Treat each incoming thing as one processing unit within a series of
+        processing units.
         '''
         self._mode = self._MANY
         return self
 
     def as_one(self):
         '''
-        Switch to working on all incoming things as one whole thing.
+        Treat multiple incoming things as one processing unit.
         '''
         self._mode = self._ONE
         return self
@@ -43,9 +43,8 @@ class ChainsawMixin(local):
 
     def as_edit(self):
         '''
-        Start session where work is performed on incoming things **without**
-        automatically reverting back to an earlier baseline snapshot when
-        invoking the :meth:`results()` or iterating over outgoing things.
+        Work on incoming things **without** automatically reverting back to a
+        baseline snapshot when :meth:`commit()` is invoked.
         '''
         self._context = self._EDIT
         self._truth = None
@@ -53,9 +52,8 @@ class ChainsawMixin(local):
 
     def as_query(self):
         '''
-        Switch to session where, upon exiting it by invoking :meth:`results()`
-        or :meth:`end()` or iterating over outgoing things, incoming things
-        **automatically** revert back to an earlier baseline snapshot.
+        Work on incoming things where incoming things revert to a baseline
+        snapshot when :meth:`close()` is invoked.
         '''
         self._context = self._QUERY
         self._truth = None
@@ -68,8 +66,7 @@ class ChainsawMixin(local):
     @classmethod
     def as_auto(cls):
         '''
-        Switch to context where incoming things are automatically rebalanced
-        with outgoing things.
+        Let incoming things be automatically rebalanced with outgoing things.
         '''
         cls._AUTO = True
         return cls
@@ -77,28 +74,28 @@ class ChainsawMixin(local):
     @classmethod
     def as_manual(cls):
         '''
-        Switch to context where incoming things must be manually rebalanced
-        with outgoing things.
+        Disallow incoming things from being manually rebalanced with outgoing
+        things.
         '''
         cls._AUTO = False
         return cls
 
     def out_in(self):
         '''
-        Copy outgoing things to incoming things.
+        Copy outgoing things back to incoming things for further processing.
         '''
         return self._outin()
 
     def in_out(self):
         '''
-        Copy incoming things to outgoing things.
+        Copy incoming things to outgoing things for output.
         '''
         return self._inout()
 
     @property
     def balanced(self):
         '''
-        Whether outgoing things and incoming things are in balance.
+        If outgoing and incoming things are in balance.
         '''
         return self._balanced()
 
@@ -108,7 +105,7 @@ class ChainsawMixin(local):
 
     def snapshot(self, baseline=False, original=False):
         '''
-        Take a snapshot of current incoming things.
+        Take a snapshot of the current state of incoming things.
 
         :keyword boolean baseline: make snapshot the baseline snapshot
 
@@ -149,7 +146,7 @@ class ChainsawMixin(local):
         '''
         Assign worker.
 
-        :argument callable call: a callable
+        :argument call: a callable
         '''
         # reset stored position arguments
         self._args = ()
@@ -249,19 +246,19 @@ class ChainsawMixin(local):
 
     def clear(self):
         '''
-        Remove everything.
+        Clear everything.
         '''
         return self._clear()
 
     def clear_in(self):
         '''
-        Remove incoming things.
+        Clear incoming things.
         '''
         return self._clearin()
 
     def clear_out(self):
         '''
-        Remove outgoing things.
+        Clear outgoing things.
         '''
         return self._clearout()
 
@@ -276,8 +273,8 @@ class OutputMixin(ChainsawMixin):
 
     def end(self):
         '''
-        End the current session and return outgoing things wrapped with the
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Close current edit or query session and return outgoing things wrapped
+        in the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper.
         '''
         value = self._unchain()._output()
@@ -287,9 +284,9 @@ class OutputMixin(ChainsawMixin):
 
     def results(self):
         '''
-        Clear and return outgoing things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper. Also
-        ends query sessions.
+        Close query session and return outgoing things wrapped with the
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper.
         '''
         value = self._unchain()._output()
         # remove outgoing things
@@ -308,7 +305,7 @@ class OutputMixin(ChainsawMixin):
 
     def wrap(self, wrapper):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
 
         :argument wrapper: an `iterable

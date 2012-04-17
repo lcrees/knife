@@ -3,10 +3,9 @@
 
 from chainsaw._compat import unittest
 
-from chainsaw.tests.base import Mixin
-from chainsaw.tests.map import MapMixin, RepeatMixin
-from chainsaw.tests.reduce import ReduceMixin, SliceMixin, FilterMixin
-from chainsaw.tests.analyze import OrderMixin, MathMixin, CompareMixin
+from chainsaw.tests.mixins import (
+    Mixin, MapMixin, RepeatMixin, ReduceMixin, SliceMixin, FilterMixin,
+    OrderMixin, MathMixin, CompareMixin)
 
 
 class TestLazy(

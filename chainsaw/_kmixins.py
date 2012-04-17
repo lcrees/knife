@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''reference keys'''
+'''chainsaw mixin keys'''
 
 from appspace.keys import AppspaceKey
 
@@ -14,7 +14,7 @@ class KCompare(AppspaceKey):
         an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
-        
+
         :rtype: :class:`bool`
         '''
 
@@ -23,7 +23,7 @@ class KCompare(AppspaceKey):
         Discover if the worker returns :const:`True` for **anything** within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_ (or if
         the iterable is empty).
-        
+
         :rtype: :class:`bool`
         '''
 
@@ -40,7 +40,7 @@ class KCompare(AppspaceKey):
         '''
         Find disjoints within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
 
@@ -57,7 +57,7 @@ class KCompare(AppspaceKey):
         Discover if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are subsets
         other iterables.
-        
+
         :rtype: :class:`bool`
         '''
 
@@ -66,7 +66,7 @@ class KCompare(AppspaceKey):
         Discover if `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_ are supersets of
         others iterables.
-        
+
         :rtype: :class:`bool`
         '''
 
@@ -74,7 +74,7 @@ class KCompare(AppspaceKey):
         '''
         Find unions within a series of `iterables
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
 
@@ -82,7 +82,7 @@ class KCompare(AppspaceKey):
         '''
         Find unique things within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: :class:`set`
         '''
 
@@ -95,7 +95,7 @@ class KMath(AppspaceKey):
         '''
         Find average value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
 
@@ -103,11 +103,11 @@ class KMath(AppspaceKey):
         '''
         Count how many times each thing occurs within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
-        :returns: :class:`tuple` consisting of (*least common thing*, *most common
-          thing*, *count of everything* consisting of a :class:`list` of
-          :class:`tuple` pairs of (*thing*, *count*).
-        
+
+        :returns: :class:`tuple` consisting of (*least common thing*,
+          *most common thing*, *count of everything* consisting of a
+          :class:`list` of :class:`tuple` pairs of (*thing*, *count*).
+
         :rtype: :class:`tuple`
         '''
 
@@ -117,7 +117,7 @@ class KMath(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
-        
+
         :rtype: number
         '''
 
@@ -125,7 +125,7 @@ class KMath(AppspaceKey):
         '''
         Find median value within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
 
@@ -135,7 +135,7 @@ class KMath(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_ using the
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
-        
+
         :rtype: number
         '''
 
@@ -143,7 +143,7 @@ class KMath(AppspaceKey):
         '''
         Find minimum and maximum values within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :returns: :class:`tuple` of (*minimum value*, *maximum value*).
         :rtype: :class:`tuple`
         '''
@@ -153,7 +153,7 @@ class KMath(AppspaceKey):
         Find length of the smallest interval that can contain everything
         within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        
+
         :rtype: number
         '''
 
@@ -166,7 +166,7 @@ class KMath(AppspaceKey):
         :type start: integer or float
 
         :keyword boolean precision: add floats with extended precision
-        
+
         :rtype: number
         '''
 
@@ -255,8 +255,8 @@ class KMap(AppspaceKey):
         `positional arguments
         <http://docs.python.org/glossary.html#term-positional-argument>`_ .
 
-        :keyword boolean merge: merge global positional arguments with positional
-          arguments from an iterable
+        :keyword boolean merge: merge global positional arguments with
+          positional arguments derived from an iterable
         '''
 
     def invoke(name):  # @NoSelf
@@ -285,10 +285,10 @@ class KMap(AppspaceKey):
         <http://docs.python.org/glossary.html#term-keyword-argument>`_ to the
         worker.
 
-        :keyword boolean merge: merge global positional or keyword arguments with
-          positional and keyword arguments from an iterable into a single
-          :class:`tuple` of wildcard positional and keyword arguments like
-          (*iterable_args* + *global_args*, *global_kwargs* +
+        :keyword boolean merge: merge global positional or keyword arguments
+          with positional and keyword arguments derived from an iterable into
+          a single :class:`tuple` of wildcard positional and keyword arguments
+          like (*iterable_args* + *global_args*, *global_kwargs* +
           *iterable_kwargs*)
         '''
 
@@ -309,7 +309,7 @@ class KFilter(AppspaceKey):
         <http://docs.python.org/glossary.html#term-attribute>`_ values from
         things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ that matches an
-        attribute name value in `names`.
+        attribute name value found in `names`.
 
         :argument string names: attribute names
         '''
@@ -329,8 +329,8 @@ class KFilter(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
         worker.
 
-        :keyword boolean invert: collect things the worker evaluates as :const:`False`
-          instead of :const:`True`
+        :keyword boolean invert: collect things the worker evaluates as
+          :const:`False` instead of :const:`True`
         '''
 
     def items(*keys):  # @NoSelf
@@ -339,7 +339,7 @@ class KFilter(AppspaceKey):
         <http://docs.python.org/glossary.html#term-sequence>`_ or `mappings
         <http://docs.python.org/glossary.html#term-mapping>`_) within an
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        that match a key value in `keys`.
+        that match a key value found in `keys`.
 
         :argument string keys: item keys (or indexes)
         '''
@@ -358,10 +358,11 @@ class KFilter(AppspaceKey):
     def traverse(ancestors=False, invert=False):  # @NoSelf
         '''
         Collect nested values from each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the worker.
+        <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
+        worker.
 
-        :keyword boolean ancestors: collect things from parents of things based on
-          `method resolution order (MRO)
+        :keyword boolean ancestors: collect things from parents of things based
+          on `method resolution order (MRO)
           <http://docs.python.org/glossary.html#term-method-resolution-order>`_
 
         :keyword boolean invert: select things that the worker evaluates as
