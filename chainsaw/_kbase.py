@@ -37,7 +37,7 @@ class KChainsaw(AppspaceKey):
     def as_edit():  # @NoSelf
         '''
         Work on incoming things **without** automatically reverting back to a
-        baseline snapshot when :meth:`commit()` is invoked.
+        baseline snapshot when :meth:`read()` is invoked.
         '''
 
     def as_query():  # @NoSelf
@@ -219,16 +219,16 @@ class KOutchain(KChainsaw):
         wrapper.
         '''
 
-    def commit():  # @NoSelf
+    def read():  # @NoSelf
         '''
         Close query session and return outgoing things wrapped with the
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper.
         '''
 
-    def preview():  # @NoSelf
+    def tell():  # @NoSelf
         '''
-        Take a peek at the current state of outgoing things.
+        Take a tell at the current state of outgoing things.
         '''
 
     ###########################################################################

@@ -86,28 +86,34 @@ class _ActiveMixin(local):
 
     def _undo(self, snapshot=0, baseline=False, original=False):
         '''revert incoming things to previous snapshot'''
-        # clear everything
-        self.clear()
-        if original:
+        if original and self._original is not None:
+            # clear everything
+            self.clear()
             # clear snapshots
             self._clearsp()
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
-            snapshot = pickle.loads(self._original)
-        elif baseline:
+            self._in.extend(pickle.loads(self._original))
+        elif baseline and self._baseline is not None:
+            # clear everything
+            self.clear()
             # clear snapshots
             self._clearsp()
             # restore baseline version of incoming things
-            snapshot = pickle.loads(self._baseline)
+            self._in.extend(pickle.loads(self._baseline))
         # if specified, use a specific snapshot
-        elif snapshot:
+        elif self._ss and snapshot:
+            # clear everything
+            self.clear()
             self._ss.rotate(-(snapshot - 1))
-            snapshot = pickle.loads(self._ss.popleft())
+            self._in.extend(pickle.loads(self._ss.popleft()))
         # by default revert to most recent snapshot
-        else:
+        elif self._ss:
+            # clear everything
+            self.clear()
             snapshot = pickle.loads(self._ss.popleft())
-        self._in.extend(snapshot)
+            self._in.extend(snapshot)
         return self
 
     ###########################################################################

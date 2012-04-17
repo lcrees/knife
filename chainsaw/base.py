@@ -3,7 +3,7 @@
 
 from threading import local
 
-from chainsaw._compat import tounicode, tobytes
+from stuf.six import tounicode, tobytes
 
 
 class ChainsawMixin(local):
@@ -44,11 +44,12 @@ class ChainsawMixin(local):
     def as_edit(self):
         '''
         Work on incoming things **without** automatically reverting back to a
-        baseline snapshot when :meth:`commit()` is invoked.
+        baseline snapshot when :meth:`read()` is invoked.
         '''
         self._context = self._EDIT
-        self._truth = None
-        return self.clear().undo(baseline=True)._unchain()
+        if self._baseline:
+            return self.clear().undo(baseline=True)._unchain()
+        return self._unchain()
 
     def as_query(self):
         '''
@@ -56,7 +57,6 @@ class ChainsawMixin(local):
         snapshot when :meth:`close()` is invoked.
         '''
         self._context = self._QUERY
-        self._truth = None
         return self.snapshot(baseline=True)._as_chain()
 
     ###########################################################################
@@ -269,33 +269,33 @@ class OutputMixin(ChainsawMixin):
         '''Yield outgoing things.'''
         return self._iterate()
 
-    def close(self):
+    def tell(self):
         '''
-        Close current edit or query session and return outgoing things wrapped
-        in the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper.
+        Peek at the current state of outgoing things without modifying things.
         '''
-        value = self._unchain()._output()
-        # remove every thing
-        self.clear()._clearsp()
-        return value
+        return self._output()
 
-    def commit(self):
+    def read(self):
         '''
-        Close query session and return outgoing things wrapped with the
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper.
+        1. Return outgoing things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        2. Close transaction by clearing outgoing things.
         '''
         value = self._unchain()._output()
         # remove outgoing things
         self.clear_out()
         return value
 
-    def preview(self):
+    def close(self):
         '''
-        Take a peek at the current state of outgoing things.
+        1. Return outgoing things wrapped in the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        2. Close session by clearing incoming, outgoing, and anything else.
         '''
-        return self._output()
+        value = self._unchain()._output()
+        # remove every thing
+        self.clear()._clearsp()
+        return value
 
     ###########################################################################
     ## wrapping things up #####################################################

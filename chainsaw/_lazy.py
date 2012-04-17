@@ -79,26 +79,32 @@ class _LazyMixin(local):
 
     def _undo(self, snapshot=0, baseline=False, original=False):
         '''revert incoming things to previous snapshot'''
-        # clear everything
-        self.clear()
-        if original:
+        if original and self._original is not None:
+            # clear everything
+            self.clear()
             # clear snapshots
             self._clearsp()
             # clear baseline
             self._baseline = None
             # restore original version of incoming things
             self._in, self._original = tee(self._original)
-        elif baseline:
+        elif baseline and self._baseline is not None:
+            # clear everything
+            self.clear()
             # clear snapshots
             self._clearsp()
             # revert to baseline version of incoming things
             self._in, self._baseline = tee(self._baseline)
         # if specified, use a specific snapshot
-        elif snapshot:
+        elif self._ss and snapshot:
+            # clear everything
+            self.clear()
             self._ss.rotate(-(snapshot - 1))
             self._in = self._ss.popleft()
         # by default revert to most recent snapshot
-        else:
+        elif self._ss:
+            # clear everything
+            self.clear()
             self._in = self._ss.popleft()
         return self
 
@@ -120,7 +126,7 @@ class _LazyMixin(local):
         setattr(
             self,
             self._HOLD,
-            chain_(things, getattr_(self, self._HOLD))
+            chain_(things, getattr_(self, self._HOLD)),
         )
         return self
 

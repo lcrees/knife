@@ -12,11 +12,12 @@ from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, cycle, islice, tee, starmap, repeat, combinations, permutations)
 
-from stuf.utils import OrderedDict, selfname
+
 from stuf.six import strings, items, values, keys, filter, map
+from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 
 from chainsaw._compat import (
-    Counter, ChainMap, ichain, ifilterfalse, zip_longest, deferiter, deferfunc)
+    Counter, ChainMap, ichain, ifilterfalse, zip_longest)
 
 
 class _CompareMixin(local):
@@ -197,8 +198,8 @@ class _MapMixin(local):
     def _invoke(name, args, mc_=methodcaller, imap_=map):
         caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
-            commit = caller(thing)
-            return thing if commit is None else commit
+            read = caller(thing)
+            return thing if read is None else read
         return lambda x: imap_(invoke, x)
 
     @staticmethod
@@ -285,8 +286,9 @@ class _FilterMixin(local):
             for name in names:
                 # yes, it's really supposed to be a tuple
                 for base in (iterable,) + mro:
-                    if name in base.__dict__:
-                        obj = base.__dict__[name]
+                    var = vars(base)
+                    if name in var:
+                        obj = var[name]
                         break
                 else:
                     obj = getattr_(iterable, name)
