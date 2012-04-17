@@ -16,13 +16,13 @@ class KChainsaw(AppspaceKey):
         '''
 
     ###########################################################################
-    ## things in process ######################################################
+    ## things in session ######################################################
     ###########################################################################
 
-    def as_multi():  # @NoSelf
+    def as_many():  # @NoSelf
         '''
         Treat each incoming thing as one processing unit within a series of
-        processing units.
+        multiple processing units.
         '''
 
     def as_one():  # @NoSelf
@@ -31,7 +31,7 @@ class KChainsaw(AppspaceKey):
         '''
 
     ###########################################################################
-    ## things in session ######################################################
+    ## things in transaction ##################################################
     ###########################################################################
 
     def as_edit():  # @NoSelf
@@ -102,30 +102,14 @@ class KChainsaw(AppspaceKey):
         '''
 
     ###########################################################################
-    ## things called ##########################################################
+    ## things are called ######################################################
     ###########################################################################
 
-    def params(*args, **kw):  # @NoSelf
+    def worker(call):  # @NoSelf
         '''
-        Assign global `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ or
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params used when the worker is invoked.
-        '''
+        Assign worker callable.
 
-    def tap(call):  # @NoSelf
-        '''
-        Assign worker.
-
-        :argument call: a callable
-        '''
-
-    def untap():  # @NoSelf
-        '''
-        Remove worker and global `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params.
+        :argument call: a Python callable
         '''
 
     def pattern(pattern, type='parse', flags=0):  # @NoSelf
@@ -141,6 +125,14 @@ class KChainsaw(AppspaceKey):
 
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
+        '''
+
+    def params(*args, **kw):  # @NoSelf
+        '''
+        Assign global `positional
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ or
+        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
+        params used when the worker is invoked.
         '''
 
     ###########################################################################
@@ -212,30 +204,30 @@ class KOutchain(KChainsaw):
     def __iter__():  # @NoSelf
         '''Yield outgoing things.'''
 
-    def close():  # @NoSelf
+    def tell():  # @NoSelf
         '''
-        Close current edit or query session and return outgoing things wrapped
-        in the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper.
+        Peek at the current state of outgoing things without modifying things.
         '''
 
     def read():  # @NoSelf
         '''
-        Close query session and return outgoing things wrapped with the
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper.
+        1. Return outgoing things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        2. Close transaction by clearing outgoing things.
         '''
 
-    def tell():  # @NoSelf
+    def close():  # @NoSelf
         '''
-        Take a tell at the current state of outgoing things.
+        1. Return outgoing things wrapped in the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        2. Close session by clearing incoming, outgoing, and anything else.
         '''
 
     ###########################################################################
     ## wrapping things up #####################################################
     ###########################################################################
 
-    def wrap(wrapper):  # @NoSelf
+    def wrapper(wrapper):  # @NoSelf
         '''
         Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
@@ -244,18 +236,11 @@ class KOutchain(KChainsaw):
           <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
         '''
 
-    def unwrap():  # @NoSelf
-        '''
-        Reset current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to
-        default iterable wrapper.
-        '''
-
     def as_ascii(errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things with the
-        ``'ascii'`` codec.
+        wrapper to :class:`byte` encode outgoing things with the ``'ascii'``
+        codec.
 
         :keyword string errors: error handling for decoding issues
         '''
@@ -284,9 +269,8 @@ class KOutchain(KChainsaw):
 
     def as_set():  # @NoSelf
         '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to cast
-        outgoing things to :class:`set`.
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to cast outgoing things to :class:`set`.
         '''
 
     def as_tuple():  # @NoSelf

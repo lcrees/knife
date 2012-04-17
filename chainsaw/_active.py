@@ -34,32 +34,19 @@ class _ActiveMixin(local):
     ###########################################################################
 
     @contextmanager
-    def _man4(self, **kw):
+    def _chain(self, **kw):
         '''switch to a manually balanced four-link chain'''
-        self._as_chain(chain=self._man4, **kw)
         # move incoming things up to work link
-        getattr(self, self._WORK).extend(getattr(self, self._IN))
+        self._work.extend(getattr(self, self._IN))
         yield
-        out = getattr(self, self._OUT)
+        out = self._out
         # clear out
         if self._nokeep:
             out.clear()
         # extend outgoing things with holding link
-        out.extend(getattr(self, self._HOLD))
+        out.extend(self._hold)
         # clear work, holding links & return to current selected chain
-        self._clearworking()._rechain()
-
-    def _outin(self):
-        '''copy outgoing things -> incoming things.'''
-        self._in.clear()
-        self._in.extend(self._out)
-        return self
-
-    def _inout(self):
-        '''copy incoming things -> outgoing things.'''
-        self._out.clear()
-        self._out.extend(self._in)
-        return self
+        self._clearworking()
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -69,51 +56,37 @@ class _ActiveMixin(local):
         '''take snapshot of incoming things'''
         # take snapshot
         snapshot = pickle.dumps(self._in, pickle.HIGHEST_PROTOCOL)
-        test = (self._ss is not None and len(self._ss) == 0)
+        test = self._history is not None and len(self._history) == 0
         # rebalance incoming with outcoming
-        if self._AUTO and not test:
+        if self._original is not None:
             self._in.clear()
             self._in.extend(self._out)
-        # make snapshot original snapshot?
-        if test or original:
-            self._original = snapshot
-        # make this snapshot the baseline snapshot
-        if test or self._context == self._EDIT or baseline:
-            self._baseline = snapshot
+        if test:
+            # make snapshot original snapshot?
+            if original:
+                self._original = snapshot
+            # make this snapshot the baseline snapshot
+            if baseline:
+                self._baseline = snapshot
         # place snapshot at beginning of snapshot stack
-        self._ss.appendleft(snapshot)
+        self._history.appendleft(snapshot)
         return self
 
     def _undo(self, snapshot=0, baseline=False, original=False):
         '''revert incoming things to previous snapshot'''
-        if original and self._original is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original version of incoming things
-            self._in.extend(pickle.loads(self._original))
-        elif baseline and self._baseline is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # restore baseline version of incoming things
-            self._in.extend(pickle.loads(self._baseline))
         # if specified, use a specific snapshot
-        elif self._ss and snapshot:
-            # clear everything
-            self.clear()
-            self._ss.rotate(-(snapshot - 1))
-            self._in.extend(pickle.loads(self._ss.popleft()))
-        # by default revert to most recent snapshot
-        elif self._ss:
-            # clear everything
-            self.clear()
-            snapshot = pickle.loads(self._ss.popleft())
-            self._in.extend(snapshot)
+        if self._history:
+            if snapshot:
+                # clear everything
+                self.clear()
+                self._history.rotate(-(snapshot - 1))
+                self._in.extend(pickle.loads(self._history.popleft()))
+            # by default revert to most recent snapshot
+            else:
+                # clear everything
+                self.clear()
+                snapshot = pickle.loads(self._history.popleft())
+                self._in.extend(snapshot)
         return self
 
     ###########################################################################
@@ -123,7 +96,7 @@ class _ActiveMixin(local):
     @property
     def _iterable(self):
         '''iterable derived from link in chain'''
-        return self._iterator(self._WORK)
+        return self._iterator(self._work)
 
     def _iterator(self, attr='_HOLD', getattr_=getattr):
         '''
@@ -144,7 +117,7 @@ class _ActiveMixin(local):
 
     def _xtend(self, things, getattr_=getattr):
         '''extend holding thing with things'''
-        getattr_(self, self._HOLD).extend(things)
+        self._hold.extend(things)
         return self
 
     def _xtendfront(self, things, getattr_=getattr):
@@ -152,12 +125,12 @@ class _ActiveMixin(local):
         extend holding things with things placed before anything already
         being held
         '''
-        getattr_(self, self._HOLD).extendleft(things)
+        self._hold.extendleft(things)
         return self
 
     def _append(self, things, getattr_=getattr):
         '''append things to holding things'''
-        getattr_(self, self._HOLD).append(things)
+        self._hold.append(things)
         return self
 
     def _prepend(self, things, getattr_=getattr):
@@ -165,7 +138,7 @@ class _ActiveMixin(local):
         append things to holding thing before anything already being
         held
         '''
-        getattr_(self, self._HOLD).appendleft(things)
+        self._hold.appendleft(things)
         return self
 
     ###########################################################################
@@ -177,25 +150,16 @@ class _ActiveMixin(local):
         return self._REPR.format(
             self.__module__,
             clsname_(self),
-            self._IN,
-            list_(getattr_(self, self._IN)),
-            self._WORK,
-            list_(getattr_(self, self._WORK)),
-            self._HOLD,
-            list_(getattr_(self, self._HOLD)),
-            self._OUT,
-            list_(getattr_(self, self._OUT)),
+            list_(self._in),
+            list_(self._work),
+            list_(self._hold),
+            list_(self._out),
             self._mode,
-            self._context,
         )
 
     def _len(self):
         '''length of incoming things.'''
         return len(self._in)
-
-    def _balanced(self):
-        '''outgoing and incoming things in balance?'''
-        return len(self._out) == len(self._in)
 
     ###########################################################################
     ## clear things ###########################################################
@@ -209,20 +173,37 @@ class _ActiveMixin(local):
         self._hold.clear()
         return self
 
-    def _clearin(self):
-        '''remove incoming things'''
-        self._in.clear()
+
+class _OutputMixin(_ActiveMixin):
+
+    '''active output mixin'''
+
+    def _baseline(self):
+        if self._baseline is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # restore baseline version of incoming things
+            self._in.extend(pickle.loads(self._baseline))
         return self
 
-    def _clearout(self):
-        '''remove outgoing things'''
-        self._out.clear()
+    def _original(self):
+        if self._original is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # clear baseline
+            self._baseline = None
+            # restore original version of incoming things
+            self._in.extend(pickle.loads(self._original))
         return self
 
     def _clear(self):
         '''remove everything'''
         # active callable
-        self._call = None
+        self._worker = None
         # position arguments
         self._args = ()
         # keyword arguments
@@ -241,20 +222,17 @@ class _ActiveMixin(local):
         self._hold.clear()
         return self
 
-
-class _OutputMixin(_ActiveMixin):
-
-    '''active output mixin'''
-
     def _iterate(self):
         '''yield outgoing things'''
         return self._iterator(self._OUT)
 
-    def _output(self):
+    def _results(self):
         '''peek at state of outgoing things'''
-        wrap, out = self._wrapper, self._out
+        wrapper, out = self._wrapper, self._out
+        if not out:
+            out.extend(self._in)
         if self._mode == self._MANY:
-            value = tuple(wrap(i) for i in out)
+            value = tuple(wrapper(i) for i in out)
         else:
-            value = wrap(out)
+            value = wrapper(out)
         return value.pop() if len(value) == 1 else value

@@ -110,8 +110,8 @@ the iterable is empty).</p>
 <dt id="chainsaw.lazy.comparesaw.as_ascii">
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt>
+codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -158,7 +158,7 @@ wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"
 <dt id="chainsaw.lazy.comparesaw.as_edit">
 <tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.as_edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Work on incoming things <strong>without</strong> automatically reverting back to a
-baseline snapshot when <a class="reference internal" href="#chainsaw.lazy.comparesaw.commit" title="chainsaw.lazy.comparesaw.commit"><tt class="xref py py-meth docutils literal"><span class="pre">commit()</span></tt></a> is invoked.</p>
+baseline snapshot when <a class="reference internal" href="#chainsaw.lazy.comparesaw.read" title="chainsaw.lazy.comparesaw.read"><tt class="xref py py-meth docutils literal"><span class="pre">read()</span></tt></a> is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -176,10 +176,10 @@ things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.comparesaw.as_multi">
-<tt class="descname">as_multi</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.as_multi" title="Permalink to this definition">¶</a></dt>
+<dt id="chainsaw.lazy.comparesaw.as_many">
+<tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.as_many" title="Permalink to this definition">¶</a></dt>
 <dd><p>Treat each incoming thing as one processing unit within a series of
-processing units.</p>
+multiple processing units.</p>
 </dd></dl>
 
 <dl class="method">
@@ -198,8 +198,8 @@ snapshot when <a class="reference internal" href="#chainsaw.lazy.comparesaw.clos
 <dl class="method">
 <dt id="chainsaw.lazy.comparesaw.as_set">
 <tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper to cast
-outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -256,17 +256,8 @@ outgoing things.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.comparesaw.close">
 <tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close current edit or query session and return outgoing things wrapped
-in the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.comparesaw.commit">
-<tt class="descname">commit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.commit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close query session and return outgoing things wrapped with the
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper.</p>
+<dd><p>1. Return outgoing things wrapped in the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.
+2. Close session by clearing incoming, outgoing, and anything else.</p>
 </dd></dl>
 
 <dl class="method">
@@ -397,9 +388,10 @@ params used when the worker is invoked.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.comparesaw.preview">
-<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.preview" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a peek at the current state of outgoing things.</p>
+<dt id="chainsaw.lazy.comparesaw.read">
+<tt class="descname">read</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>1. Return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper.
+2. Close transaction by clearing outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -451,17 +443,9 @@ others iterables.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.comparesaw.tap">
-<tt class="descname">tap</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.tap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign worker.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a callable</td>
-</tr>
-</tbody>
-</table>
+<dt id="chainsaw.lazy.comparesaw.tell">
+<tt class="descname">tell</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Peek at the current state of outgoing things without modifying things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -513,18 +497,17 @@ others iterables.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.comparesaw.untap">
-<tt class="descname">untap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.untap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove worker and global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
-<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
-params.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chainsaw.lazy.comparesaw.unwrap">
-<tt class="descname">unwrap</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.unwrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+<dt id="chainsaw.lazy.comparesaw.worker">
+<tt class="descname">worker</tt><big>(</big><em>call</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.comparesaw.worker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign worker callable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a Python callable</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">

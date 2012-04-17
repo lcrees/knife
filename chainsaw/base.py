@@ -10,22 +10,14 @@ class ChainsawMixin(local):
 
     '''base chainsaw mixin'''
 
-    def __init__(self, *things, **kw):
-        '''
-        init
-
-        :argument `things`: incoming things
-        '''
-        super(ChainsawMixin, self).__init__(*things, **kw)
-
     ###########################################################################
-    ## things in process ######################################################
+    ## things in session ######################################################
     ###########################################################################
 
-    def as_multi(self):
+    def as_many(self):
         '''
         Treat each incoming thing as one processing unit within a series of
-        processing units.
+        multiple processing units.
         '''
         self._mode = self._MANY
         return self
@@ -36,66 +28,6 @@ class ChainsawMixin(local):
         '''
         self._mode = self._ONE
         return self
-
-    ###########################################################################
-    ## things in session ######################################################
-    ###########################################################################
-
-    def as_edit(self):
-        '''
-        Work on incoming things **without** automatically reverting back to a
-        baseline snapshot when :meth:`read()` is invoked.
-        '''
-        self._context = self._EDIT
-        if self._baseline:
-            return self.clear().undo(baseline=True)._unchain()
-        return self._unchain()
-
-    def as_query(self):
-        '''
-        Work on incoming things where incoming things revert to a baseline
-        snapshot when :meth:`close()` is invoked.
-        '''
-        self._context = self._QUERY
-        return self.snapshot(baseline=True)._as_chain()
-
-    ###########################################################################
-    ## things in chains #######################################################
-    ###########################################################################
-
-    def as_auto(self):
-        '''
-        Let incoming things be automatically rebalanced with outgoing things.
-        '''
-        self._AUTO = True
-        return self
-
-    def as_manual(self):
-        '''
-        Disallow incoming things from being manually rebalanced with outgoing
-        things.
-        '''
-        self._AUTO = False
-        return self
-
-    def out_in(self):
-        '''
-        Copy outgoing things back to incoming things for further processing.
-        '''
-        return self._outin()
-
-    def in_out(self):
-        '''
-        Copy incoming things to outgoing things for output.
-        '''
-        return self._inout()
-
-    @property
-    def balanced(self):
-        '''
-        If outgoing and incoming things are in balance.
-        '''
-        return self._balanced()
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -111,62 +43,30 @@ class ChainsawMixin(local):
         '''
         return self._snapshot(baseline, original)
 
-    def undo(self, snapshot=0, baseline=False, original=False):
+    def undo(self, snapshot=0):
         '''
         Revert incoming things back to a previous snapshot.
 
         :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
-
-        :keyword boolean baseline: revert incoming things to baseline snapshot
-
-        :keyword boolean original: revert incoming things to original snapshot
         '''
-        return self._undo(snapshot, baseline, original)
+        return self._undo(snapshot)
 
     ###########################################################################
     ## things are called ######################################################
     ###########################################################################
 
-    def params(self, *args, **kw):
-        '''
-        Assign global `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ or
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params used when the worker is invoked.
-        '''
-        # positional params
-        self._args = args
-        # keyword arguemnts
-        self._kw = kw
-        return self
-
-    def tap(self, call):
+    def worker(self, worker):
         '''
         Assign worker.
 
-        :argument call: a callable
+        :argument worker: a Python callable
         '''
         # reset stored position params
         self._args = ()
         # reset stored keyword params
         self._kw = {}
         # assign worker
-        self._call = call
-        return self
-
-    def untap(self):
-        '''
-        Remove worker and global `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params.
-        '''
-        # reset position params
-        self._args = ()
-        # reset keyword params
-        self._kw = {}
-        # reset worker
-        self._call = None
+        self._worker = worker
         return self
 
     def pattern(self, pattern, type='parse', flags=0):
@@ -183,7 +83,20 @@ class ChainsawMixin(local):
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
         '''
-        self._call = self._pattern(pattern, type, flags)
+        self._worker = self._pattern(pattern, type, flags)
+        return self
+
+    def params(self, *args, **kw):
+        '''
+        Assign global `positional
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
+        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
+        params used when the worker is invoked.
+        '''
+        # positional params
+        self._args = args
+        # keyword arguemnts
+        self._kw = kw
         return self
 
     ###########################################################################
@@ -196,7 +109,7 @@ class ChainsawMixin(local):
 
         :argument things: incoming things
         '''
-        with self._man1():
+        with self._chain:
             return self._xtend(things)
 
     def extendfront(self, things):
@@ -205,7 +118,7 @@ class ChainsawMixin(local):
 
         :argument things: incoming things
         '''
-        with self._man1():
+        with self._chain:
             return self._xtendfront(things)
 
     def append(self, thing):
@@ -214,7 +127,7 @@ class ChainsawMixin(local):
 
         :argument thing: incoming thing
         '''
-        with self._man1():
+        with self._chain:
             return self._append(thing)
 
     def prepend(self, thing):
@@ -223,7 +136,7 @@ class ChainsawMixin(local):
 
         :argument thing: incoming thing
         '''
-        with self._man1():
+        with self._chain:
             return self._prepend(thing)
 
     ###########################################################################
@@ -238,8 +151,40 @@ class ChainsawMixin(local):
         '''Object representation.'''
         return self._repr()
 
+
+class OutputMixin(ChainsawMixin):
+
+    '''output mixin'''
+
     ###########################################################################
-    ## cleaning up things #####################################################
+    ## snapshot of things #####################################################
+    ###########################################################################
+
+    def baseline(self):
+        '''
+        Revert incoming things back to baseline snapshot.
+        '''
+        return self._baseline()
+
+    def original(self):
+        '''
+        Revert incoming things back to original snapshot.
+        '''
+        return self._original()
+
+    def __iter__(self):
+        '''Yield outgoing things.'''
+        return self._iterate()
+
+    def results(self):
+        '''
+        Return outgoing things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
+        return self._results()
+
+    ###########################################################################
+    ## clean up things ########################################################
     ###########################################################################
 
     def clear(self):
@@ -248,60 +193,11 @@ class ChainsawMixin(local):
         '''
         return self._clear()
 
-    def clear_in(self):
-        '''
-        Clear incoming things.
-        '''
-        return self._clearin()
-
-    def clear_out(self):
-        '''
-        Clear outgoing things.
-        '''
-        return self._clearout()
-
-
-class OutputMixin(ChainsawMixin):
-
-    '''output mixin'''
-
-    def __iter__(self):
-        '''Yield outgoing things.'''
-        return self._iterate()
-
-    def tell(self):
-        '''
-        Peek at the current state of outgoing things without modifying things.
-        '''
-        return self._output()
-
-    def read(self):
-        '''
-        1. Return outgoing things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
-        2. Close transaction by clearing outgoing things.
-        '''
-        value = self._unchain()._output()
-        # remove outgoing things
-        self.clear_out()
-        return value
-
-    def close(self):
-        '''
-        1. Return outgoing things wrapped in the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
-        2. Close session by clearing incoming, outgoing, and anything else.
-        '''
-        value = self._unchain()._output()
-        # remove every thing
-        self.clear()._clearsp()
-        return value
-
     ###########################################################################
-    ## wrapping things up #####################################################
+    ## wrap things up #########################################################
     ###########################################################################
 
-    def wrap(self, wrapper):
+    def wrapper(self, wrapper):
         '''
         Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         wrapper for outgoing things.
@@ -315,8 +211,8 @@ class OutputMixin(ChainsawMixin):
     def as_ascii(self, errors='strict'):
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things with the
-        ``'ascii'`` codec.
+        wrapper to :class:`byte` encode outgoing things with the ``'ascii'``
+        codec.
 
         :keyword string errors: error handling for decoding issues
         '''
@@ -351,13 +247,10 @@ class OutputMixin(ChainsawMixin):
         self._wrapper = list
         return self
 
-    unwrap = as_list
-
     def as_set(self):
         '''
-        Set `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper to cast
-        outgoing things to :class:`set`.
+        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper to cast outgoing things to :class:`set`.
         '''
         self._wrapper = set
         return self

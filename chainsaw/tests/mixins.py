@@ -26,32 +26,23 @@ class MathMixin(object):
             stuf(name='larry', age=50),
             stuf(name='curly', age=60),
         ]
-        test = self.mclass(1, 2, 4)
-        self.assertEqual(test.as_query().as_auto().max().read(), 4)
-        self.assertEqual(test.as_edit().as_auto().max().close(), 4)
-        test = self.mclass(*stooges)
+        self.assertEqual(self.mclass(1, 2, 4).results().max().read(), 4)
         self.assertEqual(
-            stuf(test.as_query().as_auto().tap(
+            stuf(self.mclass(*stooges).results().worker(
                 lambda x: x.age
-            ).max().untap().read()),
-            stuf(name='curly', age=60),
-        )
-        self.assertEqual(
-            stuf(test.as_edit().as_auto().tap(
-                lambda x: x.age
-            ).max().untap().close()),
+            ).max().read()),
             stuf(name='curly', age=60),
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 4).as_query().as_manual().max(),
+            self.mclass(1, 2, 4).results().max(),
             self.assertEqual,
             4,
         )
         self._false_true_false(
-            self.mclass(*stooges).as_edit().as_manual().tap(
+            self.mclass(*stooges).worker(
                 lambda x: x.age
-            ).max().untap(),
+            ).max(),
             self.assertEqual,
             stuf(name='curly', age=60)
         )
@@ -59,22 +50,22 @@ class MathMixin(object):
     def test_min(self):
         # auto
         self.assertEqual(
-            self.mclass(10, 5, 100, 2, 1000).as_edit().as_auto().min().close(),
+            self.mclass(10, 5, 100, 2, 1000).min().results(),
             2,
         )
         self.assertEqual(
-            self.mclass(10, 5, 100, 2, 1000).as_edit().as_auto().tap(
+            self.mclass(10, 5, 100, 2, 1000).worker(
                 lambda x: x
-            ).min().close(), 2,
+            ).min().results(), 2,
         )
         # man
         self._false_true_false(
-            self.mclass(10, 5, 100, 2, 1000).as_edit().as_manual().min(),
+            self.mclass(10, 5, 100, 2, 1000).min(),
             self.assertEqual,
             2,
         )
         self._false_true_false(
-            self.mclass(10, 5, 100, 2, 1000).as_edit().as_manual().tap(
+            self.mclass(10, 5, 100, 2, 1000).worker(
                 lambda x: x
             ).min(),
             self.assertEqual,
@@ -84,22 +75,22 @@ class MathMixin(object):
     def test_minmax(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 4).as_edit().as_auto().minmax().close(), (1, 4)
+            self.mclass(1, 2, 4).minmax().results(), (1, 4)
         )
         self.assertEqual(
             self.mclass(
                 10, 5, 100, 2, 1000
-            ).as_edit().as_auto().minmax().close(),
+            ).minmax().results(),
             (2, 1000),
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 4).as_edit().as_manual().minmax(),
+            self.mclass(1, 2, 4).minmax(),
             self.assertEqual,
             (1, 4),
         )
         self._false_true_false(
-            self.mclass(10, 5, 100, 2, 1000).as_edit().as_manual().minmax(),
+            self.mclass(10, 5, 100, 2, 1000).minmax(),
             self.assertEqual,
             (2, 1000),
         )
@@ -107,31 +98,31 @@ class MathMixin(object):
     def test_sum(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3).as_edit().as_auto().sum().close(), 6
+            self.mclass(1, 2, 3).sum().results(), 6
         )
         self.assertEqual(
-            self.mclass(1, 2, 3).as_edit().as_auto().sum(1).close(), 7
+            self.mclass(1, 2, 3).sum(1).results(), 7
         )
         self.assertEqual(
             self.mclass(
                 .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
-            ).as_edit().as_auto().sum(precision=True).close(),
+            ).sum(precision=True).results(),
             1.0,
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 3).as_edit().as_manual().sum(), self.assertEqual,
+            self.mclass(1, 2, 3).sum(), self.assertEqual,
             6,
         )
         self._false_true_false(
-            self.mclass(1, 2, 3).as_edit().as_manual().sum(1),
+            self.mclass(1, 2, 3).sum(1),
             self.assertEqual,
             7,
         )
         self._false_true_false(
             self.mclass(
                 .1, .1, .1, .1, .1, .1, .1, .1, .1, .1
-            ).as_edit().as_manual().sum(precision=True),
+            ).sum(precision=True),
             self.assertEqual,
             1.0,
         )
@@ -139,20 +130,20 @@ class MathMixin(object):
     def test_median(self):
         # auto
         self.assertEqual(
-            self.mclass(4, 5, 7, 2, 1).as_edit().as_auto().median().close(), 4,
+            self.mclass(4, 5, 7, 2, 1).median().results(), 4,
         )
         self.assertEqual(
-            self.mclass(4, 5, 7, 2, 1, 8).as_edit().as_auto().median().close(),
+            self.mclass(4, 5, 7, 2, 1, 8).median().results(),
             4.5,
         )
         # man
         self._false_true_false(
-            self.mclass(4, 5, 7, 2, 1).as_edit().as_manual().median(),
+            self.mclass(4, 5, 7, 2, 1).median(),
             self.assertEqual,
             4,
         )
         self._false_true_false(
-            self.mclass(4, 5, 7, 2, 1, 8).as_edit().as_manual().median(),
+            self.mclass(4, 5, 7, 2, 1, 8).median(),
             self.assertEqual,
             4.5,
         )
@@ -160,12 +151,12 @@ class MathMixin(object):
     def test_average(self):
         # auto
         self.assertEqual(
-            self.mclass(10, 40, 45).as_edit().as_auto().average().close(),
+            self.mclass(10, 40, 45).average().results(),
             31.666666666666668,
         )
         # man
         self._false_true_false(
-            self.mclass(10, 40, 45).as_edit().as_manual().average(),
+            self.mclass(10, 40, 45).average(),
             self.assertEqual,
             31.666666666666668,
         )
@@ -173,11 +164,11 @@ class MathMixin(object):
     def test_range(self):
         # auto
         self.assertEqual(
-            self.mclass(3, 5, 7, 3, 11).as_edit().as_auto().range().close(), 8,
+            self.mclass(3, 5, 7, 3, 11).range().results(), 8,
         )
         # man
         self._false_true_false(
-            self.mclass(3, 5, 7, 3, 11).as_edit().as_manual().range(),
+            self.mclass(3, 5, 7, 3, 11).range(),
             self.assertEqual,
             8,
         )
@@ -186,7 +177,7 @@ class MathMixin(object):
         # auto
         common = self.mclass(
             11, 3, 5, 11, 7, 3, 11
-        ).as_edit().as_auto().count().close()
+        ).count().results()
         self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
         # most common
         self.assertEqual(common[1], 11)
@@ -194,7 +185,7 @@ class MathMixin(object):
         self.assertEqual(common[0], 7)
         # man
         self._false_true_false(
-            self.mclass(11, 3, 5, 11, 7, 3, 11).as_edit().as_manual().count(),
+            self.mclass(11, 3, 5, 11, 7, 3, 11).count(),
             self.assertEqual,
             (7, 11, [(11, 3), (3, 2), (5, 1), (7, 1)]),
         )
@@ -207,13 +198,13 @@ class CompareMixin(object):
         self.assertFalse(
             self.mclass(
                 True, 1, None, 'yes'
-            ).as_edit().as_auto().tap(bool).all().close()
+            ).worker(bool).all().results()
         )
         # man
         self._false_true_false(
             self.mclass(
                 True, 1, None, 'yes'
-            ).as_edit().as_manual().tap(bool).all(),
+            ).worker(bool).all(),
             self.assertFalse,
         )
 
@@ -222,13 +213,13 @@ class CompareMixin(object):
         self.assertTrue(
             self.mclass(
                 None, 0, 'yes', False
-            ).as_edit().as_auto().tap(bool).any().close()
+            ).worker(bool).any().results()
         )
         # man
         self._false_true_false(
             self.mclass(
                 None, 0, 'yes', False
-            ).as_edit().as_manual().tap(bool).any(),
+            ).worker(bool).any(),
             self.assertTrue,
         )
 
@@ -237,27 +228,27 @@ class CompareMixin(object):
         self.assertEqual(
             self.mclass(
                 [1, 2, 3, 4, 5], [5, 2, 10]
-            ).as_edit().as_auto().difference().close(),
+            ).difference().results(),
             [1, 3, 4],
         )
         self.assertEqual(
             self.mclass(
                 [1, 2, 3, 4, 5], [5, 2, 10]
-            ).as_edit().as_auto().difference(True).close(),
+            ).difference(True).results(),
             [1, 3, 4, 10]
         )
         # man
         self._false_true_false(
             self.mclass(
                 [1, 2, 3, 4, 5], [5, 2, 10]
-            ).as_edit().as_manual().difference(),
+            ).difference(),
             self.assertEqual,
             [1, 3, 4]
         )
         self._false_true_false(
             self.mclass(
                 [1, 2, 3, 4, 5], [5, 2, 10]
-                ).as_edit().as_manual().difference(True),
+                ).difference(True),
             self.assertEqual,
             [1, 3, 4, 10]
         )
@@ -267,24 +258,24 @@ class CompareMixin(object):
         self.assertTrue(
             self.mclass(
                 [1, 2, 3], [5, 4, 10]
-            ).as_edit().as_auto().disjointed().close()
+            ).disjointed().results()
         )
         self.assertFalse(
             self.mclass(
                 [1, 2, 3], [5, 2, 10]
-            ).as_edit().as_auto().disjointed().close()
+            ).disjointed().results()
         )
         # man
         self._false_true_false(
             self.mclass(
                 [1, 2, 3], [5, 4, 10]
-            ).as_edit().as_manual().disjointed(),
+            ).disjointed(),
             self.assertTrue,
         )
         self._false_true_false(
             self.mclass(
                 [1, 2, 3], [5, 2, 10]
-            ).as_edit().as_manual().disjointed(),
+            ).disjointed(),
             self.assertFalse,
         )
 
@@ -293,13 +284,13 @@ class CompareMixin(object):
         self.assertEqual(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
-            ).as_edit().as_auto().intersection().close(), [1, 2],
+            ).intersection().results(), [1, 2],
         )
         # man
         self._false_true_false(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
-            ).as_edit().as_manual().intersection(),
+            ).intersection(),
             self.assertEqual,
             [1, 2],
         )
@@ -309,13 +300,13 @@ class CompareMixin(object):
         self.assertTrue(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 3]
-            ).as_edit().as_auto().subset().close(),
+            ).subset().results(),
         )
         # man
         self._false_true_false(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 3]
-            ).as_edit().as_manual().subset(),
+            ).subset(),
             self.assertTrue,
         )
 
@@ -323,13 +314,13 @@ class CompareMixin(object):
         # auto
         diff = self.mclass(
             [101, 2, 1, 3, 6, 34], [1, 2, 3]
-        ).as_edit().as_auto().superset().close()
+        ).superset().results()
         self.assertTrue(diff)
         # man
         self._false_true_false(
             self.mclass(
                 [101, 2, 1, 3, 6, 34], [1, 2, 3]
-            ).as_edit().as_manual().superset(),
+            ).superset(),
             self.assertTrue,
         )
 
@@ -338,14 +329,14 @@ class CompareMixin(object):
         self.assertEqual(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
-            ).as_edit().as_auto().union().close(),
+            ).union().results(),
             [1, 10, 3, 2, 101],
         )
         # man
         self._false_true_false(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
-            ).as_edit().as_manual().union(),
+            ).union(),
             self.assertEqual,
             [1, 10, 3, 2, 101],
         )
@@ -355,24 +346,24 @@ class CompareMixin(object):
         self.assertEqual(
             self.mclass(
                 1, 2, 1, 3, 1, 4
-            ).as_edit().as_auto().unique().close(), [1, 2, 3, 4],
+            ).unique().results(), [1, 2, 3, 4],
         )
         self.assertEqual(
             self.mclass(
                 1, 2, 1, 3, 1, 4
-            ).as_edit().as_auto().tap(round).unique().close(),
+            ).worker(round).unique().results(),
             [1, 2, 3, 4],
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 1, 3, 1, 4).as_edit().as_manual().unique(),
+            self.mclass(1, 2, 1, 3, 1, 4).unique(),
             self.assertEqual,
             [1, 2, 3, 4],
         )
         self._false_true_false(
             self.mclass(
                 1, 2, 1, 3, 1, 4
-            ).as_edit().as_manual().tap(round).unique(),
+            ).worker(round).unique(),
             self.assertEqual,
             [1, 2, 3, 4],
         )
@@ -383,17 +374,17 @@ class OrderMixin(object):
     def test_shuffle(self):
         # auto
         self.assertEqual(
-            len(self.mclass(1, 2, 3, 4, 5, 6).as_edit().as_auto().shuffle()),
+            len(self.mclass(1, 2, 3, 4, 5, 6).shuffle()),
             len([5, 4, 6, 3, 1, 2]),
         )
         # man
         manchainsaw = self.mclass(
             1, 2, 3, 4, 5, 6
-        ).as_edit().as_manual().shuffle()
+        ).shuffle()
         self.assertFalse(manchainsaw.balanced)
         manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
-        manchainsaw.close()
+        manchainsaw.results()
         self.assertTrue(manchainsaw.balanced)
 
     def test_group(self,):
@@ -402,23 +393,23 @@ class OrderMixin(object):
         self.assertEqual(
             self.mclass(
                 1.3, 2.1, 2.4
-            ).as_edit().as_auto().tap(lambda x: floor(x)).group().close(),
+            ).worker(lambda x: floor(x)).group().results(),
             [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self.assertEqual(
-            self.mclass(1.3, 2.1, 2.4).as_edit().as_auto().group().close(),
+            self.mclass(1.3, 2.1, 2.4).group().results(),
             [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
         # man
         self._false_true_false(
-            self.mclass(1.3, 2.1, 2.4).as_edit().as_manual().tap(
+            self.mclass(1.3, 2.1, 2.4).worker(
                 lambda x: floor(x)
             ).group(),
             self.assertListEqual,
             [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
         )
         self._true_true_false(
-            self.mclass(1.3, 2.1, 2.4).as_edit().as_manual().group(),
+            self.mclass(1.3, 2.1, 2.4).group(),
             self.assertListEqual,
             [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
@@ -426,12 +417,12 @@ class OrderMixin(object):
     def test_reverse(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().reverse().close(),
+            self.mclass(5, 4, 3, 2, 1).reverse().results(),
             [1, 2, 3, 4, 5],
         )
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().reverse(),
+            self.mclass(5, 4, 3, 2, 1).reverse(),
             self.assertEqual,
             [1, 2, 3, 4, 5],
         )
@@ -440,27 +431,27 @@ class OrderMixin(object):
         from math import sin
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_edit().as_auto().tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: sin(x)
-            ).sort().close(),
+            ).sort().results(),
             [5, 4, 6, 3, 1, 2],
         )
         self.assertEqual(
             self.mclass(
                 4, 6, 65, 3, 63, 2, 4
-            ).as_edit().as_auto().sort().close(),
+            ).sort().results(),
             [2, 3, 4, 4, 6, 63, 65],
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 3, 4, 5, 6).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: sin(x)
             ).sort(),
             self.assertListEqual,
             [5, 4, 6, 3, 1, 2],
         )
         self._false_true_false(
-            self.mclass(4, 6, 65, 3, 63, 2, 4).as_edit().as_manual().sort(),
+            self.mclass(4, 6, 65, 3, 63, 2, 4).sort(),
             self.assertListEqual,
             [2, 3, 4, 4, 6, 63, 65],
         )
@@ -474,7 +465,8 @@ class FilterMixin(object):
                 'This is the first test',
                 'This is the second test',
                 'This is the third test'
-            ).pattern('{} first {}').filter().close(), 'This is the first test'
+            ).pattern('{} first {}').filter().results(),
+            'This is the first test'
         )
         self.assertEqual(
             self.mclass(
@@ -483,7 +475,7 @@ class FilterMixin(object):
                 'This is the third test'
             ).pattern(
                 '. third .', type='regex'
-            ).filter().close(), 'This is the third test'
+            ).filter().results(), 'This is the third test'
         )
         self.assertEqual(
             self.mclass(
@@ -492,7 +484,7 @@ class FilterMixin(object):
                 'This is the third test'
             ).pattern(
                 '*second*', type='glob'
-            ).filter().close(), 'This is the second test'
+            ).filter().results(), 'This is the second test'
         )
 
     def test_traverse(self):
@@ -501,7 +493,7 @@ class FilterMixin(object):
         # auto
         out = self.mclass(
             stooges, stoog2, stoog3
-        ).as_edit().as_auto().traverse().close()
+        ).traverse().results()
         self.assertEqual(
             out,
             [ChainMap(OrderedDict([
@@ -527,9 +519,9 @@ class FilterMixin(object):
                 return True
             return False
         self.assertEqual(
-            self.mclass(stooges, stoog2, stoog3).as_edit().as_auto().tap(
+            self.mclass(stooges, stoog2, stoog3).worker(
                 test
-            ).traverse(True).close(),
+            ).traverse(True).results(),
             [ChainMap(OrderedDict([('classname', 'stooges'), ('age', 40)])),
             ChainMap(OrderedDict([('classname', 'stoog2'), ('age', 50)])),
             ChainMap(
@@ -542,7 +534,7 @@ class FilterMixin(object):
         self._true_true_false(
             self.mclass(
                 stooges, stoog2, stoog3
-            ).as_edit().as_manual().traverse(),
+            ).traverse(),
             self.assertEqual,
             [ChainMap(OrderedDict([
                 ('classname', 'stooges'), ('age', 40), ('name', 'moe'),
@@ -560,7 +552,7 @@ class FilterMixin(object):
             )],
         )
         self._true_true_false(
-            self.mclass(stooges, stoog2, stoog3).as_edit().as_manual().tap(
+            self.mclass(stooges, stoog2, stoog3).worker(
                 test
             ).traverse(True),
             self.assertEqual,
@@ -583,35 +575,35 @@ class FilterMixin(object):
         self.assertEqual(
             self.mclass(
                 *stooges
-            ).as_edit().as_auto().attributes('name').close(),
+            ).attributes('name').results(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
             self.mclass(
                 *stooges
-            ).as_edit().as_auto().attributes('name', 'age').close(),
+            ).attributes('name', 'age').results(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         self.assertEqual(
             self.mclass(
                 *stooges
-            ).as_edit().as_auto().attributes('place').close(), [],
+            ).attributes('place').results(), [],
         )
         # man
         self._true_true_false(
-            self.mclass(*stooges).as_edit().as_manual().attributes('name'),
+            self.mclass(*stooges).attributes('name'),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
             self.mclass(
                 *stooges
-            ).as_edit().as_manual().attributes('name', 'age'),
+            ).attributes('name', 'age'),
             self.assertEqual,
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         self._false_true_true(
-            self.mclass(*stooges).as_edit().as_manual().attributes('place'),
+            self.mclass(*stooges).attributes('place'),
             self.assertEqual,
             [],
         )
@@ -625,26 +617,26 @@ class FilterMixin(object):
         ]
         # auto
         self.assertEqual(
-            self.mclass(*stooges).as_edit().as_auto().items('name').close(),
+            self.mclass(*stooges).items('name').results(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
             self.mclass(
                 *stooges
-            ).as_edit().as_auto().items('name', 'age').close(),
+            ).items('name', 'age').results(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
         self.assertEqual(
-            self.mclass(*stooges).as_edit().as_auto().items(0).close(),
+            self.mclass(*stooges).items(0).results(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
-            self.mclass(*stooges).as_edit().as_auto().items(1).close(),
+            self.mclass(*stooges).items(1).results(),
             [40, 50, 60]
         )
         self.assertEqual(
-            self.mclass(*stooges).as_edit().as_auto().items('place').close(),
+            self.mclass(*stooges).items('place').results(),
             []
         )
         # man
@@ -654,28 +646,28 @@ class FilterMixin(object):
             stuf(name='curly', age=60)
         ]
         self._true_true_false(
-            self.mclass(*stooges).as_edit().as_manual().items('name'),
+            self.mclass(*stooges).items('name'),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
-            self.mclass(*stooges).as_edit().as_manual().items('name', 'age'),
+            self.mclass(*stooges).items('name', 'age'),
             self.assertEqual,
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
         self._true_true_false(
-            self.mclass(*stooges).as_edit().as_manual().items(0),
+            self.mclass(*stooges).items(0),
             self.assertEqual,
             ['moe', 'larry', 'curly'],
         )
         self._true_true_false(
-            self.mclass(*stooges).as_edit().as_manual().items(1),
+            self.mclass(*stooges).items(1),
             self.assertEqual,
             [40, 50, 60],
         )
         self._false_true_true(
-            self.mclass(*stooges).as_edit().as_manual().items('place'),
+            self.mclass(*stooges).items('place'),
             self.assertEqual,
             [],
         )
@@ -685,39 +677,39 @@ class FilterMixin(object):
         self.assertEqual(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_auto().mapping(True).close(), [1, 2, 3, 1, 2, 3],
+            ).mapping(True).results(), [1, 2, 3, 1, 2, 3],
         )
         self.assertEqual(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_auto().mapping(values=True).close(),
+            ).mapping(values=True).results(),
             [2, 3, 4, 2, 3, 4],
         )
         self.assertEqual(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_auto().tap(lambda x, y: x * y).mapping().close(),
+            ).worker(lambda x, y: x * y).mapping().results(),
             [2, 6, 12, 2, 6, 12],
         )
         # man
         self._false_true_false(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_manual().mapping(True),
+            ).mapping(True),
             self.assertEqual,
             [1, 2, 3, 1, 2, 3],
         )
         self._false_true_false(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_manual().mapping(values=True),
+            ).mapping(values=True),
             self.assertEqual,
             [2, 3, 4, 2, 3, 4],
         )
         self._false_true_false(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).as_edit().as_manual().tap(lambda x, y: x * y).mapping(),
+            ).worker(lambda x, y: x * y).mapping(),
             self.assertEqual,
             [2, 6, 12, 2, 6, 12],
         )
@@ -725,25 +717,25 @@ class FilterMixin(object):
     def test_filter(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
-            ).as_edit().as_auto().filter(invert=True).close(), [1, 3, 5]
+            ).filter(invert=True).results(), [1, 3, 5]
         )
         self.assertEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
-            ).as_edit().as_auto().filter().close(), [2, 4, 6]
+            ).filter().results(), [2, 4, 6]
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 3, 4, 5, 6).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
             ).filter(),
             self.assertEqual,
             [2, 4, 6],
         )
         self._false_true_false(
-            self.mclass(1, 2, 3, 4, 5, 6).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
             ).filter(invert=True),
             self.assertEqual,
@@ -753,15 +745,15 @@ class FilterMixin(object):
     def test_duality(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_edit().tap(
+            self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
-            ).as_auto().duality().close(), ([2, 4, 6], [1, 3, 5])
+            ).duality().results(), ([2, 4, 6], [1, 3, 5])
         )
         # man
         self._false_true_false(
             self.mclass(
                 1, 2, 3, 4, 5, 6
-            ).as_edit().as_auto().as_manual().tap(
+            ).worker(
                 lambda x: x % 2 == 0
             ).duality(),
             self.assertEqual,
@@ -776,14 +768,14 @@ class SliceMixin(object):
         self.assertEqual(
             self.mclass(
                 'moe', 'larry', 'curly', 30, 40, 50, True
-            ).as_edit().as_auto().dice(2, 'x').close(),
+            ).dice(2, 'x').results(),
             [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
         )
         # man
         self._false_true_false(
             self.mclass(
                 'moe', 'larry', 'curly', 30, 40, 50, True,
-            ).as_edit().as_manual().dice(2, 'x'),
+            ).dice(2, 'x'),
             self.assertEqual,
             [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')],
         )
@@ -791,20 +783,20 @@ class SliceMixin(object):
     def test_first(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().first().close(), 5
+            self.mclass(5, 4, 3, 2, 1).first().results(), 5
         )
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().first(2).close(),
+            self.mclass(5, 4, 3, 2, 1).first(2).results(),
             [5, 4]
         )
         # man
         self._false_true_false(
-             self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().first(),
+             self.mclass(5, 4, 3, 2, 1).first(),
              self.assertEqual,
              5,
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().first(2),
+            self.mclass(5, 4, 3, 2, 1).first(2),
             self.assertEqual,
             [5, 4],
         )
@@ -813,20 +805,20 @@ class SliceMixin(object):
         # auto
         self.assertEqual(self.mclass(
             5, 4, 3, 2, 1
-        ).as_edit().as_auto().at(2).close(), 3)
+        ).at(2).results(), 3)
         self.assertEqual(
             self.mclass(
                 5, 4, 3, 2, 1
-            ).as_edit().as_auto().at(10, 11).close(), 11,
+            ).at(10, 11).results(), 11,
         )
         # man
         self._false_true_false(
             self.mclass(
                 5, 4, 3, 2, 1
-            ).as_edit().as_manual().at(2), self.assertEqual, 3,
+            ).at(2), self.assertEqual, 3,
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().at(10, 11),
+            self.mclass(5, 4, 3, 2, 1).at(10, 11),
             self.assertEqual,
             11,
         )
@@ -834,31 +826,31 @@ class SliceMixin(object):
     def test_slice(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().slice(2).close(),
+            self.mclass(5, 4, 3, 2, 1).slice(2).results(),
             [5, 4]
         )
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().slice(2, 4).as_auto().close(),
+            self.mclass(5, 4, 3, 2, 1).slice(2, 4).results(),
             [3, 2]
         )
         self.assertEqual(
             self.mclass(
                 5, 4, 3, 2, 1
-            ).as_edit().as_auto().slice(2, 4, 2).close(), 3
+            ).slice(2, 4, 2).results(), 3
         )
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().slice(2),
+            self.mclass(5, 4, 3, 2, 1).slice(2),
             self.assertEqual,
             [5, 4],
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().slice(2, 4),
+            self.mclass(5, 4, 3, 2, 1).slice(2, 4),
             self.assertEqual,
             [3, 2]
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().slice(2, 4, 2),
+            self.mclass(5, 4, 3, 2, 1).slice(2, 4, 2),
             self.assertEqual,
             3,
         )
@@ -866,20 +858,20 @@ class SliceMixin(object):
     def test_last(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().last().close(), 1
+            self.mclass(5, 4, 3, 2, 1).last().results(), 1
         )
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().last(2).close(),
+            self.mclass(5, 4, 3, 2, 1).last(2).results(),
             [2, 1]
         )
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().last(),
+            self.mclass(5, 4, 3, 2, 1).last(),
             self.assertEqual,
             1
         )
         self._false_true_false(
-            self.mclass(5, 4, 3, 2).as_edit().as_manual().last(2),
+            self.mclass(5, 4, 3, 2).last(2),
             self.assertEqual,
             [3, 2],
         )
@@ -887,12 +879,12 @@ class SliceMixin(object):
     def test_initial(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().initial().close(),
+            self.mclass(5, 4, 3, 2, 1).initial().results(),
             [5, 4, 3, 2]
         )
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().initial(),
+            self.mclass(5, 4, 3, 2, 1).initial(),
             self.assertEqual,
             [5, 4, 3, 2],
         )
@@ -900,12 +892,12 @@ class SliceMixin(object):
     def test_rest(self):
         # auto
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_auto().rest().close(),
+            self.mclass(5, 4, 3, 2, 1).rest().results(),
             [4, 3, 2, 1],
         )
         # man
         self._false_true_false(
-            self.mclass(5, 4, 3, 2, 1).as_edit().as_manual().rest(),
+            self.mclass(5, 4, 3, 2, 1).rest(),
             self.assertEqual,
             [4, 3, 2, 1],
         )
@@ -915,16 +907,16 @@ class SliceMixin(object):
         self.assertEqual(
             len(self.mclass(
                 1, 2, 3, 4, 5, 6
-            ).as_edit().as_auto().choice().out_in()), 1
+            ).choice().out_in()), 1
         )
         # man
         manchainsaw = self.mclass(
             1, 2, 3, 4, 5, 6
-        ).as_edit().as_manual().choice()
+        ).choice()
         self.assertFalse(manchainsaw.balanced)
         manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
-        manchainsaw.close()
+        manchainsaw.results()
         self.assertTrue(manchainsaw.balanced)
 
     def test_sample(self):
@@ -932,16 +924,16 @@ class SliceMixin(object):
         self.assertEqual(
             len(self.mclass(
                 1, 2, 3, 4, 5, 6
-            ).as_edit().as_auto().sample(3).close()), 3,
+            ).sample(3).results()), 3,
         )
         # man
         manchainsaw = self.mclass(
             1, 2, 3, 4, 5, 6
-        ).as_edit().as_manual().sample(3)
+        ).sample(3)
         self.assertFalse(manchainsaw.balanced)
         manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
-        manchainsaw.close()
+        manchainsaw.results()
         self.assertTrue(manchainsaw.balanced)
 
 
@@ -952,14 +944,14 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 [[1, [2], [3, [[4]]]], 'here']
-            ).as_edit().as_auto().flatten().close(),
+            ).flatten().results(),
             [1, 2, 3, 4, 'here'],
         )
         # man
         self._false_true_false(
             self.mclass(
                 [[1, [2], [3, [[4]]]], 'here']
-            ).as_edit().as_manual().flatten(),
+            ).flatten(),
             self.assertEqual,
             [1, 2, 3, 4, 'here'],
         )
@@ -969,14 +961,14 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_edit().as_auto().merge().close(),
+            ).merge().results(),
             ['moe', 'larry', 'curly', 30, 40, 50, True, False, False],
         )
         # man
         self._false_true_false(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
-            ).as_edit().as_manual().merge(),
+            ).merge(),
             self.assertEqual,
             ['moe', 'larry', 'curly', 30, 40, 50, True, False, False],
         )
@@ -984,51 +976,51 @@ class ReduceMixin(object):
     def test_reduce(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3).as_edit().as_auto().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x, y: x + y
-            ).reduce().close(), 6,
+            ).reduce().results(), 6,
         )
         self.assertEqual(
-            self.mclass(1, 2, 3).as_edit().as_auto().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x, y: x + y
-            ).reduce(1).close(), 7,
+            ).reduce(1).results(), 7,
         )
         self.assertEqual(
-            self.mclass([0, 1], [2, 3], [4, 5]).as_edit().as_auto().tap(
+            self.mclass([0, 1], [2, 3], [4, 5]).worker(
                 lambda x, y: x + y
-            ).reduce(reverse=True).close(), [4, 5, 2, 3, 0, 1],
+            ).reduce(reverse=True).results(), [4, 5, 2, 3, 0, 1],
         )
         self.assertEqual(
-            self.mclass([0, 1], [2, 3], [4, 5]).as_edit().as_auto().tap(
+            self.mclass([0, 1], [2, 3], [4, 5]).worker(
                 lambda x, y: x + y
-            ).reduce([0, 0], True).close(), [4, 5, 2, 3, 0, 1, 0, 0],
+            ).reduce([0, 0], True).results(), [4, 5, 2, 3, 0, 1, 0, 0],
         )
         # man
         self._false_true_false(
-            self.mclass(1, 2, 3).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x, y: x + y
             ).reduce(),
             self.assertEqual,
             6,
         )
         self._false_true_false(
-            self.mclass(1, 2, 3).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x, y: x + y
             ).reduce(1),
             self.assertEqual,
             7,
         )
         self._false_true_false(
-            self.mclass([0, 1], [2, 3], [4, 5]).as_edit().tap(
+            self.mclass([0, 1], [2, 3], [4, 5]).worker(
                 lambda x, y: x + y
-            ).as_manual().reduce(reverse=True),
+            ).reduce(reverse=True),
             self.assertEqual,
              [4, 5, 2, 3, 0, 1],
         )
         self._false_true_false(
-            self.mclass([0, 1], [2, 3], [4, 5]).as_edit().tap(
+            self.mclass([0, 1], [2, 3], [4, 5]).worker(
                 lambda x, y: x + y
-            ).as_manual().reduce([0, 0], True),
+            ).reduce([0, 0], True),
             self.assertEqual,
             [4, 5, 2, 3, 0, 1, 0, 0],
         )
@@ -1038,14 +1030,14 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_edit().as_auto().as_one().weave().close(),
+            ).as_one().weave().results(),
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
         # man
         self._false_true_false(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_edit().as_manual().as_one().weave(),
+            ).as_one().weave(),
             self.assertEqual,
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
@@ -1055,14 +1047,14 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_edit().as_auto().as_one().zip().close(),
+            ).as_one().zip().results(),
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )
         # man
         self._true_true_false(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False],
-            ).as_edit().as_manual().as_one().zip(),
+            ).as_one().zip(),
             self.assertEqual,
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )
@@ -1075,25 +1067,25 @@ class RepeatMixin(object):
             return list(args)
         # auto
         self.assertEqual(
-            self.mclass(40, 50, 60).as_edit().as_auto().repeat(3).close(),
+            self.mclass(40, 50, 60).repeat(3).results(),
             [(40, 50, 60), (40, 50, 60), (40, 50, 60)],
         )
         self.assertEqual(
             self.mclass(
                 40, 50, 60
-            ).as_edit().as_auto().tap(test).repeat(3, True).close(),
+            ).worker(test).repeat(3, True).results(),
             [[40, 50, 60], [40, 50, 60], [40, 50, 60]],
         )
         # man
         self._true_true_false(
             self.mclass(
                 40, 50, 60
-            ).as_edit().as_manual().tap(test).repeat(3, True),
+            ).worker(test).repeat(3, True),
             self.assertEqual,
             [[40, 50, 60], [40, 50, 60], [40, 50, 60]],
         )
         self._true_true_false(
-            self.mclass(40, 50, 60).as_edit().as_manual().repeat(3),
+            self.mclass(40, 50, 60).repeat(3),
             self.assertEqual,
             [(40, 50, 60), (40, 50, 60), (40, 50, 60)],
         )
@@ -1101,7 +1093,7 @@ class RepeatMixin(object):
     def test_copy(self):
         # auto
         testlist = [[1, [2, 3]], [4, [5, 6]]]
-        newlist = self.mclass(testlist).as_edit().as_auto().copy().close()
+        newlist = self.mclass(testlist).copy().results()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
@@ -1110,11 +1102,11 @@ class RepeatMixin(object):
         self.assertListEqual(newlist[1], testlist[1])
         # man
         testlist = [[1, [2, 3]], [4, [5, 6]]]
-        manchainsaw = self.mclass(testlist).as_edit().as_manual().copy()
+        manchainsaw = self.mclass(testlist).copy()
         self.assertTrue(manchainsaw.balanced)
         manchainsaw.out_in()
         self.assertTrue(manchainsaw.balanced)
-        newlist = manchainsaw.close()
+        newlist = manchainsaw.results()
         self.assertFalse(newlist is testlist)
         self.assertListEqual(newlist, testlist)
         self.assertFalse(newlist[0] is testlist[0])
@@ -1128,12 +1120,12 @@ class RepeatMixin(object):
         self.assertEqual(
             self.mclass(
                 40, 50, 60
-            ).as_edit().as_auto().permutations(2).close(),
+            ).permutations(2).results(),
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
         # man
         self._false_true_false(
-            self.mclass(40, 50, 60).as_edit().as_manual().permutations(2),
+            self.mclass(40, 50, 60).permutations(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)],
         )
@@ -1143,12 +1135,12 @@ class RepeatMixin(object):
         self.assertEqual(
             self.mclass(
                 40, 50, 60
-            ).as_edit().as_auto().combinations(2).close(),
+            ).combinations(2).results(),
             [(40, 50), (40, 60), (50, 60)],
         )
         # man
         self._true_true_false(
-            self.mclass(40, 50, 60).as_edit().as_manual().combinations(2),
+            self.mclass(40, 50, 60).combinations(2),
             self.assertEqual,
             [(40, 50), (40, 60), (50, 60)],
         )
@@ -1161,7 +1153,7 @@ class MapMixin(object):
         # auto
         thing = self.mclass(
             [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
-        ).as_edit().as_auto().tap(stuf).map().close()
+        ).worker(stuf).map().results()
         self.assertEqual(
             thing, [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)], thing
         )
@@ -1169,7 +1161,7 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
-            ).as_edit().as_manual().tap(stuf).map().close(),
+            ).worker(stuf).map().results(),
             [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)],
         )
 
@@ -1180,29 +1172,29 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).as_edit().as_auto().tap(test).kwargmap().close(),
+            ).worker(test).kwargmap().results(),
             [6, 10, 14],
         )
         self.assertEqual(
             self.mclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).as_edit().as_auto().tap(test).params(
+            ).worker(test).params(
                 1, 2, 3, b=5, w=10, y=13
-            ).kwargmap(True).close(),
+            ).kwargmap(True).results(),
             [270, 330, 390],
         )
         # man
         self._true_true_false(
             self.mclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).as_edit().as_manual().tap(test).kwargmap(),
+            ).worker(test).kwargmap(),
             self.assertEqual,
             [6, 10, 14],
         )
         self._true_true_false(
             self.mclass(
                 ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-            ).as_edit().as_manual().tap(test).params(
+            ).worker(test).params(
                 1, 2, 3, b=5, w=10, y=13
             ).kwargmap(True),
             self.assertEqual,
@@ -1214,27 +1206,27 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 (1, 2), (2, 3), (3, 4)
-            ).as_edit().as_auto().tap(lambda x, y: x * y).argmap().close(),
+            ).worker(lambda x, y: x * y).argmap().results(),
             [2, 6, 12],
         )
         self.assertEqual(
-            self.mclass((1, 2), (2, 3), (3, 4)).tap(
+            self.mclass((1, 2), (2, 3), (3, 4)).worker(
                 lambda x, y, z, a, b: x * y * z * a * b
-            ).as_edit().as_auto().params(7, 8, 9).argmap(True).close(),
+            ).params(7, 8, 9).argmap(True).results(),
             [1008, 3024, 6048],
         )
         # man
         self._true_true_false(
-            self.mclass((1, 2), (2, 3), (3, 4)).tap(
+            self.mclass((1, 2), (2, 3), (3, 4)).worker(
                 lambda x, y: x * y
-            ).as_edit().as_manual().params(7, 8, 9).argmap(),
+            ).params(7, 8, 9).argmap(),
             self.assertEqual,
             [2, 6, 12],
         )
         self._true_true_false(
-            self.mclass((1, 2), (2, 3), (3, 4)).tap(
+            self.mclass((1, 2), (2, 3), (3, 4)).worker(
                 lambda x, y, z, a, b: x * y * z * a * b
-            ).as_edit().params(7, 8, 9).as_manual().argmap(True),
+            ).params(7, 8, 9).argmap(True),
             self.assertEqual,
             [1008, 3024, 6048],
         )
@@ -1242,14 +1234,14 @@ class MapMixin(object):
     def test_map(self):
         # auto
         self.assertEqual(
-            self.mclass(1, 2, 3).as_edit().as_auto().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x: x * 3
-            ).map().close(),
+            ).map().results(),
             [3, 6, 9],
         )
         # man
         self._true_true_false(
-            self.mclass(1, 2, 3).as_edit().as_manual().tap(
+            self.mclass(1, 2, 3).worker(
                 lambda x: x * 3
             ).map(),
             self.assertEqual,
@@ -1261,25 +1253,25 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 [5, 1, 7], [3, 2, 1]
-            ).as_edit().as_auto().params(1).invoke('index').close(),
+            ).params(1).invoke('index').results(),
             [1, 2],
         )
         self.assertEqual(
             self.mclass(
                 [5, 1, 7], [3, 2, 1]
-            ).as_edit().as_auto().invoke('sort').close(),
+            ).invoke('sort').results(),
             [[1, 5, 7], [1, 2, 3]],
         )
         # man
         self._true_true_false(
             self.mclass(
                 [5, 1, 7], [3, 2, 1]
-            ).as_edit().as_manual().params(1).invoke('index'),
+            ).params(1).invoke('index'),
             self.assertEqual,
             [1, 2],
         )
         self._true_true_false(
-            self.mclass([5, 1, 7], [3, 2, 1]).as_edit().as_manual().invoke(
+            self.mclass([5, 1, 7], [3, 2, 1]).invoke(
                 'sort'
             ),
             self.assertEqual,
@@ -1330,27 +1322,27 @@ class Mixin(object):
         initial = self.mclass(1, 2, 3, 4, 5, 6).in_out()
         self.assertListEqual(initial.tell(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 6)
-        self.assertListEqual(initial.in_out().close(), [1, 2, 3, 4, 5, 6])
+        self.assertListEqual(initial.in_out().results(), [1, 2, 3, 4, 5, 6])
         self.assertEqual(len(initial), 0)
 
     def test_extend(self):
         self.assertListEqual(
-            self.mclass().extend([1, 2, 3, 4, 5, 6]).in_out().close(),
+            self.mclass().extend([1, 2, 3, 4, 5, 6]).in_out().results(),
             [1, 2, 3, 4, 5, 6],
         )
 
     def test_extendfront(self):
         self.assertListEqual(
-            self.mclass().extendfront([1, 2, 3, 4, 5, 6]).in_out().close(),
+            self.mclass().extendfront([1, 2, 3, 4, 5, 6]).in_out().results(),
             [6, 5, 4, 3, 2, 1]
         )
 
     def test_append(self):
-        self.assertEqual(self.mclass().append('foo').in_out().close(), 'foo')
+        self.assertEqual(self.mclass().append('foo').in_out().results(), 'foo')
 
     def test_appendfront(self):
         self.assertEqual(
-            self.mclass().prepend('foo').in_out().close(), 'foo'
+            self.mclass().prepend('foo').in_out().results(), 'foo'
         )
 
     def test_clearin(self):
@@ -1362,7 +1354,7 @@ class Mixin(object):
         )
 
     def test_undo(self):
-        queue = self.mclass(1, 2, 3).as_manual().extendfront(
+        queue = self.mclass(1, 2, 3).extendfront(
             [1, 2, 3, 4, 5, 6]
         ).in_out()
         self.assertEqual(queue.tell(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
@@ -1377,7 +1369,7 @@ class Mixin(object):
             queue.tell(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1]
         )
         queue.undo(original=True).in_out()
-        self.assertEqual(queue.close(), [1, 2, 3])
+        self.assertEqual(queue.results(), [1, 2, 3])
 
     def test_insync(self):
         q = self.mclass(1, 2, 3, 4, 5, 6).out_in().clear_in().out_in()
@@ -1395,11 +1387,11 @@ class Mixin(object):
 
     def test_wrap(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).wrap(tuple).in_out().read(),
+            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).in_out().read(),
             tuple,
         )
         self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).wrap(tuple).in_out().read(),
+            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).in_out().read(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -1407,15 +1399,8 @@ class Mixin(object):
         self.assertIsInstance(
             self.mclass(1, 2, 3, 4, 5, 6).as_list().in_out().read(), list,
         )
-        self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).unwrap().in_out().read(), list,
-        )
         self.assertListEqual(
             self.mclass(1, 2, 3, 4, 5, 6).as_list().in_out().read(),
-            [1, 2, 3, 4, 5, 6],
-        )
-        self.assertListEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).unwrap().in_out().read(),
             [1, 2, 3, 4, 5, 6],
         )
 
@@ -1427,7 +1412,7 @@ class Mixin(object):
         self.assertTupleEqual(
             self.mclass(
                 1, 2, 3, 4, 5, 6
-            ).as_manual().as_tuple().in_out().read(),
+            ).as_tuple().in_out().read(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -1439,7 +1424,7 @@ class Mixin(object):
         self.assertSetEqual(
             self.mclass(
                 1, 2, 3, 4, 5, 6
-            ).as_manual().as_set().in_out().read(),
+            ).as_set().in_out().read(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
@@ -1451,7 +1436,7 @@ class Mixin(object):
         self.assertDictEqual(
             self.mclass(
                 (1, 2), (3, 4), (5, 6)
-            ).as_manual().as_dict().in_out().read(),
+            ).as_dict().in_out().read(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -1461,14 +1446,14 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_multi().as_ascii().in_out().close(),
+            ).as_many().as_ascii().in_out().results(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_manual().as_multi().as_ascii().in_out(),
+            ).as_many().as_ascii().in_out(),
             self.assertEqual,
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
@@ -1479,14 +1464,14 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_multi().as_bytes().in_out().close(),
+            ).as_many().as_bytes().in_out().results(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_manual().as_multi().as_bytes().in_out(),
+            ).as_many().as_bytes().in_out(),
             self.assertEqual,
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
@@ -1497,14 +1482,14 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_multi().as_unicode().in_out().close(),
+            ).as_many().as_unicode().in_out().results(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )
         # man
         self._true_true_false(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_manual().as_multi().as_unicode().in_out(),
+            ).as_many().as_unicode().in_out(),
             self.assertEqual,
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

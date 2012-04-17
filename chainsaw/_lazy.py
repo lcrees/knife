@@ -15,8 +15,8 @@ class _LazyMixin(local):
     def __init__(self, *things, **kw):
         # if just one thing, put it in incoming things or put everything in
         # incoming things
-        inchain = iter([things[0]]) if len(things) == 1 else iter(things)
-        super(_LazyMixin, self).__init__(inchain, iter([]), **kw)
+        incoming = iter([things[0]]) if len(things) == 1 else iter(things)
+        super(_LazyMixin, self).__init__(incoming, iter([]), **kw)
         # work link
         self._work = iter([])
         # holding link
@@ -27,33 +27,16 @@ class _LazyMixin(local):
     ###########################################################################
 
     @contextmanager
-    def _man4(self, **kw):
+    def _chain(self, **kw):
         '''switch to a manually balanced four-link chain'''
-        self._as_chain(chain=self._man4, **kw)
         # move incoming things up to work link
-        work, incoming = tee(getattr(self, self._IN))
-        setattr(self, self._WORK, work)
-        setattr(self, self._IN, incoming)
+        work, self._in = tee(self._in)
+        self._work = work
         yield
         # extend outgoing things with holding link
-        hold = getattr(self, self._HOLD)
-        setattr(
-            self,
-            self._OUT,
-            hold if self._nokeep else chain(hold, getattr(self, self._OUT)),
-        )
+        self._out = self._hold
         # clear work, holding links & return to current selected chain
         self._clearworking()
-
-    def _outin(self):
-        '''copy outgoing things -> incoming things.'''
-        self._in, self._out = tee(self._out)
-        return self
-
-    def _inout(self):
-        '''copy incoming things -> outgoing things.'''
-        self._in, self._out = tee(self._in)
-        return self
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -63,49 +46,33 @@ class _LazyMixin(local):
         '''take snapshot of incoming things'''
         # take snapshot
         self._in, snapshot = tee(self._in)
-        test = (self._ss is not None and len(self._ss) == 0)
+        test = self._history is not None and len(self._history) == 0
         # rebalance incoming with outcoming
-        if self._AUTO and not test:
+        if self._original is not None:
             self._in, self._out = tee(self._out)
-        # make snapshot original snapshot?
-        if test or original:
-            self._original = snapshot
-        # make this snapshot the baseline snapshot
-        if test or self._context == self._EDIT or baseline:
-            self._baseline = snapshot
+        if test:
+            # make snapshot original snapshot?
+            if original:
+                self._original = snapshot
+            # make this snapshot the baseline snapshot
+            if baseline:
+                self._baseline = snapshot
         # place snapshot at beginning of snapshot stack
-        self._ss.appendleft(snapshot)
+        self._history.appendleft(snapshot)
         return self
 
     def _undo(self, snapshot=0, baseline=False, original=False):
         '''revert incoming things to previous snapshot'''
-        if original and self._original is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original version of incoming things
-            self._in, self._original = tee(self._original)
-        elif baseline and self._baseline is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # revert to baseline version of incoming things
-            self._in, self._baseline = tee(self._baseline)
         # if specified, use a specific snapshot
-        elif self._ss and snapshot:
+        if self._history:
             # clear everything
             self.clear()
-            self._ss.rotate(-(snapshot - 1))
-            self._in = self._ss.popleft()
-        # by default revert to most recent snapshot
-        elif self._ss:
-            # clear everything
-            self.clear()
-            self._in = self._ss.popleft()
+            if snapshot:
+                self._history.rotate(-(snapshot - 1))
+                self._in = self._history.popleft()
+            # by default revert to most recent snapshot
+            else:
+                self._in = self._history.popleft()
         return self
 
     ###########################################################################
@@ -113,21 +80,17 @@ class _LazyMixin(local):
     ###########################################################################
 
     @property
-    def _iterable(self, getattr_=getattr):
+    def _iterable(self):
         '''iterable derived from link in chain'''
-        return getattr_(self, self._WORK)
+        return self._work
 
     ###########################################################################
     ## adding things ##########################################################
     ###########################################################################
 
-    def _xtend(self, things, chain_=chain, getattr_=getattr):
+    def _xtend(self, things, chain_=chain):
         '''extend holding thing with things'''
-        setattr(
-            self,
-            self._HOLD,
-            chain_(things, getattr_(self, self._HOLD)),
-        )
+        self._hold = chain_(things, self._hold)
         return self
 
     def _xtendfront(self, things, reversed_=reversed):
@@ -137,19 +100,14 @@ class _LazyMixin(local):
         '''
         return self._xtend(reversed_(things))
 
-    def _append(self, things, chain_=chain, iter_=iter, getattr_=getattr):
+    def _append(self, things, chain_=chain, iter_=iter):
         '''append things to holding things'''
-        setattr(
-            self,
-            self._HOLD,
-            chain_(getattr_(self, self._HOLD), iter_([things])),
-        )
+        self._hold = chain_(self._hold, iter_([things]))
         return self
 
     def _prepend(self, things, iter_=iter):
         '''
-        append things to holding thing before anything already being
-        held
+        append things to holding thing before anything already being held
         '''
         return self._xtend(iter_([things]))
 
@@ -159,27 +117,18 @@ class _LazyMixin(local):
 
     def _repr(self, tee_=tee, setattr_=setattr, getattr_=getattr, l=list):
         '''object representation.'''
-        in1, in2 = tee_(getattr(self, self._IN))
-        setattr_(self, self._IN, in1)
-        out1, out2 = tee_(getattr(self, self._OUT))
-        setattr_(self, self._OUT, out1)
-        work1, work2 = tee_(getattr(self, self._WORK))
-        setattr_(self, self._WORK, work1)
-        hold1, hold2 = tee_(getattr(self, self._HOLD))
-        setattr_(self, self._HOLD, hold1)
+        self._in, in2 = tee_(self._in)
+        self._out, out2 = tee_(self._out)
+        self._work, work2 = tee_(self._work)
+        self._hold, hold2 = tee_(self._hold)
         return self._REPR.format(
             self.__module__,
             clsname(self),
-            self._IN,
             l(in2),
-            self._WORK,
             l(work2),
-            self._HOLD,
             l(hold2),
-            self._OUT,
             l(out2),
             self._mode,
-            self._context,
         )
 
     def _len(self):
@@ -187,41 +136,24 @@ class _LazyMixin(local):
         self._in, incoming = tee(self._in)
         return len(list(incoming))
 
-    def _balanced(self):
-        '''outgoing and incoming things in balance?'''
-        self._out, outs = tee(self._out)
-        return len(tuple(outs)) == self.__len__()
-
     ###########################################################################
     ## clear things ###########################################################
     ###########################################################################
 
     def _clearworking(self, iter_=iter):
-        '''clear working, holding things'''
+        '''clear working and holding things'''
         # clear work link
-        delattr(self, self._WORK)
-        setattr(self, self._WORK, iter_([]))
+        del self._work
+        self._work = iter_([])
         # clear holding link
-        delattr(self, self._HOLD)
-        setattr(self, self._HOLD, iter_([]))
+        del self._hold
+        self._hold = iter_([])
         return self
 
-    def _clearin(self):
-        '''remove incoming things'''
-        delattr(self, self._IN)
-        setattr(self, self._IN, iter([]))
-        return self
-
-    def _clearout(self):
-        '''remove outgoing things'''
-        delattr(self, self._OUT)
-        setattr(self, self._OUT, iter([]))
-        return self
-
-    def _clear(self):
+    def _clear(self, iter_=iter, list_=list):
         '''remove everything'''
         # active callable
-        self._call = None
+        self._worker = None
         # position arguments
         self._args = ()
         # keyword arguments
@@ -229,19 +161,19 @@ class _LazyMixin(local):
         # current alternate callable
         self._alt = None
         # default output class
-        self._wrapper = list
+        self._wrapper = list_
         # remove all outgoing things
-        delattr(self, self._OUT)
-        setattr(self, self._OUT, iter([]))
+        del self._out
+        self._out = iter_([])
         # remove all incoming things
-        delattr(self, self._IN)
-        setattr(self, self._IN, iter([]))
+        del self._in
+        self._in = iter_([])
         # clear work link
-        delattr(self, self._WORK)
-        setattr(self, self._WORK, iter([]))
+        del self._work
+        self._work = iter_([])
         # clear holding link
-        delattr(self, self._HOLD)
-        setattr(self, self._HOLD, iter([]))
+        del self._hold
+        self._hold = iter_([])
         return self
 
 
@@ -249,16 +181,40 @@ class _OutputMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
+    def _baseline(self):
+        if self._baseline is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # revert to baseline version of incoming things
+            self._in, self._baseline = tee(self._baseline)
+        return self
+
+    def _original(self):
+        if self._original is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # clear baseline
+            self._baseline = None
+            # restore original version of incoming things
+            self._in, self._original = tee(self._original)
+        return self
+
     def _iterate(self):
         '''yield outgoing things'''
-        return getattr(self, self._OUT)
+        return self._out
 
-    def _output(self):
+    def _results(self):
         '''peek at state of outgoing things'''
+        if not self._out:
+            self._in, self._out = tee(self._in)
         outs, tell = tee(self._out)
-        wrap = self._wrapper
+        wrapper = self._wrapper
         if self._mode == self._MANY:
-            value = tuple(wrap(i) for i in outs)
+            value = tuple(wrapper(i) for i in outs)
         else:
-            value = wrap(outs)
-        return value.pop() if len(wrap(tell)) == 1 else value
+            value = wrapper(outs)
+        return value.pop() if len(wrapper(tell)) == 1 else value
