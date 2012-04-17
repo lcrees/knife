@@ -15,16 +15,14 @@ class TestLazy(
 
     def setUp(self):
         from chainsaw import lazysaw
-        self.qclass = lazysaw.as_auto()
-        self.mclass = lazysaw.as_manual()
+        self.mclass = lazysaw
 
 
 class TestCompare(unittest.TestCase, Mixin, CompareMixin):
 
     def setUp(self):
         from chainsaw.lazy import comparesaw
-        self.qclass = comparesaw.as_auto()
-        self.mclass = comparesaw.as_manual()
+        self.mclass = comparesaw
 
 
 class TestFilter(unittest.TestCase, Mixin, FilterMixin):
@@ -32,56 +30,49 @@ class TestFilter(unittest.TestCase, Mixin, FilterMixin):
     def setUp(self):
         self.maxDiff = None
         from chainsaw.lazy import filtersaw
-        self.qclass = filtersaw.as_auto()
-        self.mclass = filtersaw.as_manual()
+        self.mclass = filtersaw
 
 
 class TestMap(unittest.TestCase, Mixin, MapMixin):
 
     def setUp(self):
         from chainsaw.lazy import mapsaw
-        self.qclass = mapsaw.as_auto()
-        self.mclass = mapsaw.as_manual()
+        self.mclass = mapsaw
 
 
 class TestMath(unittest.TestCase, Mixin, MathMixin):
 
     def setUp(self):
         from chainsaw.lazy import mathsaw
-        self.qclass = mathsaw.as_auto()
-        self.mclass = mathsaw.as_manual()
+        self.mclass = mathsaw
 
 
 class TestOrder(unittest.TestCase, Mixin, OrderMixin):
 
     def setUp(self):
         from chainsaw.lazy import ordersaw
-        self.qclass = ordersaw.as_auto()
-        self.mclass = ordersaw.as_manual()
+        self.mclass = ordersaw
 
 
 class TestRepeat(unittest.TestCase, Mixin, RepeatMixin):
 
     def setUp(self):
         from chainsaw.lazy import repeatsaw
-        self.qclass = repeatsaw.as_auto()
-        self.mclass = repeatsaw.as_manual()
+        self.mclass = repeatsaw
 
 
 class TestReduce(unittest.TestCase, Mixin, ReduceMixin):
 
     def setUp(self):
         from chainsaw.lazy import reducesaw
-        self.qclass = reducesaw.as_auto()
-        self.mclass = reducesaw.as_manual()
+        self.mclass = reducesaw
 
 
 class TestSlice(unittest.TestCase, Mixin, SliceMixin):
 
     def setUp(self):
         from chainsaw.lazy import slicesaw
-        self.qclass = slicesaw.as_auto()
-        self.mclass = slicesaw.as_manual()
+        self.mclass = slicesaw
 
 
 if __name__ == '__main__':

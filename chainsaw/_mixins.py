@@ -5,14 +5,14 @@ from math import fsum
 from copy import deepcopy
 from threading import local
 from collections import deque
+from inspect import isclass, getmro
 from functools import partial, reduce
 from random import choice, sample, shuffle
-from inspect import classify_class_attrs, isclass
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, cycle, islice, tee, starmap, repeat, combinations, permutations)
 
-#from stuf.utils import clsname
+from stuf.utils import OrderedDict, selfname
 from stuf.six import strings, items, values, keys
 
 from chainsaw._compat import (
@@ -109,7 +109,7 @@ class _MathMixin(local):
         yield i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
 
     @staticmethod
-    def _minmax(iterable, iter_=iter, imin=min, imax=max, tee_=tee):
+    def _minmax(iterable, imin=min, imax=max, tee_=tee):
         i1, i2 = tee_(iterable)
         yield imin(i1), imax(i2)
 
@@ -205,8 +205,8 @@ class _MapMixin(local):
     @staticmethod
     def _kwargmap(call, curr, arg, kw, starmap_=starmap):
         if curr:
-            def kwargmap(*arguments):
-                args, kwargs = arguments
+            def kwargmap(*params):
+                args, kwargs = params
                 kwargs.update(kw)
                 return call(*(args + arg), **kwargs)
         else:
@@ -268,22 +268,58 @@ class _FilterMixin(local):
         return items
 
     @staticmethod
-    def _traverse(call, cca=classify_class_attrs, cm=ChainMap):
-        if call is None:
-            test = lambda x: not x.name.startswith('__')
+    def _traverse(test, invert):
+        if invert:
+            filter = ifilterfalse
         else:
-            test = call
-        chainmap = ChainMap()
-        def members(cls): #@IgnorePep8
-            for thing in ifilter(test, classify_class_attrs(cls)):
-#                if isclass(thing.object):
-#                    chainmap.maps.extend(members(thing))
-#                else:
-                chainmap[thing.name] = thing.object
-            return chainmap
-        def walkthru(iterable):
-            return imap(members, iterable)
-        return walkthru
+            filter = ifilter
+        def members(iterable, beenthere=None): #@IgnorePep8
+            mro = getmro(iterable)
+            names = dir(iterable)
+            if beenthere is None:
+                beenthere = set()
+            adder = beenthere.add
+            isclass_ = isclass
+            getattr_ = getattr
+            dict_ = OrderedDict
+            members_ = members
+            for name in names:
+                # yes, it's really supposed to be a tuple
+                for base in (iterable,) + mro:
+                    if name in base.__dict__:
+                        obj = base.__dict__[name]
+                        break
+                else:
+                    obj = getattr_(iterable, name)
+                if obj in beenthere:
+                    continue
+                else:
+                    adder(obj)
+                if isclass_(obj):
+                    this = dict_()
+                    for k, v in filter(test, members_(obj, beenthere)):
+                        this[k] = v
+                    yield name, this
+                else:
+                    yield name, obj
+        def traverse(iterable): #@IgnorePep8
+            isinstance_ = isinstance
+            selfname_ = selfname
+            members_ = members
+            odict = OrderedDict
+            cm = ChainMap
+            for iterator in iterable:
+                chaining = cm()
+                chaining['classname'] = selfname_(iterator)
+                cappend = chaining.maps.append
+                for k, v in filter(test, members_(iterator)):
+                    if isinstance_(v, odict):
+                        v['classname'] = k
+                        cappend(v)
+                    else:
+                        chaining[k] = v
+                yield chaining
+        return traverse
 
 
 class _ReduceMixin(local):

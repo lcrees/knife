@@ -153,7 +153,7 @@ class _ActiveMixin(local):
         getattr_(self, self._HOLD).append(things)
         return self
 
-    def _appendfront(self, things, getattr_=getattr):
+    def _prepend(self, things, getattr_=getattr):
         '''
         append things to holding thing before anything already being
         held

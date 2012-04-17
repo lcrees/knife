@@ -19,7 +19,7 @@ class KChainsaw(AppspaceKey):
     ## things in process ######################################################
     ###########################################################################
 
-    def as_many():  # @NoSelf
+    def as_multi():  # @NoSelf
         '''
         Treat each incoming thing as one processing unit within a series of
         processing units.
@@ -105,12 +105,12 @@ class KChainsaw(AppspaceKey):
     ## things called ##########################################################
     ###########################################################################
 
-    def arguments(*args, **kw):  # @NoSelf
+    def params(*args, **kw):  # @NoSelf
         '''
         Assign global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ or
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments used when the worker is invoked.
+        params used when the worker is invoked.
         '''
 
     def tap(call):  # @NoSelf
@@ -125,7 +125,7 @@ class KChainsaw(AppspaceKey):
         Remove worker and global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments.
+        params.
         '''
 
     def pattern(pattern, type='parse', flags=0):  # @NoSelf
@@ -154,7 +154,7 @@ class KChainsaw(AppspaceKey):
         :argument things: incoming things
         '''
 
-    def extendstart(things):  # @NoSelf
+    def extendfront(things):  # @NoSelf
         '''
         Insert `things` **before** any other incoming things.
 
@@ -168,7 +168,7 @@ class KChainsaw(AppspaceKey):
         :argument thing: incoming thing
         '''
 
-    def appendstart(thing):  # @NoSelf
+    def prepend(thing):  # @NoSelf
         '''
         Insert `thing` **before** any other incoming things.
 

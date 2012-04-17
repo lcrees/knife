@@ -130,8 +130,8 @@ the worker as <a class="reference external" href="http://docs.python.org/referen
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional arguments with positional
-arguments from an iterable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional arguments with
+positional arguments derived from an iterable</td>
 </tr>
 </tbody>
 </table>
@@ -161,11 +161,10 @@ wrapper to <tt class="xref py py-class docutils literal"><span class="pre">byte<
 </table>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_auto">
-<em class="property">classmethod </em><tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_auto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to context where incoming things are automatically rebalanced
-with outgoing things.</p>
+<tt class="descname">as_auto</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Let incoming things be automatically rebalanced with outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
@@ -197,9 +196,8 @@ wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_edit">
 <tt class="descname">as_edit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start session where work is performed on incoming things <strong>without</strong>
-automatically reverting back to an earlier baseline snapshot when
-invoking the <a class="reference internal" href="#chainsaw.lazy.lazysaw.results" title="chainsaw.lazy.lazysaw.results"><tt class="xref py py-meth docutils literal"><span class="pre">results()</span></tt></a> or iterating over outgoing things.</p>
+<dd><p>Work on incoming things <strong>without</strong> automatically reverting back to a
+baseline snapshot when <a class="reference internal" href="#chainsaw.lazy.lazysaw.commit" title="chainsaw.lazy.lazysaw.commit"><tt class="xref py py-meth docutils literal"><span class="pre">commit()</span></tt></a> is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -209,32 +207,31 @@ invoking the <a class="reference internal" href="#chainsaw.lazy.lazysaw.results"
 wrapper to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_manual">
-<em class="property">classmethod </em><tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_manual" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to context where incoming things must be manually rebalanced
-with outgoing things.</p>
+<tt class="descname">as_manual</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disallow incoming things from being manually rebalanced with outgoing
+things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_many">
 <tt class="descname">as_many</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_many" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to working on each incoming thing as one individual thing among
-many.</p>
+<dd><p>Treat each incoming thing as one processing unit within a series of
+processing units.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_one">
 <tt class="descname">as_one</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_one" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to working on all incoming things as one whole thing.</p>
+<dd><p>Treat multiple incoming things as one processing unit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.as_query">
 <tt class="descname">as_query</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.as_query" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to session where, upon exiting it by invoking <a class="reference internal" href="#chainsaw.lazy.lazysaw.results" title="chainsaw.lazy.lazysaw.results"><tt class="xref py py-meth docutils literal"><span class="pre">results()</span></tt></a>
-or <a class="reference internal" href="#chainsaw.lazy.lazysaw.end" title="chainsaw.lazy.lazysaw.end"><tt class="xref py py-meth docutils literal"><span class="pre">end()</span></tt></a> or iterating over outgoing things, incoming things
-<strong>automatically</strong> revert back to an earlier baseline snapshot.</p>
+<dd><p>Work on incoming things where incoming things revert to a baseline
+snapshot when <a class="reference internal" href="#chainsaw.lazy.lazysaw.close" title="chainsaw.lazy.lazysaw.close"><tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt></a> is invoked.</p>
 </dd></dl>
 
 <dl class="method">
@@ -295,7 +292,7 @@ found at <a class="reference external" href="http://docs.python.org/glossary.htm
 <tt class="descname">attributes</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect <a class="reference external" href="http://docs.python.org/glossary.html#term-attribute">attribute</a> values from
 things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> that matches an
-attribute name value in <cite>names</cite>.</p>
+attribute name value found in <cite>names</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -323,7 +320,7 @@ attribute name value in <cite>names</cite>.</p>
 <dl class="attribute">
 <dt id="chainsaw.lazy.lazysaw.balanced">
 <tt class="descname">balanced</tt><a class="headerlink" href="#chainsaw.lazy.lazysaw.balanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether outgoing things and incoming things are in balance.</p>
+<dd><p>If outgoing and incoming things are in balance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -336,19 +333,27 @@ one thing from an <a class="reference external" href="http://docs.python.org/glo
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.clear">
 <tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove everything.</p>
+<dd><p>Clear everything.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.clear_in">
 <tt class="descname">clear_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.clear_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove incoming things.</p>
+<dd><p>Clear incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.clear_out">
 <tt class="descname">clear_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.clear_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove outgoing things.</p>
+<dd><p>Clear outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chainsaw.lazy.lazysaw.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close current edit or query session and return outgoing things wrapped
+in the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper.</p>
 </dd></dl>
 
 <dl class="method">
@@ -366,6 +371,14 @@ one thing from an <a class="reference external" href="http://docs.python.org/glo
 </dd></dl>
 
 <dl class="method">
+<dt id="chainsaw.lazy.lazysaw.commit">
+<tt class="descname">commit</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close query session and return outgoing things wrapped with the
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+wrapper.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="chainsaw.lazy.lazysaw.copy">
 <tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Duplicate each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
@@ -379,9 +392,9 @@ one thing from an <a class="reference external" href="http://docs.python.org/glo
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>, <em>most common
-thing</em>, <em>count of everything</em> consisting of a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of
-<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>,
+<em>most common thing</em>, <em>count of everything</em> consisting of a
+<tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt></td>
 </tr>
@@ -450,14 +463,6 @@ iterables, the first being everything the worker evaluates as
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.lazysaw.end">
-<tt class="descname">end</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>End the current session and return outgoing things wrapped with the
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-wrapper.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.lazy.lazysaw.extend">
 <tt class="descname">extend</tt><big>(</big><em>things</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.extend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
@@ -494,8 +499,8 @@ worker.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things the worker evaluates as <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
-instead of <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things the worker evaluates as
+<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> instead of <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -532,7 +537,7 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.in_out">
 <tt class="descname">in_out</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.in_out" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy incoming things to outgoing things.</p>
+<dd><p>Copy incoming things to outgoing things for output.</p>
 </dd></dl>
 
 <dl class="method">
@@ -581,7 +586,7 @@ take the original thing if the return value of the method call is
 <tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect values from things (usually <a class="reference external" href="http://docs.python.org/glossary.html#term-sequence">sequences</a> or <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>) within an
 <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-that match a key value in <cite>keys</cite>.</p>
+that match a key value found in <cite>keys</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -604,10 +609,10 @@ worker.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional or keyword arguments with
-positional and keyword arguments from an iterable into a single
-<tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments like
-(<em>iterable_args</em> + <em>global_args</em>, <em>global_kwargs</em> +
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional or keyword arguments
+with positional and keyword arguments derived from an iterable into
+a single <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments
+like (<em>iterable_args</em> + <em>global_args</em>, <em>global_kwargs</em> +
 <em>iterable_kwargs</em>)</td>
 </tr>
 </tbody>
@@ -724,7 +729,7 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.out_in">
 <tt class="descname">out_in</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.out_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy outgoing things to incoming things.</p>
+<dd><p>Copy outgoing things back to incoming things for further processing.</p>
 </dd></dl>
 
 <dl class="method">
@@ -830,13 +835,6 @@ everything from an <a class="reference external" href="http://docs.python.org/gl
 </dd></dl>
 
 <dl class="method">
-<dt id="chainsaw.lazy.lazysaw.results">
-<tt class="descname">results</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear and return outgoing things wrapped with the <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> wrapper. Also
-ends query sessions.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="chainsaw.lazy.lazysaw.reverse">
 <tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.reverse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reverse the order of things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
@@ -887,7 +885,7 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><em>baseline=False</em>, <em>original=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a snapshot of current incoming things.</p>
+<dd><p>Take a snapshot of the current state of incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -967,7 +965,7 @@ others iterables.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> (<em>callable</em>) &#8211; a callable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>call</strong> &#8211; a callable</td>
 </tr>
 </tbody>
 </table>
@@ -976,14 +974,15 @@ others iterables.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.traverse">
 <tt class="descname">traverse</tt><big>(</big><em>ancestors=False</em>, <em>invert=False</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.traverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect nested values from each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the worker.</p>
+<dd><p>Collect nested values from each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> matched by the
+worker.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ancestors</strong> (<em>boolean</em>) &#8211; collect things from parents of things based on
-<a class="reference external" href="http://docs.python.org/glossary.html#term-method-resolution-order">method resolution order (MRO)</a></li>
+<li><strong>ancestors</strong> (<em>boolean</em>) &#8211; collect things from parents of things based
+on <a class="reference external" href="http://docs.python.org/glossary.html#term-method-resolution-order">method resolution order (MRO)</a></li>
 <li><strong>invert</strong> (<em>boolean</em>) &#8211; select things that the worker evaluates as
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt></li>
 </ul>
@@ -1066,7 +1065,7 @@ multiple iterables to one.</p>
 <dl class="method">
 <dt id="chainsaw.lazy.lazysaw.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#chainsaw.lazy.lazysaw.wrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
 wrapper for outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

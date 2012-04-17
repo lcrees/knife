@@ -22,7 +22,7 @@ class ChainsawMixin(local):
     ## things in process ######################################################
     ###########################################################################
 
-    def as_many(self):
+    def as_multi(self):
         '''
         Treat each incoming thing as one processing unit within a series of
         processing units.
@@ -63,22 +63,20 @@ class ChainsawMixin(local):
     ## things in chains #######################################################
     ###########################################################################
 
-    @classmethod
-    def as_auto(cls):
+    def as_auto(self):
         '''
         Let incoming things be automatically rebalanced with outgoing things.
         '''
-        cls._AUTO = True
-        return cls
+        self._AUTO = True
+        return self
 
-    @classmethod
-    def as_manual(cls):
+    def as_manual(self):
         '''
         Disallow incoming things from being manually rebalanced with outgoing
         things.
         '''
-        cls._AUTO = False
-        return cls
+        self._AUTO = False
+        return self
 
     def out_in(self):
         '''
@@ -129,14 +127,14 @@ class ChainsawMixin(local):
     ## things are called ######################################################
     ###########################################################################
 
-    def arguments(self, *args, **kw):
+    def params(self, *args, **kw):
         '''
         Assign global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ or
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments used when the worker is invoked.
+        params used when the worker is invoked.
         '''
-        # positional arguments
+        # positional params
         self._args = args
         # keyword arguemnts
         self._kw = kw
@@ -148,9 +146,9 @@ class ChainsawMixin(local):
 
         :argument call: a callable
         '''
-        # reset stored position arguments
+        # reset stored position params
         self._args = ()
-        # reset stored keyword arguments
+        # reset stored keyword params
         self._kw = {}
         # assign worker
         self._call = call
@@ -161,11 +159,11 @@ class ChainsawMixin(local):
         Remove worker and global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments.
+        params.
         '''
-        # reset position arguments
+        # reset position params
         self._args = ()
-        # reset keyword arguments
+        # reset keyword params
         self._kw = {}
         # reset worker
         self._call = None
@@ -201,7 +199,7 @@ class ChainsawMixin(local):
         with self._man1():
             return self._xtend(things)
 
-    def extendstart(self, things):
+    def extendfront(self, things):
         '''
         Insert `things` **before** any other incoming things.
 
@@ -219,14 +217,14 @@ class ChainsawMixin(local):
         with self._man1():
             return self._append(thing)
 
-    def appendstart(self, thing):
+    def prepend(self, thing):
         '''
         Insert `thing` **before** any other incoming things.
 
         :argument thing: incoming thing
         '''
         with self._man1():
-            return self._appendfront(thing)
+            return self._prepend(thing)
 
     ###########################################################################
     ## knowing things #########################################################
@@ -271,7 +269,7 @@ class OutputMixin(ChainsawMixin):
         '''Yield outgoing things.'''
         return self._iterate()
 
-    def end(self):
+    def close(self):
         '''
         Close current edit or query session and return outgoing things wrapped
         in the `iterable <http://docs.python.org/glossary.html#term-iterable>`_
@@ -282,7 +280,7 @@ class OutputMixin(ChainsawMixin):
         self.clear()._clearsp()
         return value
 
-    def results(self):
+    def commit(self):
         '''
         Close query session and return outgoing things wrapped with the
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_

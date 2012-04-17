@@ -139,7 +139,7 @@ class _LazyMixin(local):
         )
         return self
 
-    def _appendfront(self, things, iter_=iter):
+    def _prepend(self, things, iter_=iter):
         '''
         append things to holding thing before anything already being
         held

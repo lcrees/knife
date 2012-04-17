@@ -427,7 +427,7 @@ class FilterMixin(local):
         with self._chain():
             return self._many(self._mapping(self._identity, keys, values))
 
-    def traverse(self, ancestors=False, invert=False):
+    def traverse(self, invert=False):
         '''
         Collect nested values from each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
@@ -441,9 +441,11 @@ class FilterMixin(local):
           :const:`False` rather than :const:`True`
         '''
         with self._chain():
-            return self._many(self._traverse(
-                self._test, ancestors, invert,
-            ))
+            if self._call is None:
+                test = lambda x: not x[0].startswith('__')
+            else:
+                test = self._call
+            return self._many(self._traverse(test, invert))
 
 
 class ReduceMixin(local):
