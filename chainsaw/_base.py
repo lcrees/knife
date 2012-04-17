@@ -8,9 +8,8 @@ from fnmatch import translate
 from re import compile as rcompile
 from contextlib import contextmanager
 
+from stuf.six import map
 from parse import compile as pcompile
-
-from chainsaw._compat import imap
 
 SLOTS = [
      '_IN', '_in', '_WORK', '_work', '_HOLD', '_hold', '_OUT', '_out',
@@ -178,29 +177,29 @@ class _ChainsawMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    def _iter(self, call, iter_=iter):
+    def _iter(self, call, iter_=iter, _imap=map):
         # extend out with incoming things if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._xtend(iter_(call(self._iterable)))
         # map incoming things and extend out if chainsawing many things
         elif self._mode == self._MANY:
-            return self._xtend(imap(lambda x: iter_(call(x)), self._iterable))
+            return self._xtend(_imap(lambda x: iter_(call(x)), self._iterable))
 
-    def _one(self, call, _imap=imap):
+    def _one(self, call, _imap=map):
         # append incoming things to out if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._append(call(self._iterable))
         # map incoming things and extend out if chainsawing many things
         elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
+            return self._xtend(_imap(call, self._iterable))
 
-    def _many(self, call, _imap=imap):
+    def _many(self, call, _imap=map):
         # extend out with incoming things if chainsawing them as one thing
         if self._mode == self._ONE:
             return self._xtend(call(self._iterable))
         # map incoming things and extend out if chainsawing many things
         elif self._mode == self._MANY:
-            return self._xtend(imap(call, self._iterable))
+            return self._xtend(_imap(call, self._iterable))
 
     ###########################################################################
     ## knowing things #########################################################

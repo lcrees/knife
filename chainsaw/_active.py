@@ -15,7 +15,8 @@ class _ActiveMixin(local):
     '''active chainsaw mixin'''
 
     def __init__(self, *things, **kw):
-        # if just one thing, put it in inchain or put everything in inchain
+        # if just one thing, put it in incoming things or put everything in
+        # incoming things
         try:
             inchain = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:

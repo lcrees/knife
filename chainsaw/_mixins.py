@@ -13,11 +13,10 @@ from itertools import (
     groupby, cycle, islice, tee, starmap, repeat, combinations, permutations)
 
 from stuf.utils import OrderedDict, selfname
-from stuf.six import strings, items, values, keys
+from stuf.six import strings, items, values, keys, filter, map
 
 from chainsaw._compat import (
-    Counter, ChainMap, ifilter, ichain, imap, ifilterfalse, zip_longest,
-    deferiter, deferfunc)
+    Counter, ChainMap, ichain, ifilterfalse, zip_longest, deferiter, deferfunc)
 
 
 class _CompareMixin(local):
@@ -25,11 +24,11 @@ class _CompareMixin(local):
     '''comparing mixin'''
 
     @staticmethod
-    def _all(truth, all_=all, imap_=imap):
+    def _all(truth, all_=all, imap_=map):
         return lambda x: all_(imap_(truth, x))
 
     @staticmethod
-    def _any(truth, any_=any, imap_=imap):
+    def _any(truth, any_=any, imap_=map):
         return lambda x: any_(imap_(truth, x))
 
     @staticmethod
@@ -137,7 +136,7 @@ class _OrderMixin(local):
     '''order mixin'''
 
     @staticmethod
-    def _group(key, imap_=imap, tuple_=tuple, groupby_=groupby):
+    def _group(key, imap_=map, tuple_=tuple, groupby_=groupby):
         grouper = lambda x: (x[0], tuple_(x[1]))
         return lambda x: imap_(grouper, groupby_(x, key))
 
@@ -167,7 +166,7 @@ class _RepeatMixin(local):
         return lambda x: combinations_(x, n)
 
     @staticmethod
-    def _copy(iterable, deepcopy_=deepcopy, imap_=imap):
+    def _copy(iterable, deepcopy_=deepcopy, imap_=map):
         return imap_(deepcopy_, iterable)
 
     @staticmethod
@@ -195,7 +194,7 @@ class _MapMixin(local):
         return lambda x: starmap_(argmap, x)
 
     @staticmethod
-    def _invoke(name, args, mc_=methodcaller, imap_=imap):
+    def _invoke(name, args, mc_=methodcaller, imap_=map):
         caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
             commit = caller(thing)
@@ -214,7 +213,7 @@ class _MapMixin(local):
         return lambda x: starmap_(kwargmap, x)
 
     @staticmethod
-    def _map(call, imap_=imap):
+    def _map(call, imap_=map):
         return lambda x: imap_(call, x)
 
 
@@ -235,14 +234,14 @@ class _FilterMixin(local):
         return attributes
 
     @staticmethod
-    def _duality(true, f=ifilter, ff=ifilterfalse, l=list, t=tee):
+    def _duality(true, f=filter, ff=ifilterfalse, l=list, t=tee):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
             yield l(f(true, truth_)), l(ff(true, false_))
         return duality
 
     @staticmethod
-    def _filter(true, false, ifilter_=ifilter, ifilterfalse_=ifilterfalse):
+    def _filter(true, false, ifilter_=filter, ifilterfalse_=ifilterfalse):
         if false:
             return lambda x: ifilterfalse_(true, x)
         return lambda x: ifilter_(true, x)
@@ -250,10 +249,10 @@ class _FilterMixin(local):
     @staticmethod
     def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
         if key:
-            return lambda x: imap(call, c(imap(k, x)))
+            return lambda x: map(call, c(map(k, x)))
         elif value:
-            return lambda x: imap(call, c(imap(v, x)))
-        return lambda x: starmap(call, c(imap(i, x)))
+            return lambda x: map(call, c(map(v, x)))
+        return lambda x: starmap(call, c(map(i, x)))
 
     @staticmethod
     def _items(keys, _itemgetter=itemgetter):
@@ -270,9 +269,9 @@ class _FilterMixin(local):
     @staticmethod
     def _traverse(test, invert):
         if invert:
-            filter = ifilterfalse
+            ifilter = ifilterfalse
         else:
-            filter = ifilter
+            ifilter = filter
         def members(iterable, beenthere=None): #@IgnorePep8
             mro = getmro(iterable)
             names = dir(iterable)
@@ -297,7 +296,7 @@ class _FilterMixin(local):
                     adder(obj)
                 if isclass_(obj):
                     this = dict_()
-                    for k, v in filter(test, members_(obj, beenthere)):
+                    for k, v in ifilter(test, members_(obj, beenthere)):
                         this[k] = v
                     yield name, this
                 else:
@@ -312,7 +311,7 @@ class _FilterMixin(local):
                 chaining = cm()
                 chaining['classname'] = selfname_(iterator)
                 cappend = chaining.maps.append
-                for k, v in filter(test, members_(iterator)):
+                for k, v in ifilter(test, members_(iterator)):
                     if isinstance_(v, odict):
                         v['classname'] = k
                         cappend(v)

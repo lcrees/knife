@@ -2,6 +2,20 @@
 '''ordering test mixins'''
 
 
+class stooges: #@IgnorePep8
+    name = 'moe'
+    age = 40
+class stoog2: #@IgnorePep8
+    name = 'larry'
+    age = 50
+class stoog3: #@IgnorePep8
+    name = 'curly'
+    age = 60
+    class stoog4: #@IgnorePep8
+        name = 'beastly'
+        age = 969
+
+
 class MathMixin(object):
 
     def test_max(self):
@@ -432,18 +446,6 @@ class FilterMixin(object):
     def test_traverse(self):
         from chainsaw._compat import ChainMap, OrderedDict
         self.maxDiff = None
-        class stooges: #@IgnorePep8
-            name = 'moe'
-            age = 40
-        class stoog2: #@IgnorePep8
-            name = 'larry'
-            age = 50
-        class stoog3: #@IgnorePep8
-            name = 'curly'
-            age = 60
-            class stoog4: #@IgnorePep8
-                name = 'beastly'
-                age = 969
         # auto
         out = self.mclass(stooges, stoog2, stoog3).as_auto().traverse().close()
         self.assertEqual(
@@ -1248,19 +1250,19 @@ class Mixin(object):
 
     def test_undo(self):
         queue = self.mclass(1, 2, 3).extendfront([1, 2, 3, 4, 5, 6]).in_out()
-        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo().in_out()
-        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).append(2).undo().in_out()
-        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2).in_out()
-        self.assertListEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(baseline=True).in_out()
-        self.assertListEqual(
+        self.assertEqual(
             queue.preview(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1]
         )
         queue.undo(original=True).in_out()
-        self.assertListEqual(queue.close(), [1, 2, 3])
+        self.assertEqual(queue.close(), [1, 2, 3])
 
     def test_insync(self):
         q = self.mclass(1, 2, 3, 4, 5, 6).out_in().clear_in().out_in()

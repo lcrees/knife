@@ -15,15 +15,11 @@ from collections import Iterable, MutableMapping
 from stuf import six
 from stuf.utils import OrderedDict, recursive_repr
 # pylint: disable-msg=f0401,w0611
-from stuf.six.moves import (
-    map, filterfalse, filter, zip, zip_longest)  # @UnresolvedImport @UnusedImport @IgnorePep8
+from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
 # pylint: enable-msg=f0401
 
 ichain = chain.from_iterable
-ifilter = filter
 ifilterfalse = filterfalse
-imap = map
-izip = zip
 items = six.items
 
 
