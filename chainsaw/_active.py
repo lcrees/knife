@@ -192,9 +192,5 @@ class _OutMixin(_ActiveMixin):
         return value.pop() if len_(value) == 1 else value
 
     def _fetch(self, len_=len, tuple_=tuple):
-        wrapper, out = self._wrapper, self._out
-        if self._mode == self._MANY:
-            value = tuple_(wrapper(i) for i in out)
-        else:
-            value = wrapper(out)
+        value = self._wrapper(self._out)
         return value.pop() if len_(value) == 1 else value
