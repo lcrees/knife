@@ -30,28 +30,6 @@ class ChainsawMixin(local):
         return self
 
     ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    def snapshot(self, baseline=False, original=False):
-        '''
-        Take a snapshot of the current state of incoming things.
-
-        :keyword boolean baseline: make snapshot the baseline snapshot
-
-        :keyword boolean original: make snapshot the original snapshot
-        '''
-        return self._snapshot(baseline, original)
-
-    def undo(self, snapshot=0):
-        '''
-        Revert incoming things back to a previous snapshot.
-
-        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
-        '''
-        return self._undo(snapshot)
-
-    ###########################################################################
     ## things are called ######################################################
     ###########################################################################
 
@@ -103,7 +81,7 @@ class ChainsawMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    def append(self, things):
+    def append(self, *things):
         '''
         Insert `things` **after** any other incoming things.
 
@@ -112,14 +90,14 @@ class ChainsawMixin(local):
         with self._chain:
             return self._xtend(things)
 
-    def prepend(self, things):
+    def prepend(self, *things):
         '''
         Insert `things` **before** any other incoming things.
 
         :argument things: incoming things
         '''
         with self._chain:
-            return self._xtendleft(things)
+            return self._xtendfront(things)
 
     ###########################################################################
     ## knowing things #########################################################
@@ -142,11 +120,27 @@ class OutputMixin(ChainsawMixin):
     ## snapshot of things #####################################################
     ###########################################################################
 
-    def baseline(self):
+    def snapshot(self):
+        '''
+        Take a snapshot of the current state of incoming things.
+
+        :keyword boolean baseline: make snapshot the baseline snapshot
+        '''
+        return self._snapshot(baseline=True)
+
+    def rollback(self):
         '''
         Revert incoming things back to baseline snapshot.
         '''
         return self._baseline()
+
+    def undo(self, snapshot=0):
+        '''
+        Revert incoming things back to a previous snapshot.
+
+        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
+        '''
+        return self._undo(snapshot)
 
     def original(self):
         '''

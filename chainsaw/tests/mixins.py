@@ -363,7 +363,7 @@ class SliceMixin(object):
 
     def test_choice(self):
         self.assertEqual(
-            len([self.mclass(1, 2, 3, 4, 5, 6).choice().fetch]), 1,
+            len(list(self.mclass(1, 2, 3, 4, 5, 6).choice())), 1,
         )
 
     def test_sample(self):
@@ -471,7 +471,7 @@ class MapMixin(object):
             [('a', 1), ('b', 2), ('c', 3)], [('a', 1), ('b', 2), ('c', 3)]
         ).worker(stuf).map().fetch()
         self.assertEqual(
-            thing, [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)], thing
+            thing, [stuf(a=1, b=2, c=3), stuf(a=1, b=2, c=3)]
         )
 
     def test_kwargmap(self):
@@ -533,26 +533,22 @@ class Mixin(object):
             self.mclass([1, 2, 3, 4, 5, 6]).__repr__(), strings,
         )
 
-    def test_extend(self):
+    def test_append(self):
+        self.assertEqual(self.mclass().append('foo').fetch(), 'foo')
         self.assertListEqual(
-            self.mclass().extend([1, 2, 3, 4, 5, 6]).fetch(),
+            self.mclass().append(1, 2, 3, 4, 5, 6).fetch(),
             [1, 2, 3, 4, 5, 6],
         )
 
-    def test_extendfront(self):
+    def test_prepend(self):
+        self.assertEqual(self.mclass().prepend('foo').fetch(), 'foo')
         self.assertListEqual(
-            self.mclass().extendfront([1, 2, 3, 4, 5, 6]).fetch(),
+            self.mclass().prepend(1, 2, 3, 4, 5, 6).fetch(),
             [6, 5, 4, 3, 2, 1]
         )
 
-    def test_append(self):
-        self.assertEqual(self.mclass().append('foo').fetch(), 'foo')
-
-    def test_prepend(self):
-        self.assertEqual(self.mclass().prepend('foo').fetch(), 'foo')
-
     def test_undo(self):
-        queue = self.mclass(1, 2, 3).extendfront([1, 2, 3, 4, 5, 6])
+        queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo()
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])

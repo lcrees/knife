@@ -21,12 +21,6 @@ class _ChainsawMixin(local):
     '''base chainsaw mixin'''
 
     def __init__(self, ins, fetch, **kw):
-        '''
-        init
-
-        @param ins: incoming things
-        @param fetch: outgoing things
-        '''
         super(_ChainsawMixin, self).__init__()
         # incoming things
         self._in = ins
@@ -38,9 +32,7 @@ class _ChainsawMixin(local):
         # original and baseline snapshots
         self._original = self._baseline = None
         # maximum number of history snapshots to keep (default: 5)
-        maxlen = kw.pop('snapshots', 5)
-        # snapshot stack
-        self._history = deque(maxlen=maxlen) if maxlen is not None else maxlen
+        self._history = deque(maxlen=kw.pop('snapshots', 5))
         ## callable defaults ##################################################
         # worker
         self._worker = None
@@ -66,18 +58,14 @@ class _ChainsawMixin(local):
 
     @property
     def _identity(self):
-        '''
-        substitute generic identity function for worker if no other worker is
-        assigned
-        '''
+        # substitute generic identity function for worker if no other worker is
+        # assigned
         return self._worker if self._worker is not None else lambda x: x
 
     @property
     def _test(self, truth_=truth):
-        '''
-        substitute truth operator function for worker if no other worker
-        assigned
-        '''
+        # substitute truth operator function for worker if no other worker
+        # assigned
         return self._worker if self._worker is not None else truth_
 
     @staticmethod
@@ -103,7 +91,7 @@ class _ChainsawMixin(local):
     def _one(self, call, _imap=map):
         # append incoming things to fetch if chainsawing them as one thing
         if self._mode == self._ONE:
-            return self._xtend(call(self._iterable))
+            return self._append(call(self._iterable))
         # map incoming things and extend fetch if chainsawing many things
         elif self._mode == self._MANY:
             return self._xtend(_imap(call, self._iterable))

@@ -35,9 +35,19 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self):
-        self._snapshot()
-        # move incoming things up to working things
+    def _chain(self, pickle_=pickle.dumps, protocol_=pickle.HIGHEST_PROTOCOL):
+        # take snapshot
+        snapshot = pickle_(self._in, protocol_)
+        # rebalance incoming with outcoming
+        if self._original is not None:
+            self._in.clear()
+            self._in.extend(self._out)
+        # make snapshot original snapshot?
+        else:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # move incoming things to working things
         self._work.extend(self._in)
         yield
         out = self._out
@@ -51,82 +61,32 @@ class _ActiveMixin(local):
         self._hold.clear()
 
     ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    def _snapshot(self, baseline=False, original=False):
-        # take snapshot
-        snapshot = pickle.dumps(self._in, pickle.HIGHEST_PROTOCOL)
-        test = self._history is not None and len(self._history) == 0
-        # rebalance incoming with outcoming
-        if self._original is not None:
-            self._in.clear()
-            self._in.extend(self._out)
-        if test:
-            # make snapshot original snapshot?
-            if original:
-                self._original = snapshot
-            # make this snapshot the baseline snapshot
-            if baseline:
-                self._baseline = snapshot
-        # place snapshot at beginning of snapshot stack
-        self._history.appendleft(snapshot)
-        return self
-
-    def _undo(self, snapshot=0, baseline=False, original=False):
-        '''revert incoming things to previous snapshot'''
-        # if specified, use a specific snapshot
-        if self._history:
-            # clear everything
-            self.clear()
-            if snapshot:
-                self._history.rotate(-(snapshot - 1))
-                self._in.extend(pickle.loads(self._history.popleft()))
-            # by default revert to most recent snapshot
-            else:
-                snapshot = pickle.loads(self._history.popleft())
-                self._in.extend(snapshot)
-        return self
-
-    ###########################################################################
     ## stepping through things ################################################
     ###########################################################################
 
     @property
     def _iterable(self):
-        # iterable derived from link in chain
-        return self._iterator(self._work)
-
-    def _iterator(self, attr, getattr_=getattr):
         # derived from Raymond Hettinger Python Cookbook recipe # 577155
-        call = attr.popleft
+        call = self._work.popleft
         try:
             while 1:
                 yield call()
         except IndexError:
             pass
 
-    ###########################################################################
-    ## adding things ##########################################################
-    ###########################################################################
-
-    def _xtend(self, things):
-        # extend holding thing with things
-        if len(things) == 1:
-            self._hold.append(things)
-        # append things to holding things
-        else:
-            self._hold.extend(things)
+    def _append(self, thing):
+        # append thing after other holding things
+        self._hold.append(thing)
         return self
 
-    def _xtendleft(self, things):
-        # append things to holding thing before anything already being held
-        if len(things) == 1:
-            self._hold.appendleft(things)
-        # extend holding things with things placed before anything already
-        # being held
-        else:
-            self._hold.extendleft(things)
+    def _xtend(self, things):
+        # place things after holding things
+        self._hold.extend(things)
+        return self
+
+    def _xtendfront(self, things):
+        # place things before other holding things
+        self._hold.extendleft(things)
         return self
 
     ###########################################################################
@@ -150,33 +110,41 @@ class _ActiveMixin(local):
         return len(self._in)
 
 
-class _OutputMixin(_ActiveMixin):
+class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
-    def _baseline(self):
-        if self._baseline is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # revert to baseline snapshot of incoming things
-            self._in.extend(pickle.loads(self._baseline))
+    def _baseline(self, pickle_=pickle.loads):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._clearsp()
+        # revert to baseline snapshot of incoming things
+        self._in.extend(pickle_(self._baseline))
         return self
 
-    def _original(self):
-        if self._original is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original snapshot of incoming things
-            self._in.extend(pickle.loads(self._original))
+    def _original(self, pickle_=pickle.loads):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._clearsp()
+        # clear baseline
+        self._baseline = None
+        # restore original snapshot of incoming things
+        self._in.extend(pickle_(self._original))
         return self
 
-    def _clear(self):
+    def _undo(self, snapshot=0, pickle_=pickle.loads):
+        if self._history:
+            # clear everything
+            self.clear()
+            # if specified, use a specific snapshot
+            if snapshot:
+                self._history.rotate(-(snapshot - 1))
+            self._in.extend(pickle_(self._history.popleft()))
+        return self
+
+    def _clear(self, list_=list):
         # clear worker
         self._worker = None
         # clear worker positional arguments
@@ -184,7 +152,7 @@ class _OutputMixin(_ActiveMixin):
         # clear worker keyword arguments
         self._kw = {}
         # default iterable wrapper
-        self._wrapper = list
+        self._wrapper = list_
         # clear incoming things
         self._in.clear()
         # clear working things
@@ -195,17 +163,17 @@ class _OutputMixin(_ActiveMixin):
         self._out.clear()
         return self
 
-    def _iterate(self, iter_=iter):
-        if not self._out:
+    def _iterate(self, iter_=iter, len_=len):
+        if not self._out and len_(self._history) > 1:
             self._out.extend(self._in)
         return iter_(self._out)
 
-    def _fetch(self):
+    def _fetch(self, len_=len, tuple_=tuple):
         wrapper, out = self._wrapper, self._out
-        if not out:
+        if not self._out and len_(self._history) < 1:
             out.extend(self._in)
         if self._mode == self._MANY:
-            value = tuple(wrapper(i) for i in out)
+            value = tuple_(wrapper(i) for i in out)
         else:
             value = wrapper(out)
-        return value.pop() if len(value) == 1 else value
+        return value.pop() if len_(value) == 1 else value

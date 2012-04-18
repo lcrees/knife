@@ -6,7 +6,7 @@ from chainsaw.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CompareMixin, OrderMixin)
 
-from chainsaw._lazy import _OutputMixin
+from chainsaw._lazy import _OutMixin
 from chainsaw._base import SLOTS, _ChainsawMixin
 from chainsaw._mixins import (
     _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
@@ -14,7 +14,7 @@ from chainsaw._mixins import (
 
 
 class lazysaw(
-    _OutputMixin, _ChainsawMixin, _CompareMixin, _FilterMixin, _MapMixin,
+    _OutMixin, _ChainsawMixin, _CompareMixin, _FilterMixin, _MapMixin,
     _MathMixin, _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
     MathMixin, SliceMixin, CompareMixin,
@@ -26,7 +26,7 @@ class lazysaw(
 
 
 class comparesaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, CompareMixin, _CompareMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, CompareMixin, _CompareMixin,
 ):
 
     '''comparing chainsaw'''
@@ -35,7 +35,7 @@ class comparesaw(
 
 
 class filtersaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, FilterMixin, _FilterMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, FilterMixin, _FilterMixin,
 ):
 
     '''filtering chainsaw'''
@@ -43,7 +43,7 @@ class filtersaw(
     __slots__ = SLOTS
 
 
-class mapsaw(_OutputMixin, _ChainsawMixin, OutputMixin, MapMixin, _MapMixin):
+class mapsaw(_OutMixin, _ChainsawMixin, OutputMixin, MapMixin, _MapMixin):
 
     '''mapping chainsaw'''
 
@@ -51,7 +51,7 @@ class mapsaw(_OutputMixin, _ChainsawMixin, OutputMixin, MapMixin, _MapMixin):
 
 
 class mathsaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, MathMixin, _MathMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, MathMixin, _MathMixin,
 ):
 
     '''mathing chainsaw'''
@@ -60,7 +60,7 @@ class mathsaw(
 
 
 class ordersaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, OrderMixin, _OrderMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, OrderMixin, _OrderMixin,
 ):
 
     '''ordering chainsaw'''
@@ -69,7 +69,7 @@ class ordersaw(
 
 
 class reducesaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, ReduceMixin, _ReduceMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, ReduceMixin, _ReduceMixin,
 ):
 
     '''reducing chainsaw'''
@@ -78,7 +78,7 @@ class reducesaw(
 
 
 class repeatsaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, RepeatMixin, _RepeatMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, RepeatMixin, _RepeatMixin,
 ):
 
     '''repeating chainsaw'''
@@ -87,7 +87,7 @@ class repeatsaw(
 
 
 class slicesaw(
-    _OutputMixin, _ChainsawMixin, OutputMixin, SliceMixin, _SliceMixin,
+    _OutMixin, _ChainsawMixin, OutputMixin, SliceMixin, _SliceMixin,
 ):
 
     '''slicing chainsaw'''

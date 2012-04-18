@@ -29,7 +29,16 @@ class _LazyMixin(local):
     @property
     @contextmanager
     def _chain(self, iter_=iter, tee_=tee):
-        self._snapshot()
+        # take snapshot
+        self._in, snapshot = tee_(self._in)
+        # rebalance incoming with outcoming
+        if self._original is not None:
+            self._in, self._out = tee_(self._out)
+        # make snapshot original snapshot?
+        else:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
         # move incoming things up to working things
         work, self._in = tee_(self._in)
         self._work = work
@@ -44,43 +53,7 @@ class _LazyMixin(local):
         self._hold = iter_([])
 
     ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    def _snapshot(self, baseline=False, original=False):
-        # take snapshot
-        self._in, snapshot = tee(self._in)
-        test = self._history is not None and not len(self._history) == 0
-        # rebalance incoming with outcoming
-        if self._original is not None:
-            self._in, self._out = tee(self._out)
-        if test:
-            # make snapshot original snapshot?
-            if original:
-                self._original = snapshot
-            # make this snapshot the baseline snapshot
-            if baseline:
-                self._baseline = snapshot
-        # place snapshot at beginning of snapshot stack
-        self._history.appendleft(snapshot)
-        return self
-
-    def _undo(self, snapshot=0, baseline=False, original=False):
-        '''revert incoming things to previous snapshot'''
-        # if specified, use a specific snapshot
-        if self._history:
-            # clear everything
-            self.clear()
-            if snapshot:
-                self._history.rotate(-(snapshot - 1))
-                self._in = self._history.popleft()
-            # by default revert to most recent snapshot
-            else:
-                self._in = self._history.popleft()
-        return self
-
-    ###########################################################################
-    ## stepping through things ################################################
+    ## adding things ##########################################################
     ###########################################################################
 
     @property
@@ -88,26 +61,22 @@ class _LazyMixin(local):
         # iterable derived from link in chain
         return self._work
 
-    ###########################################################################
-    ## adding things ##########################################################
-    ###########################################################################
-
-    def _xtend(self, things, chain_=chain, iter_=iter):
-        # extend holding thing with things
-        if len(things) == 1:
-            self._hold = chain_(self._hold, iter_([things]))
-        # append things to holding things
-        else:
-            self._hold = chain_(things, self._hold)
+    def _xtend(self, things, chain_=chain):
+        '''extend holding thing with things'''
+        self._hold = chain_(things, self._hold)
         return self
 
-    def _xtendleft(self, things, iter_=iter, reversed_=reversed):
-        # append things to holding thing before anything already being held
-        if len(things) == 1:
-            return self._xtend(iter_([things]))
-        # extend holding things with things placed before anything already
-        # being held
+    def _xtendfront(self, things, reversed_=reversed):
+        '''
+        extend holding things with things placed before anything already
+        being held
+        '''
         return self._xtend(reversed_(things))
+
+    def _append(self, things, chain_=chain, iter_=iter):
+        '''append things to holding things'''
+        self._hold = chain_(self._hold, iter_([things]))
+        return self
 
     ###########################################################################
     ## know things ############################################################
@@ -135,30 +104,37 @@ class _LazyMixin(local):
         return len_(list_(incoming))
 
 
-class _OutputMixin(_LazyMixin):
+class _OutMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
     def _baseline(self, tee_=tee):
-        if self._baseline is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # revert to baseline snapshot of incoming things
-            self._in, self._baseline = tee_(self._baseline)
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._clearsp()
+        # revert to baseline snapshot of incoming things
+        self._in, self._baseline = tee_(self._baseline)
+        return self
+
+    def _undo(self, snapshot=0):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        self._in = self._history.popleft()
         return self
 
     def _original(self, tee_=tee):
-        if self._original is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original snapshot of incoming things
-            self._in, self._original = tee_(self._original)
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._clearsp()
+        # clear baseline
+        self._baseline = None
+        # restore original snapshot of incoming things
+        self._in, self._original = tee_(self._original)
         return self
 
     def _clear(self, iter_=iter, list_=list):
@@ -184,18 +160,19 @@ class _OutputMixin(_LazyMixin):
         self._out = iter_([])
         return self
 
-    def _iterate(self):
-        if not self._out:
-            self._in, self._out = tee(self._in)
-        return self._out
+    def _iterate(self, tee_=tee, list_=list, len_=len):
+        tell1, self._out, outs = tee_(self._out, 3)
+        if not len_(list_(tell1)) and len_(self._history) < 1:
+            outs, self._in, self._out = tee_(self._in, 3)
+        return outs
 
-    def _fetch(self):
-        if not self._out:
-            self._in, self._out = tee(self._in)
-        outs, tell = tee(self._out)
+    def _fetch(self, tee_=tee, list_=list, len_=len):
+        tell1, tell2, self._out, outs = tee(self._out, 4)
+        if not len_(list_(tell1)) and len_(self._history) < 1:
+            tell2, self._in, self._out, outs = tee_(self._in, 4)
         wrapper = self._wrapper
         if self._mode == self._MANY:
             value = tuple(wrapper(i) for i in outs)
         else:
             value = wrapper(outs)
-        return value.pop() if len(wrapper(tell)) == 1 else value
+        return value.pop() if len(list_(tell2)) == 1 else value
