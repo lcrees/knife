@@ -543,12 +543,11 @@ class Mixin(object):
     def test_prepend(self):
         self.assertEqual(self.mclass().prepend('foo').fetch(), 'foo')
         self.assertListEqual(
-            self.mclass().prepend(1, 2, 3, 4, 5, 6).fetch(),
-            [6, 5, 4, 3, 2, 1]
+            self.mclass().prepend(1, 2, 3, 4, 5, 6).fetch(), [6, 5, 4, 3, 2, 1]
         )
 
     def test_undo(self):
-        queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+        queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).filter()
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo()
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
@@ -556,7 +555,7 @@ class Mixin(object):
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.append(1).append(2).baseline()
+        queue.snapshot().append(1).append(2).baseline()
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1])
         queue.original()
         self.assertEqual(queue.fetch(), [1, 2, 3])
@@ -570,7 +569,7 @@ class Mixin(object):
             (1, 2, 3, 4, 5, 6),
         )
 
-    def test_list_wrap(self):
+    def test_list(self):
         self.assertIsInstance(
             self.mclass(1, 2, 3, 4, 5, 6).as_list().fetch(), list,
         )
@@ -579,7 +578,7 @@ class Mixin(object):
             [1, 2, 3, 4, 5, 6],
         )
 
-    def test_tuple_wrap(self):
+    def test_tuple(self):
         self.assertIsInstance(
             self.mclass(1, 2, 3, 4, 5, 6).as_tuple().fetch(), tuple,
         )
@@ -588,7 +587,7 @@ class Mixin(object):
             (1, 2, 3, 4, 5, 6),
         )
 
-    def test_set_wrap(self):
+    def test_set(self):
         self.assertIsInstance(
             self.mclass(1, 2, 3, 4, 5, 6).as_set().fetch(), set,
         )
@@ -597,7 +596,7 @@ class Mixin(object):
             set([1, 2, 3, 4, 5, 6]),
         )
 
-    def test_dict_wrap(self):
+    def test_dict(self):
         self.assertIsInstance(
             self.mclass((1, 2), (3, 4), (5, 6)).as_dict().fetch(), dict,
         )

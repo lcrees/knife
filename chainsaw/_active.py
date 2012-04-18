@@ -35,9 +35,9 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self, pickle_=pickle.dumps, protocol_=pickle.HIGHEST_PROTOCOL):
+    def _chain(self, dumps_=pickle.dumps, protocol_=pickle.HIGHEST_PROTOCOL):
         # take snapshot
-        snapshot = pickle_(self._in, protocol_)
+        snapshot = dumps_(self._in, protocol_)
         # rebalance incoming with outcoming
         if self._original is not None:
             self._in.clear()
@@ -84,9 +84,18 @@ class _ActiveMixin(local):
         self._hold.extend(things)
         return self
 
-    def _xtendfront(self, things):
-        # place things before other holding things
-        self._hold.extendleft(things)
+    def _prependit(self, things):
+        # place things before other incoming things
+        with self._chain:
+            self._hold.extendleft(things)
+        self._in.extendleft(self._out)
+        return self
+
+    def _appendit(self, things):
+        # place things after other incoming things
+        with self._chain:
+            self._hold.extend(things)
+        self._in.extend(self._out)
         return self
 
     ###########################################################################
@@ -114,16 +123,16 @@ class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
-    def _baseline(self, pickle_=pickle.loads):
+    def _snapshot(self, loads_=pickle.loads):
         # clear everything
         self.clear()
         # clear snapshots
         self._clearsp()
         # revert to baseline snapshot of incoming things
-        self._in.extend(pickle_(self._baseline))
+        self._in.extend(loads_(self._baseline))
         return self
 
-    def _original(self, pickle_=pickle.loads):
+    def _original(self, loads_=pickle.loads):
         # clear everything
         self.clear()
         # clear snapshots
@@ -131,17 +140,16 @@ class _OutMixin(_ActiveMixin):
         # clear baseline
         self._baseline = None
         # restore original snapshot of incoming things
-        self._in.extend(pickle_(self._original))
+        self._in.extend(loads_(self._original))
         return self
 
-    def _undo(self, snapshot=0, pickle_=pickle.loads):
-        if self._history:
-            # clear everything
-            self.clear()
-            # if specified, use a specific snapshot
-            if snapshot:
-                self._history.rotate(-(snapshot - 1))
-            self._in.extend(pickle_(self._history.popleft()))
+    def _undo(self, snapshot=0, loads_=pickle.loads):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        self._in.extend(loads_(self._history.popleft()))
         return self
 
     def _clear(self, list_=list):
@@ -164,13 +172,13 @@ class _OutMixin(_ActiveMixin):
         return self
 
     def _iterate(self, iter_=iter, len_=len):
-        if not self._out and len_(self._history) > 1:
+        if not self._out and len_(self._history) > 2:
             self._out.extend(self._in)
         return iter_(self._out)
 
     def _fetch(self, len_=len, tuple_=tuple):
         wrapper, out = self._wrapper, self._out
-        if not self._out and len_(self._history) < 1:
+        if not self._out and len_(self._history) < 2:
             out.extend(self._in)
         if self._mode == self._MANY:
             value = tuple_(wrapper(i) for i in out)

@@ -87,8 +87,7 @@ class ChainsawMixin(local):
 
         :argument things: incoming things
         '''
-        with self._chain:
-            return self._xtend(things)
+        return self._appendit(things)
 
     def prepend(self, *things):
         '''
@@ -96,8 +95,7 @@ class ChainsawMixin(local):
 
         :argument things: incoming things
         '''
-        with self._chain:
-            return self._xtendfront(things)
+        return self._prependit(things)
 
     ###########################################################################
     ## knowing things #########################################################
@@ -126,7 +124,7 @@ class OutputMixin(ChainsawMixin):
 
         :keyword boolean baseline: make snapshot the baseline snapshot
         '''
-        return self._snapshot(baseline=True)
+        return self._snapshot()
 
     def rollback(self):
         '''
