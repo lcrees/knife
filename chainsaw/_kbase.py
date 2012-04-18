@@ -45,7 +45,7 @@ class KChainsaw(AppspaceKey):
         :keyword boolean original: make snapshot the original snapshot
         '''
 
-    def undo(snapshot=0, baseline=False, original=False):  # @NoSelf
+    def undo(snapshot=0):  # @NoSelf
         '''
         Revert incoming things back to a previous snapshot.
 
@@ -90,32 +90,18 @@ class KChainsaw(AppspaceKey):
     ## things coming in #######################################################
     ###########################################################################
 
-    def extend(things):  # @NoSelf
+    def append(things):  # @NoSelf
         '''
         Insert `things` **after** any other incoming things.
 
         :argument things: incoming things
         '''
 
-    def extendfront(things):  # @NoSelf
+    def prepend(things):  # @NoSelf
         '''
         Insert `things` **before** any other incoming things.
 
         :argument things: incoming things
-        '''
-
-    def append(thing):  # @NoSelf
-        '''
-        Insert `thing` **after** any other incoming things.
-
-        :argument thing: incoming thing
-        '''
-
-    def prepend(thing):  # @NoSelf
-        '''
-        Insert `thing` **before** any other incoming things.
-
-        :argument thing: incoming thing
         '''
 
     ###########################################################################

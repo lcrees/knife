@@ -103,7 +103,7 @@ class _ChainsawMixin(local):
     def _one(self, call, _imap=map):
         # append incoming things to fetch if chainsawing them as one thing
         if self._mode == self._ONE:
-            return self._append(call(self._iterable))
+            return self._xtend(call(self._iterable))
         # map incoming things and extend fetch if chainsawing many things
         elif self._mode == self._MANY:
             return self._xtend(_imap(call, self._iterable))

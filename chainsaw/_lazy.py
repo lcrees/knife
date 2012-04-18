@@ -17,9 +17,9 @@ class _LazyMixin(local):
         # incoming things
         incoming = iter([things[0]]) if len(things) == 1 else iter(things)
         super(_LazyMixin, self).__init__(incoming, iter([]), **kw)
-        # work link
+        # working things
         self._work = iter([])
-        # holding link
+        # holding things
         self._hold = iter([])
 
     ###########################################################################
@@ -28,19 +28,18 @@ class _LazyMixin(local):
 
     @property
     @contextmanager
-    def _chain(self, iter_=iter):
-        '''switch to a manually balanced four-link chain'''
+    def _chain(self, iter_=iter, tee_=tee):
         self._snapshot()
-        # move incoming things up to work link
-        work, self._in = tee(self._in)
+        # move incoming things up to working things
+        work, self._in = tee_(self._in)
         self._work = work
         yield
-        # extend outgoing things with holding link
+        # extend outgoing things with holding things
         self._out = self._hold
-        # clear work link
+        # clear working things
         del self._work
         self._work = iter_([])
-        # clear holding link
+        # clear holding things
         del self._hold
         self._hold = iter_([])
 
@@ -49,7 +48,6 @@ class _LazyMixin(local):
     ###########################################################################
 
     def _snapshot(self, baseline=False, original=False):
-        '''take snapshot of incoming things'''
         # take snapshot
         self._in, snapshot = tee(self._in)
         test = self._history is not None and not len(self._history) == 0
@@ -87,49 +85,43 @@ class _LazyMixin(local):
 
     @property
     def _iterable(self):
-        '''iterable derived from link in chain'''
+        # iterable derived from link in chain
         return self._work
 
     ###########################################################################
     ## adding things ##########################################################
     ###########################################################################
 
-    def _xtend(self, things, chain_=chain):
-        '''extend holding thing with things'''
-        self._hold = chain_(things, self._hold)
+    def _xtend(self, things, chain_=chain, iter_=iter):
+        # extend holding thing with things
+        if len(things) == 1:
+            self._hold = chain_(self._hold, iter_([things]))
+        # append things to holding things
+        else:
+            self._hold = chain_(things, self._hold)
         return self
 
-    def _xtendfront(self, things, reversed_=reversed):
-        '''
-        extend holding things with things placed before anything already
-        being held
-        '''
+    def _xtendleft(self, things, iter_=iter, reversed_=reversed):
+        # append things to holding thing before anything already being held
+        if len(things) == 1:
+            return self._xtend(iter_([things]))
+        # extend holding things with things placed before anything already
+        # being held
         return self._xtend(reversed_(things))
-
-    def _append(self, things, chain_=chain, iter_=iter):
-        '''append things to holding things'''
-        self._hold = chain_(self._hold, iter_([things]))
-        return self
-
-    def _prepend(self, things, iter_=iter):
-        '''
-        append things to holding thing before anything already being held
-        '''
-        return self._xtend(iter_([things]))
 
     ###########################################################################
     ## know things ############################################################
     ###########################################################################
 
-    def _repr(self, tee_=tee, setattr_=setattr, getattr_=getattr, l=list):
-        '''object representation.'''
+    def _repr(self, tee_=tee, l=list, clsname_=clsname):
+        # object representation
         self._in, in2 = tee_(self._in)
         self._out, out2 = tee_(self._out)
         self._work, work2 = tee_(self._work)
         self._hold, hold2 = tee_(self._hold)
         return self._REPR.format(
             self.__module__,
-            clsname(self),
+            clsname_(self),
             l(in2),
             l(work2),
             l(hold2),
@@ -137,27 +129,27 @@ class _LazyMixin(local):
             self._mode,
         )
 
-    def _len(self):
-        '''length of incoming things.'''
-        self._in, incoming = tee(self._in)
-        return len(list(incoming))
+    def _len(self, tee_=tee, len_=len, list_=list):
+        # length of incoming things
+        self._in, incoming = tee_(self._in)
+        return len_(list_(incoming))
 
 
 class _OutputMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
-    def _baseline(self):
+    def _baseline(self, tee_=tee):
         if self._baseline is not None:
             # clear everything
             self.clear()
             # clear snapshots
             self._clearsp()
-            # revert to baseline version of incoming things
-            self._in, self._baseline = tee(self._baseline)
+            # revert to baseline snapshot of incoming things
+            self._in, self._baseline = tee_(self._baseline)
         return self
 
-    def _original(self):
+    def _original(self, tee_=tee):
         if self._original is not None:
             # clear everything
             self.clear()
@@ -165,44 +157,39 @@ class _OutputMixin(_LazyMixin):
             self._clearsp()
             # clear baseline
             self._baseline = None
-            # restore original version of incoming things
-            self._in, self._original = tee(self._original)
+            # restore original snapshot of incoming things
+            self._in, self._original = tee_(self._original)
         return self
 
     def _clear(self, iter_=iter, list_=list):
-        '''remove everything'''
-        # active callable
+        # clear worker
         self._worker = None
-        # position arguments
+        # clear worker positional arguments
         self._args = ()
-        # keyword arguments
+        # clear worker keyword arguments
         self._kw = {}
-        # current alternate callable
-        self._alt = None
-        # default output class
+        # default iterable wrapper
         self._wrapper = list_
-        # remove all outgoing things
-        del self._out
-        self._out = iter_([])
-        # remove all incoming things
+        # clear incoming things
         del self._in
         self._in = iter_([])
-        # clear work link
+        # clear working things
         del self._work
         self._work = iter_([])
-        # clear holding link
+        # clear holding things
         del self._hold
         self._hold = iter_([])
+        # clear outgoing things
+        del self._out
+        self._out = iter_([])
         return self
 
     def _iterate(self):
-        '''yield outgoing things'''
         if not self._out:
             self._in, self._out = tee(self._in)
         return self._out
 
     def _fetch(self):
-        '''peek at state of outgoing things'''
         if not self._out:
             self._in, self._out = tee(self._in)
         outs, tell = tee(self._out)

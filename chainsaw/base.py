@@ -103,7 +103,7 @@ class ChainsawMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    def extend(self, things):
+    def append(self, things):
         '''
         Insert `things` **after** any other incoming things.
 
@@ -112,32 +112,14 @@ class ChainsawMixin(local):
         with self._chain:
             return self._xtend(things)
 
-    def extendfront(self, things):
+    def prepend(self, things):
         '''
         Insert `things` **before** any other incoming things.
 
         :argument things: incoming things
         '''
         with self._chain:
-            return self._xtendfront(things)
-
-    def append(self, thing):
-        '''
-        Insert `thing` **after** any other incoming things.
-
-        :argument thing: incoming thing
-        '''
-        with self._chain:
-            return self._append(thing)
-
-    def prepend(self, thing):
-        '''
-        Insert `thing` **before** any other incoming things.
-
-        :argument thing: incoming thing
-        '''
-        with self._chain:
-            return self._prepend(thing)
+            return self._xtendleft(things)
 
     ###########################################################################
     ## knowing things #########################################################
