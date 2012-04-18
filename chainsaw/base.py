@@ -176,12 +176,12 @@ class OutputMixin(ChainsawMixin):
         '''Yield outgoing things.'''
         return self._iterate()
 
-    def results(self):
+    def fetch(self):
         '''
         Return outgoing things wrapped with the `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
         '''
-        return self._results()
+        return self._fetch()
 
     ###########################################################################
     ## clean up things ########################################################

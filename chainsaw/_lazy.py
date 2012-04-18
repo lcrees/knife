@@ -26,8 +26,9 @@ class _LazyMixin(local):
     ## things in chains #######################################################
     ###########################################################################
 
+    @property
     @contextmanager
-    def _chain(self, **kw):
+    def _chain(self):
         '''switch to a manually balanced four-link chain'''
         # move incoming things up to work link
         work, self._in = tee(self._in)
@@ -207,7 +208,7 @@ class _OutputMixin(_LazyMixin):
         '''yield outgoing things'''
         return self._out
 
-    def _results(self):
+    def _fetch(self):
         '''peek at state of outgoing things'''
         if not self._out:
             self._in, self._out = tee(self._in)

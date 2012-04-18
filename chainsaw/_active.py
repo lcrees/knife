@@ -33,18 +33,18 @@ class _ActiveMixin(local):
     ## things in chains #######################################################
     ###########################################################################
 
+    @property
     @contextmanager
-    def _chain(self, **kw):
+    def _chain(self):
         '''switch to a manually balanced four-link chain'''
         # move incoming things up to work link
-        self._work.extend(getattr(self, self._IN))
+        self._work.extend(self._in)
         yield
-        out = self._out
-        # clear out
-        if self._nokeep:
-            out.clear()
+        fetch = self._out
+        # clear fetch
+        fetch.clear()
         # extend outgoing things with holding link
-        out.extend(self._hold)
+        fetch.extend(self._hold)
         # clear work, holding links & return to current selected chain
         self._clearworking()
 
@@ -98,13 +98,13 @@ class _ActiveMixin(local):
         '''iterable derived from link in chain'''
         return self._iterator(self._work)
 
-    def _iterator(self, attr='_HOLD', getattr_=getattr):
+    def _iterator(self, attr, getattr_=getattr):
         '''
         repeatedly invoke callable until IndexError is raised
 
         derived from Raymond Hettinger Python Cookbook recipe # 577155
         '''
-        call = getattr_(self, attr).popleft
+        call = attr.popleft
         try:
             while 1:
                 yield call()
@@ -226,13 +226,13 @@ class _OutputMixin(_ActiveMixin):
         '''yield outgoing things'''
         return self._iterator(self._OUT)
 
-    def _results(self):
+    def _fetch(self):
         '''peek at state of outgoing things'''
-        wrapper, out = self._wrapper, self._out
-        if not out:
-            out.extend(self._in)
+        wrapper, fetch = self._wrapper, self._out
+        if not fetch:
+            fetch.extend(self._in)
         if self._mode == self._MANY:
-            value = tuple(wrapper(i) for i in out)
+            value = tuple(wrapper(i) for i in fetch)
         else:
-            value = wrapper(out)
+            value = wrapper(fetch)
         return value.pop() if len(value) == 1 else value

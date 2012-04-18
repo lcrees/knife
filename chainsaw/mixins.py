@@ -17,7 +17,7 @@ class CompareMixin(local):
 
         :rtype: :class:`bool`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._all(self._test))
 
     def any(self):
@@ -28,7 +28,7 @@ class CompareMixin(local):
 
         :rtype: :class:`bool`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._any(self._test))
 
     def difference(self, symmetric=False):
@@ -39,7 +39,7 @@ class CompareMixin(local):
         :keyword boolean symmetric: use symmetric difference
         :rtype: :class:`set`
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._difference(symmetric))
 
     def disjointed(self):
@@ -49,7 +49,7 @@ class CompareMixin(local):
 
         :rtype: :class:`set`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._disjointed)
 
     def intersection(self):
@@ -59,7 +59,7 @@ class CompareMixin(local):
 
         :rtype: :class:`set`
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._intersection)
 
     def subset(self):
@@ -70,7 +70,7 @@ class CompareMixin(local):
 
         :rtype: :class:`bool`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._subset)
 
     def superset(self):
@@ -81,7 +81,7 @@ class CompareMixin(local):
 
         :rtype: :class:`bool`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._superset)
 
     def union(self):
@@ -91,7 +91,7 @@ class CompareMixin(local):
 
         :rtype: :class:`set`
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._union)
 
     def unique(self):
@@ -101,7 +101,7 @@ class CompareMixin(local):
 
         :rtype: :class:`set`
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._unique(self._identity))
 
 
@@ -116,7 +116,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._average)
 
     def count(self):
@@ -130,7 +130,7 @@ class MathMixin(local):
 
         :rtype: :class:`tuple`
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._count)
 
     def max(self):
@@ -142,7 +142,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._max(self._identity))
 
     def median(self):
@@ -152,7 +152,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._median)
 
     def min(self):
@@ -164,7 +164,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._min(self._identity))
 
     def minmax(self):
@@ -175,7 +175,7 @@ class MathMixin(local):
         :returns: :class:`tuple` of (*minimum value*, *maximum value*).
         :rtype: :class:`tuple`
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._minmax)
 
     def range(self):
@@ -186,7 +186,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._range)
 
     def sum(self, start=0, precision=False):
@@ -201,7 +201,7 @@ class MathMixin(local):
 
         :rtype: number
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._sum(start, precision))
 
 
@@ -216,7 +216,7 @@ class OrderMixin(local):
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._group(self._identity))
 
     def reverse(self):
@@ -224,7 +224,7 @@ class OrderMixin(local):
         Reverse the order of things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._reverse)
 
     def shuffle(self):
@@ -234,7 +234,7 @@ class OrderMixin(local):
         worker as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._shuffle)
 
     def sort(self):
@@ -242,7 +242,7 @@ class OrderMixin(local):
         Randomly reorder things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._sort(self._identity))
 
 
@@ -257,7 +257,7 @@ class RepeatMixin(local):
 
         :argument integer n: length of things to combine from
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._combinations(n))
 
     def copy(self):
@@ -265,7 +265,7 @@ class RepeatMixin(local):
         Duplicate each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._copy)
 
     def permutations(self, n):
@@ -275,7 +275,7 @@ class RepeatMixin(local):
 
         :argument integer n: length of things to permutate from
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._permutations(n))
 
     def repeat(self, n=None, call=False):
@@ -288,7 +288,7 @@ class RepeatMixin(local):
 
         :keyword boolean call: repeat results of invoking worker
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._repeat(n, call, self._identity))
 
 
@@ -308,7 +308,7 @@ class MapMixin(local):
         :keyword boolean merge: merge global positional arguments with
           positional arguments derived from an iterable
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._argmap(
                 self._worker, merge, self._args, self._kw,
             ))
@@ -326,7 +326,7 @@ class MapMixin(local):
 
         :argument string name: method name
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._invoke(name, (self._args, self._kw)))
 
     def kwargmap(self, merge=False):  # @NoSelf
@@ -347,7 +347,7 @@ class MapMixin(local):
           like (*iterable_args* + *global_args*, *global_kwargs* +
           *iterable_kwargs*)
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._kwargmap(
                 self._worker, merge, self._args, self._kw,
             ))
@@ -357,7 +357,7 @@ class MapMixin(local):
         Feed each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._map(self._worker))
 
 
@@ -375,7 +375,7 @@ class FilterMixin(local):
 
         :argument string names: attribute names
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._attributes(names))
 
     def duality(self):
@@ -386,7 +386,7 @@ class FilterMixin(local):
         :const:`True` and the second being everything the worker evaluates as
         :const:`False`.
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._duality(self._test))
 
     def filter(self, invert=False):
@@ -398,7 +398,7 @@ class FilterMixin(local):
         :keyword boolean invert: collect things the worker evaluates as
           :const:`False` instead of :const:`True`
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._filter(self._test, invert))
 
     def items(self, *keys):
@@ -411,7 +411,7 @@ class FilterMixin(local):
 
         :argument string keys: item keys (or indexes)
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._items(keys))
 
     def mapping(self, keys=False, values=False):
@@ -424,7 +424,7 @@ class FilterMixin(local):
 
         :keyword boolean values: collect values only
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._mapping(self._identity, keys, values))
 
     def traverse(self, invert=False):
@@ -440,7 +440,7 @@ class FilterMixin(local):
         :keyword boolean invert: select things that the worker evaluates as
           :const:`False` rather than :const:`True`
         '''
-        with self.chain:
+        with self._chain:
             if self._worker is None:
                 test = lambda x: not x[0].startswith('__')
             else:
@@ -457,7 +457,7 @@ class ReduceMixin(local):
         Flatten nested things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._flatten)
 
     def merge(self):
@@ -466,7 +466,7 @@ class ReduceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ into one
         iterable.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._merge)
 
     def reduce(self, initial=None, reverse=False):
@@ -481,7 +481,7 @@ class ReduceMixin(local):
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
           of an iterable
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._reduce(self._worker, initial, reverse))
 
     def weave(self):
@@ -490,7 +490,7 @@ class ReduceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ while reducing
         multiple iterables to one.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._weave)
 
     def zip(self):
@@ -500,7 +500,7 @@ class ReduceMixin(local):
         by pairing every two things as a :class:`tuple` of (*thing1*,
         *thing2*).
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._zip)
 
 
@@ -518,7 +518,7 @@ class SliceMixin(local):
 
         :keyword default: default thing returned if nothing is found at `n`
         '''
-        with self.chain:
+        with self._chain:
             return self._one(self._at(n, default))
 
     def choice(self):
@@ -527,7 +527,7 @@ class SliceMixin(local):
         one thing from an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._choice)
 
     def dice(self, n, fill=None):
@@ -540,7 +540,7 @@ class SliceMixin(local):
 
         :keyword fill: value to pad out incomplete things
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._dice(n, fill))
 
     def first(self, n=0):
@@ -551,7 +551,7 @@ class SliceMixin(local):
 
         :keyword integer n: number of things
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._first(n))
 
     def initial(self):
@@ -561,7 +561,7 @@ class SliceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ except the
         **last** thing.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._initial)
 
     def last(self, n=0):
@@ -573,7 +573,7 @@ class SliceMixin(local):
 
         :keyword integer n: number of things
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._last(n))
 
     def rest(self):
@@ -583,7 +583,7 @@ class SliceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ except the
         **first** thing.
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._rest)
 
     def sample(self, n):
@@ -594,7 +594,7 @@ class SliceMixin(local):
 
         :argument integer n: size of sample
         '''
-        with self.chain:
+        with self._chain:
             return self._iter(self._sample(n))
 
     def slice(self, start, stop=False, step=False):
@@ -609,5 +609,5 @@ class SliceMixin(local):
 
         :keyword integer step: size of step in slice
         '''
-        with self.chain:
+        with self._chain:
             return self._many(self._slice(start, stop, step))
