@@ -534,74 +534,74 @@ class Mixin(object):
         )
 
     def test_append(self):
-        self.assertEqual(self.mclass().append('foo').fetch(), 'foo')
+        self.assertEqual(self.mclass().append('foo').peek(), 'foo')
         self.assertListEqual(
-            self.mclass().append(1, 2, 3, 4, 5, 6).fetch(),
+            self.mclass().append(1, 2, 3, 4, 5, 6).peek(),
             [1, 2, 3, 4, 5, 6],
         )
 
     def test_prepend(self):
-        self.assertEqual(self.mclass().prepend('foo').fetch(), 'foo')
+        self.assertEqual(self.mclass().prepend('foo').peek(), 'foo')
         self.assertListEqual(
-            self.mclass().prepend(1, 2, 3, 4, 5, 6).fetch(), [6, 5, 4, 3, 2, 1]
+            self.mclass().prepend(1, 2, 3, 4, 5, 6).peek(), [6, 5, 4, 3, 2, 1]
         )
 
     def test_undo(self):
-        queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).filter()
-        self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).undo()
-        self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
         queue.append(1).append(2).undo()
-        self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
-        self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.snapshot().append(1).append(2).baseline()
-        self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1])
+        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        queue.snapshot().append(1).append(2).rollback()
+        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.original()
-        self.assertEqual(queue.fetch(), [1, 2, 3])
+        self.assertEqual(queue.peek(), [1, 2, 3])
 
     def test_wrap(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).fetch(), tuple,
+            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).peek(), tuple,
         )
         self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).fetch(),
+            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).peek(),
             (1, 2, 3, 4, 5, 6),
         )
 
     def test_list(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_list().fetch(), list,
+            self.mclass(1, 2, 3, 4, 5, 6).as_list().peek(), list,
         )
         self.assertListEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_list().fetch(),
+            self.mclass(1, 2, 3, 4, 5, 6).as_list().peek(),
             [1, 2, 3, 4, 5, 6],
         )
 
     def test_tuple(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().fetch(), tuple,
+            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().peek(), tuple,
         )
         self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().fetch(),
+            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().peek(),
             (1, 2, 3, 4, 5, 6),
         )
 
     def test_set(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_set().fetch(), set,
+            self.mclass(1, 2, 3, 4, 5, 6).as_set().peek(), set,
         )
         self.assertSetEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_set().fetch(),
+            self.mclass(1, 2, 3, 4, 5, 6).as_set().peek(),
             set([1, 2, 3, 4, 5, 6]),
         )
 
     def test_dict(self):
         self.assertIsInstance(
-            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().fetch(), dict,
+            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().peek(), dict,
         )
         self.assertDictEqual(
-            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().fetch(),
+            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().peek(),
             {1: 2, 3: 4, 5: 6},
         )
 
@@ -610,7 +610,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_ascii().fetch(),
+            ).as_many().as_ascii().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -619,7 +619,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_bytes().fetch(),
+            ).as_many().as_bytes().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -628,6 +628,6 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_unicode().fetch(),
+            ).as_many().as_unicode().peek(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

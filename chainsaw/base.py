@@ -130,7 +130,7 @@ class OutputMixin(ChainsawMixin):
         '''
         Revert incoming things back to baseline snapshot.
         '''
-        return self._baseline()
+        return self._rollback()
 
     def undo(self, snapshot=0):
         '''
@@ -144,7 +144,7 @@ class OutputMixin(ChainsawMixin):
         '''
         Revert incoming things back to original snapshot.
         '''
-        return self._original()
+        return self._revert()
 
     def __iter__(self):
         '''Yield outgoing things.'''
@@ -156,6 +156,13 @@ class OutputMixin(ChainsawMixin):
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
         '''
         return self._fetch()
+
+    def peek(self):
+        '''
+        Preview current state of things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
+        return self._peek()
 
     ###########################################################################
     ## clean up things ########################################################
