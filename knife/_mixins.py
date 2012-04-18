@@ -186,7 +186,7 @@ class _MapMixin(local):
     '''mapping mixin'''
 
     @staticmethod
-    def _argmap(call, curr, arg, kw, starmap_=starmap):
+    def _argmap(call, curr, arg, starmap_=starmap):
         if curr:
             def argmap(*args):
                 return call(*(args + arg))
@@ -252,16 +252,16 @@ class _FilterMixin(local):
         return lambda x: starmap(call, c(map(i, x)))
 
     @staticmethod
-    def _items(keys, _itemgetter=itemgetter):
-        itemfind = _itemgetter(*keys)
-        def items(iterable, get=itemfind): #@IgnorePep8
+    def _items(key, _itemgetter=itemgetter):
+        itemfind = _itemgetter(*key)
+        def itemz(iterable, get=itemfind): #@IgnorePep8
             IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
             for thing in iterable:
                 try:
                     yield get(thing)
                 except (IndexErr_, KeyErr_, TypeErr_):
                     pass
-        return items
+        return itemz
 
     @staticmethod
     def _traverse(test, invert):
@@ -407,9 +407,9 @@ class _SliceMixin(local):
 
     @staticmethod
     def _sample(n, sample_=sample, list_=list):
-        def sample(iterable):
+        def samplez(iterable):
             yield sample_(list_(iterable), n)
-        return sample
+        return samplez
 
     @staticmethod
     def _slice(start, stop, step, _islice=islice):

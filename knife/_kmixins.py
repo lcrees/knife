@@ -355,7 +355,7 @@ class KFilter(AppspaceKey):
         :keyword boolean values: collect values only
         '''
 
-    def traverse(ancestors=False, invert=False):  # @NoSelf
+    def traverse(invert=False):  # @NoSelf
         '''
         Collect nested values from each thing within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ matched by the
@@ -378,13 +378,6 @@ class KReduce(AppspaceKey):
         '''
         Flatten nested things within an `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_.
-        '''
-
-    def merge():  # @NoSelf
-        '''
-        Combine multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ into one
-        iterable.
         '''
 
     def reduce(initial=None, reverse=False):  # @NoSelf
@@ -420,7 +413,7 @@ class KSlice(AppspaceKey):
 
     '''slicing key'''
 
-    def at(n):  # @NoSelf
+    def at(n, default=None):  # @NoSelf
         '''
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off thing
         found at `iterable

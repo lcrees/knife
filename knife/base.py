@@ -195,7 +195,7 @@ class OutputMixin(ChainknifeMixin):
         '''
         Assign type caster for outgoing things.
 
-        :argument as_type: an `iterable
+        :argument wrapper: an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ as_type
         '''
         self._wrapper = wrapper

@@ -83,7 +83,7 @@ class _LazyMixin(local):
         self._in = chain_(reversed_(things), self._in)
         return self
 
-    def _appendit(self, things, tee_=tee, chain_=chain, iter_=iter):
+    def _appendit(self, things, tee_=tee, chain_=chain):
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # make snapshot original snapshot?
@@ -124,7 +124,7 @@ class _OutMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
-    def _snapshot(self, iter_=iter, tee_=tee):
+    def _snapshot(self, tee_=tee):
         # take baseline snapshot of incoming things
         self._in, self._baseline = tee_(self._in)
         return self
@@ -184,7 +184,7 @@ class _OutMixin(_LazyMixin):
         self._out = iter_([])
         return self
 
-    def _iterate(self, tee_=tee, list_=list, len_=len):
+    def _iterate(self, tee_=tee):
         self._out, outs = tee_(self._out)
         return outs
 
@@ -195,7 +195,7 @@ class _OutMixin(_LazyMixin):
             value = tuple(as_type(i) for i in outs)
         else:
             value = as_type(outs)
-        return value.pop() if len(list_(tell)) == 1 else value
+        return value.pop() if len_(list_(tell)) == 1 else value
 
     def _fetch(self, tee_=tee, list_=list, len_=len):
         tell, self._out, outs = tee_(self._out, 3)
@@ -204,4 +204,4 @@ class _OutMixin(_LazyMixin):
             value = tuple(as_type(i) for i in outs)
         else:
             value = as_type(outs)
-        return value.pop() if len(list_(tell)) == 1 else value
+        return value.pop() if len_(list_(tell)) == 1 else value

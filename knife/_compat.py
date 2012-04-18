@@ -12,7 +12,7 @@ except ImportError:
     import unittest  # @UnusedImport
 from collections import MutableMapping
 
-from stuf.six import items
+from stuf.six import items, map as imap
 from stuf.utils import OrderedDict, recursive_repr
 # pylint: disable-msg=f0401,w0611
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
@@ -54,7 +54,7 @@ else:
 
         # Override dict methods where necessary
 
-        def update(self, iterable=None, **kw):
+        def update(self, iterable=None):
             '''like dict.update() but add counts instead of replacing them'''
             if iterable is not None:
                 self_get = self.get
@@ -121,7 +121,7 @@ except ImportError:
         @recursive_repr
         def __repr__(self):
             return '{0.__class__.__name__}({1})'.format(
-                self, ', '.join(map(repr, self.maps))
+                self, ', '.join(imap(repr, self.maps))
             )
 
         @classmethod

@@ -16,21 +16,6 @@ class KChainknife(AppspaceKey):
         '''
 
     ###########################################################################
-    ## things in session ######################################################
-    ###########################################################################
-
-    def as_many():  # @NoSelf
-        '''
-        Treat each incoming thing as one processing unit within a series of
-        multiple processing units.
-        '''
-
-    def as_one():  # @NoSelf
-        '''
-        Treat multiple incoming things as one processing unit.
-        '''
-
-    ###########################################################################
     ## things are called ######################################################
     ###########################################################################
 
@@ -68,7 +53,20 @@ class KChainknife(AppspaceKey):
     ## things coming in #######################################################
     ###########################################################################
 
-    def prepend(things):  # @NoSelf
+    def map(self):  # @NoSelf
+        '''
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
+        '''
+
+    def merge(self):  # @NoSelf
+        '''
+        Combine multiple `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
+        iterable.
+        '''
+
+    def prepend(*things):  # @NoSelf
         '''
         Insert `things` **before** any other incoming things.
 
@@ -154,31 +152,33 @@ class KOutput(KChainknife):
         '''
 
     ###########################################################################
-    ## wrap things up #########################################################
+    ## cast things out ########################################################
     ###########################################################################
 
-    def as_type(as_type):  # @NoSelf
+    def cast_each():  # @NoSelf
         '''
-        Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type for outgoing things.
+        Toggle whether each item should be cast to wrapping type or everything.
+        '''
 
-        :argument as_type: an `iterable
+    def as_type(wrapper):  # @NoSelf
+        '''
+        Assign type caster for outgoing things.
+
+        :argument wrapper: an `iterable
           <http://docs.python.org/glossary.html#term-iterable>`_ as_type
         '''
 
     def as_ascii(errors='strict'):  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to :class:`byte` encode outgoing things with the ``'ascii'``
-        codec.
+        Set type caster to :class:`byte` encode outgoing things with the
+        ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
         '''
 
     def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to :class:`byte` encode outgoing things.
+        Set type caster to :class:`byte` encode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
@@ -187,33 +187,28 @@ class KOutput(KChainknife):
 
     def as_dict():  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to cast outgoing things to :class:`dict`.
+        Set type caster to cast outgoing things to :class:`dict`.
         '''
 
     def as_list():  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to cast outgoing things to :class:`list`.
+        Set type caster to cast outgoing things to :class:`list`.
         '''
 
     def as_set():  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to cast outgoing things to :class:`set`.
+        Set type caster to cast outgoing things to :class:`set`.
         '''
 
     def as_tuple():  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to cast outgoing things to :class:`tuple`.
+        Set type caster to cast outgoing things to :class:`tuple`.
         '''
 
     def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type to :class:`unicode` (:class:`str` under Python 3) decode
-        outgoing things.
+        Set type caster to :class:`unicode` (:class:`str` under Python 3)
+        decode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
