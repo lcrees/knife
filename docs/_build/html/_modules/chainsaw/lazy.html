@@ -57,7 +57,7 @@
     <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span>
     <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">chainsaw._lazy</span> <span class="kn">import</span> <span class="n">_OutputMixin</span>
+<span class="kn">from</span> <span class="nn">chainsaw._lazy</span> <span class="kn">import</span> <span class="n">_OutMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._base</span> <span class="kn">import</span> <span class="n">SLOTS</span><span class="p">,</span> <span class="n">_ChainsawMixin</span>
 <span class="kn">from</span> <span class="nn">chainsaw._mixins</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">_RepeatMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
@@ -65,7 +65,7 @@
 
 
 <div class="viewcode-block" id="lazysaw"><a class="viewcode-back" href="../../lazysaw.html#chainsaw.lazy.lazysaw">[docs]</a><span class="k">class</span> <span class="nc">lazysaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span>
     <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
     <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span>
     <span class="n">MathMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span>
@@ -77,7 +77,7 @@
 
 </div>
 <div class="viewcode-block" id="comparesaw"><a class="viewcode-back" href="../../comparesaw.html#chainsaw.lazy.comparesaw">[docs]</a><span class="k">class</span> <span class="nc">comparesaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;comparing chainsaw&#39;&#39;&#39;</span>
@@ -86,7 +86,7 @@
 
 </div>
 <div class="viewcode-block" id="filtersaw"><a class="viewcode-back" href="../../filtersaw.html#chainsaw.lazy.filtersaw">[docs]</a><span class="k">class</span> <span class="nc">filtersaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;filtering chainsaw&#39;&#39;&#39;</span>
@@ -94,7 +94,7 @@
     <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
 
 </div>
-<div class="viewcode-block" id="mapsaw"><a class="viewcode-back" href="../../mapsaw.html#chainsaw.lazy.mapsaw">[docs]</a><span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="mapsaw"><a class="viewcode-back" href="../../mapsaw.html#chainsaw.lazy.mapsaw">[docs]</a><span class="k">class</span> <span class="nc">mapsaw</span><span class="p">(</span><span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;mapping chainsaw&#39;&#39;&#39;</span>
 
@@ -102,7 +102,7 @@
 
 </div>
 <div class="viewcode-block" id="mathsaw"><a class="viewcode-back" href="../../mathsaw.html#chainsaw.lazy.mathsaw">[docs]</a><span class="k">class</span> <span class="nc">mathsaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;mathing chainsaw&#39;&#39;&#39;</span>
@@ -111,7 +111,7 @@
 
 </div>
 <div class="viewcode-block" id="ordersaw"><a class="viewcode-back" href="../../ordersaw.html#chainsaw.lazy.ordersaw">[docs]</a><span class="k">class</span> <span class="nc">ordersaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;ordering chainsaw&#39;&#39;&#39;</span>
@@ -120,7 +120,7 @@
 
 </div>
 <div class="viewcode-block" id="reducesaw"><a class="viewcode-back" href="../../reducesaw.html#chainsaw.lazy.reducesaw">[docs]</a><span class="k">class</span> <span class="nc">reducesaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;reducing chainsaw&#39;&#39;&#39;</span>
@@ -129,7 +129,7 @@
 
 </div>
 <div class="viewcode-block" id="repeatsaw"><a class="viewcode-back" href="../../repeatsaw.html#chainsaw.lazy.repeatsaw">[docs]</a><span class="k">class</span> <span class="nc">repeatsaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;repeating chainsaw&#39;&#39;&#39;</span>
@@ -138,7 +138,7 @@
 
 </div>
 <div class="viewcode-block" id="slicesaw"><a class="viewcode-back" href="../../slicesaw.html#chainsaw.lazy.slicesaw">[docs]</a><span class="k">class</span> <span class="nc">slicesaw</span><span class="p">(</span>
-    <span class="n">_OutputMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainsawMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;slicing chainsaw&#39;&#39;&#39;</span>
