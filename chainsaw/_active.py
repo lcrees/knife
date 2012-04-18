@@ -17,12 +17,8 @@ class _ActiveMixin(local):
     def __init__(self, *things, **kw):
         # if just one thing, put it in incoming things or put everything in
         # incoming things
-        try:
-            incoming = deque(things[0]) if len(things) == 1 else deque(things)
-        except TypeError:
-            # handle non-iterable incoming things that don't have a length
-            incoming = deque()
-            incoming.append(things)
+        incoming = deque()
+        incoming.extend(things)
         super(_ActiveMixin, self).__init__(incoming, deque(), **kw)
         # working things
         self._work = deque()
@@ -120,7 +116,6 @@ class _ActiveMixin(local):
             list_(self._work),
             list_(self._hold),
             list_(self._out),
-            self._mode,
         )
 
     def _len(self):
@@ -185,7 +180,7 @@ class _OutMixin(_ActiveMixin):
         self._out.clear()
         return self
 
-    def _iterate(self, iter_=iter, len_=len):
+    def _iterate(self, iter_=iter):
         return iter_(self._out)
 
     def _peek(self, len_=len, tuple_=tuple):

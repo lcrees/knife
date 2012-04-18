@@ -11,25 +11,6 @@ class ChainsawMixin(local):
     '''base chainsaw mixin'''
 
     ###########################################################################
-    ## things in session ######################################################
-    ###########################################################################
-
-    def as_many(self):
-        '''
-        Treat each incoming thing as one processing unit within a series of
-        multiple processing units.
-        '''
-        self._mode = self._MANY
-        return self
-
-    def as_one(self):
-        '''
-        Treat multiple incoming things as one processing unit.
-        '''
-        self._mode = self._ONE
-        return self
-
-    ###########################################################################
     ## things are called ######################################################
     ###########################################################################
 
@@ -81,14 +62,6 @@ class ChainsawMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    def append(self, *things):
-        '''
-        Insert `things` **after** any other incoming things.
-
-        :argument things: incoming things
-        '''
-        return self._appendit(things)
-
     def prepend(self, *things):
         '''
         Insert `things` **before** any other incoming things.
@@ -96,6 +69,14 @@ class ChainsawMixin(local):
         :argument things: incoming things
         '''
         return self._prependit(things)
+
+    def append(self, *things):
+        '''
+        Insert `things` **after** any other incoming things.
+
+        :argument things: incoming things
+        '''
+        return self._appendit(things)
 
     ###########################################################################
     ## knowing things #########################################################
@@ -115,54 +96,57 @@ class OutputMixin(ChainsawMixin):
     '''output mixin'''
 
     ###########################################################################
-    ## snapshot of things #####################################################
+    ## things going out #######################################################
     ###########################################################################
 
-    def snapshot(self):
-        '''
-        Take a snapshot of the current state of incoming things.
-
-        :keyword boolean baseline: make snapshot the baseline snapshot
-        '''
-        return self._snapshot()
-
-    def rollback(self):
-        '''
-        Revert incoming things back to baseline snapshot.
-        '''
-        return self._rollback()
-
-    def undo(self, snapshot=0):
-        '''
-        Revert incoming things back to a previous snapshot.
-
-        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
-        '''
-        return self._undo(snapshot)
-
-    def original(self):
-        '''
-        Revert incoming things back to original snapshot.
-        '''
-        return self._revert()
-
     def __iter__(self):
-        '''Yield outgoing things.'''
+        '''Iterate over outgoing things.'''
         return self._iterate()
 
     def fetch(self):
         '''
-        Return outgoing things wrapped with the `iterable
+        Return outgoing things (wrapped with the current `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
         '''
         return self._fetch()
 
     def peek(self):
         '''
-        Preview current state of things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        Preview current state of incoming things (wrapped with the current
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper).
         '''
         return self._peek()
+
+    ###########################################################################
+    ## state of things ########################################################
+    ###########################################################################
+
+    def undo(self, snapshot=0):
+        '''
+        Restore incoming things to a previous state.
+
+        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
+        '''
+        return self._undo(snapshot)
+
+    def snapshot(self):
+        '''
+        Take baseline snapshot of the current state of incoming things.
+        '''
+        return self._snapshot()
+
+    def stepback(self):
+        '''
+        Restore incoming things to baseline state.
+        '''
+        return self._rollback()
+
+    def original(self):
+        '''
+        Restore incoming things to initial state.
+        '''
+        return self._revert()
 
     ###########################################################################
     ## clean up things ########################################################
@@ -197,6 +181,7 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for decoding issues
         '''
+        self._mode = self._MANY
         self._wrapper = lambda x: tobytes(x, 'ascii', errors)
         return self
 
@@ -209,6 +194,7 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for encoding issues
         '''
+        self._mode = self._MANY
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
 
@@ -254,5 +240,6 @@ class OutputMixin(ChainsawMixin):
 
         :keyword string errors: error handling for decoding issues
         '''
+        self._mode = self._MANY
         self._wrapper = lambda x: tounicode(x, encoding, errors)
         return self

@@ -112,7 +112,6 @@ class _LazyMixin(local):
             l(work2),
             l(hold2),
             l(out2),
-            self._mode,
         )
 
     def _len(self, tee_=tee, len_=len, list_=list):

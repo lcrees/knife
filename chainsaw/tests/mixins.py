@@ -412,7 +412,7 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_one().weave().fetch(),
+            ).weave().fetch(),
             ['moe', 30, True, 'larry', 40, False, 'curly', 50, False],
         )
 
@@ -421,7 +421,7 @@ class ReduceMixin(object):
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]
-            ).as_one().zip().fetch(),
+            ).zip().fetch(),
             [('moe', 30, True), ('larry', 40, False), ('curly', 50, False)],
         )
 
@@ -555,7 +555,7 @@ class Mixin(object):
         self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
         self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.snapshot().append(1).append(2).rollback()
+        queue.snapshot().append(1).append(2).stepback()
         self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.original()
         self.assertEqual(queue.peek(), [1, 2, 3])
@@ -610,7 +610,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_ascii().peek(),
+            ).as_ascii().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -619,7 +619,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_bytes().peek(),
+            ).as_bytes().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -628,6 +628,6 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_many().as_unicode().peek(),
+            ).as_unicode().peek(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

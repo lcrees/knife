@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''base chainsaw keys'''
 
-from appspace.keys import AppspaceKey, Attribute
+from appspace.keys import AppspaceKey
 
 
 class KChainsaw(AppspaceKey):
@@ -28,28 +28,6 @@ class KChainsaw(AppspaceKey):
     def as_one():  # @NoSelf
         '''
         Treat multiple incoming things as one processing unit.
-        '''
-        self._mode = self._ONE
-        return self
-
-    ###########################################################################
-    ## snapshot of things #####################################################
-    ###########################################################################
-
-    def snapshot(baseline=False, original=False):  # @NoSelf
-        '''
-        Take a snapshot of the current state of incoming things.
-
-        :keyword boolean baseline: make snapshot the baseline snapshot
-
-        :keyword boolean original: make snapshot the original snapshot
-        '''
-
-    def undo(snapshot=0):  # @NoSelf
-        '''
-        Revert incoming things back to a previous snapshot.
-
-        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
         '''
 
     ###########################################################################
@@ -90,16 +68,16 @@ class KChainsaw(AppspaceKey):
     ## things coming in #######################################################
     ###########################################################################
 
-    def append(things):  # @NoSelf
+    def prepend(things):  # @NoSelf
         '''
-        Insert `things` **after** any other incoming things.
+        Insert `things` **before** any other incoming things.
 
         :argument things: incoming things
         '''
 
-    def prepend(things):  # @NoSelf
+    def append(things):  # @NoSelf
         '''
-        Insert `things` **before** any other incoming things.
+        Insert `things` **after** any other incoming things.
 
         :argument things: incoming things
         '''
@@ -121,26 +99,49 @@ class KOutput(KChainsaw):
     '''output key'''
 
     ###########################################################################
-    ## snapshot of things #####################################################
+    ## things going out #######################################################
     ###########################################################################
 
-    def baseline():  # @NoSelf
+    def __iter__():  # @NoSelf
+        '''Iterate over outgoing things.'''
+
+    def fetch():  # @NoSelf
         '''
-        Revert incoming things back to baseline snapshot.
+        Return outgoing things (wrapped with the current `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
+
+    def peek():  # @NoSelf
+        '''
+        Preview current state of incoming things (wrapped with the current
+        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
+        wrapper).
+        '''
+
+    ###########################################################################
+    ## state of things ########################################################
+    ###########################################################################
+
+    def undo(snapshot=0):  # @NoSelf
+        '''
+        Restore incoming things to a previous state.
+
+        :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
+        '''
+
+    def snapshot():  # @NoSelf
+        '''
+        Take baseline snapshot of the current state of incoming things.
+        '''
+
+    def stepback():  # @NoSelf
+        '''
+        Restore incoming things to baseline state.
         '''
 
     def original():  # @NoSelf
         '''
-        Revert incoming things back to original snapshot.
-        '''
-
-    def __iter__():  # @NoSelf
-        '''Yield outgoing things.'''
-
-    def fetch():  # @NoSelf
-        '''
-        Return outgoing things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        Restore incoming things to initial state.
         '''
 
     ###########################################################################
