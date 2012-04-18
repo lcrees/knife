@@ -1,7 +1,7 @@
-*chainsaw* chains iterators together using a double-headed input and output queue,
+*knife* chains iterators together using a double-headed input and output queue,
 that can be shifted or synced as needed.
 
-*chainsaw* exposes some useful features buried in the standard library and 
+*knife* exposes some useful features buried in the standard library and 
 includes some Python 2 <-> 3 compatibility aids.
 
-Mirrored on https://github.com/kwarterthieves/chainsaw/
+Mirrored on https://github.com/kwarterthieves/knife/

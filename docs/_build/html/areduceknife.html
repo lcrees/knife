@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>knife.active.reduceknife — Reducing knife &mdash; knife 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="knife 0.5.0 documentation" href="index.html" />
+    <link rel="next" title="knife.active.repeatknife — Repeating knife" href="arepeatknife.html" />
+    <link rel="prev" title="knife.active.orderknife — Ordering knife" href="aorderknife.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="arepeatknife.html" title="knife.active.repeatknife — Repeating knife"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="aorderknife.html" title="knife.active.orderknife — Ordering knife"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-knife.active">
+<span id="knife-active-reduceknife-reducing-knife"></span><h1><a class="reference internal" href="#knife.active.reduceknife" title="knife.active.reduceknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.active.reduceknife</span></tt></a> &#8212; Reducing knife<a class="headerlink" href="#module-knife.active" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="knife.active.reduceknife">
+<em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">reduceknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/knife/active.html#reduceknife"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#knife.active.reduceknife" title="Permalink to this definition">¶</a></dt>
+<dd><p>reducing knife</p>
+<dl class="method">
+<dt id="knife.active.reduceknife.append">
+<tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_type">
+<tt class="descname">as_type</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign type caster for outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>as_type</strong> &#8211; an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3)
+decode outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.cast_each">
+<tt class="descname">cast_each</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.cast_each" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle whether each item should be cast to wrapping type or everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.fetch">
+<tt class="descname">fetch</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things (wrapped with the current <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.flatten">
+<tt class="descname">flatten</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten nested things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.map">
+<tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.merge">
+<tt class="descname">merge</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
+iterable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.original">
+<tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.original" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to initial state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.params">
+<tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
+<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
+params used when the worker is invoked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.pattern">
+<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile a search pattern and use it as the worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
+<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile pattern with. Valid options are
+<a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
+<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.peek">
+<tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preview current state of incoming things (wrapped with the current
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+as_type).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.prepend">
+<tt class="descname">prepend</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.prepend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.reduce">
+<tt class="descname">reduce</tt><big>(</big><em>initial=None</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> down to one
+thing using the worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial</strong> &#8211; starting value</li>
+<li><strong>reverse</strong> (<em>boolean</em>) &#8211; reduce from <a class="reference external" href="http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html">the right side</a>
+of an iterable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take baseline snapshot of the current state of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.stepback">
+<tt class="descname">stepback</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.stepback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to baseline state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to a previous state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.weave">
+<tt class="descname">weave</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.weave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interleave things found at the same position across multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> while reducing
+multiple iterables to one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.worker">
+<tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.active.reduceknife.worker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a Python callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.reduceknife.zip">
+<tt class="descname">zip</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.reduceknife.zip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> to one iterable
+by pairing every two things as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>thing1</em>,
+<em>thing2</em>).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aorderknife.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.orderknife</span></tt> &#8212; Ordering knife</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arepeatknife.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.active.repeatknife</span></tt> &#8212; Repeating knife</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/areduceknife.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="arepeatknife.html" title="knife.active.repeatknife — Repeating knife"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="aorderknife.html" title="knife.active.orderknife — Ordering knife"
+             >previous</a> |</li>
+        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

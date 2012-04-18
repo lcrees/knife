@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# chainsaw documentation build configuration file, created by
+# knife documentation build configuration file, created by
 # sphinx-quickstart on Wed Apr 11 00:32:47 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'chainsaw'
+project = u'knife'
 copyright = u'2012, L. C. Rees'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -171,7 +171,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'chainsawdoc'
+htmlhelp_basename = 'knifedoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -190,7 +190,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'chainsaw.tex', u'chainsaw Documentation',
+  ('index', 'knife.tex', u'knife Documentation',
    u'L. C. Rees', 'manual'),
 ]
 
@@ -220,7 +220,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'chainsaw', u'chainsaw Documentation',
+    ('index', 'knife', u'knife Documentation',
      [u'L. C. Rees'], 1)
 ]
 
@@ -234,8 +234,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'chainsaw', u'chainsaw Documentation',
-   u'L. C. Rees', 'chainsaw', 'One line description of project.',
+  ('index', 'knife', u'knife Documentation',
+   u'L. C. Rees', 'knife', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -252,7 +252,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'chainsaw'
+epub_title = u'knife'
 epub_author = u'L. C. Rees'
 epub_publisher = u'L. C. Rees'
 epub_copyright = u'2012, L. C. Rees'

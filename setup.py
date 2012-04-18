@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-'''setup for chainsaw'''
+'''setup for knife'''
 
 from os import getcwd
 from os.path import join
@@ -14,7 +14,7 @@ install_requires = list(l.strip() for l in open(
 ).readlines())
 
 setup(
-    name='chainsaw',
+    name='knife',
     version='0.5.0',
     description='Things go in. Things happen. Things come out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
@@ -22,9 +22,9 @@ setup(
     license='BSD',
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
-    url='https://bitbucket.org/lcrees/chainsaw',
-    packages=['chainsaw'],
-    test_suite='chainsaw.tests',
+    url='https://bitbucket.org/lcrees/knife',
+    packages=['knife'],
+    test_suite='knife.tests',
     zip_safe=False,
     install_requires=install_requires,
     classifiers=[

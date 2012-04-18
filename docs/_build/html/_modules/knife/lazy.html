@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>knife.lazy &mdash; knife 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="knife 0.5.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">knife 0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for knife.lazy</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;lazily evaluated knifes&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">knife.base</span> <span class="kn">import</span> <span class="n">OutputMixin</span>
+<span class="kn">from</span> <span class="nn">knife.mixins</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span>
+    <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">knife._lazy</span> <span class="kn">import</span> <span class="n">_OutMixin</span>
+<span class="kn">from</span> <span class="nn">knife._base</span> <span class="kn">import</span> <span class="n">SLOTS</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span>
+<span class="kn">from</span> <span class="nn">knife._mixins</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_RepeatMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
+    <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="lazyknife"><a class="viewcode-back" href="../../lazyknife.html#knife.lazy.lazyknife">[docs]</a><span class="k">class</span> <span class="nc">lazyknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">,</span>
+    <span class="n">_MathMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
+    <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span>
+    <span class="n">MathMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;lazy knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="compareknife"><a class="viewcode-back" href="../../lcompareknife.html#knife.lazy.compareknife">[docs]</a><span class="k">class</span> <span class="nc">compareknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">CompareMixin</span><span class="p">,</span> <span class="n">_CompareMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;comparing knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="filterknife"><a class="viewcode-back" href="../../lfilterknife.html#knife.lazy.filterknife">[docs]</a><span class="k">class</span> <span class="nc">filterknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">FilterMixin</span><span class="p">,</span> <span class="n">_FilterMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;filtering knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="mapknife"><a class="viewcode-back" href="../../lmapknife.html#knife.lazy.mapknife">[docs]</a><span class="k">class</span> <span class="nc">mapknife</span><span class="p">(</span><span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MapMixin</span><span class="p">,</span> <span class="n">_MapMixin</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;mapping knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="mathknife"><a class="viewcode-back" href="../../lmathknife.html#knife.lazy.mathknife">[docs]</a><span class="k">class</span> <span class="nc">mathknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">MathMixin</span><span class="p">,</span> <span class="n">_MathMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;mathing knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="orderknife"><a class="viewcode-back" href="../../lorderknife.html#knife.lazy.orderknife">[docs]</a><span class="k">class</span> <span class="nc">orderknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">OrderMixin</span><span class="p">,</span> <span class="n">_OrderMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;ordering knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="reduceknife"><a class="viewcode-back" href="../../lreduceknife.html#knife.lazy.reduceknife">[docs]</a><span class="k">class</span> <span class="nc">reduceknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">ReduceMixin</span><span class="p">,</span> <span class="n">_ReduceMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;reducing knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="repeatknife"><a class="viewcode-back" href="../../lrepeatknife.html#knife.lazy.repeatknife">[docs]</a><span class="k">class</span> <span class="nc">repeatknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">RepeatMixin</span><span class="p">,</span> <span class="n">_RepeatMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;repeating knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span>
+
+</div>
+<div class="viewcode-block" id="sliceknife"><a class="viewcode-back" href="../../lsliceknife.html#knife.lazy.sliceknife">[docs]</a><span class="k">class</span> <span class="nc">sliceknife</span><span class="p">(</span>
+    <span class="n">_OutMixin</span><span class="p">,</span> <span class="n">_ChainknifeMixin</span><span class="p">,</span> <span class="n">OutputMixin</span><span class="p">,</span> <span class="n">SliceMixin</span><span class="p">,</span> <span class="n">_SliceMixin</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;slicing knife&#39;&#39;&#39;</span>
+
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="n">SLOTS</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">knife 0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

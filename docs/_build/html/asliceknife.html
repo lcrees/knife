@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>knife.active.sliceknife — Slicing knife &mdash; knife 0.5.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="knife 0.5.0 documentation" href="index.html" />
+    <link rel="next" title="knife.lazy.lazyknife — Lazily evaluated knife" href="lazyknife.html" />
+    <link rel="prev" title="knife.active.repeatknife — Repeating knife" href="arepeatknife.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lazyknife.html" title="knife.lazy.lazyknife — Lazily evaluated knife"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arepeatknife.html" title="knife.active.repeatknife — Repeating knife"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-knife.active">
+<span id="knife-active-sliceknife-slicing-knife"></span><h1><a class="reference internal" href="#knife.active.sliceknife" title="knife.active.sliceknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.active.sliceknife</span></tt></a> &#8212; Slicing knife<a class="headerlink" href="#module-knife.active" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="knife.active.sliceknife">
+<em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">sliceknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/knife/active.html#sliceknife"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#knife.active.sliceknife" title="Permalink to this definition">¶</a></dt>
+<dd><p>slicing knife</p>
+<dl class="method">
+<dt id="knife.active.sliceknife.append">
+<tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_ascii">
+<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
+<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_bytes">
+<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_list">
+<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_set">
+<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_tuple">
+<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_type">
+<tt class="descname">as_type</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign type caster for outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>as_type</strong> &#8211; an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.as_unicode">
+<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3)
+decode outgoing things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.at">
+<tt class="descname">at</tt><big>(</big><em>n</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.at" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off thing
+found at <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> index <cite>n</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> (<em>integer</em>) &#8211; index of some thing</li>
+<li><strong>default</strong> &#8211; default thing returned if nothing is found at <cite>n</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.cast_each">
+<tt class="descname">cast_each</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.cast_each" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle whether each item should be cast to wrapping type or everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.choice">
+<tt class="descname">choice</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.choice" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Randomly slice</a> off
+one thing from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear everything.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.dice">
+<tt class="descname">dice</tt><big>(</big><em>n</em>, <em>fill=None</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.dice" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> one
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> into
+multiple iterables of <cite>n</cite> things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> (<em>integer</em>) &#8211; number of things per slice</li>
+<li><strong>fill</strong> &#8211; value to pad out incomplete things</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.fetch">
+<tt class="descname">fetch</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return outgoing things (wrapped with the current <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.first">
+<tt class="descname">first</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slice off <cite>n</cite> things from the starting end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
+<strong>first</strong> thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.initial">
+<tt class="descname">initial</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.initial" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off
+everything from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the
+<strong>last</strong> thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.last">
+<tt class="descname">last</tt><big>(</big><em>n=0</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.last" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off either
+<cite>n</cite> things from the tail end of an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or just the
+<strong>last</strong> thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.map">
+<tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.merge">
+<tt class="descname">merge</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
+iterable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.original">
+<tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.original" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to initial state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.params">
+<tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
+<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
+params used when the worker is invoked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.pattern">
+<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile a search pattern and use it as the worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
+<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile pattern with. Valid options are
+<a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
+<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.peek">
+<tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preview current state of incoming things (wrapped with the current
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+as_type).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.prepend">
+<tt class="descname">prepend</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.prepend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.rest">
+<tt class="descname">rest</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off
+everything from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> except the
+<strong>first</strong> thing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.sample">
+<tt class="descname">sample</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly <a class="reference external" href="http://docs.python.org/glossary.html#term-slice">slice</a> off
+<cite>n</cite> things from an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; size of sample</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.slice">
+<tt class="descname">slice</tt><big>(</big><em>start</em>, <em>stop=False</em>, <em>step=False</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.slice" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/glossary.html#term-slice">Slice</a> off things
+from <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>integer</em>) &#8211; starting index of slice</li>
+<li><strong>stop</strong> (<em>integer</em>) &#8211; stopping index of slice</li>
+<li><strong>step</strong> (<em>integer</em>) &#8211; size of step in slice</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.snapshot">
+<tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take baseline snapshot of the current state of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.stepback">
+<tt class="descname">stepback</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.sliceknife.stepback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to baseline state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.undo">
+<tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to a previous state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.sliceknife.worker">
+<tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.active.sliceknife.worker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign worker.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a Python callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arepeatknife.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.repeatknife</span></tt> &#8212; Repeating knife</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lazyknife.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.lazy.lazyknife</span></tt> &#8212; Lazily evaluated knife</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/asliceknife.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lazyknife.html" title="knife.lazy.lazyknife — Lazily evaluated knife"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arepeatknife.html" title="knife.active.repeatknife — Repeating knife"
+             >previous</a> |</li>
+        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, L. C. Rees.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

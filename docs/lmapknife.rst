@@ -1,0 +1,8 @@
+:class:`knife.lazy.mapknife` --- Mapping knife
+==============================================
+
+.. module:: knife.lazy
+
+.. autoclass:: mapknife
+    :members: __init__, __bool__, __iter__, __len__
+    :inherited-members:
