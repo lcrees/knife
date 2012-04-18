@@ -18,12 +18,12 @@ class _ActiveMixin(local):
         # if just one thing, put it in incoming things or put everything in
         # incoming things
         try:
-            inchain = deque(things[0]) if len(things) == 1 else deque(things)
+            incoming = deque(things[0]) if len(things) == 1 else deque(things)
         except TypeError:
             # handle non-iterable incoming things with length
-            inchain = deque()
-            inchain.append(things)
-        super(_ActiveMixin, self).__init__(inchain, deque(), **kw)
+            incoming = deque()
+            incoming.append(things)
+        super(_ActiveMixin, self).__init__(incoming, deque(), **kw)
         # work link
         self._work = deque()
         # holding link
@@ -37,6 +37,7 @@ class _ActiveMixin(local):
     @contextmanager
     def _chain(self):
         '''switch to a manually balanced four-link chain'''
+        self._snapshot()
         # move incoming things up to work link
         self._work.extend(self._in)
         yield
@@ -45,8 +46,10 @@ class _ActiveMixin(local):
         fetch.clear()
         # extend outgoing things with holding link
         fetch.extend(self._hold)
-        # clear work, holding links & return to current selected chain
-        self._clearworking()
+        # clear work link
+        self._work.clear()
+        # clear holding link
+        self._hold.clear()
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -122,8 +125,8 @@ class _ActiveMixin(local):
 
     def _xtendfront(self, things, getattr_=getattr):
         '''
-        extend holding things with things placed before anything already
-        being held
+        extend holding things with things placed before anything already being
+        held
         '''
         self._hold.extendleft(things)
         return self
@@ -134,10 +137,7 @@ class _ActiveMixin(local):
         return self
 
     def _prepend(self, things, getattr_=getattr):
-        '''
-        append things to holding thing before anything already being
-        held
-        '''
+        '''append things to holding thing before anything already being held'''
         self._hold.appendleft(things)
         return self
 
@@ -145,8 +145,8 @@ class _ActiveMixin(local):
     ## know things ############################################################
     ###########################################################################
 
-    def _repr(self, getattr_=getattr, clsname_=clsname, list_=list):
-        '''object representation.'''
+    def _repr(self, clsname_=clsname, list_=list):
+        '''object representation'''
         return self._REPR.format(
             self.__module__,
             clsname_(self),
@@ -158,20 +158,8 @@ class _ActiveMixin(local):
         )
 
     def _len(self):
-        '''length of incoming things.'''
+        '''length of incoming things'''
         return len(self._in)
-
-    ###########################################################################
-    ## clear things ###########################################################
-    ###########################################################################
-
-    def _clearworking(self):
-        '''clear working, holding things'''
-        # clear work link
-        self._work.clear()
-        # clear holding link
-        self._hold.clear()
-        return self
 
 
 class _OutputMixin(_ActiveMixin):
@@ -212,27 +200,29 @@ class _OutputMixin(_ActiveMixin):
         self._alt = None
         # default output class
         self._wrapper = list
-        # remove all outgoing things
-        self._out.clear()
         # remove all incoming things
         self._in.clear()
         # clear work link
         self._work.clear()
         # clear holding link
         self._hold.clear()
+        # remove all outgoing things
+        self._out.clear()
         return self
 
     def _iterate(self):
         '''yield outgoing things'''
-        return self._iterator(self._OUT)
+        if not self._out:
+            self._out.extend(self._in)
+        return self._iterator(self._out)
 
     def _fetch(self):
         '''peek at state of outgoing things'''
-        wrapper, fetch = self._wrapper, self._out
-        if not fetch:
-            fetch.extend(self._in)
+        wrapper, out = self._wrapper, self._out
+        if not out:
+            out.extend(self._in)
         if self._mode == self._MANY:
-            value = tuple(wrapper(i) for i in fetch)
+            value = tuple(wrapper(i) for i in out)
         else:
-            value = wrapper(fetch)
+            value = wrapper(out)
         return value.pop() if len(value) == 1 else value

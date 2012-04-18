@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''reference keys'''
+'''base chainsaw keys'''
 
 from appspace.keys import AppspaceKey, Attribute
 
@@ -29,53 +29,8 @@ class KChainsaw(AppspaceKey):
         '''
         Treat multiple incoming things as one processing unit.
         '''
-
-    ###########################################################################
-    ## things in transaction ##################################################
-    ###########################################################################
-
-    def as_edit():  # @NoSelf
-        '''
-        Work on incoming things **without** automatically reverting back to a
-        baseline snapshot when :meth:`read()` is invoked.
-        '''
-
-    def as_query():  # @NoSelf
-        '''
-        Work on incoming things where incoming things revert to a baseline
-        snapshot when :meth:`close()` is invoked.
-        '''
-
-    ###########################################################################
-    ## things in chains #######################################################
-    ###########################################################################
-
-    def as_auto():  # @NoSelf
-        '''
-        Let incoming things be automatically rebalanced with outgoing things.
-        '''
-
-    def as_manual():  # @NoSelf
-        '''
-        Disallow incoming things from being manually rebalanced with outgoing
-        things.
-        '''
-
-    def out_in():  # @NoSelf
-        '''
-        Copy outgoing things back to incoming things for further processing.
-        '''
-
-    def in_out():  # @NoSelf
-        '''
-        Copy incoming things to outgoing things for output.
-        '''
-
-    balanced = Attribute(
-        '''
-        If outgoing and incoming things are in balance.
-        '''
-    )
+        self._mode = self._ONE
+        return self
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -95,10 +50,6 @@ class KChainsaw(AppspaceKey):
         Revert incoming things back to a previous snapshot.
 
         :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
-
-        :keyword boolean baseline: revert incoming things to baseline snapshot
-
-        :keyword boolean original: revert incoming things to original snapshot
         '''
 
     ###########################################################################
@@ -107,9 +58,9 @@ class KChainsaw(AppspaceKey):
 
     def worker(call):  # @NoSelf
         '''
-        Assign worker callable.
+        Assign worker.
 
-        :argument call: a Python callable
+        :argument worker: a Python callable
         '''
 
     def pattern(pattern, type='parse', flags=0):  # @NoSelf
@@ -130,7 +81,7 @@ class KChainsaw(AppspaceKey):
     def params(*args, **kw):  # @NoSelf
         '''
         Assign global `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ or
+        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
         params used when the worker is invoked.
         '''
@@ -176,9 +127,38 @@ class KChainsaw(AppspaceKey):
 
     def __repr__(self):
         '''Object representation.'''
+        return self._repr()
+
+
+class KOutput(KChainsaw):
+
+    '''output key'''
 
     ###########################################################################
-    ## cleaning up things #####################################################
+    ## snapshot of things #####################################################
+    ###########################################################################
+
+    def baseline():  # @NoSelf
+        '''
+        Revert incoming things back to baseline snapshot.
+        '''
+
+    def original():  # @NoSelf
+        '''
+        Revert incoming things back to original snapshot.
+        '''
+
+    def __iter__():  # @NoSelf
+        '''Yield outgoing things.'''
+
+    def fetch():  # @NoSelf
+        '''
+        Return outgoing things wrapped with the `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        '''
+
+    ###########################################################################
+    ## clean up things ########################################################
     ###########################################################################
 
     def clear():  # @NoSelf
@@ -186,45 +166,8 @@ class KChainsaw(AppspaceKey):
         Clear everything.
         '''
 
-    def clear_in():  # @NoSelf
-        '''
-        Clear incoming things.
-        '''
-
-    def clear_out():  # @NoSelf
-        '''
-        Clear outgoing things.
-        '''
-
-
-class KOutchain(KChainsaw):
-
-    '''output key'''
-
-    def __iter__():  # @NoSelf
-        '''Yield outgoing things.'''
-
-    def tell():  # @NoSelf
-        '''
-        Peek at the current state of outgoing things without modifying things.
-        '''
-
-    def read():  # @NoSelf
-        '''
-        1. Return outgoing things wrapped with the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
-        2. Close transaction by clearing outgoing things.
-        '''
-
-    def close():  # @NoSelf
-        '''
-        1. Return outgoing things wrapped in the `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
-        2. Close session by clearing incoming, outgoing, and anything else.
-        '''
-
     ###########################################################################
-    ## wrapping things up #####################################################
+    ## wrap things up #########################################################
     ###########################################################################
 
     def wrapper(wrapper):  # @NoSelf

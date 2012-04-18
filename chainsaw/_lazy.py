@@ -28,16 +28,21 @@ class _LazyMixin(local):
 
     @property
     @contextmanager
-    def _chain(self):
+    def _chain(self, iter_=iter):
         '''switch to a manually balanced four-link chain'''
+        self._snapshot()
         # move incoming things up to work link
         work, self._in = tee(self._in)
         self._work = work
         yield
         # extend outgoing things with holding link
         self._out = self._hold
-        # clear work, holding links & return to current selected chain
-        self._clearworking()
+        # clear work link
+        del self._work
+        self._work = iter_([])
+        # clear holding link
+        del self._hold
+        self._hold = iter_([])
 
     ###########################################################################
     ## snapshot of things #####################################################
@@ -47,7 +52,7 @@ class _LazyMixin(local):
         '''take snapshot of incoming things'''
         # take snapshot
         self._in, snapshot = tee(self._in)
-        test = self._history is not None and len(self._history) == 0
+        test = self._history is not None and not len(self._history) == 0
         # rebalance incoming with outcoming
         if self._original is not None:
             self._in, self._out = tee(self._out)
@@ -137,18 +142,31 @@ class _LazyMixin(local):
         self._in, incoming = tee(self._in)
         return len(list(incoming))
 
-    ###########################################################################
-    ## clear things ###########################################################
-    ###########################################################################
 
-    def _clearworking(self, iter_=iter):
-        '''clear working and holding things'''
-        # clear work link
-        del self._work
-        self._work = iter_([])
-        # clear holding link
-        del self._hold
-        self._hold = iter_([])
+class _OutputMixin(_LazyMixin):
+
+    '''lazy output mixin'''
+
+    def _baseline(self):
+        if self._baseline is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # revert to baseline version of incoming things
+            self._in, self._baseline = tee(self._baseline)
+        return self
+
+    def _original(self):
+        if self._original is not None:
+            # clear everything
+            self.clear()
+            # clear snapshots
+            self._clearsp()
+            # clear baseline
+            self._baseline = None
+            # restore original version of incoming things
+            self._in, self._original = tee(self._original)
         return self
 
     def _clear(self, iter_=iter, list_=list):
@@ -177,35 +195,10 @@ class _LazyMixin(local):
         self._hold = iter_([])
         return self
 
-
-class _OutputMixin(_LazyMixin):
-
-    '''lazy output mixin'''
-
-    def _baseline(self):
-        if self._baseline is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # revert to baseline version of incoming things
-            self._in, self._baseline = tee(self._baseline)
-        return self
-
-    def _original(self):
-        if self._original is not None:
-            # clear everything
-            self.clear()
-            # clear snapshots
-            self._clearsp()
-            # clear baseline
-            self._baseline = None
-            # restore original version of incoming things
-            self._in, self._original = tee(self._original)
-        return self
-
     def _iterate(self):
         '''yield outgoing things'''
+        if not self._out:
+            self._in, self._out = tee(self._in)
         return self._out
 
     def _fetch(self):

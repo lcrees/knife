@@ -67,7 +67,6 @@ class MathMixin(object):
         self.assertEqual(self.mclass(3, 5, 7, 3, 11).range().fetch(), 8)
 
     def test_count(self):
-        # auto
         common = self.mclass(11, 3, 5, 11, 7, 3, 11).count().fetch()
         self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
         # most common
@@ -102,9 +101,6 @@ class CompareMixin(object):
         self.assertTrue(
             self.mclass([1, 2, 3], [5, 4, 10]).disjointed().fetch()
         )
-        self.assertFalse(
-            self.mclass([1, 2, 3], [5, 2, 10]).disjointed().fetch()
-        )
 
     def test_intersection(self):
         self.assertEqual(
@@ -119,8 +115,9 @@ class CompareMixin(object):
         )
 
     def test_superset(self):
-        diff = self.mclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset().fetch()
-        self.assertTrue(diff)
+        self.assertTrue(
+            self.mclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset().fetch()
+        )
 
     def test_union(self):
         self.assertEqual(
@@ -365,10 +362,14 @@ class SliceMixin(object):
         )
 
     def test_choice(self):
-        self.assertEqual(len(self.mclass(1, 2, 3, 4, 5, 6).choice()), 1)
+        self.assertEqual(
+            len([self.mclass(1, 2, 3, 4, 5, 6).choice().fetch]), 1,
+        )
 
     def test_sample(self):
-        self.assertEqual(len(self.mclass(1, 2, 3, 4, 5, 6).sample(3)), 3)
+        self.assertEqual(
+            len(self.mclass(1, 2, 3, 4, 5, 6).sample(3).fetch()), 3,
+        )
 
 
 class ReduceMixin(object):
@@ -559,9 +560,9 @@ class Mixin(object):
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
-        queue.append(1).append(2).undo(baseline=True)
+        queue.append(1).append(2).baseline()
         self.assertEqual(queue.fetch(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1, 1])
-        queue.undo(original=True)
+        queue.original()
         self.assertEqual(queue.fetch(), [1, 2, 3])
 
     def test_wrap(self):

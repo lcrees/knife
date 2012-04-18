@@ -56,9 +56,9 @@ class _ChainsawMixin(local):
     ###########################################################################
 
     # chainsaw incoming things as one thing
-    _ONE = _DEFAULT_MODE = 'TREAT AS ONE'
+    _ONE = _DEFAULT_MODE = 'ONE'
     # chainsaw each incoming thing as one of many individual things
-    _MANY = 'TREAT AS MANY'
+    _MANY = 'MANY'
 
     ###########################################################################
     ## things called ##########################################################
@@ -121,8 +121,8 @@ class _ChainsawMixin(local):
     ###########################################################################
 
     _REPR = (
-        '{0}.{1} ([IN: ({2}) => WORK: ({3}) => UTIL: ({4}) => OUT: '
-        '({5})]) <<mode: {6}>>'
+        '{0}.{1} ([IN: ({2}) => WORK: ({3}) => UTIL: ({4}) => OUT: ({5})]) '
+        '<<mode: {6}>>'
     )
 
     ###########################################################################
