@@ -62,6 +62,23 @@ class ChainsawMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
+    def map(self):
+        '''
+        Feed each thing within an `iterable
+        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
+        '''
+        with self._chain:
+            return self._many(self._map(self._worker))
+
+    def merge(self):
+        '''
+        Combine multiple `iterables
+        <http://docs.python.org/glossary.html#term-iterable>`_ into one
+        iterable.
+        '''
+        with self._chain:
+            return self._many(self._merge)
+
     def prepend(self, *things):
         '''
         Insert `things` **before** any other incoming things.
@@ -106,7 +123,7 @@ class OutputMixin(ChainsawMixin):
     def fetch(self):
         '''
         Return outgoing things (wrapped with the current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        <http://docs.python.org/glossary.html#term-iterable>`_ as_type.
         '''
         return self._fetch()
 
@@ -114,7 +131,7 @@ class OutputMixin(ChainsawMixin):
         '''
         Preview current state of incoming things (wrapped with the current
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper).
+        as_type).
         '''
         return self._peek()
 
@@ -159,87 +176,88 @@ class OutputMixin(ChainsawMixin):
         return self._clear()
 
     ###########################################################################
-    ## wrap things up #########################################################
+    ## cast things out ########################################################
     ###########################################################################
 
-    def wrapper(self, wrapper):
-        '''
-        Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper for outgoing things.
+    # type cast outgoing things as type caster
+    _ONE = _DEFAULT_MODE = 'ONE'
+    # type cast each outgoing thing as type caster
+    _MANY = 'MANY'
 
-        :argument wrapper: an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
+    def cast_each(self):
+        '''
+        Toggle whether each item should be cast to wrapping type or everything.
+        '''
+        self._mode = self._MANY if self._mode == self._ONE else self._ONE
+        return self
+
+    def as_type(self, wrapper):
+        '''
+        Assign type caster for outgoing things.
+
+        :argument as_type: an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ as_type
         '''
         self._wrapper = wrapper
         return self
 
     def as_ascii(self, errors='strict'):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things with the ``'ascii'``
-        codec.
+        Set type caster to :class:`byte` encode outgoing things with the
+        ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
         '''
-        self._mode = self._MANY
         self._wrapper = lambda x: tobytes(x, 'ascii', errors)
         return self
 
     def as_bytes(self, encoding='utf-8', errors='strict'):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things.
+        Set type caster to :class:`byte` encode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for encoding issues
         '''
-        self._mode = self._MANY
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
 
     def as_dict(self):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`dict`.
+        Set type caster to cast outgoing things to :class:`dict`.
         '''
         self._wrapper = dict
         return self
 
     def as_list(self):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`list`.
+        Set type caster to cast outgoing things to :class:`list`.
         '''
         self._wrapper = list
         return self
 
     def as_set(self):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`set`.
+        Set type caster to cast outgoing things to :class:`set`.
         '''
         self._wrapper = set
         return self
 
     def as_tuple(self):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`tuple`.
+        Set type caster to cast outgoing things to :class:`tuple`.
         '''
         self._wrapper = tuple
         return self
 
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
-        outgoing things.
+        Set type caster to :class:`unicode` (:class:`str` under Python 3)
+        decode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for decoding issues
         '''
-        self._mode = self._MANY
         self._wrapper = lambda x: tounicode(x, encoding, errors)
         return self

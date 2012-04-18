@@ -108,14 +108,14 @@ class KOutput(KChainsaw):
     def fetch():  # @NoSelf
         '''
         Return outgoing things (wrapped with the current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrapper.
+        <http://docs.python.org/glossary.html#term-iterable>`_ as_type.
         '''
 
     def peek():  # @NoSelf
         '''
         Preview current state of incoming things (wrapped with the current
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper).
+        as_type).
         '''
 
     ###########################################################################
@@ -157,19 +157,19 @@ class KOutput(KChainsaw):
     ## wrap things up #########################################################
     ###########################################################################
 
-    def wrapper(wrapper):  # @NoSelf
+    def as_type(as_type):  # @NoSelf
         '''
         Assign `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper for outgoing things.
+        as_type for outgoing things.
 
-        :argument wrapper: an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ wrapper
+        :argument as_type: an `iterable
+          <http://docs.python.org/glossary.html#term-iterable>`_ as_type
         '''
 
     def as_ascii(errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things with the ``'ascii'``
+        as_type to :class:`byte` encode outgoing things with the ``'ascii'``
         codec.
 
         :keyword string errors: error handling for decoding issues
@@ -178,7 +178,7 @@ class KOutput(KChainsaw):
     def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`byte` encode outgoing things.
+        as_type to :class:`byte` encode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
@@ -188,31 +188,31 @@ class KOutput(KChainsaw):
     def as_dict():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`dict`.
+        as_type to cast outgoing things to :class:`dict`.
         '''
 
     def as_list():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`list`.
+        as_type to cast outgoing things to :class:`list`.
         '''
 
     def as_set():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`set`.
+        as_type to cast outgoing things to :class:`set`.
         '''
 
     def as_tuple():  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to cast outgoing things to :class:`tuple`.
+        as_type to cast outgoing things to :class:`tuple`.
         '''
 
     def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrapper to :class:`unicode` (:class:`str` under Python 3) decode
+        as_type to :class:`unicode` (:class:`str` under Python 3) decode
         outgoing things.
 
         :keyword string encoding: Unicode encoding

@@ -10,6 +10,8 @@ from re import compile as rcompile
 from stuf.six import map
 from parse import compile as pcompile
 
+from chainsaw._compat import ichain
+
 SLOTS = [
      '_in', '_work', '_hold', '_out', '_original', '_baseline', '_mode',
      '_history', '_worker', '_wrapper', '_args', '_kw',
@@ -44,15 +46,6 @@ class _ChainsawMixin(local):
         self._wrapper = list
 
     ###########################################################################
-    ## things in process ######################################################
-    ###########################################################################
-
-    # chainsaw incoming things as one thing
-    _ONE = _DEFAULT_MODE = 'ONE'
-    # chainsaw each incoming thing as one of many individual things
-    _MANY = 'MANY'
-
-    ###########################################################################
     ## things called ##########################################################
     ###########################################################################
 
@@ -79,6 +72,14 @@ class _ChainsawMixin(local):
     ###########################################################################
     ## things coming in #######################################################
     ###########################################################################
+
+    @staticmethod
+    def _map(call, imap_=map):
+        return lambda x: imap_(call, x)
+
+    @staticmethod
+    def _merge(iterable, ichain_=ichain):
+        return ichain_(iterable)
 
     def _iter(self, call, iter_=iter, _imap=map):
         # extend fetch with incoming things if chainsawing them as one thing

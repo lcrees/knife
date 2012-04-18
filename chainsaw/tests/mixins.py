@@ -18,6 +18,19 @@ class stoog3: #@IgnorePep8
 
 class MathMixin(object):
 
+    def test_average(self):
+        self.assertEqual(
+            self.mclass(10, 40, 45).average().fetch(), 31.666666666666668,
+        )
+
+    def test_count(self):
+        common = self.mclass(11, 3, 5, 11, 7, 3, 11).count().fetch()
+        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
+        # most common
+        self.assertEqual(common[1], 11)
+        # least common
+        self.assertEqual(common[0], 7)
+
     def test_max(self):
         from stuf import stuf
         stooges = [
@@ -30,6 +43,10 @@ class MathMixin(object):
             stuf(self.mclass(*stooges).worker(lambda x: x.age).max().fetch()),
             stuf(name='curly', age=60),
         )
+
+    def test_median(self):
+        self.assertEqual(self.mclass(4, 5, 7, 2, 1).median().fetch(), 4)
+        self.assertEqual(self.mclass(4, 5, 7, 2, 1, 8).median().fetch(), 4.5)
 
     def test_min(self):
         self.assertEqual(self.mclass(10, 5, 100, 2, 1000).min().fetch(), 2)
@@ -44,6 +61,17 @@ class MathMixin(object):
             self.mclass(10, 5, 100, 2, 1000).minmax().fetch(), (2, 1000),
         )
 
+    def test_combo(self):
+        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().min().fetch()
+        self.assertEqual(test, 2, test)
+        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().max().fetch()
+        self.assertEqual(test, 1000, test)
+        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().sum().fetch()
+        self.assertEqual(test, 1002, test)
+
+    def test_range(self):
+        self.assertEqual(self.mclass(3, 5, 7, 3, 11).range().fetch(), 8)
+
     def test_sum(self):
         self.assertEqual(self.mclass(1, 2, 3).sum().fetch(), 6)
         self.assertEqual(self.mclass(1, 2, 3).sum(1).fetch(), 7)
@@ -53,26 +81,6 @@ class MathMixin(object):
             ).sum(precision=True).fetch(),
             1.0,
         )
-
-    def test_median(self):
-        self.assertEqual(self.mclass(4, 5, 7, 2, 1).median().fetch(), 4)
-        self.assertEqual(self.mclass(4, 5, 7, 2, 1, 8).median().fetch(), 4.5)
-
-    def test_average(self):
-        self.assertEqual(
-            self.mclass(10, 40, 45).average().fetch(), 31.666666666666668,
-        )
-
-    def test_range(self):
-        self.assertEqual(self.mclass(3, 5, 7, 3, 11).range().fetch(), 8)
-
-    def test_count(self):
-        common = self.mclass(11, 3, 5, 11, 7, 3, 11).count().fetch()
-        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
-        # most common
-        self.assertEqual(common[1], 11)
-        # least common
-        self.assertEqual(common[0], 7)
 
 
 class CompareMixin(object):
@@ -562,10 +570,10 @@ class Mixin(object):
 
     def test_wrap(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).peek(), tuple,
+            self.mclass(1, 2, 3, 4, 5, 6).as_type(tuple).peek(), tuple,
         )
         self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).wrapper(tuple).peek(),
+            self.mclass(1, 2, 3, 4, 5, 6).as_type(tuple).peek(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -610,7 +618,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_ascii().peek(),
+            ).as_ascii().cast_each().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -619,7 +627,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_bytes().peek(),
+            ).as_bytes().cast_each().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -628,6 +636,6 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_unicode().peek(),
+            ).as_unicode().cast_each().peek(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

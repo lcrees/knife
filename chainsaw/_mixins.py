@@ -213,10 +213,6 @@ class _MapMixin(local):
             kwargmap = lambda x, y: call(*x, **y)
         return lambda x: starmap_(kwargmap, x)
 
-    @staticmethod
-    def _map(call, imap_=map):
-        return lambda x: imap_(call, x)
-
 
 class _FilterMixin(local):
 
@@ -342,10 +338,6 @@ class _ReduceMixin(local):
             except TypeError:
                 # does not recur
                 yield item
-
-    @staticmethod
-    def _merge(iterable, ichain_=ichain):
-        return ichain_(iterable)
 
     @staticmethod
     def _reduce(call, initial, reverse, reduce_=reduce):

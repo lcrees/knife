@@ -168,7 +168,7 @@ class _OutMixin(_ActiveMixin):
         self._args = ()
         # clear worker keyword arguments
         self._kw = {}
-        # default iterable wrapper
+        # default iterable as_type
         self._wrapper = list_
         # clear incoming things
         self._in.clear()
@@ -184,13 +184,17 @@ class _OutMixin(_ActiveMixin):
         return iter_(self._out)
 
     def _peek(self, len_=len, tuple_=tuple):
-        wrapper, out = self._wrapper, self._in
+        as_type, out = self._wrapper, self._in
         if self._mode == self._MANY:
-            value = tuple_(wrapper(i) for i in out)
+            value = tuple_(as_type(i) for i in out)
         else:
-            value = wrapper(out)
+            value = as_type(out)
         return value.pop() if len_(value) == 1 else value
 
     def _fetch(self, len_=len, tuple_=tuple):
-        value = self._wrapper(self._out)
+        as_type, out = self._wrapper, self._out
+        if self._mode == self._MANY:
+            value = tuple_(as_type(i) for i in out)
+        else:
+            value = as_type(out)
         return value.pop() if len_(value) == 1 else value

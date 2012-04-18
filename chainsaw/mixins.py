@@ -352,14 +352,6 @@ class MapMixin(local):
                 self._worker, merge, self._args, self._kw,
             ))
 
-    def map(self):
-        '''
-        Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
-        '''
-        with self._chain:
-            return self._many(self._map(self._worker))
-
 
 class FilterMixin(local):
 
@@ -459,15 +451,6 @@ class ReduceMixin(local):
         '''
         with self._chain:
             return self._many(self._flatten)
-
-    def merge(self):
-        '''
-        Combine multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ into one
-        iterable.
-        '''
-        with self._chain:
-            return self._many(self._merge)
 
     def reduce(self, initial=None, reverse=False):
         '''

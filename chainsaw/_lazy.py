@@ -168,7 +168,7 @@ class _OutMixin(_LazyMixin):
         self._args = ()
         # clear worker keyword arguments
         self._kw = {}
-        # default iterable wrapper
+        # default iterable as_type
         self._wrapper = list_
         # clear incoming things
         del self._in
@@ -189,15 +189,19 @@ class _OutMixin(_LazyMixin):
         return outs
 
     def _peek(self, tee_=tee, list_=list, len_=len):
-        tell, self._in, outs = tee(self._in, 3)
-        wrapper = self._wrapper
+        tell, self._in, outs = tee_(self._in, 3)
+        as_type = self._wrapper
         if self._mode == self._MANY:
-            value = tuple(wrapper(i) for i in outs)
+            value = tuple(as_type(i) for i in outs)
         else:
-            value = wrapper(outs)
+            value = as_type(outs)
         return value.pop() if len(list_(tell)) == 1 else value
 
     def _fetch(self, tee_=tee, list_=list, len_=len):
-        tell, self._out, outs = tee(self._out, 3)
-        value = self._wrapper(outs)
+        tell, self._out, outs = tee_(self._out, 3)
+        as_type = self._wrapper
+        if self._mode == self._MANY:
+            value = tuple(as_type(i) for i in outs)
+        else:
+            value = as_type(outs)
         return value.pop() if len(list_(tell)) == 1 else value
