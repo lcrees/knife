@@ -16,7 +16,8 @@ install_requires = list(l.strip() for l in open(
 setup(
     name='knife',
     version='0.5.0',
-    description='Things go in. Things happen. Things come out.',
+    description='Pythonic remix of underscore.js: Things go in. Things get '
+        'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='pipe flow ETL iterator functional fluent chaining',
     license='BSD',

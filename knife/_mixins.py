@@ -11,7 +11,7 @@ from random import choice, sample, shuffle
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, cycle, islice, tee, starmap, repeat, combinations, permutations,
-    product)
+    product, chain)
 
 from stuf.six import strings, items, values, keys, filter, map
 from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
@@ -22,6 +22,7 @@ from knife._compat import (
 Count = namedtuple('Count', 'least_common most_common totals')
 MinMax = namedtuple('MinMax', 'minimum maximum')
 TrueFalse = namedtuple('TrueFalse', 'true false')
+GroupBy = namedtuple('GroupBy', 'keys groups')
 
 
 class _CmpMixin(local):
@@ -30,10 +31,12 @@ class _CmpMixin(local):
 
     @staticmethod
     def _all(truth, all_=all, imap_=map):
+        # invoke worker on each item to yield truth
         return lambda x: all_(imap_(truth, x))
 
     @staticmethod
     def _any(truth, any_=any, imap_=map):
+        # invoke worker on each item to yield truth
         return lambda x: any_(imap_(truth, x))
 
     @staticmethod
@@ -75,8 +78,8 @@ class _MathMixin(local):
         yield t(s(i1, 0.0), n(l(i2)))
 
     @staticmethod
-    def _count(iterable, counter=Counter, count_=Count):
-        count = counter(iterable)
+    def _count(iterable, counter_=Counter, count_=Count):
+        count = counter_(iterable)
         commonality = count.most_common()
         yield count_(
             # least common
@@ -118,9 +121,9 @@ class _MathMixin(local):
 
     @staticmethod
     def _sum(start, floats, isum_=sum, fsum_=fsum):
-        summer = fsum_ if floats else lambda x: isum_(x, start)
+        summer_ = fsum_ if floats else lambda x: isum_(x, start)
         def isum(iterable): #@IgnorePep8
-            yield summer(iterable)
+            yield summer_(iterable)
         return isum
 
 
@@ -129,9 +132,11 @@ class _OrderMixin(local):
     '''order mixin'''
 
     @staticmethod
-    def _group(key, imap_=map, tuple_=tuple, groupby_=groupby):
-        grouper = lambda x: (x[0], tuple_(x[1]))
-        return lambda x: imap_(grouper, groupby_(x, key))
+    def _group(key, group_=groupby, sorted_=sorted, G=GroupBy, tuple_=tuple):
+        def grouper(iterable):
+            for k, g in group_(sorted_(iterable, key=key), key):
+                yield G(k, tuple_(g))
+        return grouper
 
     @staticmethod
     def _reverse(iterable, l=list, r=reversed, c=ichain, p=product):
@@ -244,8 +249,8 @@ class _FilterMixin(local):
         return lambda x: starmap(call, c(map(i, x)))
 
     @staticmethod
-    def _items(key, _itemgetter=itemgetter):
-        itemfind = _itemgetter(*key)
+    def _items(key, itemgetter_=itemgetter):
+        itemfind = itemgetter_(*key)
         def itemz(iterable, get=itemfind): #@IgnorePep8
             IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
             for thing in iterable:
@@ -256,25 +261,28 @@ class _FilterMixin(local):
         return itemz
 
     @staticmethod
-    def _traverse(test, invert):
+    def _traverse(test, invert, odict=OrderedDict, chain_=chain, vars_=vars):
         if invert:
             ifilter = ifilterfalse
         else:
             ifilter = filter
         def members(iterable, beenthere=None): #@IgnorePep8
-            mro = getmro(iterable)
-            names = dir(iterable)
-            if beenthere is None:
-                beenthere = set()
-            adder = beenthere.add
             isclass_ = isclass
             getattr_ = getattr
-            odict = OrderedDict
+            o_ = odict
             members_ = members
+            ifilter_ = ifilter
+            varz_ = vars_
+            if beenthere is None:
+                beenthere = set()
+            test_ = test
+            mro = getmro(iterable)
+            names = dir(iterable)
+            adder_ = beenthere.add
             for name in names:
                 # yes, it's really supposed to be a tuple
-                for base in (iterable,) + mro:
-                    var = vars(base)
+                for base in chain_([iterable], mro):
+                    var = varz_(base)
                     if name in var:
                         obj = var[name]
                         break
@@ -283,10 +291,10 @@ class _FilterMixin(local):
                 if obj in beenthere:
                     continue
                 else:
-                    adder(obj)
+                    adder_(obj)
                 if isclass_(obj):
-                    yield name, odict((k, v) for k, v in ifilter(
-                        test, members_(obj, beenthere)
+                    yield name, o_((k, v) for k, v in ifilter_(
+                        test_, members_(obj, beenthere),
                     ))
                 else:
                     yield name, obj
@@ -294,14 +302,16 @@ class _FilterMixin(local):
             isinstance_ = isinstance
             selfname_ = selfname
             members_ = members
-            odict = OrderedDict
-            cm = ChainMap
+            o_ = odict
+            cm_ = ChainMap
+            ifilter_ = ifilter
+            test_ = test
             for iterator in iterable:
-                chaining = cm()
+                chaining = cm_()
                 chaining['classname'] = selfname_(iterator)
                 cappend = chaining.maps.append
-                for k, v in ifilter(test, members_(iterator)):
-                    if isinstance_(v, odict):
+                for k, v in ifilter_(test_, members_(iterator)):
+                    if isinstance_(v, o_):
                         v['classname'] = k
                         cappend(v)
                     else:

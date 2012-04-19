@@ -137,14 +137,14 @@ class OrderMixin(object):
         )
 
     def test_group(self,):
+        self.assertEqual(
+            self.mclass(1.3, 2.1, 2.4).group().fetch(),
+            [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
+        )
         from math import floor
         self.assertEqual(
             self.mclass(1.3, 2.1, 2.4).worker(floor).group().fetch(),
             [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
-        )
-        self.assertEqual(
-            self.mclass(1.3, 2.1, 2.4).group().fetch(),
-            [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
 
     def test_combo(self):
