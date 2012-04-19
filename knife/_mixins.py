@@ -143,7 +143,9 @@ class _OrderMixin(local):
 
     @staticmethod
     def _reverse(iterable, list_=list, reversed_=reversed):
-        yield list_(reversed_(list_(iterable)))
+        def ireverse(itbl):
+            yield reversed_(list_(iterable))
+        return next(ireverse(iterable))
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):

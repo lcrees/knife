@@ -225,7 +225,7 @@ class OrderMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_.
         '''
         with self._chain:
-            return self._iter(self._reverse)
+            return self._many(self._reverse)
 
     def shuffle(self):
         '''

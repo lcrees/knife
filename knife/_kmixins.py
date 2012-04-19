@@ -292,12 +292,6 @@ class KMap(AppspaceKey):
           *iterable_kwargs*)
         '''
 
-    def map():  # @NoSelf
-        '''
-        Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
-        '''
-
 
 class KFilter(AppspaceKey):
 

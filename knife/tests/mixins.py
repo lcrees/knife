@@ -162,6 +162,12 @@ class OrderMixin(object):
             [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))],
         )
 
+    def test_combo(self):
+        self.assertEqual(
+            self.mclass(5, 4, 3, 2, 1).reverse().sort().fetch(),
+            [1, 2, 3, 4, 5]
+        )
+
     def test_reverse(self):
         self.assertEqual(
             self.mclass(5, 4, 3, 2, 1).reverse().fetch(), [1, 2, 3, 4, 5],

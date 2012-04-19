@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-'''lazily evaluated knifes'''
+'''lazily evaluated knives'''
 
 from knife.base import OutputMixin
 from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CompareMixin, OrderMixin)
 
-from knife._lazy import _OutMixin
-from knife._base import SLOTS, _ChainknifeMixin
+from knife._lazy import _OutputMixin
+from knife._base import SLOTS, _KnifeMixin
 from knife._mixins import (
     _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
     _MathMixin, _CompareMixin, _OrderMixin)
 
 
 class lazyknife(
-    _OutMixin, _ChainknifeMixin, _CompareMixin, _FilterMixin, _MapMixin,
+    _OutputMixin, _KnifeMixin, _CompareMixin, _FilterMixin, _MapMixin,
     _MathMixin, _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
     OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
     MathMixin, SliceMixin, CompareMixin,
@@ -26,7 +26,7 @@ class lazyknife(
 
 
 class compareknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, CompareMixin, _CompareMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, CompareMixin, _CompareMixin,
 ):
 
     '''comparing knife'''
@@ -35,7 +35,7 @@ class compareknife(
 
 
 class filterknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, FilterMixin, _FilterMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, FilterMixin, _FilterMixin,
 ):
 
     '''filtering knife'''
@@ -43,7 +43,7 @@ class filterknife(
     __slots__ = SLOTS
 
 
-class mapknife(_OutMixin, _ChainknifeMixin, OutputMixin, MapMixin, _MapMixin):
+class mapknife(_OutputMixin, _KnifeMixin, OutputMixin, MapMixin, _MapMixin):
 
     '''mapping knife'''
 
@@ -51,7 +51,7 @@ class mapknife(_OutMixin, _ChainknifeMixin, OutputMixin, MapMixin, _MapMixin):
 
 
 class mathknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, MathMixin, _MathMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, MathMixin, _MathMixin,
 ):
 
     '''mathing knife'''
@@ -60,7 +60,7 @@ class mathknife(
 
 
 class orderknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, OrderMixin, _OrderMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, OrderMixin, _OrderMixin,
 ):
 
     '''ordering knife'''
@@ -69,7 +69,7 @@ class orderknife(
 
 
 class reduceknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, ReduceMixin, _ReduceMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, ReduceMixin, _ReduceMixin,
 ):
 
     '''reducing knife'''
@@ -78,7 +78,7 @@ class reduceknife(
 
 
 class repeatknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, RepeatMixin, _RepeatMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, RepeatMixin, _RepeatMixin,
 ):
 
     '''repeating knife'''
@@ -87,7 +87,7 @@ class repeatknife(
 
 
 class sliceknife(
-    _OutMixin, _ChainknifeMixin, OutputMixin, SliceMixin, _SliceMixin,
+    _OutputMixin, _KnifeMixin, OutputMixin, SliceMixin, _SliceMixin,
 ):
 
     '''slicing knife'''

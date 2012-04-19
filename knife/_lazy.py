@@ -122,7 +122,7 @@ class _LazyMixin(local):
         return len_(list_(incoming))
 
 
-class _OutMixin(_LazyMixin):
+class _OutputMixin(_LazyMixin):
 
     '''lazy output mixin'''
 

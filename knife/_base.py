@@ -13,17 +13,17 @@ from parse import compile as pcompile
 from knife._compat import ichain
 
 SLOTS = [
-     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_mode',
-     '_history', '_worker', '_wrapper', '_args', '_kw',
+     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_mode', '_kw',
+     '_history', '_worker', '_wrapper', '_args',
 ]
 
 
-class _ChainknifeMixin(local):
+class _KnifeMixin(local):
 
     '''base knife mixin'''
 
     def __init__(self, ins, fetch, **kw):
-        super(_ChainknifeMixin, self).__init__()
+        super(_KnifeMixin, self).__init__()
         # incoming things
         self._in = ins
         # outgoing things
