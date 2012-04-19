@@ -57,7 +57,7 @@ class _ActiveMixin(local):
         self._hold.clear()
 
     ###########################################################################
-    ## stepping through things ################################################
+    ## adding things ##########################################################
     ###########################################################################
 
     @property
@@ -81,6 +81,7 @@ class _ActiveMixin(local):
         return self
 
     def _prependit(self, things, d=pickle.dumps, p_=pickle.HIGHEST_PROTOCOL):
+        # place thing before other holding things
         # take snapshot
         snapshot = d(self._in, p_)
         # make snapshot original snapshot?
@@ -88,7 +89,7 @@ class _ActiveMixin(local):
             self._original = snapshot
         # place snapshot at beginning of snapshot stack
         self._history.appendleft(snapshot)
-        self._in.extendleft(things)
+        self._in.extendleft(reversed(things))
         return self
 
     def _appendit(self, things, d=pickle.dumps, p_=pickle.HIGHEST_PROTOCOL):
@@ -127,6 +128,15 @@ class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
+    def _undo(self, snapshot=0, loads_=pickle.loads):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        self._in.extend(loads_(self._history.popleft()))
+        return self
+
     def _snapshot(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
         # take baseline snapshot of incoming things
         self._baseline = d(self._in, p)
@@ -150,15 +160,6 @@ class _OutMixin(_ActiveMixin):
         self._baseline = None
         # restore original snapshot of incoming things
         self._in.extend(loads_(self._original))
-        return self
-
-    def _undo(self, snapshot=0, loads_=pickle.loads):
-        # clear everything
-        self.clear()
-        # if specified, use a specific snapshot
-        if snapshot:
-            self._history.rotate(-(snapshot - 1))
-        self._in.extend(loads_(self._history.popleft()))
         return self
 
     def _clear(self, list_=list):

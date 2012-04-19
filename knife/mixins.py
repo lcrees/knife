@@ -309,9 +309,7 @@ class MapMixin(local):
           positional arguments derived from an iterable
         '''
         with self._chain:
-            return self._many(self._argmap(
-                self._worker, merge, self._args, self._kw,
-            ))
+            return self._many(self._argmap(self._worker, merge, self._args))
 
     def invoke(self, name):
         '''

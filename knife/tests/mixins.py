@@ -33,14 +33,14 @@ class MathMixin(object):
 
     def test_max(self):
         from stuf import stuf
-        stooges = [
+        stooge = [
             stuf(name='moe', age=40),
             stuf(name='larry', age=50),
             stuf(name='curly', age=60),
         ]
         self.assertEqual(self.mclass(1, 2, 4).max().fetch(), 4)
         self.assertEqual(
-            stuf(self.mclass(*stooges).worker(lambda x: x.age).max().fetch()),
+            stuf(self.mclass(*stooge).worker(lambda x: x.age).max().fetch()),
             stuf(name='curly', age=60),
         )
 
@@ -249,44 +249,44 @@ class FilterMixin(object):
 
     def test_attributes(self):
         from stuf import stuf
-        stooges = [
+        stooge = [
             stuf(name='moe', age=40),
             stuf(name='larry', age=50),
             stuf(name='curly', age=60)
         ]
         self.assertEqual(
-            self.mclass(*stooges).attributes('name').fetch(),
+            self.mclass(*stooge).attributes('name').fetch(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
-            self.mclass(*stooges).attributes('name', 'age').fetch(),
+            self.mclass(*stooge).attributes('name', 'age').fetch(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
         self.assertEqual(
-            self.mclass(*stooges).attributes('place').fetch(), [],
+            self.mclass(*stooge).attributes('place').fetch(), [],
         )
 
     def test_items(self):
         from stuf import stuf
-        stooges = [
+        stooge = [
             stuf(name='moe', age=40),
             stuf(name='larry', age=50),
             stuf(name='curly', age=60)
         ]
         self.assertEqual(
-            self.mclass(*stooges).items('name').fetch(),
+            self.mclass(*stooge).items('name').fetch(),
             ['moe', 'larry', 'curly'],
         )
         self.assertEqual(
-            self.mclass(*stooges).items('name', 'age').fetch(),
+            self.mclass(*stooge).items('name', 'age').fetch(),
             [('moe', 40), ('larry', 50), ('curly', 60)],
         )
-        stooges = [['moe', 40], ['larry', 50], ['curly', 60]]
+        stooge = [['moe', 40], ['larry', 50], ['curly', 60]]
         self.assertEqual(
-            self.mclass(*stooges).items(0).fetch(), ['moe', 'larry', 'curly'],
+            self.mclass(*stooge).items(0).fetch(), ['moe', 'larry', 'curly'],
         )
-        self.assertEqual(self.mclass(*stooges).items(1).fetch(), [40, 50, 60])
-        self.assertEqual(self.mclass(*stooges).items('place').fetch(), [])
+        self.assertEqual(self.mclass(*stooge).items(1).fetch(), [40, 50, 60])
+        self.assertEqual(self.mclass(*stooge).items('place').fetch(), [])
 
     def test_mapping(self):
         self.assertEqual(
@@ -551,20 +551,20 @@ class Mixin(object):
     def test_prepend(self):
         self.assertEqual(self.mclass().prepend('foo').peek(), 'foo')
         self.assertListEqual(
-            self.mclass().prepend(1, 2, 3, 4, 5, 6).peek(), [6, 5, 4, 3, 2, 1]
+            self.mclass().prepend(1, 2, 3, 4, 5, 6).peek(), [1, 2, 3, 4, 5, 6]
         )
 
     def test_undo(self):
         queue = self.mclass(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
-        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3])
         queue.append(1).undo()
-        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3])
+        self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3])
         queue.append(1).append(2).undo()
-        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
-        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.snapshot().append(1).append(2).stepback()
-        self.assertEqual(queue.peek(), [6, 5, 4, 3, 2, 1, 1, 2, 3, 1])
+        self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.original()
         self.assertEqual(queue.peek(), [1, 2, 3])
 

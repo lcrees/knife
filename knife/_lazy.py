@@ -71,7 +71,8 @@ class _LazyMixin(local):
         self._hold = chain_(self._hold, iter_([things]))
         return self
 
-    def _prependit(self, things, tee_=tee, chain_=chain, reversed_=reversed):
+    def _prependit(self, things, tee_=tee, chain_=chain):
+        # place thing before other holding things
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # make snapshot original snapshot?
@@ -80,10 +81,11 @@ class _LazyMixin(local):
         # place snapshot at beginning of snapshot stack
         self._history.appendleft(snapshot)
         # place things before other incoming things
-        self._in = chain_(reversed_(things), self._in)
+        self._in = chain_(things, self._in)
         return self
 
     def _appendit(self, things, tee_=tee, chain_=chain):
+        # place things after other incoming things
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # make snapshot original snapshot?
@@ -124,6 +126,18 @@ class _OutMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
+    def _undo(self, snapshot=0, iter_=iter):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        self._in = self._history.popleft()
+        # clear outgoing things
+        del self._out
+        self._out = iter_([])
+        return self
+
     def _snapshot(self, tee_=tee):
         # take baseline snapshot of incoming things
         self._in, self._baseline = tee_(self._in)
@@ -136,18 +150,6 @@ class _OutMixin(_LazyMixin):
         self._clearsp()
         # revert to baseline snapshot of incoming things
         self._in, self._baseline = tee_(self._baseline)
-        return self
-
-    def _undo(self, snapshot=0, iter_=iter):
-        # clear everything
-        self.clear()
-        # if specified, use a specific snapshot
-        if snapshot:
-            self._history.rotate(-(snapshot - 1))
-        self._in = self._history.popleft()
-        # clear outgoing things
-        del self._out
-        self._out = iter_([])
         return self
 
     def _revert(self, tee_=tee):
@@ -168,7 +170,7 @@ class _OutMixin(_LazyMixin):
         self._args = ()
         # clear worker keyword arguments
         self._kw = {}
-        # default iterable as_type
+        # default iterable wrapper
         self._wrapper = list_
         # clear incoming things
         del self._in
