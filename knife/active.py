@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 '''active knifes'''
 
-from knife.base import OutputMixin
+from knife.base import OutMixin
 from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
-    CompareMixin, OrderMixin)
+    CmpMixin, OrderMixin)
 
-from knife._active import _OutputMixin
+from knife._active import _OutMixin
 from knife._base import SLOTS, _KnifeMixin
 from knife._mixins import (
     _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
-    _MathMixin, _CompareMixin, _OrderMixin)
+    _MathMixin, _CmpMixin, _OrderMixin)
 
 
 class activeknife(
-    _OutputMixin, _KnifeMixin, _CompareMixin, _FilterMixin, _MapMixin,
+    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin,
     _MathMixin, _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
-    OutputMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
-    MathMixin, SliceMixin, CompareMixin,
+    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
+    MathMixin, SliceMixin, CmpMixin,
 ):
 
     '''active knife'''
@@ -25,70 +25,56 @@ class activeknife(
     __slots__ = SLOTS
 
 
-class compareknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, CompareMixin, _CompareMixin,
-):
+class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
     '''comparing knife'''
 
     __slots__ = SLOTS
 
 
-class filterknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, FilterMixin, _FilterMixin,
-):
+class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
     '''filtering knife'''
 
     __slots__ = SLOTS
 
 
-class mapknife(_OutputMixin, _KnifeMixin, OutputMixin, MapMixin, _MapMixin):
+class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
     '''mapping knife'''
 
     __slots__ = SLOTS
 
 
-class mathknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, MathMixin, _MathMixin,
-):
+class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
     '''mathing knife'''
 
     __slots__ = SLOTS
 
 
-class orderknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, OrderMixin, _OrderMixin,
-):
+class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
     '''ordering knife'''
 
     __slots__ = SLOTS
 
 
-class reduceknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, ReduceMixin, _ReduceMixin,
-):
+class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
     '''reducing knife'''
 
     __slots__ = SLOTS
 
 
-class repeatknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, RepeatMixin, _RepeatMixin,
-):
+class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
     '''repeating knife'''
 
     __slots__ = SLOTS
 
 
-class sliceknife(
-    _OutputMixin, _KnifeMixin, OutputMixin, SliceMixin, _SliceMixin,
-):
+class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
 
     '''slicing knife'''
 

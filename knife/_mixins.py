@@ -4,14 +4,14 @@
 from math import fsum
 from copy import deepcopy
 from threading import local
-from collections import deque
 from inspect import isclass, getmro
 from functools import partial, reduce
+from collections import deque, namedtuple
 from random import choice, sample, shuffle
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
-    groupby, cycle, islice, tee, starmap, repeat, combinations, permutations)
-
+    groupby, cycle, islice, tee, starmap, repeat, combinations, permutations,
+    product)
 
 from stuf.six import strings, items, values, keys, filter, map
 from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
@@ -19,8 +19,12 @@ from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 from knife._compat import (
     Counter, ChainMap, ichain, ifilterfalse, zip_longest)
 
+Count = namedtuple('Count', 'least_common most_common totals')
+MinMax = namedtuple('MinMax', 'minimum maximum')
+TrueFalse = namedtuple('TrueFalse', 'true false')
 
-class _CompareMixin(local):
+
+class _CmpMixin(local):
 
     '''comparing mixin'''
 
@@ -41,20 +45,8 @@ class _CompareMixin(local):
         return lambda x: reduce_(test, x)
 
     @staticmethod
-    def _disjointed(iterable, set_=set, reduce_=reduce):
-        return reduce_(lambda x, y: set_(x).isdisjoint(y), iterable)
-
-    @staticmethod
     def _intersection(iterable, set_=set, reduce_=reduce):
         return reduce_(lambda x, y: set_(x).intersection(y), iterable)
-
-    @staticmethod
-    def _subset(iterable, set_=set, reduce_=reduce):
-        return reduce_(lambda x, y: set_(x).issubset(y), iterable)
-
-    @staticmethod
-    def _superset(iterable, set_=set, reduce_=reduce):
-        return reduce_(lambda x, y: set_(x).issuperset(y), iterable)
 
     @staticmethod
     def _union(iterable, set_=set, reduce_=reduce):
@@ -83,10 +75,10 @@ class _MathMixin(local):
         yield t(s(i1, 0.0), n(l(i2)))
 
     @staticmethod
-    def _count(iterable, counter=Counter):
+    def _count(iterable, counter=Counter, count_=Count):
         count = counter(iterable)
         commonality = count.most_common()
-        yield (
+        yield count_(
             # least common
             commonality[:-2:-1][0][0],
             # most common (mode)
@@ -109,9 +101,9 @@ class _MathMixin(local):
         yield i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
 
     @staticmethod
-    def _minmax(iterable, imin=min, imax=max, tee_=tee):
+    def _minmax(iterable, imin=min, imax=max, tee_=tee, minmax_=MinMax):
         i1, i2 = tee_(iterable)
-        yield imin(i1), imax(i2)
+        yield minmax_(imin(i1), imax(i2))
 
     @staticmethod
     def _range(iterable, list_=list, sorted_=sorted):
@@ -142,10 +134,8 @@ class _OrderMixin(local):
         return lambda x: imap_(grouper, groupby_(x, key))
 
     @staticmethod
-    def _reverse(iterable, list_=list, reversed_=reversed):
-        def ireverse(itbl):
-            yield reversed_(list_(iterable))
-        return next(ireverse(iterable))
+    def _reverse(iterable, l=list, r=reversed, c=ichain, p=product):
+        return c(p(r(l(iterable))))
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
@@ -177,10 +167,10 @@ class _RepeatMixin(local):
         return lambda x: permutations_(x, n)
 
     @staticmethod
-    def _repeat(n, usecall, call, r=repeat, tuple_=tuple, l=list, s=starmap):
+    def _repeat(n, usecall, call, r=repeat, t=tuple, l=list, s=starmap):
         if usecall:
             return lambda x: s(call, r(l(x), n))
-        return lambda x: r(tuple_(x), n)
+        return lambda x: r(t(x), n)
 
 
 class _MapMixin(local):
@@ -233,10 +223,10 @@ class _FilterMixin(local):
         return attributes
 
     @staticmethod
-    def _duality(true, f=filter, ff=ifilterfalse, l=list, t=tee):
+    def _duality(true, f=filter, ff=ifilterfalse, l=list, t=tee, b=TrueFalse):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
-            yield l(f(true, truth_)), l(ff(true, false_))
+            yield b(l(f(true, truth_)), l(ff(true, false_)))
         return duality
 
     @staticmethod
@@ -279,7 +269,7 @@ class _FilterMixin(local):
             adder = beenthere.add
             isclass_ = isclass
             getattr_ = getattr
-            dict_ = OrderedDict
+            odict = OrderedDict
             members_ = members
             for name in names:
                 # yes, it's really supposed to be a tuple
@@ -295,10 +285,9 @@ class _FilterMixin(local):
                 else:
                     adder(obj)
                 if isclass_(obj):
-                    this = dict_()
-                    for k, v in ifilter(test, members_(obj, beenthere)):
-                        this[k] = v
-                    yield name, this
+                    yield name, odict((k, v) for k, v in ifilter(
+                        test, members_(obj, beenthere)
+                    ))
                 else:
                     yield name, obj
         def traverse(iterable): #@IgnorePep8

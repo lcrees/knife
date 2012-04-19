@@ -124,7 +124,7 @@ class _ActiveMixin(local):
         return len(self._in)
 
 
-class _OutputMixin(_ActiveMixin):
+class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 

@@ -1,5 +1,5 @@
-:class:`knife.active.mapknife` --- Mapping knife
-================================================
+:class:`knife.active.mapknife` --- active mapping knife
+=======================================================
 
 .. module:: knife.active
 

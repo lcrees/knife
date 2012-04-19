@@ -1,5 +1,5 @@
-:class:`knife.lazy.repeatknife` --- Repeating knife
-===================================================
+:class:`knife.lazy.repeatknife` --- lazy repeating knife
+========================================================
 
 .. module:: knife.lazy
 

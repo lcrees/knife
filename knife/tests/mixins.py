@@ -25,11 +25,11 @@ class MathMixin(object):
 
     def test_count(self):
         common = self.mclass(11, 3, 5, 11, 7, 3, 11).count().fetch()
-        self.assertEqual(common[2], [(11, 3), (3, 2), (5, 1), (7, 1)])
+        self.assertEqual(common.totals, [(11, 3), (3, 2), (5, 1), (7, 1)])
         # most common
-        self.assertEqual(common[1], 11)
+        self.assertEqual(common.most_common, 11)
         # least common
-        self.assertEqual(common[0], 7)
+        self.assertEqual(common.least_common, 7)
 
     def test_max(self):
         from stuf import stuf
@@ -83,7 +83,7 @@ class MathMixin(object):
         )
 
 
-class CompareMixin(object):
+class CmpMixin(object):
 
     def test_all(self):
         self.assertFalse(
@@ -105,26 +105,11 @@ class CompareMixin(object):
             [1, 3, 4, 10]
         )
 
-    def test_disjointed(self):
-        self.assertTrue(
-            self.mclass([1, 2, 3], [5, 4, 10]).disjointed().fetch()
-        )
-
     def test_intersection(self):
         self.assertEqual(
             self.mclass(
                 [1, 2, 3], [101, 2, 1, 10], [2, 1]
             ).intersection().fetch(), [1, 2],
-        )
-
-    def test_subset(self):
-        self.assertTrue(
-            self.mclass([1, 2, 3], [101, 2, 1, 3]).subset().fetch(),
-        )
-
-    def test_superset(self):
-        self.assertTrue(
-            self.mclass([101, 2, 1, 3, 6, 34], [1, 2, 3]).superset().fetch()
         )
 
     def test_union(self):
@@ -347,6 +332,11 @@ class SliceMixin(object):
     def test_first(self):
         self.assertEqual(self.mclass(5, 4, 3, 2, 1).first().fetch(), 5)
         self.assertEqual(self.mclass(5, 4, 3, 2, 1).first(2).fetch(), [5, 4])
+
+    def test_combo(self):
+        self.assertEqual(
+            self.mclass(5, 4, 3, 2, 1).initial().rest().last().fetch(), 2,
+        )
 
     def test_index(self):
         self.assertEqual(self.mclass(5, 4, 3, 2, 1).at(2).fetch(), 3)

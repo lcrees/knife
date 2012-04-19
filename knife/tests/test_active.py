@@ -5,12 +5,12 @@ from knife._compat import unittest
 
 from knife.tests.mixins import (
     Mixin, MapMixin, RepeatMixin, ReduceMixin, SliceMixin, FilterMixin,
-    OrderMixin, MathMixin, CompareMixin)
+    OrderMixin, MathMixin, CmpMixin)
 
 
 class TestActive(
     unittest.TestCase, Mixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    SliceMixin, RepeatMixin, MathMixin, CompareMixin
+    SliceMixin, RepeatMixin, MathMixin, CmpMixin
 ):
 
     def setUp(self):
@@ -18,11 +18,11 @@ class TestActive(
         self.mclass = activeknife
 
 
-class TestCompare(unittest.TestCase, Mixin, CompareMixin):
+class TestCompare(unittest.TestCase, Mixin, CmpMixin):
 
     def setUp(self):
-        from knife.active import compareknife
-        self.mclass = compareknife
+        from knife.active import cmpknife
+        self.mclass = cmpknife
 
 
 class TestFilter(unittest.TestCase, Mixin, FilterMixin):

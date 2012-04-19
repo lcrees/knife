@@ -6,14 +6,14 @@
 `knife` Documentation
 =====================
 
-Active Knives
+Active knives
 -------------
 
 .. toctree::
    :maxdepth: 2
 
    activeknife
-   acompareknife
+   acmpknife
    afilterknife
    amapknife
    amathknife
@@ -22,14 +22,14 @@ Active Knives
    arepeatknife
    asliceknife
    
-Lazy Knives
+Lazy knives
 -----------
 
 .. toctree::
    :maxdepth: 2
 
    lazyknife
-   lcompareknife
+   lcmpknife
    lfilterknife
    lmapknife
    lmathknife

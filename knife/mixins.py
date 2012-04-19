@@ -4,7 +4,7 @@
 from threading import local
 
 
-class CompareMixin(local):
+class CmpMixin(local):
 
     '''comparing mixin'''
 
@@ -42,16 +42,6 @@ class CompareMixin(local):
         with self._chain:
             return self._many(self._difference(symmetric))
 
-    def disjointed(self):
-        '''
-        Find disjoints within a series of `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_.
-
-        :rtype: :class:`set`
-        '''
-        with self._chain:
-            return self._one(self._disjointed)
-
     def intersection(self):
         '''
         Find intersections within a series of `iterables
@@ -61,28 +51,6 @@ class CompareMixin(local):
         '''
         with self._chain:
             return self._many(self._intersection)
-
-    def subset(self):
-        '''
-        Discover if `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ are subsets
-        other iterables.
-
-        :rtype: :class:`bool`
-        '''
-        with self._chain:
-            return self._one(self._subset)
-
-    def superset(self):
-        '''
-        Discover if `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ are supersets of
-        others iterables.
-
-        :rtype: :class:`bool`
-        '''
-        with self._chain:
-            return self._one(self._superset)
 
     def union(self):
         '''

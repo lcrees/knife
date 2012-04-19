@@ -1,8 +1,8 @@
-:class:`knife.lazy.sliceknife` --- lazy slicing knife
+:class:`knife.lazy.cmpknife` --- lazy comparing knife
 =====================================================
 
 .. module:: knife.lazy
-
-.. autoclass:: sliceknife
+    
+.. autoclass:: cmpknife
     :members: __init__, __bool__, __iter__, __len__
     :inherited-members:

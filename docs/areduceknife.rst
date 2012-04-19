@@ -1,5 +1,5 @@
-:class:`knife.active.reduceknife` --- Reducing knife
-====================================================
+:class:`knife.active.reduceknife` --- active reducing knife
+===========================================================
 
 .. module:: knife.active
 

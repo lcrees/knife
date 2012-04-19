@@ -1,5 +1,5 @@
-:class:`knife.lazy.mathknife` --- Mathing knife
-===============================================
+:class:`knife.lazy.mathknife` --- lazy mathing knife
+====================================================
 
 .. module:: knife.lazy
 

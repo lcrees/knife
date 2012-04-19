@@ -1,5 +1,5 @@
-:class:`knife.active.repeatknife` --- Repeating knife
-=====================================================
+:class:`knife.active.repeatknife` --- active repeating knife
+============================================================
 
 .. module:: knife.active
 

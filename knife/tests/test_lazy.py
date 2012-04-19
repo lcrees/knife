@@ -5,11 +5,11 @@ from knife._compat import unittest
 
 from knife.tests.mixins import (
     Mixin, MapMixin, RepeatMixin, ReduceMixin, SliceMixin, FilterMixin,
-    OrderMixin, MathMixin, CompareMixin)
+    OrderMixin, MathMixin, CmpMixin)
 
 
 class TestLazy(
-    unittest.TestCase, Mixin, CompareMixin, MapMixin, ReduceMixin, OrderMixin,
+    unittest.TestCase, Mixin, CmpMixin, MapMixin, ReduceMixin, OrderMixin,
     SliceMixin, RepeatMixin, MathMixin, FilterMixin
 ):
 
@@ -18,11 +18,11 @@ class TestLazy(
         self.mclass = lazyknife
 
 
-class TestCompare(unittest.TestCase, Mixin, CompareMixin):
+class TestCompare(unittest.TestCase, Mixin, CmpMixin):
 
     def setUp(self):
-        from knife.lazy import compareknife
-        self.mclass = compareknife
+        from knife.lazy import cmpknife
+        self.mclass = cmpknife
 
 
 class TestFilter(unittest.TestCase, Mixin, FilterMixin):

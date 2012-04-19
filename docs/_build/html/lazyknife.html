@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>knife.lazy.lazyknife — Lazily evaluated knife &mdash; knife 0.5.0 documentation</title>
+    <title>knife.lazy.lazyknife — lazily evaluated knife &mdash; knife 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="knife 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="knife.lazy.compareknife — Lazy comparing knife" href="lcompareknife.html" />
-    <link rel="prev" title="knife.active.sliceknife — Slicing knife" href="asliceknife.html" /> 
+    <link rel="next" title="knife.lazy.cmpknife — lazy comparing knife" href="lcmpknife.html" />
+    <link rel="prev" title="knife.active.sliceknife — active slicing knife" href="asliceknife.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="lcompareknife.html" title="knife.lazy.compareknife — Lazy comparing knife"
+          <a href="lcmpknife.html" title="knife.lazy.cmpknife — lazy comparing knife"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="asliceknife.html" title="knife.active.sliceknife — Slicing knife"
+          <a href="asliceknife.html" title="knife.active.sliceknife — active slicing knife"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-knife.lazy">
-<span id="knife-lazy-lazyknife-lazily-evaluated-knife"></span><h1><a class="reference internal" href="#knife.lazy.lazyknife" title="knife.lazy.lazyknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.lazy.lazyknife</span></tt></a> &#8212; Lazily evaluated knife<a class="headerlink" href="#module-knife.lazy" title="Permalink to this headline">¶</a></h1>
+<span id="knife-lazy-lazyknife-lazily-evaluated-knife"></span><h1><a class="reference internal" href="#knife.lazy.lazyknife" title="knife.lazy.lazyknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.lazy.lazyknife</span></tt></a> &#8212; lazily evaluated knife<a class="headerlink" href="#module-knife.lazy" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="knife.lazy.lazyknife">
 <em class="property">class </em><tt class="descclassname">knife.lazy.</tt><tt class="descname">lazyknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/knife/lazy.html#lazyknife"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#knife.lazy.lazyknife" title="Permalink to this definition">¶</a></dt>
@@ -352,20 +352,6 @@ multiple iterables of <cite>n</cite> things.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> (<em>boolean</em>) &#8211; use symmetric difference</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">set</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.lazy.lazyknife.disjointed">
-<tt class="descname">disjointed</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.lazyknife.disjointed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find disjoints within a series of <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">set</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -815,21 +801,6 @@ from <a class="reference external" href="http://docs.python.org/glossary.html#te
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.lazy.lazyknife.subset">
-<tt class="descname">subset</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.lazyknife.subset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover if <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> are subsets
-other iterables.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="knife.lazy.lazyknife.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>precision=False</em><big>)</big><a class="headerlink" href="#knife.lazy.lazyknife.sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find total value by adding <cite>start</cite> and everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> together.</p>
@@ -845,21 +816,6 @@ other iterables.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">number</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.lazy.lazyknife.superset">
-<tt class="descname">superset</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.lazyknife.superset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover if <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> are supersets of
-others iterables.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -970,10 +926,10 @@ by pairing every two things as a <tt class="xref py py-class docutils literal"><
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="asliceknife.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.sliceknife</span></tt> &#8212; Slicing knife</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.sliceknife</span></tt> &#8212; active slicing knife</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="lcompareknife.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.lazy.compareknife</span></tt> &#8212; Lazy comparing knife</a></p>
+  <p class="topless"><a href="lcmpknife.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.lazy.cmpknife</span></tt> &#8212; lazy comparing knife</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/lazyknife.txt"
@@ -1006,10 +962,10 @@ by pairing every two things as a <tt class="xref py py-class docutils literal"><
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="lcompareknife.html" title="knife.lazy.compareknife — Lazy comparing knife"
+          <a href="lcmpknife.html" title="knife.lazy.cmpknife — lazy comparing knife"
              >next</a> |</li>
         <li class="right" >
-          <a href="asliceknife.html" title="knife.active.sliceknife — Slicing knife"
+          <a href="asliceknife.html" title="knife.active.sliceknife — active slicing knife"
              >previous</a> |</li>
         <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
       </ul>

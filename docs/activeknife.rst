@@ -1,4 +1,4 @@
-:class:`knife.active.activeknife` --- Active knife
+:class:`knife.active.activeknife` --- active knife
 ==================================================
 
 .. module:: knife.active

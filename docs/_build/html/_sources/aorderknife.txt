@@ -1,5 +1,5 @@
-:class:`knife.active.orderknife` --- Ordering knife
-===================================================
+:class:`knife.active.orderknife` --- active ordering knife
+==========================================================
 
 .. module:: knife.active
 

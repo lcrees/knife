@@ -108,7 +108,7 @@ class ChainknifeMixin(local):
         return self._repr()
 
 
-class OutputMixin(ChainknifeMixin):
+class OutMixin(ChainknifeMixin):
 
     '''output mixin'''
 

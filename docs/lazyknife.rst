@@ -1,4 +1,4 @@
-:class:`knife.lazy.lazyknife` --- Lazily evaluated knife
+:class:`knife.lazy.lazyknife` --- lazily evaluated knife
 ========================================================
 
 .. module:: knife.lazy
