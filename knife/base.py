@@ -222,34 +222,6 @@ class OutMixin(ChainknifeMixin):
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
 
-    def as_dict(self):
-        '''
-        Set type caster to cast outgoing things to :class:`dict`.
-        '''
-        self._wrapper = dict
-        return self
-
-    def as_list(self):
-        '''
-        Set type caster to cast outgoing things to :class:`list`.
-        '''
-        self._wrapper = list
-        return self
-
-    def as_set(self):
-        '''
-        Set type caster to cast outgoing things to :class:`set`.
-        '''
-        self._wrapper = set
-        return self
-
-    def as_tuple(self):
-        '''
-        Set type caster to cast outgoing things to :class:`tuple`.
-        '''
-        self._wrapper = tuple
-        return self
-
     def as_unicode(self, encoding='utf-8', errors='strict'):
         '''
         Set type caster to :class:`unicode` (:class:`str` under Python 3)

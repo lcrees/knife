@@ -31,9 +31,9 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self, dumps_=pickle.dumps, protocol_=pickle.HIGHEST_PROTOCOL):
+    def _chain(self):
         # take snapshot
-        snapshot = dumps_(self._in, protocol_)
+        snapshot = self._dumps(self._in)
         # rebalance incoming with outcoming
         if self._original is not None:
             self._in.clear()
@@ -60,6 +60,9 @@ class _ActiveMixin(local):
     ## adding things ##########################################################
     ###########################################################################
 
+    def _dumps(self, thing, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+        return d(thing, p)
+
     @property
     def _iterable(self):
         # derived from Raymond Hettinger Python Cookbook recipe # 577155
@@ -80,10 +83,10 @@ class _ActiveMixin(local):
         self._hold.extend(things)
         return self
 
-    def _prependit(self, things, d=pickle.dumps, p_=pickle.HIGHEST_PROTOCOL):
+    def _prependit(self, things):
         # place thing before other holding things
         # take snapshot
-        snapshot = d(self._in, p_)
+        snapshot = self._dumps(self._in)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
@@ -92,10 +95,9 @@ class _ActiveMixin(local):
         self._in.extendleft(reversed(things))
         return self
 
-    def _appendit(self, things, d=pickle.dumps, p_=pickle.HIGHEST_PROTOCOL):
+    def _appendit(self, things):
         # place things after other incoming things
-        # take snapshot
-        snapshot = d(self._in, p_)
+        snapshot = self._dumps(self._in)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
@@ -128,30 +130,33 @@ class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
-    def _undo(self, snapshot=0, loads_=pickle.loads):
+    def _loads(self, past, loads_=pickle.loads):
+        return loads_(past)
+
+    def _undo(self, snapshot=0):
         # clear everything
         self.clear()
         # if specified, use a specific snapshot
         if snapshot:
             self._history.rotate(-(snapshot - 1))
-        self._in.extend(loads_(self._history.popleft()))
+        self._in.extend(self._loads(self._history.popleft()))
         return self
 
-    def _snapshot(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+    def _snapshot(self):
         # take baseline snapshot of incoming things
-        self._baseline = d(self._in, p)
+        self._baseline = self._dumps(self._in)
         return self
 
-    def _rollback(self, loads_=pickle.loads):
+    def _rollback(self):
         # clear everything
         self.clear()
         # clear snapshots
         self._clearsp()
         # revert to baseline snapshot of incoming things
-        self._in.extend(loads_(self._baseline))
+        self._in.extend(self._loads(self._baseline))
         return self
 
-    def _revert(self, loads_=pickle.loads):
+    def _revert(self):
         # clear everything
         self.clear()
         # clear snapshots
@@ -159,7 +164,7 @@ class _OutMixin(_ActiveMixin):
         # clear baseline
         self._baseline = None
         # restore original snapshot of incoming things
-        self._in.extend(loads_(self._original))
+        self._in.extend(self._loads(self._original))
         return self
 
     def _clear(self, list_=list):

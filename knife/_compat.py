@@ -2,6 +2,7 @@
 '''knife support'''
 
 from itertools import chain
+from functools import update_wrapper
 try:
     import cPickle as pickle
 except ImportError:

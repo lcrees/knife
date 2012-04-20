@@ -86,8 +86,9 @@ class MathMixin(object):
 class CmpMixin(object):
 
     def test_all(self):
+        from operator import truth
         self.assertFalse(
-            self.mclass(True, 1, None, 'yes').worker(bool).all().fetch()
+            self.mclass(True, 1, None, 'yes').worker(truth).all().fetch()
         )
 
     def test_any(self):
@@ -201,6 +202,7 @@ class FilterMixin(object):
         )
 
     def test_traverse(self):
+        self.maxDiff = None
         from knife._compat import ChainMap, OrderedDict
         fetch = self.mclass(stooges, stoog2, stoog3).traverse().fetch()
         self.assertEqual(
@@ -216,7 +218,7 @@ class FilterMixin(object):
                     ('classname', 'stoog3'), ('age', 60), ('name', 'curly'),
                 ]),
                 OrderedDict([
-                    ('classname', 'stoog4'), ('age', 969), ('name', 'beastly'),
+                    ('age', 969), ('name', 'beastly'), ('classname', 'stoog4'),
                 ])
             )],
         )
@@ -571,42 +573,6 @@ class Mixin(object):
         self.assertTupleEqual(
             self.mclass(1, 2, 3, 4, 5, 6).as_type(tuple).peek(),
             (1, 2, 3, 4, 5, 6),
-        )
-
-    def test_list(self):
-        self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_list().peek(), list,
-        )
-        self.assertListEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_list().peek(),
-            [1, 2, 3, 4, 5, 6],
-        )
-
-    def test_tuple(self):
-        self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().peek(), tuple,
-        )
-        self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_tuple().peek(),
-            (1, 2, 3, 4, 5, 6),
-        )
-
-    def test_set(self):
-        self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_set().peek(), set,
-        )
-        self.assertSetEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_set().peek(),
-            set([1, 2, 3, 4, 5, 6]),
-        )
-
-    def test_dict(self):
-        self.assertIsInstance(
-            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().peek(), dict,
-        )
-        self.assertDictEqual(
-            self.mclass((1, 2), (3, 4), (5, 6)).as_dict().peek(),
-            {1: 2, 3: 4, 5: 6},
         )
 
     def test_ascii(self):
