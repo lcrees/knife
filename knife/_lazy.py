@@ -32,7 +32,7 @@ class _LazyMixin(local):
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # rebalance incoming with outcoming
-        if self._original is not None:
+        if self._history:
             self._in, self._out = tee_(self._out)
         # make snapshot original snapshot?
         else:
@@ -191,19 +191,17 @@ class _OutMixin(_LazyMixin):
         return outs
 
     def _peek(self, tee_=tee, list_=list, len_=len):
-        tell, self._in, outs = tee_(self._in, 3)
+        tell, self._in, out = tee_(self._in, 3)
         wrap = self._wrapper
-        if self._mode == self._MANY:
-            value = tuple(wrap(i) for i in outs)
-        else:
-            value = wrap(outs)
-        return value.pop() if len_(list_(tell)) == 1 else value
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(list_(tell)) == 1 else value
 
     def _get(self, tee_=tee, list_=list, len_=len):
-        tell, self._out, outs = tee_(self._out, 3)
+        tell, self._out, out = tee_(self._out, 3)
         wrap = self._wrapper
-        if self._mode == self._MANY:
-            value = tuple(wrap(i) for i in outs)
-        else:
-            value = wrap(outs)
-        return value.pop() if len_(list_(tell)) == 1 else value
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(list_(tell)) == 1 else value

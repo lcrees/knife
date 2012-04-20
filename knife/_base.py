@@ -11,7 +11,7 @@ from stuf.six import map
 from parse import compile as pcompile
 
 SLOTS = [
-     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_mode', '_kw',
+     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each', '_kw',
      '_history', '_worker', '_wrapper', '_args',
 ]
 
@@ -27,7 +27,7 @@ class _KnifeMixin(local):
         # outgoing things
         self._out = fetch
         # default mode
-        self._mode = self._DEFAULT_MODE
+        self._each = False
         ## snapshot defaults ##################################################
         # original and baseline snapshots
         self._original = self._baseline = None

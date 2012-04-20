@@ -35,7 +35,7 @@ class _ActiveMixin(local):
         # take snapshot
         snapshot = self._dumps(self._in)
         # rebalance incoming with outcoming
-        if self._original is not None:
+        if self._history:
             self._in.clear()
             self._in.extend(self._out)
         # make snapshot original snapshot?
@@ -189,18 +189,16 @@ class _OutMixin(_ActiveMixin):
     def _iterate(self, iter_=iter):
         return iter_(self._out)
 
-    def _peek(self, len_=len, tuple_=tuple):
+    def _peek(self, len_=len, list_=list):
         wrap, out = self._wrapper, self._in
-        if self._mode == self._MANY:
-            value = tuple_(wrap(i) for i in out)
-        else:
-            value = wrap(out)
-        return value.pop() if len_(value) == 1 else value
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(value) == 1 else value
 
-    def _get(self, len_=len, tuple_=tuple):
+    def _get(self, len_=len, list_=list):
         wrap, out = self._wrapper, self._out
-        if self._mode == self._MANY:
-            value = tuple_(wrap(i) for i in out)
-        else:
-            value = wrap(out)
-        return value.pop() if len_(value) == 1 else value
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(value) == 1 else value

@@ -10,15 +10,18 @@ class ChainknifeMixin(local):
 
     '''base knife mixin'''
 
-    ###########################################################################
-    ## things are called ######################################################
-    ###########################################################################
-
     def worker(self, worker):
         '''
         Assign callable used to work on incoming things.
 
+        Global `positional <http://docs.python.org/glossary.html#term-
+        positional-argument>`_ and `keyword <http://docs.python.org/glossary.
+        html#term-keyword-argument>`_:meth:`params` are reset when new worker
+        is assigned.
+
         :argument worker: a callable
+
+        :rtype: :const:`self` (a :obj:`knife` object)
         '''
         # reset stored position params
         self._args = ()
@@ -34,6 +37,8 @@ class ChainknifeMixin(local):
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
         arguments used when :meth:`worker` is invoked.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
         '''
         # positional params
         self._args = args
@@ -45,33 +50,40 @@ class ChainknifeMixin(local):
         '''
         Compile search `pattern` for use as :meth:`worker`.
 
+        Global `positional <http://docs.python.org/glossary.html#term-
+        positional-argument>`_ and `keyword <http://docs.python.org/glossary.
+        html#term-keyword-argument>`_:meth:`params` are reset when a pattern
+        is compiled.
+
         :argument string pattern: search pattern
 
         :keyword string type: engine to compile `pattern` with. Valid options
           are `'parse' <http://pypi.python.org/pypi/parse/>`_, `'re'
-          <http://docs.python.org/library/re.html>`_, or `'glob'
-          <http://docs.python.org/library/fnmatch.html>`_
+          <http://docs.python.org/library/re.html>`_, or `'glob' <http://docs.
+          python.org/library/fnmatch.html>`_
 
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
+
+        :rtype: :const:`self` (a :obj:`knife` object)
 
         >>> # using parse expression
         >>> test = __('first test', 'second test', 'third test')
         >>> test.pattern('first {}').filter().get()
         'first test'
-        >>> # using regular expression
-        >>> test.original().pattern('third .', type='regex').filter().get()
-        'third test'
         >>> # using glob pattern
         >>> test.original().pattern('second*', type='glob').filter().get()
         'second test'
+        >>> # using regular expression
+        >>> test.original().pattern('third .', type='regex').filter().get()
+        'third test'
         '''
+        # reset stored position params
+        self._args = ()
+        # reset stored keyword params
+        self._kw = {}
         self._worker = self._pattern(pattern, type, flags)
         return self
-
-    ###########################################################################
-    ## things coming in #######################################################
-    ###########################################################################
 
     def prepend(self, *things):
         '''
@@ -79,7 +91,8 @@ class ChainknifeMixin(local):
 
         :argument things: incoming things
 
-        >>> from knife import __
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
         [1, 2, 3, 4, 5, 6, 3, 4, 5]
         '''
@@ -91,15 +104,13 @@ class ChainknifeMixin(local):
 
         :argument things: incoming things
 
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> from knife import __
         >>> __(3, 4, 5).append(1, 2, 3, 4, 5, 6).peek()
         [3, 4, 5, 1, 2, 3, 4, 5, 6]
         '''
         return self._appendit(things)
-
-    ###########################################################################
-    ## knowing things #########################################################
-    ###########################################################################
 
     def __len__(self):
         '''Number of incoming things.'''
@@ -113,10 +124,6 @@ class ChainknifeMixin(local):
 class OutMixin(ChainknifeMixin):
 
     '''output mixin'''
-
-    ###########################################################################
-    ## things going out #######################################################
-    ###########################################################################
 
     def __iter__(self):
         '''Iterate over outgoing things.'''
@@ -134,21 +141,17 @@ class OutMixin(ChainknifeMixin):
         '''
         return self._peek()
 
-    ###########################################################################
-    ## wrap things up #########################################################
-    ###########################################################################
-
-    # type cast outgoing things as type caster
-    _ONE = _DEFAULT_MODE = 'ONE'
-    # type cast oneach outgoing thing as type caster
-    _MANY = 'MANY'
-
     def wrap(self, wrapper):
         '''
-        Assign object, type, or class used to wrap outgoing things. Default
-        wrapper is :class:`list`.
+        Assign :class:`object`, :class:`type`, or :obj:`class` used to wrap
+        outgoing things.
 
-        :argument wrapper: a object, type, or class
+        Default wrapper is :class:`list`. The default wrapper is reverted to
+        after :meth:`get` or :meth:`peek` is invoked.
+
+        :argument wrapper: an :class:`object`, :class:`type`, or :obj:`class`
+
+        :rtype: :const:`self` (a :obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).wrap(tuple).peek()
         (1, 2, 3, 4, 5, 6)
@@ -160,67 +163,85 @@ class OutMixin(ChainknifeMixin):
         '''
         Toggle whether each outgoing thing should be individually wrapped with
         :meth:`wrap` or whether all outgoing things should be wrapped with
-        :meth:`wrap` all at once. Default behavior is to :meth:`wrap`
-        everything at once.
+        :meth:`wrap` all at once.
+
+        Default behavior is to :meth:`wrap` everything at once. The default
+        behavior is reverted to **after** :meth:`get` or :meth:`peek` is
+        invoked.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
         '''
-        self._mode = self._MANY if self._mode == self._ONE else self._ONE
+        self._each = not self._each
         return self
 
     def ascii(self, errors='strict'):
         '''
-        :class:`byte` encode outgoing things with the ``'ascii'`` codec.
+        `byte <http://docs.python.org/py3k/library/functions.html#bytes>`_
+        `encode() <http://docs.python.org/py3k/library/stdtypes.html#str.
+        encode>`_ outgoing things with the ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
 
-        >>> from knife import __
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> from stuf.six import u, b
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.ascii().oneach().peek()
-        ('[1]', 'True', 't', 'i', 'g', 'None', '(1,)')
+        ['[1]', 'True', 't', 'i', 'g', 'None', '(1,)']
         '''
         self._wrapper = lambda x: tobytes(x, 'ascii', errors)
         return self
 
     def bytes(self, encoding='utf-8', errors='strict'):
         '''
-        :class:`byte` encode outgoing things.
+        `byte <http://docs.python.org/py3k/library/functions.html#bytes>`_
+        `encode() <http://docs.python.org/py3k/library/stdtypes.html#str.
+        encode>`_ outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for encoding issues
 
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.bytes().oneach().peek()
-        ('[1]', 'True', 't', 'i', 'g', 'None', '(1,)')
+        ['[1]', 'True', 't', 'i', 'g', 'None', '(1,)']
         '''
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
 
     def unicode(self, encoding='utf-8', errors='strict'):
         '''
-        :class:`unicode` (:class:`str` under Python 3) decode outgoing things.
+        `unicode <http://docs.python.org/library/functions.html#unicode>`_
+        (`str <http://docs.python.org/py3k/library/functions.html#str>`_ under
+        Python 3) `decode() <http://docs.python.org/py3k/library/stdtypes.html
+        #bytes.decode>`_ outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for decoding issues
 
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.unicode().oneach().peek()
-        (u'[1]', u'True', u't', u'i', u'g', u'None', u'(1,)')
+        [u'[1]', u'True', u't', u'i', u'g', u'None', u'(1,)']
         '''
         self._wrapper = lambda x: tounicode(x, encoding, errors)
         return self
-
-    ###########################################################################
-    ## state of things ########################################################
-    ###########################################################################
 
     def undo(self, snapshot=0):
         '''
         Restore incoming things to a previous snapshot.
 
+        A snapshot of incoming things is automatically taken at the start of
+        each :mod:`knife` operation.
+
         :keyword integer snapshot: number of steps ago ``1``, ``2``, ``3``,
           etc.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
 
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
@@ -240,12 +261,16 @@ class OutMixin(ChainknifeMixin):
     def snapshot(self):
         '''
         Take baseline snapshot of current incoming things.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
         '''
         return self._snapshot()
 
     def baseline(self):
         '''
         Restore incoming things to baseline :meth:`snapshot`.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
 
         >>> from knife import __
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
@@ -262,6 +287,8 @@ class OutMixin(ChainknifeMixin):
         '''
         Restore incoming things to original snapshot.
 
+        :rtype: :const:`self` (a :obj:`knife` object)
+
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
         [1, 2, 3, 4, 5, 6, 1, 2, 3]
@@ -270,12 +297,10 @@ class OutMixin(ChainknifeMixin):
         '''
         return self._revert()
 
-    ###########################################################################
-    ## clean up things ########################################################
-    ###########################################################################
-
     def clear(self):
         '''
         Clear everything.
+
+        :rtype: :const:`self` (a :obj:`knife` object)
         '''
         return self._clear()

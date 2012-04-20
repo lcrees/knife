@@ -10,8 +10,9 @@
     
     <title>knife.active.mathknife — Actively evaluated mathing knife &mdash; knife 0.5.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -25,41 +26,37 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
     <link rel="top" title="knife 0.5.0 documentation" href="index.html" />
     <link rel="next" title="knife.active.orderknife — Actively evaluated ordering knife" href="aorderknife.html" />
     <link rel="prev" title="knife.active.mapknife — Actively evaluated mapping knife" href="amapknife.html" /> 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="aorderknife.html" title="knife.active.orderknife — Actively evaluated ordering knife"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="amapknife.html" title="knife.active.mapknife — Actively evaluated mapping knife"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+      <div class="header"><h1 class="heading"><a href="index.html">
+          <span>knife 0.5.0 documentation</span></a></h1>
+        <h2 class="heading"><span>knife.active.mathknife — Actively evaluated mathing knife</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="amapknife.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.mapknife</span></tt> &#8212; Actively evaluated mapping knife</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="aorderknife.html"><tt class="docutils literal"><span class="pre">knife.active.orderknife</span></tt> &#8212; Actively evaluated ordering knife</a>&#160;&#160;»
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
+      </div>
+      <div class="content">
+        
+        
   <div class="section" id="module-knife.active">
 <span id="knife-active-mathknife-actively-evaluated-mathing-knife"></span><h1><a class="reference internal" href="#knife.active.mathknife" title="knife.active.mathknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.active.mathknife</span></tt></a> &#8212; Actively evaluated mathing knife<a class="headerlink" href="#module-knife.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="knife.active.mathknife">
-<em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">mathknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/knife/active.html#mathknife"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#knife.active.mathknife" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">mathknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.mathknife" title="Permalink to this definition">¶</a></dt>
 <dd><p>Actively evaluated mathing knife.</p>
+<p>Numeric and statistical operations for incoming things.</p>
 <dl class="method">
 <dt id="knife.active.mathknife.append">
 <tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.append" title="Permalink to this definition">¶</a></dt>
@@ -69,6 +66,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -82,20 +81,22 @@
 <dl class="method">
 <dt id="knife.active.mathknife.ascii">
 <tt class="descname">ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
+<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
 </tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stuf.six</span> <span class="kn">import</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stuf.six</span> <span class="kn">import</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">ascii</span><span class="p">()</span><span class="o">.</span><span class="n">oneach</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(&#39;[1]&#39;, &#39;True&#39;, &#39;t&#39;, &#39;i&#39;, &#39;g&#39;, &#39;None&#39;, &#39;(1,)&#39;)</span>
+<span class="go">[&#39;[1]&#39;, &#39;True&#39;, &#39;t&#39;, &#39;i&#39;, &#39;g&#39;, &#39;None&#39;, &#39;(1,)&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -103,7 +104,15 @@
 <dl class="method">
 <dt id="knife.active.mathknife.average">
 <tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.average" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover average incoming thing.</p>
+<dd><p>Discover average value among incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span><span class="o">.</span><span class="n">average</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">31.666666666666668</span>
@@ -115,6 +124,14 @@
 <dt id="knife.active.mathknife.baseline">
 <tt class="descname">baseline</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.baseline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore incoming things to baseline <a class="reference internal" href="#knife.active.mathknife.snapshot" title="knife.active.mathknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
@@ -130,22 +147,26 @@
 <dl class="method">
 <dt id="knife.active.mathknife.bytes">
 <tt class="descname">bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
+<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
 <li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">bytes</span><span class="p">()</span><span class="o">.</span><span class="n">oneach</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(&#39;[1]&#39;, &#39;True&#39;, &#39;t&#39;, &#39;i&#39;, &#39;g&#39;, &#39;None&#39;, &#39;(1,)&#39;)</span>
+<span class="go">[&#39;[1]&#39;, &#39;True&#39;, &#39;t&#39;, &#39;i&#39;, &#39;g&#39;, &#39;None&#39;, &#39;(1,)&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -154,19 +175,28 @@
 <dt id="knife.active.mathknife.clear">
 <tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear everything.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.count">
 <tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discover how common each incoming thing is.</p>
+<p>Collects <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of
+(<em>least common thing</em>, <em>most common thing</em>, [<em>counts of everything</em>
+(a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>))]).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>least common thing</em>, <em>most common thing</em>,
-[<em>counts of everything</em> (a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of
-(<em>thing</em>, <em>count</em>))]).</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -193,8 +223,16 @@
 <dl class="method">
 <dt id="knife.active.mathknife.max">
 <tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover maximum incoming thing using <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key
-function</a>.</p>
+<dd><p>Discover maximum value among incoming things using <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as
+the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">4</span>
@@ -213,7 +251,15 @@ function</a>.</p>
 <dl class="method">
 <dt id="knife.active.mathknife.median">
 <tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.median" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover median incoming thing.</p>
+<dd><p>Discover median value among incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">4</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -225,8 +271,16 @@ function</a>.</p>
 <dl class="method">
 <dt id="knife.active.mathknife.min">
 <tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover minimum incoming thing using <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key
-function</a>.</p>
+<dd><p>Discover minimum value among incoming things using <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as
+the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">2</span>
@@ -239,12 +293,13 @@ function</a>.</p>
 <dl class="method">
 <dt id="knife.active.mathknife.minmax">
 <tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.minmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover minimum and maximum incoming things.</p>
+<dd><p>Discover minimum and maximum values among incoming things.</p>
+<p>Collects <tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> (<em>minimum value</em>, <em>maximum value</em>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> (<em>minimum value</em>, <em>maximum value</em>).</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -262,14 +317,32 @@ function</a>.</p>
 <tt class="descname">oneach</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.oneach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle whether each outgoing thing should be individually wrapped with
 <a class="reference internal" href="#knife.active.mathknife.wrap" title="knife.active.mathknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> or whether all outgoing things should be wrapped with
-<a class="reference internal" href="#knife.active.mathknife.wrap" title="knife.active.mathknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> all at once. Default behavior is to <a class="reference internal" href="#knife.active.mathknife.wrap" title="knife.active.mathknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>
-everything at once.</p>
+<a class="reference internal" href="#knife.active.mathknife.wrap" title="knife.active.mathknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> all at once.</p>
+<p>Default behavior is to <a class="reference internal" href="#knife.active.mathknife.wrap" title="knife.active.mathknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> everything at once. The default
+behavior is reverted to <strong>after</strong> <a class="reference internal" href="#knife.active.mathknife.get" title="knife.active.mathknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.active.mathknife.peek" title="knife.active.mathknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is
+invoked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.original" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore incoming things to original snapshot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
@@ -285,22 +358,35 @@ everything at once.</p>
 <dd><p>Assign <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
 <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
 arguments used when <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is invoked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile search <cite>pattern</cite> for use as <a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a><a class="reference internal" href="#knife.active.mathknife.params" title="knife.active.mathknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when a pattern
+is compiled.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
 <li><strong>type</strong> (<em>string</em>) &#8211; engine to compile <cite>pattern</cite> with. Valid options
 are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
 <li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -309,12 +395,12 @@ are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#82
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;first {}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">&#39;first test&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># using regular expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;third .&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;regex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="go">&#39;third test&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># using glob pattern</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;second*&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">&#39;second test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using regular expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;third .&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;regex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">&#39;third test&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -335,10 +421,11 @@ are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#82
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
 </tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 4, 5, 6, 3, 4, 5]</span>
 </pre></div>
 </div>
@@ -347,8 +434,16 @@ are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#82
 <dl class="method">
 <dt id="knife.active.mathknife.range">
 <tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover length of the smallest interval that can contain every
-incoming thing.</p>
+<dd><p>Discover length of the smallest interval that can contain the value of
+every incoming thing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">range</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">8</span>
 </pre></div>
@@ -359,20 +454,31 @@ incoming thing.</p>
 <dt id="knife.active.mathknife.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take baseline snapshot of current incoming things.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>precision=False</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover total by adding <cite>start</cite> and incoming things together.</p>
+<dd><p>Discover total value of adding <cite>start</cite> and incoming things together.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> (<em>integer or float</em>) &#8211; starting number</li>
 <li><strong>precision</strong> (<em>boolean</em>) &#8211; add floats with extended precision</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -394,12 +500,16 @@ incoming thing.</p>
 <dt id="knife.active.mathknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore incoming things to a previous snapshot.</p>
+<p>A snapshot of incoming things is automatically taken at the start of
+each <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> operation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>,
 etc.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -422,22 +532,27 @@ etc.</td>
 <dl class="method">
 <dt id="knife.active.mathknife.unicode">
 <tt class="descname">unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="#knife.active.mathknife.unicode" title="knife.active.mathknife.unicode"><tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt></a> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode outgoing things.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/library/functions.html#unicode">unicode</a>
+(<a class="reference external" href="http://docs.python.org/py3k/library/functions.html#str">str</a> under
+Python 3) <a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#bytes.decode">decode()</a> outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
 <li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span><span class="o">.</span><span class="n">oneach</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(u&#39;[1]&#39;, u&#39;True&#39;, u&#39;t&#39;, u&#39;i&#39;, u&#39;g&#39;, u&#39;None&#39;, u&#39;(1,)&#39;)</span>
+<span class="go">[u&#39;[1]&#39;, u&#39;True&#39;, u&#39;t&#39;, u&#39;i&#39;, u&#39;g&#39;, u&#39;None&#39;, u&#39;(1,)&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -446,11 +561,15 @@ etc.</td>
 <dt id="knife.active.mathknife.worker">
 <tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.worker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign callable used to work on incoming things.</p>
+<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a><a class="reference internal" href="#knife.active.mathknife.params" title="knife.active.mathknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when new worker
+is assigned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a callable</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -459,13 +578,17 @@ etc.</td>
 <dl class="method">
 <dt id="knife.active.mathknife.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.wrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign object, type, or class used to wrap outgoing things. Default
-wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+<dd><p>Assign <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt> used to wrap
+outgoing things.</p>
+<p>Default wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>. The default wrapper is reverted to
+after <a class="reference internal" href="#knife.active.mathknife.get" title="knife.active.mathknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.active.mathknife.peek" title="knife.active.mathknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is invoked.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; a object, type, or class</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -480,57 +603,19 @@ wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list<
 </div>
 
 
-          </div>
-        </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="amapknife.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.mapknife</span></tt> &#8212; Actively evaluated mapping knife</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="aorderknife.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.active.orderknife</span></tt> &#8212; Actively evaluated ordering knife</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/amathknife.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="amapknife.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.mapknife</span></tt> &#8212; Actively evaluated mapping knife</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="aorderknife.html"><tt class="docutils literal"><span class="pre">knife.active.orderknife</span></tt> &#8212; Actively evaluated ordering knife</a>&#160;&#160;»
+        </p>
+
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="aorderknife.html" title="knife.active.orderknife — Actively evaluated ordering knife"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="amapknife.html" title="knife.active.mapknife — Actively evaluated mapping knife"
-             >previous</a> |</li>
-        <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
+
     <div class="footer">
         &copy; Copyright 2012, L. C. Rees.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.

@@ -20,62 +20,102 @@ class activeknife(
     MathMixin, SliceMixin, CmpMixin,
 ):
 
-    '''Actively evaluated combo knife.'''
+    '''
+    Actively evaluated combo knife.
+
+    Combines features from every other :mod:`knife` knife.
+    '''
 
     __slots__ = SLOTS
 
 
 class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
-    '''Actively evaluated comparing knife.'''
+    '''
+    Actively evaluated comparing knife.
+
+    Comparison operations for incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
-    '''Actively evaluated filtering knife.'''
+    '''
+    Actively evaluated filtering knife.
+
+    Filtering operations for incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
-    '''Actively evaluated mapping knife.'''
+    '''
+    Actively evaluated mapping knife.
+
+    `Map <http://docs.python.org/library/functions.html#map>`_ operations for incoming
+    things.
+    '''
 
     __slots__ = SLOTS
 
 
 class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
-    '''Actively evaluated mathing knife.'''
+    '''
+    Actively evaluated mathing knife.
+
+    Numeric and statistical operations for incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
-    '''Actively evaluated ordering knife.'''
+    '''
+    Actively evaluated ordering knife.
+
+    Sorting and grouping operations for incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
-    '''Actively evaluated reducing knife.'''
+    '''
+    Actively evaluated reducing knife.
+
+    `Reducing operations <http://docs.python.org/library/functions.html#map>`_ for
+    incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
-    '''Actively evaluated repeating knife.'''
+    '''
+    Actively evaluated repeating knife.
+
+    `Repetition <http://docs.python.org/library/functions.html#reduce>`_ operations
+    for incoming things.
+    '''
 
     __slots__ = SLOTS
 
 
 class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
 
-    '''slicing knife'''
+    '''
+    Actively evaluated slicing knife.
+
+    `Slicing operations <http://docs.python.org/library/functions.html#slice>`_ for
+    incoming things.
+    '''
 
     __slots__ = SLOTS
