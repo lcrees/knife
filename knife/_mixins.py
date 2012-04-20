@@ -4,13 +4,13 @@
 from math import fsum
 from copy import deepcopy
 from threading import local
+from functools import reduce
 from inspect import isclass, getmro
-from functools import partial, reduce
 from collections import deque, namedtuple
 from random import choice, sample, shuffle
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
-    groupby, cycle, islice, tee, starmap, repeat, combinations, permutations,
+    groupby, islice, tee, starmap, repeat, combinations, permutations,
     product, chain)
 
 from stuf.six import strings, items, values, keys, filter, map
@@ -19,10 +19,10 @@ from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 from knife._compat import (
     Counter, ChainMap, ichain, ifilterfalse, zip_longest)
 
-Count = namedtuple('Count', 'least_common most_common totals')
-MinMax = namedtuple('MinMax', 'minimum maximum')
+Count = namedtuple('Count', 'least most overall')
+MinMax = namedtuple('MinMax', 'min max')
 TrueFalse = namedtuple('TrueFalse', 'true false')
-GroupBy = namedtuple('GroupBy', 'keys groups')
+GroupBy = namedtuple('Group', 'keys groups')
 
 
 class _CmpMixin(local):
@@ -209,7 +209,7 @@ class _MapMixin(local):
         else:
             kwargmap = lambda x, y: call(*x, **y)
         return lambda x: starmap_(kwargmap, x)
-    
+
     @staticmethod
     def _map(call, imap_=map):
         return lambda x: imap_(call, x)
@@ -230,14 +230,14 @@ class _FilterMixin(local):
     @staticmethod
     def _attributes(names, _attrgetter=attrgetter):
         attrfind = _attrgetter(*names)
-        def attributes(iterable, get=attrfind): #@IgnorePep8
+        def attrs(iterable, get=attrfind): #@IgnorePep8
             AttrErr_ = AttributeError
             for thing in iterable:
                 try:
                     yield get(thing)
                 except AttrErr_:
                     pass
-        return attributes
+        return attrs
 
     @staticmethod
     def _duality(true, f=filter, ff=ifilterfalse, l=list, t=tee, b=TrueFalse):
@@ -357,19 +357,6 @@ class _ReduceMixin(local):
         if initial is None:
             return lambda x: reduce_(call, x)
         return lambda x: reduce_(call, x, initial)
-
-    @staticmethod
-    def _weave(b, i=iter, n=next, s=islice, c=cycle, p=partial, t=tee, l=list):
-        work, measure = t(b)
-        nexts = c(p(n, i(item)) for item in work)
-        pending = len(l(measure))
-        while pending:
-            try:
-                for nextz in nexts:
-                    yield nextz()
-            except StopIteration:
-                pending -= 1
-                nexts = c(s(nexts, pending))
 
     @staticmethod
     def _zip(iterable, zip_=zip_longest):

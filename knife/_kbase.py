@@ -21,63 +21,42 @@ class KChainknife(AppspaceKey):
 
     def worker(call):  # @NoSelf
         '''
-        Assign worker.
+        Assign Python callable used to process incoming things.
 
         :argument worker: a Python callable
         '''
 
-    def pattern(pattern, type='parse', flags=0):  # @NoSelf
-        '''
-        Compile a search pattern and use it as the worker.
-
-        :argument string pattern: search pattern
-
-        :keyword string type: engine to compile pattern with. Valid options are
-          `'parse' <http://pypi.python.org/pypi/parse/>`_, `'re'
-          <http://docs.python.org/library/re.html>`_, or `'glob'
-          <http://docs.python.org/library/fnmatch.html>`_
-
-        :keyword integer flags: regular expression `flags
-          <http://docs.python.org/library/re.html#re.DEBUG>`_
-        '''
-
     def params(*args, **kw):  # @NoSelf
         '''
-        Assign global `positional
+        Assign `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params used when the worker is invoked.
+        arguments used whenever :meth:`worker` is invoked.
         '''
 
     ###########################################################################
     ## things coming in #######################################################
     ###########################################################################
 
-    def map(self):  # @NoSelf
-        '''
-        Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
-        '''
-
-    def merge(self):  # @NoSelf
-        '''
-        Combine multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ into one
-        iterable.
-        '''
-
     def prepend(*things):  # @NoSelf
         '''
-        Insert `things` **before** any other incoming things.
+        Insert `things` **before** other incoming things.
 
         :argument things: incoming things
+
+        >>> from knife import __
+        >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
+        [1, 2, 3, 4, 5, 6, 3, 4, 5]
         '''
 
     def append(things):  # @NoSelf
         '''
-        Insert `things` **after** any other incoming things.
+        Insert `things` **after** other incoming things.
 
         :argument things: incoming things
+
+        >>> __(3, 4, 5).append(1, 2, 3, 4, 5, 6).peek()
+        [3, 4, 5, 1, 2, 3, 4, 5, 6]
         '''
 
     ###########################################################################
@@ -88,7 +67,7 @@ class KChainknife(AppspaceKey):
         '''Number of incoming things.'''
 
     def __repr__(self):
-        '''Object representation.'''
+        '''String representation.'''
         return self._repr()
 
 
@@ -103,17 +82,14 @@ class KOutput(KChainknife):
     def __iter__():  # @NoSelf
         '''Iterate over outgoing things.'''
 
-    def fetch():  # @NoSelf
+    def get():  # @NoSelf
         '''
-        Return outgoing things (wrapped with the current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ wrap.
+        Return outgoing things wrapped with :meth:`wrap`.
         '''
 
     def peek():  # @NoSelf
         '''
-        Preview current state of incoming things (wrapped with the current
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        wrap).
+        Preview current incoming things wrapped with :meth:`wrap`.
         '''
 
     ###########################################################################
@@ -122,24 +98,53 @@ class KOutput(KChainknife):
 
     def undo(snapshot=0):  # @NoSelf
         '''
-        Restore incoming things to a previous state.
+        Restore incoming things to a previous snapshot.
 
         :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
+
+        >>> from knife import __
+        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+        >>> undone.peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3]
+        >>> # undo back one step
+        >>> undone.append(1).undo().peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3]
+        >>> # undo back one step
+        >>>> undone.append(1).append(2).undo().peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
+        >>> # undo back 2 steps
+        >>> undone.append(1).append(2).undo(2).peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
         '''
 
     def snapshot():  # @NoSelf
         '''
-        Take baseline snapshot of the current state of incoming things.
+        Take baseline snapshot of current incoming things.
         '''
 
     def baseline():  # @NoSelf
         '''
-        Restore incoming things to baseline state.
+        Restore incoming things to baseline :meth:`snapshot`.
+
+          >>> from knife import __
+          >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+          >>> undone.peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6]
+          >>> undone.snapshot().append(1).append(2).peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]
+          >>> undone.baseline().peek()
+          [1, 2, 3, 4, 5, 6, 1, 2, 3]
         '''
 
     def original():  # @NoSelf
         '''
-        Restore incoming things to initial state.
+        Restore incoming things to original snapshot.
+
+          >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+          >>> undone.peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6]
+          >>> undone.original().peek()
+          [1, 2, 3]
         '''
 
     ###########################################################################
@@ -155,62 +160,60 @@ class KOutput(KChainknife):
     ## cast things out ########################################################
     ###########################################################################
 
-    def wrap_each():  # @NoSelf
+    def oneach():  # @NoSelf
         '''
-        Toggle whether each item should be cast to wrapping type or everything.
+        Toggle whether each outgoing thing should be individually wrapped with
+        :meth:`wrap` or whether all outgoing things should be wrapped with
+        :meth:`wrap` all at once. Default behavior is to :meth:`wrap`
+        everything at once.
         '''
 
     def wrap(wrapper):  # @NoSelf
         '''
-        Assign type caster for outgoing things.
+        Assign object, type, or class used to wrap outgoing things. The default
+        wrapper is :class:`list`.
 
-        :argument wrapper: an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ wrap
+        :argument wrapper: a Python object, type, or class
+
+          >>> __(1, 2, 3, 4, 5, 6).wrap(tuple).peek()
+          (1, 2, 3, 4, 5, 6)
         '''
 
     def ascii(errors='strict'):  # @NoSelf
         '''
-        Set type caster to :class:`byte` encode outgoing things with the
-        ``'ascii'`` codec.
+        :class:`byte` encode outgoing things with the ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
+
+          >>> from knife import __
+          >>> from stuf.six import u, b
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.ascii().oneach().peek()
+          (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
 
     def bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        Set type caster to :class:`byte` encode outgoing things.
+        :class:`byte` encode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for encoding issues
-        '''
 
-    def as_dict():  # @NoSelf
-        '''
-        Set type caster to cast outgoing things to :class:`dict`.
-        '''
-
-    def as_list():  # @NoSelf
-        '''
-        Set type caster to cast outgoing things to :class:`list`.
-        '''
-
-    def as_set():  # @NoSelf
-        '''
-        Set type caster to cast outgoing things to :class:`set`.
-        '''
-
-    def as_tuple():  # @NoSelf
-        '''
-        Set type caster to cast outgoing things to :class:`tuple`.
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.bytes().oneach().peek()
+          (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
 
     def unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
-        Set type caster to :class:`unicode` (:class:`str` under Python 3)
-        decode outgoing things.
+        :class:`unicode` (:class:`str` under Python 3) decode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for decoding issues
+
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.unicode().oneach().peek()
+          (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         '''

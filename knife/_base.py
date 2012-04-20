@@ -10,8 +10,6 @@ from re import compile as rcompile
 from stuf.six import map
 from parse import compile as pcompile
 
-from knife._compat import ichain
-
 SLOTS = [
      '_in', '_work', '_hold', '_out', '_original', '_baseline', '_mode', '_kw',
      '_history', '_worker', '_wrapper', '_args',

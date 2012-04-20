@@ -12,11 +12,11 @@ class CmpMixin(local):
 
     def all(self):
         '''
-        Discover if :meth:`worker` returns :const:`True` for **every**
-        incoming thing.
+        Discover if :meth:`worker` is :const:`True` for **every** incoming
+        thing.
 
         >>> from knife import __
-        >>> __(2, 4, 6, 8).worker(lambda x: x % 2 == 0).all().fetch()
+        >>> __(2, 4, 6, 8).worker(lambda x: x % 2 == 0).all().get()
         True
         '''
         with self._chain:
@@ -24,10 +24,9 @@ class CmpMixin(local):
 
     def any(self):
         '''
-        Discover if :meth:`worker` returns :const:`True` for **any** incoming
-        thing.
+        Discover if :meth:`worker` is :const:`True` for **any** incoming thing.
 
-        >>> __(1, 4, 5, 9).worker(lambda x: x % 2 == 0).any().fetch()
+        >>> __(1, 4, 5, 9).worker(lambda x: x % 2 == 0).any().get()
         True
         '''
         with self._chain:
@@ -43,10 +42,10 @@ class CmpMixin(local):
 
         >>> # default behavior
         >>> test = __([1, 2, 3, 4, 5], [5, 2, 10], [10, 11, 2])
-        >>> test.difference().fetch()
+        >>> test.difference().get()
         [1, 3, 4]
         >>> # symmetric difference
-        >>> test.original().difference(symmetric=True).fetch()
+        >>> test.original().difference(symmetric=True).get()
         [1, 3, 4, 11]
         '''
         with self._chain:
@@ -58,7 +57,7 @@ class CmpMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming
         things.
 
-        >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).intersection().fetch()
+        >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).intersection().get()
         [1, 2]
         '''
         with self._chain:
@@ -69,7 +68,7 @@ class CmpMixin(local):
         Discover union within a series of `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming things.
 
-        >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().fetch()
+        >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().get()
         [1, 10, 3, 2, 101]
         '''
         with self._chain:
@@ -79,12 +78,12 @@ class CmpMixin(local):
         '''
         Discover unique incoming things.
 
-          >>> # default behavior
-          >>> __(1, 2, 1, 3, 1, 4).unique().fetch()
-          [1, 2, 3, 4]
-          >>> # using worker as key function
-          >>> __(1, 2, 1, 3, 1, 4).worker(round).unique().fetch()
-          [1, 2, 3, 4]
+        >>> # default behavior
+        >>> __(1, 2, 1, 3, 1, 4).unique().get()
+        [1, 2, 3, 4]
+        >>> # using worker as key function
+        >>> __(1, 2, 1, 3, 1, 4).worker(round).unique().get()
+        [1, 2, 3, 4]
         '''
         with self._chain:
             return self._iter(self._unique(self._identity))
@@ -98,31 +97,31 @@ class MathMixin(local):
         '''
         Discover average incoming thing.
 
-          >>> from knife import __
-          >>> __(10, 40, 45).average().fetch()
-          31.666666666666668
+        >>> from knife import __
+        >>> __(10, 40, 45).average().get()
+        31.666666666666668
         '''
         with self._chain:
             return self._iter(self._average)
 
     def count(self):
         '''
-        Discover how many times each incoming thing occurs.
+        Discover how common each incoming thing is.
 
         :returns: :class:`tuple` of (*least common thing*, *most common thing*,
           [*counts of everything* (a :class:`list` of :class:`tuple` pairs of
           (*thing*, *count*))]).
 
-          >>> common = __(11, 3, 5, 11, 7, 3, 5, 11).count().fetch()
-          >>> # least common thing
-          >>> common.least_common
-          7
-          >>> # most common thing
-          >>> common.most_common
-          11
-          >>> # total count for every thing
-          >>> common.totals
-          [(11, 3), (3, 2), (5, 2), (7, 1)]
+        >>> common = __(11, 3, 5, 11, 7, 3, 5, 11).count().get()
+        >>> # least common thing
+        >>> common.least
+        7
+        >>> # most common thing
+        >>> common.most
+        11
+        >>> # total count for every thing
+        >>> common.overall
+        [(11, 3), (3, 2), (5, 2), (7, 1)]
         '''
         with self._chain:
             return self._iter(self._count)
@@ -132,17 +131,17 @@ class MathMixin(local):
         Discover maximum incoming thing using :meth:`worker` as the `key
         function <http://docs.python.org/glossary.html#term-key-function>`_.
 
-          >>> # default behavior
-          >>> __(1, 2, 4).max().fetch()
-          4
-          >>> stooges = (
-          ...    {'name': 'moe', 'age': 40},
-          ...    {'name': 'larry', 'age': 50},
-          ...    {'name': 'curly', 'age': 60},
-          ... )
-          >>> # using worker as key function
-          >>> __(*stooges).worker(lambda x: x['age']).max().fetch()
-          {'age': 60, 'name': 'curly'}
+        >>> # default behavior
+        >>> __(1, 2, 4).max().get()
+        4
+        >>> stooges = (
+        ...    {'name': 'moe', 'age': 40},
+        ...    {'name': 'larry', 'age': 50},
+        ...    {'name': 'curly', 'age': 60},
+        ... )
+        >>> # using worker as key function
+        >>> __(*stooges).worker(lambda x: x['age']).max().get()
+        {'age': 60, 'name': 'curly'}
         '''
         with self._chain:
             return self._iter(self._max(self._identity))
@@ -151,9 +150,9 @@ class MathMixin(local):
         '''
         Discover median incoming thing.
 
-        >>> __(4, 5, 7, 2, 1).median().fetch()
+        >>> __(4, 5, 7, 2, 1).median().get()
         4
-        >>> __(4, 5, 7, 2, 1, 8).median().fetch()
+        >>> __(4, 5, 7, 2, 1, 8).median().get()
         4.5
         '''
         with self._chain:
@@ -165,9 +164,9 @@ class MathMixin(local):
         function <http://docs.python.org/glossary.html#term-key-function>`_.
 
         >>> test = __(10, 5, 100, 2, 1000)
-        >>> test.min().fetch()
+        >>> test.min().get()
         2
-        >>> test.original().worker(lambda x: x % 100 == 0).min().fetch()
+        >>> test.original().worker(lambda x: x % 100 == 0).min().get()
         10
         '''
         with self._chain:
@@ -179,11 +178,11 @@ class MathMixin(local):
 
         :returns: :class:`namedtuple` (*minimum value*, *maximum value*).
 
-          >>> minmax = __(1, 2, 4).minmax().fetch()
-          >>> minmax.minimum
-          1
-          >>> minmax.maximum
-          4
+        >>> minmax = __(1, 2, 4).minmax().get()
+        >>> minmax.min
+        1
+        >>> minmax.max
+        4
         '''
         with self._chain:
             return self._iter(self._minmax)
@@ -193,8 +192,8 @@ class MathMixin(local):
         Discover length of the smallest interval that can contain every
         incoming thing.
 
-          >>> __(3, 5, 7, 3, 11).range().fetch()
-          8
+        >>> __(3, 5, 7, 3, 11).range().get()
+        8
         '''
         with self._chain:
             return self._iter(self._range)
@@ -208,15 +207,15 @@ class MathMixin(local):
 
         :keyword boolean precision: add floats with extended precision
 
-          >>> # default behavior
-          >>> __(1, 2, 3).sum().fetch()
-          6
-          >>> # with a starting mumber
-          >>> __(1, 2, 3).sum(start=1).fetch()
-          7
-          >>> # add floating points with extended precision
-          >>> __(.1, .1, .1, .1, .1, .1, .1, .1).sum(precision=True).fetch()
-          1.0
+        >>> # default behavior
+        >>> __(1, 2, 3).sum().get()
+        6
+        >>> # with a starting mumber
+        >>> __(1, 2, 3).sum(start=1).get()
+        7
+        >>> # add floating points with extended precision
+        >>> __(.1, .1, .1, .1, .1, .1, .1, .1).sum(precision=True).get()
+        0.8
         '''
         with self._chain:
             return self._iter(self._sum(start, precision))
@@ -231,14 +230,14 @@ class OrderMixin(local):
         Group incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-          >>> from knife import __
-          >>> # default grouping
-          >>> __(1.3, 2.1, 2.4).group().fetch()
-          [(1.3, (1.3,)), (2.1, (2.1,)), (2.4, (2.4,))]
-          >>> from math import floor
-          >>> # use worker for key function
-          >>> __(1.3, 2.1, 2.4).worker(floor).group().fetch()
-          [(1.0, (1.3,)), (2.0, (2.1, 2.4))]
+        >>> from knife import __
+        >>> # default grouping
+        >>> __(1.3, 2.1).group().get()
+        [Group(keys=1.3, groups=(1.3,)), Group(keys=2.1, groups=(2.1,))]
+        >>> from math import floor
+        >>> # use worker for key function
+        >>> __(1.3, 2.1, 2.4).worker(floor).group().get()
+        [Group(keys=1.0, groups=(1.3,)), Group(keys=2.0, groups=(2.1, 2.4))]
         '''
         with self._chain:
             return self._many(self._group(self._identity))
@@ -247,8 +246,8 @@ class OrderMixin(local):
         '''
         Reverse the order of incoming things.
 
-          >>> __(5, 4, 3, 2, 1).reverse().fetch()
-          [1, 2, 3, 4, 5]
+        >>> __(5, 4, 3, 2, 1).reverse().get()
+        [1, 2, 3, 4, 5]
         '''
         with self._chain:
             return self._many(self._reverse)
@@ -257,7 +256,7 @@ class OrderMixin(local):
         '''
         Randomly sort incoming things.
 
-          >>> __(5, 4, 3, 2, 1).shuffle().fetch()
+          >>> __(5, 4, 3, 2, 1).shuffle().get()
           [3, 1, 5, 4, 2]
         '''
         with self._chain:
@@ -268,13 +267,13 @@ class OrderMixin(local):
         Reorder incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-          >>> # default sort
-          >>> __(4, 6, 65, 3, 63, 2, 4).sort().fetch()
-          [2, 3, 4, 4, 6, 63, 65]
-          >>> from math import sin
-          >>> # using worker as key function
-          >>> __(1, 2, 3, 4, 5, 6).worker(sin).sort().fetch()
-          [5, 4, 6, 3, 1, 2]
+        >>> # default sort
+        >>> __(4, 6, 65, 3, 63, 2, 4).sort().get()
+        [2, 3, 4, 4, 6, 63, 65]
+        >>> from math import sin
+        >>> # using worker as key function
+        >>> __(1, 2, 3, 4, 5, 6).worker(sin).sort().get()
+        [5, 4, 6, 3, 1, 2]
         '''
         with self._chain:
             return self._iter(self._sort(self._identity))
@@ -284,16 +283,16 @@ class RepeatMixin(local):
 
     '''repeating knife mixin'''
 
-    def combinations(self, n):
+    def combinate(self, n):
         '''
-        Discover combinations of every `n` incoming things.
+        Discover combinations for every `n` incoming things.
 
         :argument integer n: number of incoming things to generate
           combinations from
 
-          >>> from knife import __
-          >>> __(40, 50, 60).combinations(2).fetch()
-          [(40, 50), (40, 60), (50, 60)]
+        >>> from knife import __
+        >>> __(40, 50, 60).combinate(2).get()
+        [(40, 50), (40, 60), (50, 60)]
         '''
         with self._chain:
             return self._many(self._combinations(n))
@@ -302,21 +301,21 @@ class RepeatMixin(local):
         '''
         Duplicate each incoming thing.
 
-          >>> __([[1, [2, 3]], [4, [5, 6]]]).copy().fetch()
-          [[1, [2, 3]], [4, [5, 6]]]
+        >>> __([[1, [2, 3]], [4, [5, 6]]]).copy().get()
+        [[1, [2, 3]], [4, [5, 6]]]
         '''
         with self._chain:
             return self._many(self._copy)
 
-    def permutations(self, n):
+    def permutate(self, n):
         '''
-        Discover permutations of every `n` incoming things.
+        Discover permutations for every `n` incoming things.
 
         :argument integer n: number of incoming things to generate
           permutations from
 
-          >>> __(40, 50, 60).permutations(2).fetch()
-          [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]
+        >>> __(40, 50, 60).permutate(2).get()
+        [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]
         '''
         with self._chain:
             return self._many(self._permutations(n))
@@ -329,14 +328,14 @@ class RepeatMixin(local):
 
         :keyword boolean call: repeat results of invoking :meth:`worker`
 
-          >>> # repeat iterable
-          >>> __(40, 50, 60).repeat(3).fetch()
-          [(40, 50, 60), (40, 50, 60), (40, 50, 60)]
-          >>> def test(*args):
-          ...    return list(args)
-          >>> # with worker
-          >>> __(40, 50, 60).worker(test).repeat(n=3, call=True).fetch()
-          [[40, 50, 60], [40, 50, 60], [40, 50, 60]]
+        >>> # repeat iterable
+        >>> __(40, 50, 60).repeat(3).get()
+        [(40, 50, 60), (40, 50, 60), (40, 50, 60)]
+        >>> def test(*args):
+        ...    return list(args)
+        >>> # with worker
+        >>> __(40, 50, 60).worker(test).repeat(n=3, call=True).get()
+        [[40, 50, 60], [40, 50, 60], [40, 50, 60]]
         '''
         with self._chain:
             return self._many(self._repeat(n, call, self._identity))
@@ -356,14 +355,14 @@ class MapMixin(local):
         :keyword boolean merge: merge global positional :meth:`params` with
           positional arguments derived from an iterable
 
-          >>> from knife import __
-          >>> # default behavior
-          >>> test = __((1, 2), (2, 3), (3, 4))
-          >> test.worker(lambda x, y: x * y).argmap().fetch()
-          [2, 6, 12]
-          >>> # merge global positional arguments with iterable arguments
-          >>> test.original().worker(lambda x, y, z, a, b: x * y * z * a * b)
-          >>> test.params(7, 8, 9).argmap(merge=True).fetch()
+        >>> from knife import __
+        >>> # default behavior
+        >>> test = __((1, 2), (2, 3), (3, 4))
+        >>> test.worker(lambda x, y: x * y).argmap().get()
+        [2, 6, 12]
+        >>> # merge global positional arguments with iterable arguments
+        >>> test.original().worker(lambda x, y, z, a, b: x * y * z * a * b)
+        >>> test.params(7, 8, 9).argmap(merge=True).get()
           [1008, 3024, 6048]
         '''
         with self._chain:
@@ -380,12 +379,12 @@ class MapMixin(local):
 
         :argument string name: method name
 
-          >>> # invoke list.index()
-          >>> __([5, 1, 7], [3, 2, 1]).params(1).invoke('index').fetch()
-          [1, 2]
-          >>> # invoke list.sort() but return sorted list instead of None
-          >>> __([5, 1, 7], [3, 2, 1]).invoke('sort').fetch()
-          [[1, 5, 7], [1, 2, 3]]
+        >>> # invoke list.index()
+        >>> __([5, 1, 7], [3, 2, 1]).params(1).invoke('index').get()
+        [1, 2]
+        >>> # invoke list.sort() but return sorted list instead of None
+        >>> __([5, 1, 7], [3, 2, 1]).invoke('sort').get()
+        [[1, 5, 7], [1, 2, 3]]
         '''
         with self._chain:
             return self._many(self._invoke(name, (self._args, self._kw)))
@@ -405,18 +404,18 @@ class MapMixin(local):
           keyword arguments like (*iterable_args* + *global_args*,
           *global_kwargs* + *iterable_kwargs*)
 
-          >>> # default behavior
-          >>> test = __(
-          ...  ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
-          ... )
-          >>> test.worker(test).kwargmap().fetch()
-          [6, 10, 14]
-          >>> def tester(*args, **kw):
-          ...    return sum(args) * sum(kw.values())
-          >>> # merging global and iterable derived positional and keyword args
-          >>> test.original().worker(tester).params(1, 2, 3, b=5, w=10, y=13)
-          >>> test.kwargmap(merge=True).fetch()
-          [270, 330, 390]
+        >>> # default behavior
+        >>> test = __(
+        ...  ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+        ... )
+        >>> test.worker(test).kwargmap().get()
+        [6, 10, 14]
+        >>> def tester(*args, **kw):
+        ...    return sum(args) * sum(kw.values())
+        >>> # merging global and iterable derived positional and keyword args
+        >>> test.original().worker(tester).params(1, 2, 3, b=5, w=10, y=13)
+        >>> test.kwargmap(merge=True).get()
+        [270, 330, 390]
         '''
         with self._chain:
             return self._many(self._kwargmap(
@@ -427,8 +426,8 @@ class MapMixin(local):
         '''
         Feed each incoming thing to :meth:`worker`.
 
-          >>> __(1, 2, 3).worker(lambda x: x * 3).map().fetch()
-          [3, 6, 9]
+        >>> __(1, 2, 3).worker(lambda x: x * 3).map().get()
+        [3, 6, 9]
         '''
         with self._chain:
             return self._many(self._map(self._worker))
@@ -442,18 +441,18 @@ class MapMixin(local):
 
         :keyword boolean values: collect mapping values only
 
-          >>> # filter items
-          >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-          ... ).worker(lambda x, y: x * y).mapping().fetch()
-          [2, 6, 12, 2, 6, 12]
-          >>> # mapping keys only
-          >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-          ... ).mapping(keys=True).fetch()
-          [1, 2, 3, 1, 2, 3]
-          >>> # mapping values only
-          >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-          ... ).mapping(values=True).fetch()
-          [2, 3, 4, 2, 3, 4]
+        >>> # filter items
+        >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+        ... ).worker(lambda x, y: x * y).mapping().get()
+        [2, 6, 12, 2, 6, 12]
+        >>> # mapping keys only
+        >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+        ... ).mapping(keys=True).get()
+        [1, 2, 3, 1, 2, 3]
+        >>> # mapping values only
+        >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+        ... ).mapping(values=True).get()
+        [2, 3, 4, 2, 3, 4]
         '''
         with self._chain:
             return self._many(self._mapping(self._identity, keys, values))
@@ -463,7 +462,7 @@ class FilterMixin(local):
 
     '''filtering knife mixin'''
 
-    def attributes(self, *names):
+    def attrs(self, *names):
         '''
         Collect `attribute
         <http://docs.python.org/glossary.html#term-attribute>`_ values from
@@ -471,21 +470,21 @@ class FilterMixin(local):
 
         :argument string names: attribute names
 
-          >>> from knife import __
-          >>> from stuf import stuf
-          >>> stooge = [
-          ...    stuf(name='moe', age=40),
-          ...    stuf(name='larry', age=50),
-          ...    stuf(name='curly', age=60),
-          ... ]
-          >>> __(*stooge).attributes('name').fetch()
-          ['moe', 'larry', 'curly']
-          >>> # multiple attribute names
-          >>> __(*stooge).attributes('name', 'age').fetch()
-          [('moe', 40), ('larry', 50), ('curly', 60)]
-          >>> # no attributes named 'place'
-          >>> __(*stooge).attributes('place').fetch()
-          []
+        >>> from knife import __
+        >>> from stuf import stuf
+        >>> stooge = [
+        ...    stuf(name='moe', age=40),
+        ...    stuf(name='larry', age=50),
+        ...    stuf(name='curly', age=60),
+        ... ]
+        >>> __(*stooge).attrs('name').get()
+        ['moe', 'larry', 'curly']
+        >>> # multiple attribute names
+        >>> __(*stooge).attrs('name', 'age').get()
+        [('moe', 40), ('larry', 50), ('curly', 60)]
+        >>> # no attrs named 'place'
+        >>> __(*stooge).attrs('place').get()
+        []
         '''
         with self._chain:
             return self._iter(self._attributes(names))
@@ -493,16 +492,16 @@ class FilterMixin(local):
     def duality(self):
         '''
         Divide incoming things into two `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_, the first being
-        everything :meth:`worker` evaluates as :const:`True` and the second
-        being everything :meth:`worker` evaluates as :const:`False`.
+        <http://docs.python.org/glossary.html#term-iterable>`_, the first
+        everything :meth:`worker` is :const:`True` for and the second
+        everything :meth:`worker` is :const:`False` for.
 
-          >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
-          >>> divide = test.duality().fetch()
-          >>> divide.true
-          [2, 4, 6]
-          >>> divide.false
-          [1, 3, 5]
+        >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
+        >>> divide = test.duality().get()
+        >>> divide.true
+        [2, 4, 6]
+        >>> divide.false
+        [1, 3, 5]
         '''
         with self._chain:
             return self._iter(self._duality(self._test))
@@ -511,17 +510,17 @@ class FilterMixin(local):
         '''
         Collect incoming things matched by :meth:`worker`.
 
-        :keyword boolean invert: collect incoming things :meth:`worker`
-          evaluates as :const:`False` instead of :const:`True`
+        :keyword boolean invert: collect things :meth:`worker` is
+          :const:`False` for rather than :const:`True` for
 
-          >>> # filter for true values
-          >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
-          >>> test.filter().fetch()
-          [2, 4, 6]
-          >>> # filter for false values
-          >>> test.original().worker(lambda x: x % 2 == 0)
-          >>> test.filter(invert=True).fetch()
-          [1, 3, 5]
+        >>> # filter for true values
+        >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
+        >>> test.filter().get()
+        [2, 4, 6]
+        >>> # filter for false values
+        >>> test.original().worker(lambda x: x % 2 == 0)
+        >>> test.filter(invert=True).get()
+        [1, 3, 5]
         '''
         with self._chain:
             return self._many(self._filter(self._test, invert))
@@ -535,88 +534,57 @@ class FilterMixin(local):
 
         :argument string keys: keys or indices
 
-          >>> stooge = [
-          ...    dict(name='moe', age=40),
-          ...    dict(name='larry', age=50),
-          ...    dict(name='curly', age=60)
-          ... ]
-          >>> # get items from mappings like dictionaries, etc...
-          >>> __(*stooge).items('name').fetch()
-          ['moe', 'larry', 'curly']
-          >>> __(*stooge).items('name', 'age').fetch()
-          [('moe', 40), ('larry', 50), ('curly', 60)]
-          >>> # get items from sequences like lists, tuples, etc...
-          >>> stooge = [['moe', 40], ['larry', 50], ['curly', 60]]
-          >>> __(*stooge).items(0).fetch()
-          ['moe', 'larry', 'curly']
-          >>> __(*stooge).items(1).fetch()
-          [40, 50, 60]
-          >>> __(*stooge).items('place').fetch()
-          []
+        >>> stooge = [
+        ...    dict(name='moe', age=40),
+        ...    dict(name='larry', age=50),
+        ...    dict(name='curly', age=60)
+        ... ]
+        >>> # get items from mappings like dictionaries, etc...
+        >>> __(*stooge).items('name').get()
+        ['moe', 'larry', 'curly']
+        >>> __(*stooge).items('name', 'age').get()
+        [('moe', 40), ('larry', 50), ('curly', 60)]
+        >>> # get items from sequences like lists, tuples, etc...
+        >>> stooge = [['moe', 40], ['larry', 50], ['curly', 60]]
+        >>> __(*stooge).items(0).get()
+        ['moe', 'larry', 'curly']
+        >>> __(*stooge).items(1).get()
+        [40, 50, 60]
+        >>> __(*stooge).items('place').get()
+        []
         '''
         with self._chain:
             return self._iter(self._items(keys))
-
-    def pattern(self, pattern, type='parse', flags=0):
-        '''
-        Compile search `pattern` for use as :meth:`worker`.
-
-        :argument string pattern: search pattern
-
-        :keyword string type: engine to compile `pattern` with. Valid options
-          are `'parse' <http://pypi.python.org/pypi/parse/>`_, `'re'
-          <http://docs.python.org/library/re.html>`_, or `'glob'
-          <http://docs.python.org/library/fnmatch.html>`_
-
-        :keyword integer flags: regular expression `flags
-          <http://docs.python.org/library/re.html#re.DEBUG>`_
-
-          >>> # using parse expression
-          >>> test = __('first test', 'second test', 'third test')
-          >>> test.pattern('first {}').filter().fetch()
-          'first test'
-          >>> # using regular expression
-          >>> test.original().pattern('third .', type='regex').filter().fetch()
-          'third test'
-          >>> # using glob pattern
-          >>> test.original().pattern('second*', type='glob').filter().fetch()
-          'second test'
-        '''
-        self._worker = self._pattern(pattern, type, flags)
-        return self
 
     def traverse(self, invert=False):
         '''
         Collect deeply nested values from incoming things matched by
         :meth:`worker`.
 
-        :keyword boolean invert: select incoming things that :meth:`worker`
-          evaluates as :const:`False` rather than :const:`True`
+        :keyword boolean invert: collect things that :meth:`worker` is
+          :const:`False` for rather than :const:`True` for
 
-          >>> class stooge:
-          ...    name = 'moe'
-          ...    age = 40
-          >>> class stooge2:
-          ...    name = 'larry'
-          ...    age = 50
-          >>> class stooge3:
-          ...    name = 'curly'
-          ...    age = 60
-          ...    class stooge4(object):
-          ...        name = 'beastly'
-          ...        age = 969
-          >>> def test(x):
-          ...    if x[0] == 'name':
-          ...        return True
-          ...    elif x[0].startswith('__'):
-          ...        return True
-          ...    return False
-          >>> # using worker while filtering for False values
-          >>> test.original().worker(test).traverse(invert=True).fetch()
-          [ChainMap(OrderedDict([('classname', 'stooges'), ('age', 40)])),
-          ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])),
-          ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]),
-          OrderedDict([('classname', 'stooge4'), ('age', 969)]))]
+        >>> class stooge:
+        ...    name = 'moe'
+        ...    age = 40
+        >>> class stooge2:
+        ...    name = 'larry'
+        ...    age = 50
+        >>> class stooge3:
+        ...    name = 'curly'
+        ...    age = 60
+        ...    class stooge4(object):
+        ...        name = 'beastly'
+        ...        age = 969
+        >>> def test(x):
+        ...    if x[0] == 'name':
+        ...        return True
+        ...    elif x[0].startswith('__'):
+        ...        return True
+        ...    return False
+        >>> # using worker while filtering for False values
+        >>> __(stooge, stooge2, stooge3).worker(test).traverse(invert=True).get()
+        [ChainMap(OrderedDict([('classname', 'stooge'), ('age', 40)])), ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])), ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]), OrderedDict([('age', 969), ('classname', 'stooge4')]))]
         '''
         with self._chain:
             if self._worker is None:
@@ -634,9 +602,9 @@ class ReduceMixin(local):
         '''
         Reduce nested incoming things to flattened incoming things.
 
-          >>> from knife import __
-          >>> __([[1, [2], [3, [[4]]]], 'here']).flatten().fetch()
-          [1, 2, 3, 4, 'here']
+        >>> from knife import __
+        >>> __([[1, [2], [3, [[4]]]], 'here']).flatten().get()
+        [1, 2, 3, 4, 'here']
         '''
         with self._chain:
             return self._many(self._flatten)
@@ -647,9 +615,9 @@ class ReduceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming
         things into one iterable incoming thing.
 
-          >>> test = __(['moe', 'larry'], [30, 40], [True, False])
-          test.merge().fetch()
-          ['moe', 'larry', 30, 40, True, False]
+        >>> test = __(['moe', 'larry'], [30, 40], [True, False])
+        test.merge().get()
+        ['moe', 'larry', 30, 40, True, False]
         '''
         with self._chain:
             return self._many(self._merge)
@@ -665,48 +633,34 @@ class ReduceMixin(local):
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
           of incoming things
 
-          >>> # reduce from left side
-          >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce().fetch(),
-          6
-          >>> # reduce from left side with initial value
-          >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce(1).fetch()
-          7
-          >>> # reduce from right side
-          >>> test = __([0, 1], [2, 3], [4, 5]).worker(lambda x, y: x + y)
-          >>> test.reduce(reverse=True).fetch()
-          [4, 5, 2, 3, 0, 1]
-          >>> # reduce from right side with initial value
-          >>> test.original().worker(lambda x, y: x + y)
-          >>> test.reduce(initial=[0, 0], reverse=True).fetch()
-          [4, 5, 2, 3, 0, 1, 0, 0]
+        >>> # reduce from left side
+        >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce().get(),
+        6
+        >>> # reduce from left side with initial value
+        >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce(1).get()
+        7
+        >>> # reduce from right side
+        >>> test = __([0, 1], [2, 3], [4, 5]).worker(lambda x, y: x + y)
+        >>> test.reduce(reverse=True).get()
+        [4, 5, 2, 3, 0, 1]
+        >>> # reduce from right side with initial value
+        >>> test.original().worker(lambda x, y: x + y)
+        >>> test.reduce(initial=[0, 0], reverse=True).get()
+        [4, 5, 2, 3, 0, 1, 0, 0]
         '''
         with self._chain:
             return self._one(self._reduce(self._worker, initial, reverse))
-
-    def weave(self):
-        '''
-        Reduce multiple `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ incoming
-        things to one iterable incoming thing by interleaving things found at
-        the same index position within those iterables.
-
-          >>> test = __(['moe', 'larry'], [30, 40], [True, False])
-          >>> test.weave().fetch()
-          ['moe', 30, True, 'larry', 40, False]
-        '''
-        with self._chain:
-            return self._many(self._weave)
 
     def zip(self):
         '''
         Convert multiple `iterable
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming
         things to :class:`tuples` composed of things found at the same index
-        position within those iterables.
+        position within the original iterables.
 
-          >>> test = __(['moe', 'larry'], [30, 40], [True, False])
-          >>> test.zip().fetch()
-          [('moe', 30, True), ('larry', 40, False)]
+        >>> test = __(['moe', 'larry'], [30, 40], [True, False])
+        >>> test.zip().get()
+        [('moe', 30, True), ('larry', 40, False)]
         '''
         with self._chain:
             return self._many(self._zip)
@@ -725,24 +679,24 @@ class SliceMixin(local):
 
         :keyword default: default returned if nothing is found at `n`
 
-          >>> from knife import __
-          >>> # default behavior
-          >>> __(5, 4, 3, 2, 1).at(2).fetch()
-          3
-          >>> # return default value if nothing found at index
-          >>> __(5, 4, 3, 2, 1).at(10, 11).fetch()
-          11
+        >>> from knife import __
+        >>> # default behavior
+        >>> __(5, 4, 3, 2, 1).at(2).get()
+        3
+        >>> # return default value if nothing found at index
+        >>> __(5, 4, 3, 2, 1).at(10, 11).get()
+        11
         '''
         with self._chain:
             return self._one(self._at(n, default))
 
     def choice(self):
         '''
-        `Randomly slice <http://docs.python.org/glossary.html#term-slice>`_ off
-        **one** incoming thing.
+        Randomly `slice <http://docs.python.org/glossary.html#term-slice>`_
+        off **one** incoming thing.
 
-          >>> __(1, 2, 3, 4, 5, 6).choice().fetch()
-          3
+        >>> __(1, 2, 3, 4, 5, 6).choice().get()
+        3
         '''
         with self._chain:
             return self._iter(self._choice)
@@ -757,7 +711,7 @@ class SliceMixin(local):
 
         :keyword fill: value to pad out incomplete iterables
 
-        >>> __('moe', 'larry', 'curly', 30, 40, 50, True).dice(2, 'x').fetch()
+        >>> __('moe', 'larry', 'curly', 30, 40, 50, True).dice(2, 'x').get()
         [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
         '''
         with self._chain:
@@ -770,12 +724,12 @@ class SliceMixin(local):
 
         :keyword integer n: number of incoming things
 
-          >>> # default behavior
-          >>> __(5, 4, 3, 2, 1).first().fetch()
-          5
-          >>> # first things from index 0 to 2
-          >>> __(5, 4, 3, 2, 1).first(2).fetch()
-          [5, 4]
+        >>> # default behavior
+        >>> __(5, 4, 3, 2, 1).first().get()
+        5
+        >>> # first things from index 0 to 2
+        >>> __(5, 4, 3, 2, 1).first(2).get()
+        [5, 4]
         '''
         with self._chain:
             return self._iter(self._first(n))
@@ -785,8 +739,8 @@ class SliceMixin(local):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **last** incoming thing.
 
-          >>> __(5, 4, 3, 2, 1).initial().fetch()
-          [5, 4, 3, 2]
+        >>> __(5, 4, 3, 2, 1).initial().get()
+        [5, 4, 3, 2]
         '''
         with self._chain:
             return self._many(self._initial)
@@ -799,12 +753,12 @@ class SliceMixin(local):
 
         :keyword integer n: number of incoming things
 
-          >>> # default behavior
-          >>> __(5, 4, 3, 2, 1).last().fetch()
-          1
-          >>> # fetch last two things
-          >>> __(5, 4, 3, 2, 1).last(2).fetch()
-          [2, 1]
+        >>> # default behavior
+        >>> __(5, 4, 3, 2, 1).last().get()
+        1
+        >>> # fetch last two things
+        >>> __(5, 4, 3, 2, 1).last(2).get()
+        [2, 1]
         '''
         with self._chain:
             return self._iter(self._last(n))
@@ -814,8 +768,8 @@ class SliceMixin(local):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **first** incoming thing.
 
-          >>> __(5, 4, 3, 2, 1).rest().fetch()
-          [4, 3, 2, 1]
+        >>> __(5, 4, 3, 2, 1).rest().get()
+        [4, 3, 2, 1]
         '''
         with self._chain:
             return self._many(self._rest)
@@ -827,16 +781,16 @@ class SliceMixin(local):
 
         :argument integer n: sample size
 
-          >>> __(1, 2, 3, 4, 5, 6).sample(3).fetch()
-          [2, 4, 5]
+        >>> __(1, 2, 3, 4, 5, 6).sample(3).get()
+        [2, 4, 5]
         '''
         with self._chain:
             return self._iter(self._sample(n))
 
     def slice(self, start, stop=False, step=False):
         '''
-        `Slice <http://docs.python.org/glossary.html#term-slice>`_
-        incoming things.
+        Take a `slice <http://docs.python.org/glossary.html#term-slice>`_ out
+        of incoming things.
 
         :argument integer start: starting index of slice
 
@@ -844,15 +798,15 @@ class SliceMixin(local):
 
         :keyword integer step: size of step in slice
 
-          >>> # slice from index 0 to 3
-          >>> __(5, 4, 3, 2, 1).slice(2).fetch()
-          [5, 4]
-          >>> # slice from index 2 to 4
-          >>> __(5, 4, 3, 2, 1).slice(2, 4).fetch()
-          [3, 2]
-          >>> # slice from index 2 to 4 with 2 steps
-          >>> __(5, 4, 3, 2, 1).slice(2, 4, 2).fetch()
-          3
+        >>> # slice from index 0 to 3
+        >>> __(5, 4, 3, 2, 1).slice(2).get()
+        [5, 4]
+        >>> # slice from index 2 to 4
+        >>> __(5, 4, 3, 2, 1).slice(2, 4).get()
+        [3, 2]
+        >>> # slice from index 2 to 4 with 2 steps
+        >>> __(5, 4, 3, 2, 1).slice(2, 4, 2).get()
+        3
         '''
         with self._chain:
             return self._many(self._slice(start, stop, step))

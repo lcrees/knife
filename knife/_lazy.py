@@ -199,7 +199,7 @@ class _OutMixin(_LazyMixin):
             value = wrap(outs)
         return value.pop() if len_(list_(tell)) == 1 else value
 
-    def _fetch(self, tee_=tee, list_=list, len_=len):
+    def _get(self, tee_=tee, list_=list, len_=len):
         tell, self._out, outs = tee_(self._out, 3)
         wrap = self._wrapper
         if self._mode == self._MANY:

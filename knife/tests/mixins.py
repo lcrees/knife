@@ -25,11 +25,11 @@ class MathMixin(object):
 
     def test_count(self):
         common = self.mclass(11, 3, 5, 11, 7, 3, 11).count().fetch()
-        self.assertEqual(common.totals, [(11, 3), (3, 2), (5, 1), (7, 1)])
+        self.assertEqual(common.overall, [(11, 3), (3, 2), (5, 1), (7, 1)])
         # most common
-        self.assertEqual(common.most_common, 11)
+        self.assertEqual(common.most, 11)
         # least common
-        self.assertEqual(common.least_common, 7)
+        self.assertEqual(common.least, 7)
 
     def test_max(self):
         from stuf import stuf
