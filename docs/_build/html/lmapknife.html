@@ -63,7 +63,11 @@
 <dl class="method">
 <dt id="knife.lazy.mapknife.append">
 <tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.append" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> other incoming things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[3, 4, 5, 1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -78,13 +82,23 @@
 <dt id="knife.lazy.mapknife.argmap">
 <tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.argmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to
-the worker as <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#function">wildcard</a>
+<a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#function">wildcard</a>
 <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional arguments</a> .</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">argmap</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[2, 6, 12]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># merge global positional arguments with iterable arguments</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="gp">... </span>  <span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">argmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[1008, 3024, 6048]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional arguments with
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> with
 positional arguments derived from an iterable</td>
 </tr>
 </tbody>
@@ -96,6 +110,10 @@ positional arguments derived from an iterable</td>
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_ascii</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -110,6 +128,10 @@ positional arguments derived from an iterable</td>
 <dt id="knife.lazy.mapknife.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_bytes</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -125,33 +147,13 @@ positional arguments derived from an iterable</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.lazy.mapknife.as_dict">
-<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.lazy.mapknife.as_list">
-<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.lazy.mapknife.as_set">
-<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.lazy.mapknife.as_tuple">
-<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="knife.lazy.mapknife.as_type">
 <tt class="descname">as_type</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign type caster for outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">as_type</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(1, 2, 3, 4, 5, 6)</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -168,6 +170,10 @@ positional arguments derived from an iterable</td>
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3)
 decode outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_unicode</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(u(&#39;[1]&#39;), u(&#39;True&#39;), u(&#39;t&#39;), u(&#39;i&#39;), u(&#39;g&#39;), u(&#39;None&#39;), u(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -209,6 +215,14 @@ the global <a class="reference external" href="http://docs.python.org/glossary.h
 <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword arguments</a> but
 take the original thing if the return value of the method call is
 <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># invoke list.index()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># invoke list.sort() but return sorted list instead of None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s">&#39;sort&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[[1, 5, 7], [1, 2, 3]]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -225,17 +239,28 @@ take the original thing if the return value of the method call is
 <dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as a
 <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#function">wildcard</a>
 <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
-<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword arguments</a> to the
-worker.</p>
+<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword arguments</a> to
+<a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">kwargmap</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[6, 10, 14]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># merging global and iterable derived positional and keyword args</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span> <span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span>
+<span class="gp">... </span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">kwargmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[270, 330, 390]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional or keyword arguments
-with positional and keyword arguments derived from an iterable into
-a single <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and keyword arguments
-like (<em>iterable_args</em> + <em>global_args</em>, <em>global_kwargs</em> +
-<em>iterable_kwargs</em>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional or keyword
+<a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> with positional and keyword arguments derived from an
+iterable into a single <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional and
+keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
+<em>global_kwargs</em> + <em>iterable_kwargs</em>)</td>
 </tr>
 </tbody>
 </table>
@@ -244,20 +269,57 @@ like (<em>iterable_args</em> + <em>global_args</em>, <em>global_kwargs</em> +
 <dl class="method">
 <dt id="knife.lazy.mapknife.map">
 <tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
+<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to
+<a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[3, 6, 9]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.lazy.mapknife.merge">
-<tt class="descname">merge</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.merge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
-iterable.</p>
+<dt id="knife.lazy.mapknife.mapping">
+<tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> on things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> made up of
+<a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># filter items</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]),</span> <span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">mapping</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[2, 6, 12, 2, 6, 12]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># mapping keys only</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]),</span> <span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># mapping values only</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]),</span> <span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">mapping</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[2, 3, 4, 2, 3, 4]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>keys</strong> (<em>boolean</em>) &#8211; collect mapping keys only</li>
+<li><strong>values</strong> (<em>boolean</em>) &#8211; collect mapping values only</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.original" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to initial state.</p>
+<dd><p>Restore incoming things back to initial snapshot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -272,6 +334,17 @@ params used when the worker is invoked.</p>
 <dt id="knife.lazy.mapknife.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile a search pattern and use it as the worker.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># using parse expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;first {}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;first test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using regular expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;third .&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;regex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;third test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using glob pattern</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;second*&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;second test&#39;</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -299,7 +372,11 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.lazy.mapknife.prepend">
 <tt class="descname">prepend</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.prepend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> other incoming things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 3, 4, 5]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -319,13 +396,34 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.lazy.mapknife.stepback">
 <tt class="descname">stepback</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.stepback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to baseline state.</p>
+<dd><p>Restore incoming things back to baseline snapshot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">stepback</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore incoming things to a previous state.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back one step</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back one step</span>
+<span class="go">&gt;&gt;&gt;&gt; undone.append(1).append(2).undo().peek()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back 2 steps</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">undo</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

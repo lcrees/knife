@@ -63,7 +63,11 @@
 <dl class="method">
 <dt id="knife.active.mathknife.append">
 <tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.append" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert <cite>things</cite> <strong>after</strong> any other incoming things.</p>
+<dd><p>Insert <cite>things</cite> <strong>after</strong> other incoming things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[3, 4, 5, 1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -79,6 +83,10 @@
 <tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_ascii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
 <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_ascii</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -93,6 +101,10 @@
 <dt id="knife.active.mathknife.as_bytes">
 <tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_bytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_bytes</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -108,33 +120,13 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.mathknife.as_dict">
-<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.mathknife.as_list">
-<tt class="descname">as_list</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.mathknife.as_set">
-<tt class="descname">as_set</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">set</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.mathknife.as_tuple">
-<tt class="descname">as_tuple</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to cast outgoing things to <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="knife.active.mathknife.as_type">
 <tt class="descname">as_type</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign type caster for outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">as_type</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(1, 2, 3, 4, 5, 6)</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -150,6 +142,10 @@
 <tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.as_unicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3)
 decode outgoing things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_unicode</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(u(&#39;[1]&#39;), u(&#39;True&#39;), u(&#39;t&#39;), u(&#39;i&#39;), u(&#39;g&#39;), u(&#39;None&#39;), u(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -168,14 +164,10 @@ decode outgoing things.</p>
 <dt id="knife.active.mathknife.average">
 <tt class="descname">average</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.average" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find average value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
-</tr>
-</tbody>
-</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span><span class="o">.</span><span class="n">average</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">31.666666666666668</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -194,15 +186,25 @@ decode outgoing things.</p>
 <dt id="knife.active.mathknife.count">
 <tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count how many times each thing occurs within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">common</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># least common thing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">common</span><span class="o">.</span><span class="n">least_common</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># most common thing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">common</span><span class="o">.</span><span class="n">most_common</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># total count for every thing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">common</span><span class="o">.</span><span class="n">totals</span>
+<span class="go">[(11, 3), (3, 2), (5, 1), (7, 1)])</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> consisting of (<em>least common thing</em>,
-<em>most common thing</em>, <em>count of everything</em> consisting of a
-<tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of (<em>thing</em>, <em>count</em>).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>least common thing</em>, <em>most common thing</em>,
+[<em>count of everything</em> (a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> pairs of
+(<em>thing</em>, <em>count</em>))]).</td>
 </tr>
 </tbody>
 </table>
@@ -215,73 +217,68 @@ decode outgoing things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.mathknife.map">
-<tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> to the worker.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="knife.active.mathknife.max">
 <tt class="descname">max</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find maximum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Find maximum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using
+<a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stooges</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;moe&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;larry&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;curly&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using worker as key function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="o">*</span><span class="n">stooges</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;age&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">{&#39;name&#39;: &#39;curly&#39;, &#39;age&#39;: 60}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.median">
 <tt class="descname">median</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.median" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find median value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.mathknife.merge">
-<tt class="descname">merge</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.merge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combine multiple <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a> into one
-iterable.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">4.5</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.min">
 <tt class="descname">min</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find minimum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using the
-worker as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Find minimum value within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> using
+<a class="reference internal" href="#knife.active.mathknife.worker" title="knife.active.mathknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as the <a class="reference external" href="http://docs.python.org/glossary.html#term-key-function">key function</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using worker as key function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">10</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.minmax">
 <tt class="descname">minmax</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.minmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find minimum and maximum values within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">minmax</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">minmax</span><span class="o">.</span><span class="n">minimum</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">minmax</span><span class="o">.</span><span class="n">maximum</span>
+<span class="go">4</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of (<em>minimum value</em>, <em>maximum value</em>).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">namedtuple</span></tt> of (<em>minimum value</em>, <em>maximum value</em>).</td>
 </tr>
 </tbody>
 </table>
@@ -290,7 +287,13 @@ worker as the <a class="reference external" href="http://docs.python.org/glossar
 <dl class="method">
 <dt id="knife.active.mathknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.original" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to initial state.</p>
+<dd><p>Restore incoming things back to initial snapshot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -305,6 +308,17 @@ params used when the worker is invoked.</p>
 <dt id="knife.active.mathknife.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile a search pattern and use it as the worker.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># using parse expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;first {}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;first test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using regular expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;third .&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;regex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;third test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># using glob pattern</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;second*&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">&#39;second test&#39;</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -332,7 +346,11 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.active.mathknife.prepend">
 <tt class="descname">prepend</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.prepend" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert <cite>things</cite> <strong>before</strong> any other incoming things.</p>
+<dd><p>Insert <cite>things</cite> <strong>before</strong> other incoming things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 3, 4, 5]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -346,16 +364,12 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.active.mathknife.range">
 <tt class="descname">range</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find length of the smallest interval that can contain everything
+<dd><p>Find length of the smallest interval that can contain every value
 within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
-</tr>
-</tbody>
-</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">range</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">8</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -367,24 +381,42 @@ within an <a class="reference external" href="http://docs.python.org/glossary.ht
 <dl class="method">
 <dt id="knife.active.mathknife.stepback">
 <tt class="descname">stepback</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.mathknife.stepback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to baseline state.</p>
+<dd><p>Restore incoming things back to baseline snapshot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">stepback</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.mathknife.sum">
 <tt class="descname">sum</tt><big>(</big><em>start=0</em>, <em>precision=False</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find total value by adding <cite>start</cite> and everything within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> together.</p>
+<dd><p>Find total value by adding up <cite>start</cite> and everything else within an
+<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
+together.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># default behavior</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># with a starting mumber</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># add floating points with extended precision</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>start</strong> (<em>integer or float</em>) &#8211; starting number</li>
 <li><strong>precision</strong> (<em>boolean</em>) &#8211; add floats with extended precision</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">number</p>
 </td>
 </tr>
 </tbody>
@@ -395,6 +427,19 @@ within an <a class="reference external" href="http://docs.python.org/glossary.ht
 <dt id="knife.active.mathknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.mathknife.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore incoming things to a previous state.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back one step</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back one step</span>
+<span class="go">&gt;&gt;&gt;&gt; undone.append(1).append(2).undo().peek()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back 2 steps</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">undo</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
