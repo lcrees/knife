@@ -1,5 +1,5 @@
-:class:`knife.active.reduceknife` --- active reducing knife
-===========================================================
+:class:`knife.active.reduceknife` --- Actively evaluated reducing knife
+=======================================================================
 
 .. module:: knife.active
 

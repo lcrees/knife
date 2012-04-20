@@ -1,5 +1,5 @@
-:class:`knife.active.sliceknife` --- active slicing knife
-=========================================================
+:class:`knife.active.sliceknife` --- Actively evaluated slicing knife
+=====================================================================
 
 .. module:: knife.active
 

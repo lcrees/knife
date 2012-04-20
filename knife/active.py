@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''active knifes'''
+'''Actively evaluated knives'''
 
 from knife.base import OutMixin
 from knife.mixins import (
@@ -20,56 +20,56 @@ class activeknife(
     MathMixin, SliceMixin, CmpMixin,
 ):
 
-    '''active knife'''
+    '''Actively evaluated combo knife.'''
 
     __slots__ = SLOTS
 
 
 class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
-    '''comparing knife'''
+    '''Actively evaluated comparing knife.'''
 
     __slots__ = SLOTS
 
 
 class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
-    '''filtering knife'''
+    '''Actively evaluated filtering knife.'''
 
     __slots__ = SLOTS
 
 
 class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
-    '''mapping knife'''
+    '''Actively evaluated mapping knife.'''
 
     __slots__ = SLOTS
 
 
 class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
-    '''mathing knife'''
+    '''Actively evaluated mathing knife.'''
 
     __slots__ = SLOTS
 
 
 class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
-    '''ordering knife'''
+    '''Actively evaluated ordering knife.'''
 
     __slots__ = SLOTS
 
 
 class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
-    '''reducing knife'''
+    '''Actively evaluated reducing knife.'''
 
     __slots__ = SLOTS
 
 
 class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
-    '''repeating knife'''
+    '''Actively evaluated repeating knife.'''
 
     __slots__ = SLOTS
 

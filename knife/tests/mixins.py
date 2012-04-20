@@ -52,7 +52,7 @@ class MathMixin(object):
         self.assertEqual(self.mclass(10, 5, 100, 2, 1000).min().fetch(), 2)
         self.assertEqual(
             self.mclass(10, 5, 100, 2, 1000).worker(
-                lambda x: x % 10 == 0
+            lambda x: x % 100 == 0
             ).min().fetch(),
             10,
         )
@@ -62,14 +62,6 @@ class MathMixin(object):
         self.assertEqual(
             self.mclass(10, 5, 100, 2, 1000).minmax().fetch(), (2, 1000),
         )
-
-    def test_combo(self):
-        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().min().fetch()
-        self.assertEqual(test, 2, test)
-        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().max().fetch()
-        self.assertEqual(test, 1000, test)
-        test = self.mclass(10, 5, 100, 2, 1000).minmax().merge().sum().fetch()
-        self.assertEqual(test, 1002, test)
 
     def test_range(self):
         self.assertEqual(self.mclass(3, 5, 7, 3, 11).range().fetch(), 8)
@@ -292,25 +284,6 @@ class FilterMixin(object):
         )
         self.assertEqual(self.mclass(*stooge).items(1).fetch(), [40, 50, 60])
         self.assertEqual(self.mclass(*stooge).items('place').fetch(), [])
-
-    def test_mapping(self):
-        self.assertEqual(
-            self.mclass(
-                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).mapping(True).fetch(), [1, 2, 3, 1, 2, 3],
-        )
-        self.assertEqual(
-            self.mclass(
-                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).mapping(values=True).fetch(),
-            [2, 3, 4, 2, 3, 4],
-        )
-        self.assertEqual(
-            self.mclass(
-                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).worker(lambda x, y: x * y).mapping().fetch(),
-            [2, 6, 12, 2, 6, 12],
-        )
 
     def test_filter(self):
         self.assertEqual(
@@ -542,6 +515,25 @@ class MapMixin(object):
             [[1, 5, 7], [1, 2, 3]],
         )
 
+    def test_mapping(self):
+        self.assertEqual(
+            self.mclass(
+                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+            ).mapping(True).fetch(), [1, 2, 3, 1, 2, 3],
+        )
+        self.assertEqual(
+            self.mclass(
+                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+            ).mapping(values=True).fetch(),
+            [2, 3, 4, 2, 3, 4],
+        )
+        self.assertEqual(
+            self.mclass(
+                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+            ).worker(lambda x, y: x * y).mapping().fetch(),
+            [2, 6, 12, 2, 6, 12],
+        )
+
 
 class Mixin(object):
 
@@ -573,17 +565,17 @@ class Mixin(object):
         self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.append(1).append(2).undo(2)
         self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
-        queue.snapshot().append(1).append(2).stepback()
+        queue.snapshot().append(1).append(2).baseline()
         self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.original()
         self.assertEqual(queue.peek(), [1, 2, 3])
 
     def test_wrap(self):
         self.assertIsInstance(
-            self.mclass(1, 2, 3, 4, 5, 6).as_type(tuple).peek(), tuple,
+            self.mclass(1, 2, 3, 4, 5, 6).wrap(tuple).peek(), tuple,
         )
         self.assertTupleEqual(
-            self.mclass(1, 2, 3, 4, 5, 6).as_type(tuple).peek(),
+            self.mclass(1, 2, 3, 4, 5, 6).wrap(tuple).peek(),
             (1, 2, 3, 4, 5, 6),
         )
 
@@ -592,7 +584,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_ascii().cast_each().peek(),
+            ).ascii().wrap_each().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -601,7 +593,7 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_bytes().cast_each().peek(),
+            ).bytes().wrap_each().peek(),
             (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         )
 
@@ -610,6 +602,6 @@ class Mixin(object):
         self.assertEqual(
             self.mclass(
                 [1], True, r't', b('i'), u('g'), None, (1,)
-            ).as_unicode().cast_each().peek(),
+            ).unicode().wrap_each().peek(),
             (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         )

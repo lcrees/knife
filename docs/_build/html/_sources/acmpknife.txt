@@ -1,5 +1,5 @@
-:class:`knife.active.cmpknife` --- active comparing knife
-=========================================================
+:class:`knife.active.cmpknife` --- Actively evaluated comparing knife
+=====================================================================
 
 .. module:: knife.active
 

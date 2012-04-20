@@ -1,5 +1,5 @@
-:class:`knife.active.mathknife` --- active mathing knife
-========================================================
+:class:`knife.active.mathknife` --- Actively evaluated mathing knife
+====================================================================
 
 .. module:: knife.active
 

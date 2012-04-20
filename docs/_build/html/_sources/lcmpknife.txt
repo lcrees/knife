@@ -1,5 +1,5 @@
-:class:`knife.lazy.cmpknife` --- lazy comparing knife
-=====================================================
+:class:`knife.lazy.cmpknife` --- Lazily evaluated comparing knife
+=================================================================
 
 .. module:: knife.lazy
     

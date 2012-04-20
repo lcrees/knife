@@ -1,5 +1,5 @@
-:class:`knife.active.activeknife` --- active knife
-==================================================
+:class:`knife.active.activeknife` --- Actively evaluated combo knife
+====================================================================
 
 .. module:: knife.active
 

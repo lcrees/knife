@@ -1,5 +1,5 @@
-:class:`knife.active.filterknife` --- active filtering knife
-============================================================
+:class:`knife.active.filterknife` --- Actively evaluated filtering knife
+========================================================================
 
 .. module:: knife.active
 

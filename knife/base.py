@@ -16,7 +16,7 @@ class ChainknifeMixin(local):
 
     def worker(self, worker):
         '''
-        Assign Python callable for use as a processing filter.
+        Assign Python callable used to process incoming things.
 
         :argument worker: a Python callable
         '''
@@ -28,39 +28,12 @@ class ChainknifeMixin(local):
         self._worker = worker
         return self
 
-    def pattern(self, pattern, type='parse', flags=0):
-        '''
-        Compile a search pattern for use as :meth:`worker`.
-
-        :argument string pattern: search pattern
-
-        :keyword string type: engine to compile pattern with. Valid options are
-          `'parse' <http://pypi.python.org/pypi/parse/>`_, `'re'
-          <http://docs.python.org/library/re.html>`_, or `'glob'
-          <http://docs.python.org/library/fnmatch.html>`_
-
-        :keyword integer flags: regular expression `flags
-          <http://docs.python.org/library/re.html#re.DEBUG>`_
-
-        >>> # using parse expression
-        >>> __('first test', 'second test', 'third test').pattern('first {}').filter().fetch()
-        'first test'
-        >>> # using regular expression
-        >>> __('first test', 'second test', 'third test').pattern('third .', type='regex').filter().fetch()
-        'third test'
-        >>> # using glob pattern
-        >>> __('first test', 'second test', 'third test').pattern('second*', type='glob').filter().fetch()
-        'second test'
-        '''
-        self._worker = self._pattern(pattern, type, flags)
-        return self
-
     def params(self, *args, **kw):
         '''
-        Assign global `positional
+        Assign `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params used when :meth:`worker` is invoked.
+        arguments used whenever :meth:`worker` is invoked.
         '''
         # positional params
         self._args = args
@@ -78,6 +51,7 @@ class ChainknifeMixin(local):
 
         :argument things: incoming things
 
+        >>> from knife import __
         >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
         [1, 2, 3, 4, 5, 6, 3, 4, 5]
         '''
@@ -103,7 +77,7 @@ class ChainknifeMixin(local):
         return self._len()
 
     def __repr__(self):
-        '''Object representation.'''
+        '''Knife innard representation.'''
         return self._repr()
 
 
@@ -121,14 +95,13 @@ class OutMixin(ChainknifeMixin):
 
     def fetch(self):
         '''
-        Return outgoing things (wrapped with the current type caster).
+        Return outgoing things wrapped with :meth:`wrap`.
         '''
         return self._fetch()
 
     def peek(self):
         '''
-        Preview current state of incoming things (wrapped with the current type
-        caster).
+        Preview current incoming things wrapped with :meth:`wrap`.
         '''
         return self._peek()
 
@@ -138,11 +111,13 @@ class OutMixin(ChainknifeMixin):
 
     def undo(self, snapshot=0):
         '''
-        Restore incoming things to a previous state.
+        Restore incoming things to a previous snapshot.
 
         :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
 
-        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
+        >>> from knife import __
+        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+        >>> undone.peek()
         [1, 2, 3, 4, 5, 6, 1, 2, 3]
         >>> # undo back one step
         >>> undone.append(1).undo().peek()
@@ -158,31 +133,34 @@ class OutMixin(ChainknifeMixin):
 
     def snapshot(self):
         '''
-        Take baseline snapshot of the current state of incoming things.
+        Take baseline snapshot of current incoming things.
         '''
         return self._snapshot()
 
-    def stepback(self):
+    def baseline(self):
         '''
-        Restore incoming things back to baseline snapshot.
+        Restore incoming things to baseline :meth:`snapshot`.
 
-        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
-        [1, 2, 3, 1, 2, 3, 4, 5, 6]
-        >>> undone.snapshot().append(1).append(2).peek()
-        [1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]
-        >>> undone.stepback().peek()
-        [1, 2, 3, 4, 5, 6, 1, 2, 3]
+          >>> from knife import __
+          >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+          >>> undone.peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6]
+          >>> undone.snapshot().append(1).append(2).peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]
+          >>> undone.baseline().peek()
+          [1, 2, 3, 4, 5, 6, 1, 2, 3]
         '''
         return self._rollback()
 
     def original(self):
         '''
-        Restore incoming things back to initial snapshot.
+        Restore incoming things to original snapshot.
 
-        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
-        [1, 2, 3, 1, 2, 3, 4, 5, 6]
-        >>> undone.original().peek()
-        [1, 2, 3]
+          >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
+          >>> undone.peek()
+          [1, 2, 3, 1, 2, 3, 4, 5, 6]
+          >>> undone.original().peek()
+          [1, 2, 3]
         '''
         return self._revert()
 
@@ -197,7 +175,7 @@ class OutMixin(ChainknifeMixin):
         return self._clear()
 
     ###########################################################################
-    ## cast things out ########################################################
+    ## wrap things up #########################################################
     ###########################################################################
 
     # type cast outgoing things as type caster
@@ -205,64 +183,70 @@ class OutMixin(ChainknifeMixin):
     # type cast each outgoing thing as type caster
     _MANY = 'MANY'
 
-    def cast_each(self):
+    def wrap_each(self):
         '''
-        Toggle whether each item should be cast to wrapping type or everything
-        should be cast to wrapping type.
+        Toggle whether each outgoing thing should be individually wrapped with
+        :meth:`wrap` or whether all outgoing things should be wrapped with
+        :meth:`wrap` all at once. Default behavior is to :meth:`wrap`
+        everything at once.
         '''
         self._mode = self._MANY if self._mode == self._ONE else self._ONE
         return self
 
-    def as_type(self, wrapper):
+    def wrap(self, wrapper):
         '''
-        Assign type caster for outgoing things.
+        Assign object, type, or class used to wrap outgoing things. The default
+        wrapper is :class:`list`.
 
-        :argument wrapper: type to cast results to
+        :argument wrapper: a Python object, type, or class
 
-        >>> __(1, 2, 3, 4, 5, 6).as_type(tuple).peek()
-        (1, 2, 3, 4, 5, 6)
+          >>> __(1, 2, 3, 4, 5, 6).wrap(tuple).peek()
+          (1, 2, 3, 4, 5, 6)
         '''
         self._wrapper = wrapper
         return self
 
-    def as_ascii(self, errors='strict'):
+    def ascii(self, errors='strict'):
         '''
-        Set type caster to :class:`byte` encode outgoing things with the
-        ``'ascii'`` codec.
+        :class:`byte` encode outgoing things with the ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
 
-        >>> __([1], True, r't', b('i'), u('g'), None, (1,)).as_ascii().cast_each().peek()
-        (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
+          >>> from knife import __
+          >>> from stuf.six import u, b
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.ascii().wrap_each().peek()
+          (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
         self._wrapper = lambda x: tobytes(x, 'ascii', errors)
         return self
 
-    def as_bytes(self, encoding='utf-8', errors='strict'):
+    def bytes(self, encoding='utf-8', errors='strict'):
         '''
-        Set type caster to :class:`byte` encode outgoing things.
+        :class:`byte` encode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for encoding issues
 
-        >>> ([1], True, r't', b('i'), u('g'), None, (1,)).as_bytes().cast_each().peek()
-        (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.bytes().wrap_each().peek()
+          (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
 
-    def as_unicode(self, encoding='utf-8', errors='strict'):
+    def unicode(self, encoding='utf-8', errors='strict'):
         '''
-        Set type caster to :class:`unicode` (:class:`str` under Python 3)
-        decode outgoing things.
+        :class:`unicode` (:class:`str` under Python 3) decode outgoing things.
 
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for decoding issues
 
-        >>> __([1], True, r't', b('i'), u('g'), None, (1,)).as_unicode().cast_each().peek()
-        (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
+          >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
+          >>> test.unicode().wrap_each().peek()
+          (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         '''
         self._wrapper = lambda x: tounicode(x, encoding, errors)
         return self

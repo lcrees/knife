@@ -192,18 +192,18 @@ class _OutMixin(_LazyMixin):
 
     def _peek(self, tee_=tee, list_=list, len_=len):
         tell, self._in, outs = tee_(self._in, 3)
-        as_type = self._wrapper
+        wrap = self._wrapper
         if self._mode == self._MANY:
-            value = tuple(as_type(i) for i in outs)
+            value = tuple(wrap(i) for i in outs)
         else:
-            value = as_type(outs)
+            value = wrap(outs)
         return value.pop() if len_(list_(tell)) == 1 else value
 
     def _fetch(self, tee_=tee, list_=list, len_=len):
         tell, self._out, outs = tee_(self._out, 3)
-        as_type = self._wrapper
+        wrap = self._wrapper
         if self._mode == self._MANY:
-            value = tuple(as_type(i) for i in outs)
+            value = tuple(wrap(i) for i in outs)
         else:
-            value = as_type(outs)
+            value = wrap(outs)
         return value.pop() if len_(list_(tell)) == 1 else value

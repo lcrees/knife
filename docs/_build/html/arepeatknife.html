@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>knife.active.repeatknife — active repeating knife &mdash; knife 0.5.0 documentation</title>
+    <title>knife.active.repeatknife — Actively evaluated repeating knife &mdash; knife 0.5.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="knife 0.5.0 documentation" href="index.html" />
-    <link rel="next" title="knife.active.sliceknife — active slicing knife" href="asliceknife.html" />
-    <link rel="prev" title="knife.active.reduceknife — active reducing knife" href="areduceknife.html" /> 
+    <link rel="next" title="knife.active.sliceknife — Actively evaluated slicing knife" href="asliceknife.html" />
+    <link rel="prev" title="knife.active.reduceknife — Actively evaluated reducing knife" href="areduceknife.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="asliceknife.html" title="knife.active.sliceknife — active slicing knife"
+          <a href="asliceknife.html" title="knife.active.sliceknife — Actively evaluated slicing knife"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="areduceknife.html" title="knife.active.reduceknife — active reducing knife"
+          <a href="areduceknife.html" title="knife.active.reduceknife — Actively evaluated reducing knife"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
       </ul>
@@ -55,19 +55,15 @@
           <div class="body">
             
   <div class="section" id="module-knife.active">
-<span id="knife-active-repeatknife-active-repeating-knife"></span><h1><a class="reference internal" href="#knife.active.repeatknife" title="knife.active.repeatknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.active.repeatknife</span></tt></a> &#8212; active repeating knife<a class="headerlink" href="#module-knife.active" title="Permalink to this headline">¶</a></h1>
+<span id="knife-active-repeatknife-actively-evaluated-repeating-knife"></span><h1><a class="reference internal" href="#knife.active.repeatknife" title="knife.active.repeatknife"><tt class="xref py py-class docutils literal"><span class="pre">knife.active.repeatknife</span></tt></a> &#8212; Actively evaluated repeating knife<a class="headerlink" href="#module-knife.active" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="knife.active.repeatknife">
 <em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">repeatknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="reference internal" href="_modules/knife/active.html#repeatknife"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#knife.active.repeatknife" title="Permalink to this definition">¶</a></dt>
-<dd><p>repeating knife</p>
+<dd><p>Actively evaluated repeating knife.</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.append">
 <tt class="descname">append</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>after</strong> other incoming things.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">[3, 4, 5, 1, 2, 3, 4, 5, 6]</span>
-</pre></div>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -76,43 +72,28 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[3, 4, 5, 1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.repeatknife.as_ascii">
-<tt class="descname">as_ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.as_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the
-<tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_ascii</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
-</pre></div>
-</div>
+<dt id="knife.active.repeatknife.ascii">
+<tt class="descname">ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.repeatknife.as_bytes">
-<tt class="descname">as_bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.as_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_bytes</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; <p>error handling for decoding issues</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stuf.six</span> <span class="kn">import</span> <span class="n">u</span><span class="p">,</span> <span class="n">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">ascii</span><span class="p">()</span><span class="o">.</span><span class="n">wrap_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
-</ul>
 </td>
 </tr>
 </tbody>
@@ -120,50 +101,43 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.repeatknife.as_type">
-<tt class="descname">as_type</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.as_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign type caster for outgoing things.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">as_type</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(1, 2, 3, 4, 5, 6)</span>
+<dt id="knife.active.repeatknife.baseline">
+<tt class="descname">baseline</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.baseline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore incoming things to baseline <a class="reference internal" href="#knife.active.repeatknife.snapshot" title="knife.active.repeatknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">baseline</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.repeatknife.as_unicode">
-<tt class="descname">as_unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.as_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set type caster to <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3)
-decode outgoing things.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">as_unicode</span><span class="p">()</span><span class="o">.</span><span class="n">cast_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">(u(&#39;[1]&#39;), u(&#39;True&#39;), u(&#39;t&#39;), u(&#39;i&#39;), u(&#39;g&#39;), u(&#39;None&#39;), u(&#39;(1,)&#39;))</span>
-</pre></div>
-</div>
+<dt id="knife.active.repeatknife.bytes">
+<tt class="descname">bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="xref py py-class docutils literal"><span class="pre">byte</span></tt> encode outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; <p>error handling for encoding issues</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">bytes</span><span class="p">()</span><span class="o">.</span><span class="n">wrap_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(b(&#39;[1]&#39;), b(&#39;True&#39;), b(&#39;t&#39;), b(&#39;i&#39;), b(&#39;g&#39;), b(&#39;None&#39;), b(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.repeatknife.cast_each">
-<tt class="descname">cast_each</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.cast_each" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggle whether each item should be cast to wrapping type or everything.</p>
 </dd></dl>
 
 <dl class="method">
@@ -175,16 +149,19 @@ decode outgoing things.</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.combinations">
 <tt class="descname">combinations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.combinations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find combinations of every <cite>n</cite> things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">[(40, 50), (40, 60), (50, 60)]</span>
-</pre></div>
-</div>
+<dd><p>Discover combinations of every <cite>n</cite> incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; length of things to combine from</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; <p>number of incoming things to generate
+combinations from</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[(40, 50), (40, 60), (50, 60)]</span>
+</pre></div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -193,7 +170,7 @@ decode outgoing things.</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.copy">
 <tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.copy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Duplicate each thing within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
+<dd><p>Duplicate each incoming thing.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
 <span class="go">[[1, [2, 3]], [4, [5, 6]]]</span>
 </pre></div>
@@ -203,14 +180,15 @@ decode outgoing things.</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.fetch">
 <tt class="descname">fetch</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.fetch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things (wrapped with the current <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> as_type.</p>
+<dd><p>Return outgoing things wrapped with <a class="reference internal" href="#knife.active.repeatknife.wrap" title="knife.active.repeatknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.repeatknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.original" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things back to initial snapshot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<dd><p>Restore incoming things to original snapshot.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
@@ -221,63 +199,32 @@ decode outgoing things.</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.params">
 <tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
 <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
-params used when the worker is invoked.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.repeatknife.pattern">
-<tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compile a search pattern and use it as the worker.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># using parse expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;first {}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">&#39;first test&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># using regular expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;third .&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;regex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">&#39;third test&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># using glob pattern</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="s">&#39;first test&#39;</span><span class="p">,</span> <span class="s">&#39;second test&#39;</span><span class="p">,</span> <span class="s">&#39;third test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s">&#39;second*&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">&#39;second test&#39;</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
-<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile pattern with. Valid options are
-<a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
-<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+arguments used whenever <a class="reference internal" href="#knife.active.repeatknife.worker" title="knife.active.repeatknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is invoked.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.repeatknife.peek">
 <tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.peek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Preview current state of incoming things (wrapped with the current
-<a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>
-as_type).</p>
+<dd><p>Preview current incoming things wrapped with <a class="reference internal" href="#knife.active.repeatknife.wrap" title="knife.active.repeatknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.repeatknife.permutations">
 <tt class="descname">permutations</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.permutations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find permutations of every <cite>n</cite> things within an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">[(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]</span>
-</pre></div>
-</div>
+<dd><p>Discover permutations of every <cite>n</cite> incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; length of things to permutate from</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; <p>number of incoming things to generate
+permutations from</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]</span>
+</pre></div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -287,10 +234,6 @@ as_type).</p>
 <dt id="knife.active.repeatknife.prepend">
 <tt class="descname">prepend</tt><big>(</big><em>*things</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.prepend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert <cite>things</cite> <strong>before</strong> other incoming things.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">[1, 2, 3, 4, 5, 6, 3, 4, 5]</span>
-</pre></div>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -299,30 +242,35 @@ as_type).</p>
 </tr>
 </tbody>
 </table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 3, 4, 5]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.repeatknife.repeat">
 <tt class="descname">repeat</tt><big>(</big><em>n=None</em>, <em>call=False</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.repeat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeat either an <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterable</a> or invoke
-<a class="reference internal" href="#knife.active.repeatknife.worker" title="knife.active.repeatknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> <cite>n</cite> times.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># repeat iterable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">[(40, 50, 60), (40, 50, 60), (40, 50, 60)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="gp">... </span>   <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># with worker</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<span class="go">[[40, 50, 60], [40, 50, 60], [40, 50, 60]]</span>
-</pre></div>
-</div>
+<dd><p>Repeat either incoming things or invoke <a class="reference internal" href="#knife.active.repeatknife.worker" title="knife.active.repeatknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> <cite>n</cite> times.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> (<em>integer</em>) &#8211; number of times to repeat</li>
-<li><strong>call</strong> (<em>boolean</em>) &#8211; repeat results of invoking worker</li>
+<li><strong>call</strong> (<em>boolean</em>) &#8211; <p>repeat results of invoking <a class="reference internal" href="#knife.active.repeatknife.worker" title="knife.active.repeatknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># repeat iterable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[(40, 50, 60), (40, 50, 60), (40, 50, 60)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># with worker</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">call</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<span class="go">[[40, 50, 60], [40, 50, 60], [40, 50, 60]]</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </td>
 </tr>
@@ -333,28 +281,24 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take baseline snapshot of the current state of incoming things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="knife.active.repeatknife.stepback">
-<tt class="descname">stepback</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.stepback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things back to baseline snapshot.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">[1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">stepback</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-<span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
-</pre></div>
-</div>
+<dd><p>Take baseline snapshot of current incoming things.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.repeatknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to a previous state.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<dd><p>Restore incoming things to a previous snapshot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># undo back one step</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
@@ -367,11 +311,27 @@ as_type).</p>
 <span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.repeatknife.unicode">
+<tt class="descname">unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#knife.active.repeatknife.unicode" title="knife.active.repeatknife.unicode"><tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt></a> (<tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> under Python 3) decode outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago e.g. <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
+<li><strong>errors</strong> (<em>string</em>) &#8211; <p>error handling for decoding issues</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="s">r&#39;t&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="n">u</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span><span class="o">.</span><span class="n">wrap_each</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(u(&#39;[1]&#39;), u(&#39;True&#39;), u(&#39;t&#39;), u(&#39;i&#39;), u(&#39;g&#39;), u(&#39;None&#39;), u(&#39;(1,)&#39;))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -380,7 +340,7 @@ as_type).</p>
 <dl class="method">
 <dt id="knife.active.repeatknife.worker">
 <tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.worker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign worker.</p>
+<dd><p>Assign Python callable used to process incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -389,6 +349,35 @@ as_type).</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.repeatknife.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.repeatknife.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign object, type, or class used to wrap outgoing things. The default
+wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; <p>a Python object, type, or class</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+<span class="go">(1, 2, 3, 4, 5, 6)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.repeatknife.wrap_each">
+<tt class="descname">wrap_each</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.repeatknife.wrap_each" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle whether each outgoing thing should be individually wrapped with
+<a class="reference internal" href="#knife.active.repeatknife.wrap" title="knife.active.repeatknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> or whether all outgoing things should be wrapped with
+<a class="reference internal" href="#knife.active.repeatknife.wrap" title="knife.active.repeatknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> all at once. Default behavior is to <a class="reference internal" href="#knife.active.repeatknife.wrap" title="knife.active.repeatknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>
+everything at once.</p>
 </dd></dl>
 
 </dd></dl>
@@ -403,10 +392,10 @@ as_type).</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="areduceknife.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.reduceknife</span></tt> &#8212; active reducing knife</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">knife.active.reduceknife</span></tt> &#8212; Actively evaluated reducing knife</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="asliceknife.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.active.sliceknife</span></tt> &#8212; active slicing knife</a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">knife.active.sliceknife</span></tt> &#8212; Actively evaluated slicing knife</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/arepeatknife.txt"
@@ -439,10 +428,10 @@ as_type).</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="asliceknife.html" title="knife.active.sliceknife — active slicing knife"
+          <a href="asliceknife.html" title="knife.active.sliceknife — Actively evaluated slicing knife"
              >next</a> |</li>
         <li class="right" >
-          <a href="areduceknife.html" title="knife.active.reduceknife — active reducing knife"
+          <a href="areduceknife.html" title="knife.active.reduceknife — Actively evaluated reducing knife"
              >previous</a> |</li>
         <li><a href="index.html">knife 0.5.0 documentation</a> &raquo;</li> 
       </ul>

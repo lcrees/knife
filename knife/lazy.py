@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''lazily evaluated knives'''
+'''Lazily evaluated knives.'''
 
 from knife.base import OutMixin
 from knife.mixins import (
@@ -20,62 +20,62 @@ class lazyknife(
     MathMixin, SliceMixin, CmpMixin,
 ):
 
-    '''lazy knife'''
+    '''Lazily evaluated combo knife.'''
 
     __slots__ = SLOTS
 
 
 class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
-    '''comparing knife'''
+    '''Lazily evaluated comparing knife.'''
 
     __slots__ = SLOTS
 
 
 class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
-    '''filtering knife'''
+    '''Lazily evaluated filtering knife.'''
 
     __slots__ = SLOTS
 
 
 class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
-    '''mapping knife'''
+    '''Lazily evaluated mapping knife.'''
 
     __slots__ = SLOTS
 
 
 class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
-    '''mathing knife'''
+    '''Lazily evaluated mathing knife.'''
 
     __slots__ = SLOTS
 
 
 class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
-    '''ordering knife'''
+    '''Lazily evaluated ordering knife.'''
 
     __slots__ = SLOTS
 
 
 class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
-    '''reducing knife'''
+    '''Lazily evaluated reducing knife.'''
 
     __slots__ = SLOTS
 
 
 class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
-    '''repeating knife'''
+    '''Lazily evaluated repeating knife.'''
 
     __slots__ = SLOTS
 
 
 class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
 
-    '''slicing knife'''
+    '''Lazily evaluated slicing knife.'''
 
     __slots__ = SLOTS

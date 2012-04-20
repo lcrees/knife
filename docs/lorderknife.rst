@@ -1,5 +1,5 @@
-:class:`knife.lazy.orderknife` --- lazy ordering knife
-======================================================
+:class:`knife.lazy.orderknife` --- Lazily evaluated ordering knife
+================================================================== 
 
 .. module:: knife.lazy
 

@@ -1,5 +1,5 @@
-:class:`knife.lazy.sliceknife` --- lazy slicing knife
-=====================================================
+:class:`knife.lazy.sliceknife` --- Lazily evaluated slicing knife
+=================================================================
 
 .. module:: knife.lazy
 

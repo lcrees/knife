@@ -1,5 +1,5 @@
-:class:`knife.lazy.filterknife` --- lazy filtering knife
-========================================================
+:class:`knife.lazy.filterknife` --- Lazily evaluated filtering knife
+====================================================================
 
 .. module:: knife.lazy
 

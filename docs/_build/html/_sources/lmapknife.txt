@@ -1,5 +1,5 @@
-:class:`knife.lazy.mapknife` --- lazy mapping knife
-===================================================
+:class:`knife.lazy.mapknife` --- Lazily evaluated mapping knife
+===============================================================
 
 .. module:: knife.lazy
 

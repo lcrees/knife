@@ -106,14 +106,14 @@ class KOutput(KChainknife):
     def fetch():  # @NoSelf
         '''
         Return outgoing things (wrapped with the current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ as_type.
+        <http://docs.python.org/glossary.html#term-iterable>`_ wrap.
         '''
 
     def peek():  # @NoSelf
         '''
         Preview current state of incoming things (wrapped with the current
         `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type).
+        wrap).
         '''
 
     ###########################################################################
@@ -132,7 +132,7 @@ class KOutput(KChainknife):
         Take baseline snapshot of the current state of incoming things.
         '''
 
-    def stepback():  # @NoSelf
+    def baseline():  # @NoSelf
         '''
         Restore incoming things to baseline state.
         '''
@@ -155,20 +155,20 @@ class KOutput(KChainknife):
     ## cast things out ########################################################
     ###########################################################################
 
-    def cast_each():  # @NoSelf
+    def wrap_each():  # @NoSelf
         '''
         Toggle whether each item should be cast to wrapping type or everything.
         '''
 
-    def as_type(wrapper):  # @NoSelf
+    def wrap(wrapper):  # @NoSelf
         '''
         Assign type caster for outgoing things.
 
         :argument wrapper: an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ as_type
+          <http://docs.python.org/glossary.html#term-iterable>`_ wrap
         '''
 
-    def as_ascii(errors='strict'):  # @NoSelf
+    def ascii(errors='strict'):  # @NoSelf
         '''
         Set type caster to :class:`byte` encode outgoing things with the
         ``'ascii'`` codec.
@@ -176,7 +176,7 @@ class KOutput(KChainknife):
         :keyword string errors: error handling for decoding issues
         '''
 
-    def as_bytes(encoding='utf-8', errors='strict'):  # @NoSelf
+    def bytes(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set type caster to :class:`byte` encode outgoing things.
 
@@ -205,7 +205,7 @@ class KOutput(KChainknife):
         Set type caster to cast outgoing things to :class:`tuple`.
         '''
 
-    def as_unicode(encoding='utf-8', errors='strict'):  # @NoSelf
+    def unicode(encoding='utf-8', errors='strict'):  # @NoSelf
         '''
         Set type caster to :class:`unicode` (:class:`str` under Python 3)
         decode outgoing things.

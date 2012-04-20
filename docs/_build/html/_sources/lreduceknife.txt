@@ -1,5 +1,5 @@
-:class:`knife.lazy.reduceknife` --- lazy reducing knife
-=======================================================
+:class:`knife.lazy.reduceknife` --- Lazily evaluated reducing knife
+===================================================================
 
 .. module:: knife.lazy
 
