@@ -209,6 +209,18 @@ class _MapMixin(local):
         else:
             kwargmap = lambda x, y: call(*x, **y)
         return lambda x: starmap_(kwargmap, x)
+    
+    @staticmethod
+    def _map(call, imap_=map):
+        return lambda x: imap_(call, x)
+
+    @staticmethod
+    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
+        if key:
+            return lambda x: map(call, c(map(k, x)))
+        elif value:
+            return lambda x: map(call, c(map(v, x)))
+        return lambda x: starmap(call, c(map(i, x)))
 
 
 class _FilterMixin(local):
@@ -239,14 +251,6 @@ class _FilterMixin(local):
         if false:
             return lambda x: ifilterfalse_(true, x)
         return lambda x: ifilter_(true, x)
-
-    @staticmethod
-    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
-        if key:
-            return lambda x: map(call, c(map(k, x)))
-        elif value:
-            return lambda x: map(call, c(map(v, x)))
-        return lambda x: starmap(call, c(map(i, x)))
 
     @staticmethod
     def _items(key, itemgetter_=itemgetter):
@@ -339,6 +343,10 @@ class _ReduceMixin(local):
             except TypeError:
                 # does not recur
                 yield item
+
+    @staticmethod
+    def _merge(iterable, ichain_=ichain):
+        return ichain_(iterable)
 
     @staticmethod
     def _reduce(call, initial, reverse, reduce_=reduce):

@@ -51,8 +51,10 @@ class MathMixin(object):
     def test_min(self):
         self.assertEqual(self.mclass(10, 5, 100, 2, 1000).min().fetch(), 2)
         self.assertEqual(
-            self.mclass(10, 5, 100, 2, 1000).worker(lambda x: x).min().fetch(),
-            2,
+            self.mclass(10, 5, 100, 2, 1000).worker(
+                lambda x: x % 10 == 0
+            ).min().fetch(),
+            10,
         )
 
     def test_minmax(self):
@@ -90,20 +92,30 @@ class CmpMixin(object):
         self.assertFalse(
             self.mclass(True, 1, None, 'yes').worker(truth).all().fetch()
         )
+        self.assertTrue(
+            self.mclass(2, 4, 6, 8).worker(lambda x: x % 2 == 0).all().fetch()
+        )
 
     def test_any(self):
         self.assertTrue(
             self.mclass(None, 0, 'yes', False).worker(bool).any().fetch()
         )
+        self.assertTrue(
+            self.mclass(1, 4, 5, 9).worker(lambda x: x % 2 == 0).any().fetch()
+        )
 
     def test_difference(self):
         self.assertEqual(
-            self.mclass([1, 2, 3, 4, 5], [5, 2, 10]).difference().fetch(),
+            self.mclass(
+                [1, 2, 3, 4, 5], [5, 2, 10], [10, 11, 2]
+            ).difference().fetch(),
             [1, 3, 4],
         )
         self.assertEqual(
-            self.mclass([1, 2, 3, 4, 5], [5, 2, 10]).difference(True).fetch(),
-            [1, 3, 4, 10]
+            self.mclass(
+                [1, 3, 4, 5], [5, 2, 10], [10, 11, 2]
+            ).difference(True).fetch(),
+            [1, 3, 4, 11]
         )
 
     def test_intersection(self):

@@ -73,14 +73,6 @@ class _KnifeMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    @staticmethod
-    def _map(call, imap_=map):
-        return lambda x: imap_(call, x)
-
-    @staticmethod
-    def _merge(iterable, ichain_=ichain):
-        return ichain_(iterable)
-
     def _iter(self, call, iter_=iter, _imap=map):
         # extend fetch with incoming things if knifeing them as one thing
         return self._xtend(iter_(call(self._iterable)))

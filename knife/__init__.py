@@ -6,4 +6,6 @@ from knife.active import activeknife
 
 knife = activeknife
 
-__all__ = ('knife', 'activeknife', 'lazyknife')
+__ = lazyknife
+
+__all__ = ('knife', 'activeknife', 'lazyknife', '__')

@@ -16,7 +16,7 @@ class ChainknifeMixin(local):
 
     def worker(self, worker):
         '''
-        Assign worker.
+        Assign Python callable for use as a processing filter.
 
         :argument worker: a Python callable
         '''
@@ -30,7 +30,7 @@ class ChainknifeMixin(local):
 
     def pattern(self, pattern, type='parse', flags=0):
         '''
-        Compile a search pattern and use it as the worker.
+        Compile a search pattern for use as :meth:`worker`.
 
         :argument string pattern: search pattern
 
@@ -41,6 +41,16 @@ class ChainknifeMixin(local):
 
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
+
+        >>> # using parse expression
+        >>> __('first test', 'second test', 'third test').pattern('first {}').filter().fetch()
+        'first test'
+        >>> # using regular expression
+        >>> __('first test', 'second test', 'third test').pattern('third .', type='regex').filter().fetch()
+        'third test'
+        >>> # using glob pattern
+        >>> __('first test', 'second test', 'third test').pattern('second*', type='glob').filter().fetch()
+        'second test'
         '''
         self._worker = self._pattern(pattern, type, flags)
         return self
@@ -50,7 +60,7 @@ class ChainknifeMixin(local):
         Assign global `positional
         <http://docs.python.org/glossary.html#term-positional-argument>`_ and
         `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        params used when the worker is invoked.
+        params used when :meth:`worker` is invoked.
         '''
         # positional params
         self._args = args
@@ -62,36 +72,25 @@ class ChainknifeMixin(local):
     ## things coming in #######################################################
     ###########################################################################
 
-    def map(self):
-        '''
-        Feed each thing within an `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ to the worker.
-        '''
-        with self._chain:
-            return self._many(self._map(self._worker))
-
-    def merge(self):
-        '''
-        Combine multiple `iterables
-        <http://docs.python.org/glossary.html#term-iterable>`_ into one
-        iterable.
-        '''
-        with self._chain:
-            return self._many(self._merge)
-
     def prepend(self, *things):
         '''
-        Insert `things` **before** any other incoming things.
+        Insert `things` **before** other incoming things.
 
         :argument things: incoming things
+
+        >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
+        [1, 2, 3, 4, 5, 6, 3, 4, 5]
         '''
         return self._prependit(things)
 
     def append(self, *things):
         '''
-        Insert `things` **after** any other incoming things.
+        Insert `things` **after** other incoming things.
 
         :argument things: incoming things
+
+        >>> __(3, 4, 5).append(1, 2, 3, 4, 5, 6).peek()
+        [3, 4, 5, 1, 2, 3, 4, 5, 6]
         '''
         return self._appendit(things)
 
@@ -122,16 +121,14 @@ class OutMixin(ChainknifeMixin):
 
     def fetch(self):
         '''
-        Return outgoing things (wrapped with the current `iterable
-        <http://docs.python.org/glossary.html#term-iterable>`_ as_type.
+        Return outgoing things (wrapped with the current type caster).
         '''
         return self._fetch()
 
     def peek(self):
         '''
-        Preview current state of incoming things (wrapped with the current
-        `iterable <http://docs.python.org/glossary.html#term-iterable>`_
-        as_type).
+        Preview current state of incoming things (wrapped with the current type
+        caster).
         '''
         return self._peek()
 
@@ -144,6 +141,18 @@ class OutMixin(ChainknifeMixin):
         Restore incoming things to a previous state.
 
         :keyword integer snapshot: number of steps ago e.g. ``1``, ``2``, ``3``
+
+        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3]
+        >>> # undo back one step
+        >>> undone.append(1).undo().peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3]
+        >>> # undo back one step
+        >>>> undone.append(1).append(2).undo().peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
+        >>> # undo back 2 steps
+        >>> undone.append(1).append(2).undo(2).peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
         '''
         return self._undo(snapshot)
 
@@ -155,13 +164,25 @@ class OutMixin(ChainknifeMixin):
 
     def stepback(self):
         '''
-        Restore incoming things to baseline state.
+        Restore incoming things back to baseline snapshot.
+
+        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
+        [1, 2, 3, 1, 2, 3, 4, 5, 6]
+        >>> undone.snapshot().append(1).append(2).peek()
+        [1, 2, 3, 1, 2, 3, 4, 5, 6, 1, 2]
+        >>> undone.stepback().peek()
+        [1, 2, 3, 4, 5, 6, 1, 2, 3]
         '''
         return self._rollback()
 
     def original(self):
         '''
-        Restore incoming things to initial state.
+        Restore incoming things back to initial snapshot.
+
+        >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6).peek()
+        [1, 2, 3, 1, 2, 3, 4, 5, 6]
+        >>> undone.original().peek()
+        [1, 2, 3]
         '''
         return self._revert()
 
@@ -186,7 +207,8 @@ class OutMixin(ChainknifeMixin):
 
     def cast_each(self):
         '''
-        Toggle whether each item should be cast to wrapping type or everything.
+        Toggle whether each item should be cast to wrapping type or everything
+        should be cast to wrapping type.
         '''
         self._mode = self._MANY if self._mode == self._ONE else self._ONE
         return self
@@ -195,8 +217,10 @@ class OutMixin(ChainknifeMixin):
         '''
         Assign type caster for outgoing things.
 
-        :argument wrapper: an `iterable
-          <http://docs.python.org/glossary.html#term-iterable>`_ as_type
+        :argument wrapper: type to cast results to
+
+        >>> __(1, 2, 3, 4, 5, 6).as_type(tuple).peek()
+        (1, 2, 3, 4, 5, 6)
         '''
         self._wrapper = wrapper
         return self
@@ -207,6 +231,9 @@ class OutMixin(ChainknifeMixin):
         ``'ascii'`` codec.
 
         :keyword string errors: error handling for decoding issues
+
+        >>> __([1], True, r't', b('i'), u('g'), None, (1,)).as_ascii().cast_each().peek()
+        (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
         self._wrapper = lambda x: tobytes(x, 'ascii', errors)
         return self
@@ -218,6 +245,9 @@ class OutMixin(ChainknifeMixin):
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for encoding issues
+
+        >>> ([1], True, r't', b('i'), u('g'), None, (1,)).as_bytes().cast_each().peek()
+        (b('[1]'), b('True'), b('t'), b('i'), b('g'), b('None'), b('(1,)'))
         '''
         self._wrapper = lambda x: tobytes(x, encoding, errors)
         return self
@@ -230,6 +260,9 @@ class OutMixin(ChainknifeMixin):
         :keyword string encoding: Unicode encoding
 
         :keyword string errors: error handling for decoding issues
+
+        >>> __([1], True, r't', b('i'), u('g'), None, (1,)).as_unicode().cast_each().peek()
+        (u('[1]'), u('True'), u('t'), u('i'), u('g'), u('None'), u('(1,)'))
         '''
         self._wrapper = lambda x: tounicode(x, encoding, errors)
         return self
