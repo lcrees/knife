@@ -18,6 +18,17 @@ class stoog3: #@IgnorePep8
 
 class MathMixin(object):
 
+    def test_pipe(self):
+        one = self.mclass(10, 5, 100, 2, 1000)
+        two = self.pipe()
+        test = one.minmax().pipe(two).merge().back().min().get()
+        self.assertEqual(test, 2, test)
+        test = one.original().minmax().pipe(two).merge().back().max().get()
+        self.assertEqual(test, 1000, test)
+        test = one.original().minmax().pipe(two).merge().back().sum().get()
+        self.assertEqual(test, 1002, test)
+        one = self.mclass(10, 5, 100, 2, 1000)
+
     def test_average(self):
         self.assertEqual(
             self.mclass(10, 40, 45).average().get(), 31.666666666666668,

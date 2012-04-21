@@ -23,10 +23,6 @@ class _ActiveMixin(local):
         # holding things
         self._hold = deque()
 
-    ###########################################################################
-    ## things in chains #######################################################
-    ###########################################################################
-
     @property
     @contextmanager
     def _chain(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
@@ -53,10 +49,6 @@ class _ActiveMixin(local):
         self._work.clear()
         # clear holding things
         self._hold.clear()
-
-    ###########################################################################
-    ## adding things ##########################################################
-    ###########################################################################
 
     @property
     def _iterable(self):
@@ -102,9 +94,34 @@ class _ActiveMixin(local):
         self._in.extend(things)
         return self
 
-    ###########################################################################
-    ## know things ############################################################
-    ###########################################################################
+    def _pipeit(self, knife):
+        knife.clear()
+        knife._history.clear()
+        knife._history.extend(self._history)
+        knife._original = self._original
+        knife._baseline = self._baseline
+        knife._out.extend(self._out)
+        knife._worker = self._worker
+        knife._args = self._args
+        knife._kw = self._kw
+        knife._wrapper = self._wrapper
+        knife._pipe = self
+        return knife
+
+    def _unpipeit(self):
+        piped = self._pipe
+        piped.clear()
+        piped._history.clear()
+        piped._history.extend(self._history)
+        piped._original = self._original
+        piped._baseline = self._baseline
+        piped._out.extend(self._out)
+        piped._worker = self._worker
+        piped._args = self._args
+        piped._kw = self._kw
+        piped._wrapper = self._wrapper
+        self._pipe = None
+        return piped
 
     def _repr(self, clsname_=clsname, list_=list):
         # object representation

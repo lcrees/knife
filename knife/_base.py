@@ -20,57 +20,46 @@ class _KnifeMixin(local):
 
     '''base knife mixin'''
 
-    def __init__(self, ins, fetch, **kw):
+    def __init__(self, ins, outs, **kw):
         super(_KnifeMixin, self).__init__()
         # incoming things
         self._in = ins
         # outgoing things
-        self._out = fetch
-        self._pipe = False
-        # default mode
+        self._out = outs
+        # pipe out default
+        self._pipe = None
+        # default output default
         self._each = False
-        ## snapshot defaults ##################################################
         # original and baseline snapshots
         self._original = self._baseline = None
         # maximum number of history snapshots to keep (default: 5)
         self._history = deque(maxlen=kw.pop('snapshots', 5))
-        ## callable defaults ##################################################
-        # worker
+        # worker default
         self._worker = None
-        # position arguments
+        # position arguments default
         self._args = ()
-        # keyword arguments
+        # keyword arguments default
         self._kw = {}
-        # default output class
+        # default wrapper default
         self._wrapper = list
-
-    ###########################################################################
-    ## things called ##########################################################
-    ###########################################################################
 
     @property
     def _identity(self):
-        # substitute generic identity function for worker if no other worker is
-        # assigned
+        # use  generic identity function for worker if no worker assigned
         return self._worker if self._worker is not None else lambda x: x
 
     @property
     def _test(self, truth_=truth):
-        # substitute truth operator function for worker if no other worker
-        # assigned
+        # use truth operator function for worker if no worker assigned
         return self._worker if self._worker is not None else truth_
 
     @staticmethod
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
-        # compile search pattern
+        # compile glob pattern into regex
         if type == 'glob':
             pat = t(pat)
             type = 'regex'
         return r(pat, flag).search if type == 'regex' else p(pat).search
-
-    ###########################################################################
-    ## things coming in #######################################################
-    ###########################################################################
 
     def _iter(self, call, iter_=iter, _imap=map):
         # extend fetch with incoming things if knifeing them as one thing
@@ -84,17 +73,7 @@ class _KnifeMixin(local):
         # extend fetch with incoming things if knifeing them as one thing
         return self._xtend(call(self._iterable))
 
-    ###########################################################################
-    ## knowing things #########################################################
-    ###########################################################################
-
-    _REPR = (
-        '{0}.{1} ([IN: ({2}) => WORK: ({3}) => UTIL: ({4}) => OUT: ({5})])'
-    )
-
-    ###########################################################################
-    ## clearing things up #####################################################
-    ###########################################################################
+    _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => UTIL: ({4}) => OUT: ({5})])'
 
     def _clearsp(self):
         # clear fetch snapshots

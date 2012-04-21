@@ -16,6 +16,7 @@ class TestActive(
     def setUp(self):
         from knife import activeknife
         self.mclass = activeknife
+        self.pipe = activeknife
 
 
 class TestCompare(unittest.TestCase, Mixin, CmpMixin):
@@ -43,23 +44,9 @@ class TestMap(unittest.TestCase, Mixin, MapMixin):
 class TestMath(unittest.TestCase, Mixin, MathMixin):
 
     def setUp(self):
-        from knife.active import mathknife
+        from knife.active import mathknife, reduceknife
         self.mclass = mathknife
-
-#    def test_pipe(self):
-#        from knife.active import reduceknife
-#        combo = self.mclass(10, 5, 100, 2, 1000)
-#        combo2 = reduceknife()
-#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_min | combo.pipe_get
-#        self.assertEqual(test, 2, test)
-#        combo = self.mclass(10, 5, 100, 2, 1000)
-#        combo2 = reduceknife()
-#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_max.get()
-#        self.assertEqual(test, 1000, test)
-#        combo = self.mclass(10, 5, 100, 2, 1000)
-#        combo2 = reduceknife()
-#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_sum.get()
-#        self.assertEqual(test, 1002, test)
+        self.pipe = reduceknife
 
 
 class TestOrder(unittest.TestCase, Mixin, OrderMixin):

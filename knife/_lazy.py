@@ -13,18 +13,12 @@ class _LazyMixin(local):
     '''lazy knife mixin'''
 
     def __init__(self, *things, **kw):
-        # if just one thing, put it in incoming things or put everything in
-        # incoming things
         incoming = iter([things[0]]) if len(things) == 1 else iter(things)
         super(_LazyMixin, self).__init__(incoming, iter([]), **kw)
         # working things
         self._work = iter([])
         # holding things
         self._hold = iter([])
-
-    ###########################################################################
-    ## things in chains #######################################################
-    ###########################################################################
 
     @property
     @contextmanager
@@ -51,10 +45,6 @@ class _LazyMixin(local):
         # clear holding things
         del self._hold
         self._hold = iter_([])
-
-    ###########################################################################
-    ## adding things ##########################################################
-    ###########################################################################
 
     @property
     def _iterable(self):
@@ -95,9 +85,34 @@ class _LazyMixin(local):
         self._in = chain_(self._in, things)
         return self
 
-    ###########################################################################
-    ## know things ############################################################
-    ###########################################################################
+    def _pipeit(self, knife):
+        knife.clear()
+        knife._history.clear()
+        knife._history.extend(self._history)
+        knife._original = self._original
+        knife._baseline = self._baseline
+        knife._out = self._out
+        knife._worker = self._worker
+        knife._args = self._args
+        knife._kw = self._kw
+        knife._wrapper = self._wrapper
+        knife._pipe = self
+        return knife
+
+    def _unpipeit(self):
+        piped = self._pipe
+        piped.clear()
+        piped._history.clear()
+        piped._history.extend(self._history)
+        piped._original = self._original
+        piped._baseline = self._baseline
+        piped._out = self._out
+        piped._worker = self._worker
+        piped._args = self._args
+        piped._kw = self._kw
+        piped._wrapper = self._wrapper
+        self._pipe = None
+        return piped
 
     def _repr(self, tee_=tee, l=list, clsname_=clsname):
         # object representation
@@ -192,7 +207,9 @@ class _OutMixin(_LazyMixin):
         tell, self._in, out = tee_(self._in, 3)
         wrap = self._wrapper
         value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        # reset each flag
         self._each = False
+        # reset wrapper
         self._wrapper = list_
         return value[0] if len_(list_(tell)) == 1 else value
 
@@ -200,6 +217,8 @@ class _OutMixin(_LazyMixin):
         tell, self._out, out = tee_(self._out, 3)
         wrap = self._wrapper
         value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        # reset each flag
         self._each = False
+        # reset wrapper
         self._wrapper = list_
         return value[0] if len_(list_(tell)) == 1 else value

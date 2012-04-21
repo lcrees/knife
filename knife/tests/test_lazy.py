@@ -16,6 +16,7 @@ class TestLazy(
     def setUp(self):
         from knife import lazyknife
         self.mclass = lazyknife
+        self.pipe = lazyknife
 
 
 class TestCompare(unittest.TestCase, Mixin, CmpMixin):
@@ -43,8 +44,9 @@ class TestMap(unittest.TestCase, Mixin, MapMixin):
 class TestMath(unittest.TestCase, Mixin, MathMixin):
 
     def setUp(self):
-        from knife.lazy import mathknife
+        from knife.lazy import mathknife, reduceknife
         self.mclass = mathknife
+        self.pipe = reduceknife
 
 
 class TestOrder(unittest.TestCase, Mixin, OrderMixin):

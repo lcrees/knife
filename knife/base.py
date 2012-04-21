@@ -17,7 +17,7 @@ class ChainknifeMixin(local):
 
         Global `positional <http://docs.python.org/glossary.html#term-
         positional-argument>`_ and `keyword <http://docs.python.org/glossary.
-        html#term-keyword-argument>`_:meth:`params` are reset when new worker
+        html#term-keyword-argument>`_ :meth:`params` are reset when new worker
         is assigned.
 
         :argument worker: a callable
@@ -113,6 +113,22 @@ class ChainknifeMixin(local):
         '''
         return self._appendit(things)
 
+    def pipe(self, knife):
+        '''
+        Switch to a new :mod:`knife`.
+
+        :argument knife: :mod:`knife` to pipe incoming things through
+        '''
+        with self._chain:
+            return self._pipeit(knife)
+
+    def back(self):
+        '''
+        Switch back to a previously piped :mod:`knife`.
+        '''
+        with self._chain:
+            return self._unpipeit()
+
     def __len__(self):
         '''Number of incoming things.'''
         return self._len()
@@ -133,12 +149,20 @@ class OutMixin(ChainknifeMixin):
     def get(self):
         '''
         Return outgoing things wrapped with :meth:`wrap`.
+
+        If there's only one outgoing thing, only that thing will be returned.
+        If there are multiple outgoing things, they will be returned wrapped
+        with :meth:`wrap`.
         '''
         return self._get()
 
     def peek(self):
         '''
         Preview current incoming things wrapped with :meth:`wrap`.
+
+        If there's only one outgoing thing, only that thing will be returned.
+        If there are multiple outgoing things, they will be returned wrapped
+        with :meth:`wrap`.
         '''
         return self._peek()
 
