@@ -17,8 +17,8 @@ operator.html`>_ in one convenient shrink-wrapped package.
 Vitals
 ------
 
-:mod:`knife`'s documentation can be found at http://knife.readthedocs.org/ or
-http://packages.python.org/knife/
+:mod:`knife`'s documentation can be found at http://readthedocs.org/docs/knife/en/latest/
+or http://packages.python.org/knife/
 
 :mod:`knife` works with Python 2.6, 2.7, and 3.2.
 
