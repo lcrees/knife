@@ -50,7 +50,7 @@ In Brief...
 -----------
 
 :mod:`knife` features 45 carefully curated methods that can be `chained <https:
-//en.wikipedia.org/wiki/Fluent_interface>`_ together into one pipeline.
+//en.wikipedia.org/wiki/Fluent_interface>`_ into one pipeline.
 
 *Higly contrived introductory example:*
 
