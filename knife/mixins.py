@@ -654,7 +654,7 @@ class FilterMixin(local):
         [ChainMap(OrderedDict([('classname', 'stooge'), ('age', 40)])),
         ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])),
         ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]),
-        OrderedDict([('age', 969), ('classname', 'stooge4')]))] 
+        OrderedDict([('age', 969), ('classname', 'stooge4')]))]
         '''
         with self._chain:
             if self._worker is None:

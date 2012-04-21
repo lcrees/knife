@@ -46,6 +46,21 @@ class TestMath(unittest.TestCase, Mixin, MathMixin):
         from knife.active import mathknife
         self.mclass = mathknife
 
+#    def test_pipe(self):
+#        from knife.active import reduceknife
+#        combo = self.mclass(10, 5, 100, 2, 1000)
+#        combo2 = reduceknife()
+#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_min | combo.pipe_get
+#        self.assertEqual(test, 2, test)
+#        combo = self.mclass(10, 5, 100, 2, 1000)
+#        combo2 = reduceknife()
+#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_max.get()
+#        self.assertEqual(test, 1000, test)
+#        combo = self.mclass(10, 5, 100, 2, 1000)
+#        combo2 = reduceknife()
+#        test = combo.minmax() | combo2.pipe_merge | combo.pipe_sum.get()
+#        self.assertEqual(test, 1002, test)
+
 
 class TestOrder(unittest.TestCase, Mixin, OrderMixin):
 

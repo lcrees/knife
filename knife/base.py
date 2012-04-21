@@ -12,7 +12,8 @@ class ChainknifeMixin(local):
 
     def worker(self, worker):
         '''
-        Assign callable used to work on incoming things.
+        Assign `callable <http://docs.python.org/library/functions.html#
+        callable>`_ used to work on incoming things.
 
         Global `positional <http://docs.python.org/glossary.html#term-
         positional-argument>`_ and `keyword <http://docs.python.org/glossary.

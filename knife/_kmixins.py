@@ -556,7 +556,6 @@ class KFilter(AppspaceKey):
         >>> __(*stooge).items('place').get()
         []
         '''
-        Compile search `pattern` for use as :meth:`worker`.
 
     def traverse(self, invert=False):
         '''

@@ -56,8 +56,8 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
     '''
     Actively evaluated mapping knife.
 
-    `Map <http://docs.python.org/library/functions.html#map>`_ operations for incoming
-    things.
+    `Map <http://docs.python.org/library/functions.html#map>`_ operations for
+    incoming things.
     '''
 
     __slots__ = SLOTS
@@ -90,8 +90,8 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
     '''
     Actively evaluated reducing knife.
 
-    `Reducing operations <http://docs.python.org/library/functions.html#map>`_ for
-    incoming things.
+    `Reducing operations <http://docs.python.org/library/functions.html#map>`_
+    for incoming things.
     '''
 
     __slots__ = SLOTS
@@ -102,8 +102,8 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
     '''
     Actively evaluated repeating knife.
 
-    `Repetition <http://docs.python.org/library/functions.html#reduce>`_ operations
-    for incoming things.
+    `Repetition <http://docs.python.org/library/functions.html#reduce>`_
+    operations for incoming things.
     '''
 
     __slots__ = SLOTS
@@ -114,8 +114,8 @@ class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
     '''
     Actively evaluated slicing knife.
 
-    `Slicing operations <http://docs.python.org/library/functions.html#slice>`_ for
-    incoming things.
+    `Slicing operations <http://docs.python.org/library/functions.html#slice>`_
+    for incoming things.
     '''
 
     __slots__ = SLOTS

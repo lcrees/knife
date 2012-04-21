@@ -72,7 +72,6 @@ class _LazyMixin(local):
         return self
 
     def _prependit(self, things, tee_=tee, chain_=chain):
-        # place thing before other holding things
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # make snapshot original snapshot?
@@ -85,7 +84,6 @@ class _LazyMixin(local):
         return self
 
     def _appendit(self, things, tee_=tee, chain_=chain):
-        # place things after other incoming things
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # make snapshot original snapshot?

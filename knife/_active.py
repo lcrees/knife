@@ -15,8 +15,6 @@ class _ActiveMixin(local):
     '''active knife mixin'''
 
     def __init__(self, *things, **kw):
-        # if just one thing, put it in incoming things or put everything in
-        # incoming things
         incoming = deque()
         incoming.extend(things)
         super(_ActiveMixin, self).__init__(incoming, deque(), **kw)
@@ -31,9 +29,9 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self):
+    def _chain(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
         # take snapshot
-        snapshot = self._dumps(self._in)
+        snapshot = d(self._in, p)
         # rebalance incoming with outcoming
         if self._history:
             self._in.clear()
@@ -60,9 +58,6 @@ class _ActiveMixin(local):
     ## adding things ##########################################################
     ###########################################################################
 
-    def _dumps(self, thing, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
-        return d(thing, p)
-
     @property
     def _iterable(self):
         # derived from Raymond Hettinger Python Cookbook recipe # 577155
@@ -83,26 +78,27 @@ class _ActiveMixin(local):
         self._hold.extend(things)
         return self
 
-    def _prependit(self, things):
-        # place thing before other holding things
+    def _prependit(self, things, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
         # take snapshot
-        snapshot = self._dumps(self._in)
+        snapshot = d(self._in, p)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
         # place snapshot at beginning of snapshot stack
         self._history.appendleft(snapshot)
+        # place thing before other holding things
         self._in.extendleft(reversed(things))
         return self
 
-    def _appendit(self, things):
-        # place things after other incoming things
-        snapshot = self._dumps(self._in)
+    def _appendit(self, things, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+        # take snapshot
+        snapshot = d(self._in, p)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
         # place snapshot at beginning of snapshot stack
         self._history.appendleft(snapshot)
+        # place things after other incoming things
         self._in.extend(things)
         return self
 
@@ -130,33 +126,30 @@ class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
-    def _loads(self, past, loads_=pickle.loads):
-        return loads_(past)
-
-    def _undo(self, snapshot=0):
+    def _undo(self, snapshot=0, loads_=pickle.loads):
         # clear everything
         self.clear()
         # if specified, use a specific snapshot
         if snapshot:
             self._history.rotate(-(snapshot - 1))
-        self._in.extend(self._loads(self._history.popleft()))
+        self._in.extend(loads_(self._history.popleft()))
         return self
 
-    def _snapshot(self):
+    def _snapshot(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
         # take baseline snapshot of incoming things
-        self._baseline = self._dumps(self._in)
+        self._baseline = d(self._in, p)
         return self
 
-    def _rollback(self):
+    def _rollback(self, loads_=pickle.loads):
         # clear everything
         self.clear()
         # clear snapshots
         self._clearsp()
         # revert to baseline snapshot of incoming things
-        self._in.extend(self._loads(self._baseline))
+        self._in.extend(loads_(self._baseline))
         return self
 
-    def _revert(self):
+    def _revert(self, loads_=pickle.loads):
         # clear everything
         self.clear()
         # clear snapshots
@@ -164,7 +157,7 @@ class _OutMixin(_ActiveMixin):
         # clear baseline
         self._baseline = None
         # restore original snapshot of incoming things
-        self._in.extend(self._loads(self._original))
+        self._in.extend(loads_(self._original))
         return self
 
     def _clear(self, list_=list):
