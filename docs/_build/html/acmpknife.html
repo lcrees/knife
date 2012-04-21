@@ -58,6 +58,36 @@
 <dd><p>Actively evaluated comparing knife.</p>
 <p>Comparison operations for incoming things.</p>
 <dl class="method">
+<dt id="knife.active.cmpknife.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*things</em>, <em>snapshots=5</em><big>)</big><a class="headerlink" href="#knife.active.cmpknife.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>things</strong> &#8211; incoming things</li>
+<li><strong>snapshots</strong> (<em>integer</em>) &#8211; snapshots to keep (default: <tt class="docutils literal"><span class="pre">5</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.cmpknife.__len__">
+<tt class="descname">__len__</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.cmpknife.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of incoming things.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.cmpknife.__iter__">
+<tt class="descname">__iter__</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.cmpknife.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over outgoing things.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="knife.active.cmpknife.all">
 <tt class="descname">all</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.cmpknife.all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discover if <a class="reference internal" href="#knife.active.cmpknife.worker" title="knife.active.cmpknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for <strong>every</strong> incoming

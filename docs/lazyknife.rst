@@ -5,4 +5,7 @@
 
 .. autoclass:: lazyknife
     :inherited-members:
-    :members: __init__, __bool__, __iter__, __len__
+    
+    .. automethod:: __init__(*things, snapshots=5)
+    .. automethod:: __len__()
+    .. automethod:: __iter__()

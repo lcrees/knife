@@ -10,9 +10,10 @@ class KChainknife(AppspaceKey):
 
     def __init__(*things, **kw):  # @NoSelf
         '''
-        init
+        Initialize :mod:`knife`.
 
-        :argument `things`: incoming things
+        :argument things: incoming things
+        :keyword integer snapshots: snapshots to keep (default: ``5``)
         '''
 
     def worker(worker):  # @NoSelf

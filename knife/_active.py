@@ -15,6 +15,12 @@ class _ActiveMixin(local):
     '''active knife mixin'''
 
     def __init__(self, *things, **kw):
+        '''
+        Initialize :mod:`knife`.
+
+        :argument things: incoming things
+        :keyword integer snapshots: snapshots to keep (default: ``5``)
+        '''
         incoming = deque()
         incoming.extend(things)
         super(_ActiveMixin, self).__init__(incoming, deque(), **kw)

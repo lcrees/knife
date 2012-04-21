@@ -13,6 +13,12 @@ class _LazyMixin(local):
     '''lazy knife mixin'''
 
     def __init__(self, *things, **kw):
+        '''
+        Initialize :mod:`knife`.
+
+        :argument things: incoming things
+        :keyword integer snapshots: snapshots to keep (default: ``5``)
+        '''
         incoming = iter([things[0]]) if len(things) == 1 else iter(things)
         super(_LazyMixin, self).__init__(incoming, iter([]), **kw)
         # working things

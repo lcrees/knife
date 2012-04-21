@@ -4,5 +4,8 @@
 .. module:: knife.active
 
 .. autoclass:: reduceknife
-    :members: __init__, __bool__, __iter__, __len__
     :inherited-members:
+    
+    .. automethod:: __init__(*things, snapshots=5)
+    .. automethod:: __len__()
+    .. automethod:: __iter__()

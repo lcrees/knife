@@ -4,5 +4,8 @@
 .. module:: knife.lazy
 
 .. autoclass:: sliceknife
-    :members: __init__, __bool__, __iter__, __len__
     :inherited-members:
+    
+    .. automethod:: __init__(*things, **kw)
+    .. automethod:: __len__()
+    .. automethod:: __iter__()
