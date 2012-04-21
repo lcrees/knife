@@ -6,19 +6,17 @@
 knife Documentation
 ===================
 
-:mod:`knife` is a powerful multitool loosely inspired by 'underscore.js <http://
-documentcloud.github.com/underscore/>`_ but remixed for `Python <http://docs.
-python.org/>`_. It concentrates functionality from `Python standard library
-<http://docs.python.org/library/index.html>`_ in modules like `itertools <http:
-//docs.python.org/library/itertools.html>`_, `collections <http://docs.python.
-org/library/collections.html`>_, `operator <http://docs.python.org/library/
-operator.html`>_ in one convenient shrink-wrapped package.
+:mod:`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
+loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
+but remixed for maximum `Pythonicness <http://docs.python.org/glossary.html#term-pythonic>`_. 
+It delivers functionality scattered across the Python's `standard library <http://docs.
+python.org/library/index.html>`_ in one convenient shrink-wrapped package.
 
 Vitals
 ------
 
-:mod:`knife`'s documentation can be found at http://knife.readthedocs.org/ or
-http://packages.python.org/knife/
+:mod:`knife`'s documentation can be found at http://readthedocs.org/docs/knife/en/latest/
+or http://packages.python.org/knife/
 
 :mod:`knife` works with Python 2.6, 2.7, and 3.2.
 
@@ -38,7 +36,7 @@ Or `easy_install <http://packages.python.org/distribute/>`_:
   [... stuff happens ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://
+:mod:`knife` can also be downloaded from http://pypi.python.org/knife
 
 Development
 -----------

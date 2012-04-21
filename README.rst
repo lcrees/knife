@@ -1,10 +1,8 @@
-:mod:`knife` is a powerful multitool loosely inspired by 'underscore.js
-<http://documentcloud.github.com/underscore/>`_ but remixed for `Python 
-<http://docs.python.org/>`_. It concentrates functionality from `Python standard library
-<http://docs.python.org/library/index.html>`_ in modules like `itertools <http:
-//docs.python.org/library/itertools.html>`_, `collections <http://docs.python.
-org/library/collections.html`>_, `operator <http://docs.python.org/library/
-operator.html`>_ in one convenient shrink-wrapped package.
+:mod:`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
+loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
+but remixed for maximum `Pythonicness <http://docs.python.org/glossary.html#term-pythonic>`_. 
+It delivers functionality scattered across the standard library <http://docs.
+python.org/library/index.html>`_ in one convenient shrink-wrapped package.
 
 Vitals
 ------
