@@ -6,9 +6,9 @@
 knife Documentation
 ===================
 
-:mod:`knife` is a powerful multitool loosely inspired by 'underscore.js <http://
-documentcloud.github.com/underscore/>`_ but remixed for `Python <http://docs.
-python.org/>`_. It concentrates functionality from `Python standard library
+:mod:`knife` is a powerful multitool loosely inspired by 'underscore.js
+<http://documentcloud.github.com/underscore/>`_ but remixed for `Python 
+<http://docs.python.org/>`_. It concentrates functionality from `Python standard library
 <http://docs.python.org/library/index.html>`_ in modules like `itertools <http:
 //docs.python.org/library/itertools.html>`_, `collections <http://docs.python.
 org/library/collections.html`>_, `operator <http://docs.python.org/library/
@@ -38,16 +38,15 @@ Or `easy_install <http://packages.python.org/distribute/>`_:
   [... stuff happens ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://
+:mod:`knife` can also be downloaded from http://pypi.python.org/knife
 
 Development
 -----------
 
- * :mod:`knife`'s main public source repository is https://bitbucket.org/lcrees/knife.
+ * :mod:`knife` public source repository is at https://bitbucket.org/lcrees/knife.
  * :mod:`knife` is mirrored on https://github.com/kwarterthieves/knife/.
  * :mod:`knife` issues can be reported at https://bitbucket.org/lcrees/knife/issues
- * :mod:`knife` is distributed under a `BSD <http://www.opensource.org/licenses/
-     bsd-license.php>`_ license.
+ * :mod:`knife` is distributed under a `BSD <http://www.opensource.org/licenses/bsd-license.php>`_ license.
 
 In Brief...
 -----------
@@ -83,8 +82,8 @@ chained together in pipelines.
   >>> one.minmax().pipe(two).merge().back().min().get()
   2
   
-:mod:`knife` can also undo the results of previous operations and even roll
-a knife back to its original arguments.
+:mod:`knife` can also rollback the results of previous operations, a baseline
+snapshot, or its original arguments.
 
 *Higly contrived introductory example:*
   
@@ -127,7 +126,7 @@ Or:
 
   >>> from knife import lazyknife
   
-Specilized classes featuring a limited subset of :knife:`functionality` are
+Specilized classes featuring a limited subset of :mod:`knife` functionality` are
 available in active or lazy flavors and documented below:
 
 Table of Contents
