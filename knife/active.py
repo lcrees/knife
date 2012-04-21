@@ -24,6 +24,10 @@ class activeknife(
     Actively evaluated combo knife.
 
     Combines features from every other :mod:`knife` knife.
+
+    Aliased as :class:`knife` when imported from :mod:`knife`.
+
+    >>> from knife import knife
     '''
 
     __slots__ = SLOTS

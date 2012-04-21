@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''knife _mixins'''
+'''specific knife mixins'''
 
 from math import fsum
 from copy import deepcopy
@@ -13,7 +13,8 @@ from itertools import (
     groupby, islice, tee, starmap, repeat, combinations, permutations,
     product, chain)
 
-from stuf.six import strings, items, values, keys, filter, map
+from stuf.six import (
+    strings, items, values, keys, filter, map, advance_iterator)
 from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 
 from knife._compat import (
@@ -368,7 +369,7 @@ class _SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
-    def _at(n, default, islice_=islice, next_=next):
+    def _at(n, default, islice_=islice, next_=advance_iterator):
         return lambda x: next_(islice_(x, n, None), default)
 
     @staticmethod

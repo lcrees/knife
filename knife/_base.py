@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''base knife mixins'''
+'''base base knife mixins'''
 
 from operator import truth
 from threading import local

@@ -24,6 +24,10 @@ class lazyknife(
     Lazily evaluated combo knife.
 
     Combines features from every other :mod:`knife` knife.
+
+    Aliased as :class:`__` when imported from :mod:`knife`.
+
+    >>> from knife import __
     '''
 
     __slots__ = SLOTS

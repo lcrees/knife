@@ -17,12 +17,12 @@ class ChainknifeMixin(local):
 
         Global `positional <http://docs.python.org/glossary.html#term-
         positional-argument>`_ and `keyword <http://docs.python.org/glossary.
-        html#term-keyword-argument>`_ :meth:`params` are reset when new worker
-        is assigned.
+        html#term-keyword-argument>`_ :meth:`params` are reset when a new
+        `worker` is assigned.
 
         :argument worker: a callable
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         # reset stored position params
         self._args = ()
@@ -34,12 +34,12 @@ class ChainknifeMixin(local):
 
     def params(self, *args, **kw):
         '''
-        Assign `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments used when :meth:`worker` is invoked.
+        Assign `positional <http://docs.python.org/glossary.html#term-
+        positional-argument>`_ and `keyword <http://docs.python.org/glossary.
+        html#term-keyword-argument>`_ arguments used when :meth:`worker` is
+        invoked.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         # positional params
         self._args = args
@@ -66,7 +66,7 @@ class ChainknifeMixin(local):
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # using parse expression
         >>> test = __('first test', 'second test', 'third test')
@@ -92,7 +92,7 @@ class ChainknifeMixin(local):
 
         :argument things: incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
         [1, 2, 3, 4, 5, 6, 3, 4, 5]
@@ -105,7 +105,7 @@ class ChainknifeMixin(local):
 
         :argument things: incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(3, 4, 5).append(1, 2, 3, 4, 5, 6).peek()
@@ -177,7 +177,7 @@ class OutMixin(ChainknifeMixin):
 
         :argument wrapper: an :class:`object`, :class:`type`, or :obj:`class`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).wrap(tuple).peek()
         (1, 2, 3, 4, 5, 6)
@@ -195,7 +195,7 @@ class OutMixin(ChainknifeMixin):
         behavior is reverted to **after** :meth:`get` or :meth:`peek` is
         invoked.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         self._each = not self._each
         return self
@@ -208,7 +208,7 @@ class OutMixin(ChainknifeMixin):
 
         :keyword string errors: error handling for decoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from stuf.six import u, b
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
@@ -228,7 +228,7 @@ class OutMixin(ChainknifeMixin):
 
         :keyword string errors: error handling for encoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.bytes().oneach().peek()
@@ -248,7 +248,7 @@ class OutMixin(ChainknifeMixin):
 
         :keyword string errors: error handling for decoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.unicode().oneach().peek()
@@ -267,7 +267,7 @@ class OutMixin(ChainknifeMixin):
         :keyword integer snapshot: number of steps ago ``1``, ``2``, ``3``,
           etc.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
@@ -288,7 +288,7 @@ class OutMixin(ChainknifeMixin):
         '''
         Take baseline snapshot of current incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         return self._snapshot()
 
@@ -296,7 +296,7 @@ class OutMixin(ChainknifeMixin):
         '''
         Restore incoming things to baseline :meth:`snapshot`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
@@ -313,7 +313,7 @@ class OutMixin(ChainknifeMixin):
         '''
         Restore incoming things to original snapshot.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
@@ -327,6 +327,6 @@ class OutMixin(ChainknifeMixin):
         '''
         Clear everything.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         return self._clear()

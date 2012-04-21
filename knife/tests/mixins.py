@@ -27,7 +27,6 @@ class MathMixin(object):
         self.assertEqual(test, 1000, test)
         test = one.original().minmax().pipe(two).merge().back().sum().get()
         self.assertEqual(test, 1002, test)
-        one = self.mclass(10, 5, 100, 2, 1000)
 
     def test_average(self):
         self.assertEqual(
@@ -209,7 +208,6 @@ class FilterMixin(object):
         )
 
     def test_traverse(self):
-        self.maxDiff = None
         from knife._compat import ChainMap, OrderedDict
         get = self.mclass(stooges, stoog2, stoog3).traverse().get()
         self.assertEqual(
@@ -324,8 +322,8 @@ class SliceMixin(object):
         self.assertEqual(self.mclass(5, 4, 3, 2, 1).first(2).get(), [5, 4])
 
     def test_combo(self):
-        self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).initial().rest().last().get(), 2,
+        self.assertEqual(self.mclass(
+            5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get(), 3,
         )
 
     def test_index(self):
