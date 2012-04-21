@@ -115,16 +115,17 @@ class ChainknifeMixin(local):
 
     def pipe(self, knife):
         '''
-        Switch to a new :mod:`knife`.
+        Pipe incoming things through another :mod:`knife`.
 
-        :argument knife: :mod:`knife` to pipe incoming things through
+        :argument knife: another :mod:`knife`
         '''
         with self._chain:
             return self._pipeit(knife)
 
     def back(self):
         '''
-        Switch back to a previously piped :mod:`knife`.
+        Switch back to the previous :mod:`knife` object that piped its incoming
+        things through this :mod:`knife`.
         '''
         with self._chain:
             return self._unpipeit()
