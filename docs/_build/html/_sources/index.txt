@@ -10,34 +10,33 @@
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
-:mod:`knife` concentrates power normally found dispersed across the Python
+:mod:`knife` concentrates power normally dispersed across the entire Python
 universe in one convenient shrink-wrapped package.
 
 Vitals
 ======
 
-:mod:`knife`'s documentation is found at http://readthedocs.org/docs/knife/en/latest/
-or http://packages.python.org/knife/
-
 :mod:`knife` works with Python 2.6, 2.7, and 3.2.
+
+mod:`knife` documentation is at http://readthedocs.org/docs/knife/en/latest/ or
+http://packages.python.org/knife/
 
 Installation
 ============
 
-:mod:`knife` is installed with `pip <http://www.pip-installer.org/en/latest/index.html>`_::
+Install :mod:`knife` with `pip <http://www.pip-installer.org/en/latest/index.html>`_...::
 
   $ pip install knife
   [... possibly exciting stuff happening ...]
   Successfully installed knife
   
-Or `easy_install <http://packages.python.org/distribute/>`_::
+...or `easy_install <http://packages.python.org/distribute/>`_...::
 
   $ easy_install knife
   [... possibly exciting stuff happening ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://pypi.python.org/knife and installed
-old school::
+...or old school by downloading :mod:`knife` from http://pypi.python.org/pypi/knife/::
 
   $ python setup.py install
   [... possibly exciting stuff happening ...]
@@ -51,8 +50,8 @@ Development
  * Issue tracker: https://bitbucket.org/lcrees/knife/issues
  * License: `BSD <http://www.opensource.org/licenses/bsd-license.php>`_ license
 
-*knife* in 3 seconds
-====================
+3 second *knife*
+================
 
 Things go in:
 
@@ -67,14 +66,14 @@ Things come out:
   >>> gauntlet.get()
   3
 
-Slightly More
-=============
+Slightly more *knife*
+=====================
 
-:mod:`knife` has over 40 methods that can be `chained <https://en.wikipedia.org/
-wiki/Fluent_interface>`_.
+:mod:`knife` has 40 plus methods that can be `chained <https://en.wikipedia.org/
+wiki/Fluent_interface>`_ into pipelines.
 
-*contrived example:*
-^^^^^^^^^^^^^^^^^^^^
+contrived example:
+^^^^^^^^^^^^^^^^^^
 
   >>> from knife import __
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
@@ -82,8 +81,8 @@ wiki/Fluent_interface>`_.
 
 Or used object-oriented style.
 
-*contrived example:*
-^^^^^^^^^^^^^^^^^^^^
+contrived example:
+^^^^^^^^^^^^^^^^^^
 
   >>> from knife import knife
   >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
@@ -92,12 +91,12 @@ Or used object-oriented style.
   >>> oo.get()
   {'a': 1, 'b': 2, 'c': 3}
   
-:mod:`knife` knives can roll the data it is knifing back to the results of
-immediately preceding steps, a baseline snapshot, or even the original
+A :mod:`knife` knife can rollback the state of things it has knifed back to results
+of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
-*contrived example:*
-^^^^^^^^^^^^^^^^^^^^
+contrived example:
+^^^^^^^^^^^^^^^^^^
   
   >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
   >>> undone.peek()
@@ -106,9 +105,9 @@ arguments.
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.append(1, 2).undo(2).peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  undone.snapshot().append(1, 2).baseline().peek()
+  >>> undone.snapshot().append(1, 2).baseline().peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  undone.original().peek()
+  >>> undone.original().peek()
   [1, 2, 3]
   >>> one.original().minmax().pipe(two).merge().back().max().get()
   1000
@@ -120,7 +119,7 @@ knives evaluate the result of each method immediately it's called. Calling the
 same method with a lazy knife only generate results when they are iterated over
 or :meth:`knife.lazy.lazyknife.get` is called to get results.
   
-:class:`knife.lazy.lazyknife` combines all :mod:`knife` methods into one
+:class:`knife.lazy.lazyknife` combines all :mod:`knife` methods in one
 :mod:`knife` class:
 
   >>> from knife import lazyknife
@@ -129,7 +128,7 @@ It can be imported under its *dunderscore* (:class:`knife.__`) alias.
 
   >>> from knife import __  
   
-:class:`knife.active.activeknife` combines every :mod:`knife` method in one
+:class:`knife.active.activeknife` also combines every :mod:`knife` method in one
 combo :mod:`knife` class:
 
   >>> from knife import activeknife
@@ -138,11 +137,11 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods also come in focused classes group :mod:`knife` methods 
-with related functionality that can be chained together into pipelines.
+:mod:`knife`'s methods are available in more focused classes that group related 
+methods together. These can also be chained into pipelines.
 
-*contrived example:*
-^^^^^^^^^^^^^^^^^^^^
+contrived example:
+^^^^^^^^^^^^^^^^^^
 
   >>> from knife.active import mathknife, reduceknife
   >>> one = mathknife(10, 5, 100, 2, 1000)
