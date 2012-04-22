@@ -10,7 +10,7 @@
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
-:mod:`knife` concentrates power normally dispersed across the entire Python
+:mod:`knife` concentrates power that is normally dispersed across the entire Python
 universe in one convenient shrink-wrapped package.
 
 Vitals
@@ -98,7 +98,7 @@ contrived example:
   >>> oo.get()
   3
   
-A :mod:`knife` knife can rollback the state of things it has knifed back to results
+A :mod:`knife` can rollback the state of things it has knifed back to results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
@@ -140,7 +140,7 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods are available in more focused classes that group related 
+:mod:`knife` methods are available in more focused classes that group related 
 methods together. These can also be chained into pipelines.
 
 contrived example:

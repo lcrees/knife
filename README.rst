@@ -47,11 +47,13 @@ Development
 
 Things go in:
 
+  >>> from knife import __
   >>> gauntlet = __(5, 4, 3, 2, 1)
   
 Things get knifed:
 
   >>> gauntlet.initial().rest().slice(1, 2).last()
+  knife.lazy.lazyknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
 
 Things come out:
 
@@ -67,7 +69,6 @@ wiki/Fluent_interface>`_ into pipelines.
 contrived example:
 ^^^^^^^^^^^^^^^^^^
 
-  >>> from knife import __
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
@@ -77,13 +78,19 @@ contrived example:
 ^^^^^^^^^^^^^^^^^^
 
   >>> from knife import knife
-  >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
-  >>> oo.wrap(dict)
-  >>> oo.map()
+  >>> oo = knife(5, 4, 3, 2, 1)
+  >>> oo.initial()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) => WORK: ([]) => UTIL: ([]) => OUT: ([5, 4, 3, 2])])
+  >>> oo.rest()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([4, 3, 2])])
+  >>> oo.slice(1, 2)
+  knife.active.activeknife ([IN: ([4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
+  >>> oo.last()
+  knife.active.activeknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
   >>> oo.get()
-  {'a': 1, 'b': 2, 'c': 3}
+  3
   
-A `knife` knife can rollback the state of things it has knifed back to results
+A `knife` can rollback the state of things it has knifed back to results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
@@ -101,10 +108,6 @@ contrived example:
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
   >>> undone.original().peek()
   [1, 2, 3]
-  >>> one.original().minmax().pipe(two).merge().back().max().get()
-  1000
-  >>> one.original().minmax().pipe(two).merge().back().sum().get()
-  1002
 
 `knife` knives come in two flavors: `active` and `lazy`. Active
 knives evaluate the result of each method immediately it's called. Calling the
@@ -128,7 +131,7 @@ It can be imported under its `knife.knife` alias:
  
   >>> from knife import knife
 
-`knife`'s methods are available in more focused classes that group related 
+`knife` methods are available in more focused classes that group related 
 methods together. These can also be chained into pipelines.
 
 contrived example:
@@ -139,3 +142,7 @@ contrived example:
   >>> two = reduceknife()
   >>> one.minmax().pipe(two).merge().back().min().get()
   2
+  >>> one.original().minmax().pipe(two).merge().back().max().get()
+  1000
+  >>> one.original().minmax().pipe(two).merge().back().sum().get()
+  1002

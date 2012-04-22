@@ -10,7 +10,7 @@
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
-:mod:`knife` concentrates power normally dispersed across the entire Python
+:mod:`knife` concentrates power that is normally dispersed across the entire Python
 universe in one convenient shrink-wrapped package.
 
 Vitals
@@ -61,6 +61,7 @@ Things go in:
 Things get knifed:
 
   >>> gauntlet.initial().rest().slice(1, 2).last()
+  knife.lazy.lazyknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
 
 Things come out:
 
@@ -85,13 +86,19 @@ contrived example:
 ^^^^^^^^^^^^^^^^^^
 
   >>> from knife import knife
-  >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
-  >>> oo.wrap(dict)
-  >>> oo.merge()
+  >>> oo = knife(5, 4, 3, 2, 1)
+  >>> oo.initial()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) => WORK: ([]) => UTIL: ([]) => OUT: ([5, 4, 3, 2])])
+  >>> oo.rest()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([4, 3, 2])])
+  >>> oo.slice(1, 2)
+  knife.active.activeknife ([IN: ([4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
+  >>> oo.last()
+  knife.active.activeknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
   >>> oo.get()
-  {'a': 1, 'b': 2, 'c': 3}
+  3
   
-A :mod:`knife` knife can rollback the state of things it has knifed back to results
+A :mod:`knife` can rollback the state of things it has knifed back to results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
@@ -133,7 +140,7 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods are available in more focused classes that group related 
+:mod:`knife` methods are available in more focused classes that group related 
 methods together. These can also be chained into pipelines.
 
 contrived example:
