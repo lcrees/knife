@@ -667,7 +667,7 @@ class KReduce(AppspaceKey):
 
 class KSlice(AppspaceKey):
 
-    '''slicing key'''
+    '''slicing knife key'''
 
     def at(n, default=None):  # @NoSelf
         '''

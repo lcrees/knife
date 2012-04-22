@@ -1,6 +1,6 @@
 '''knife fabfile'''
 
-from fabric.api import prompt, local, settings, env
+from fabric.api import prompt, local, settings, env, lcd
 
 
 def _test(val):
@@ -13,6 +13,14 @@ def _test(val):
 def tox():
     '''test knife'''
     local('tox')
+
+
+def docs():
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
 
 
 def tox_recreate():

@@ -118,6 +118,8 @@ class ChainknifeMixin(local):
         Pipe incoming things through another :mod:`knife`.
 
         :argument knife: another :mod:`knife`
+        
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         with self._chain:
             return self._pipeit(knife)
@@ -126,6 +128,8 @@ class ChainknifeMixin(local):
         '''
         Switch back to the previous :mod:`knife` object that piped its incoming
         things through this :mod:`knife`.
+        
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
         with self._chain:
             return self._unpipeit()

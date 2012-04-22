@@ -23,8 +23,8 @@ class KChainknife(AppspaceKey):
 
         Global `positional <http://docs.python.org/glossary.html#term-
         positional-argument>`_ and `keyword <http://docs.python.org/glossary.
-        html#term-keyword-argument>`_:meth:`params` are reset when new worker
-        is assigned.
+        html#term-keyword-argument>`_ :meth:`params` are reset when a new
+        `worker` is assigned.
 
         :argument worker: a callable
 
@@ -33,10 +33,10 @@ class KChainknife(AppspaceKey):
 
     def params(*args, **kw):  # @NoSelf
         '''
-        Assign `positional
-        <http://docs.python.org/glossary.html#term-positional-argument>`_ and
-        `keyword <http://docs.python.org/glossary.html#term-keyword-argument>`_
-        arguments used when :meth:`worker` is invoked.
+        Assign `positional <http://docs.python.org/glossary.html#term-
+        positional-argument>`_ and `keyword <http://docs.python.org/glossary.
+        html#term-keyword-argument>`_ arguments used when :meth:`worker` is
+        invoked.
 
         :rtype: :const:`self` (a :obj:`knife` object)
         '''
@@ -60,7 +60,7 @@ class KChainknife(AppspaceKey):
         :keyword integer flags: regular expression `flags
           <http://docs.python.org/library/re.html#re.DEBUG>`_
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # using parse expression
         >>> test = __('first test', 'second test', 'third test')
@@ -80,7 +80,7 @@ class KChainknife(AppspaceKey):
 
         :argument things: incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(3, 4, 5).prepend(1, 2, 3, 4, 5, 6).peek()
         [1, 2, 3, 4, 5, 6, 3, 4, 5]
@@ -92,11 +92,28 @@ class KChainknife(AppspaceKey):
 
         :argument things: incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(3, 4, 5).append(1, 2, 3, 4, 5, 6).peek()
         [3, 4, 5, 1, 2, 3, 4, 5, 6]
+        '''
+
+    def pipe(self, knife):
+        '''
+        Pipe incoming things through another :mod:`knife`.
+
+        :argument knife: another :mod:`knife`
+        
+        :rtype: :const:`self` (:obj:`knife` object)
+        '''
+
+    def back(self):
+        '''
+        Switch back to the previous :mod:`knife` object that piped its incoming
+        things through this :mod:`knife`.
+        
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
 
     def __len__():  # @NoSelf
@@ -116,11 +133,19 @@ class KOutput(KChainknife):
     def get():  # @NoSelf
         '''
         Return outgoing things wrapped with :meth:`wrap`.
+
+        If there's only one outgoing thing, only that thing will be returned.
+        If there are multiple outgoing things, they will be returned wrapped
+        with :meth:`wrap`.
         '''
 
     def peek():  # @NoSelf
         '''
         Preview current incoming things wrapped with :meth:`wrap`.
+
+        If there's only one outgoing thing, only that thing will be returned.
+        If there are multiple outgoing things, they will be returned wrapped
+        with :meth:`wrap`.
         '''
 
     def wrap(wrapper):  # @NoSelf
@@ -133,7 +158,7 @@ class KOutput(KChainknife):
 
         :argument wrapper: an :class:`object`, :class:`type`, or :obj:`class`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).wrap(tuple).peek()
         (1, 2, 3, 4, 5, 6)
@@ -149,7 +174,7 @@ class KOutput(KChainknife):
         behavior is reverted to **after** :meth:`get` or :meth:`peek` is
         invoked.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
 
     def ascii(errors='strict'):  # @NoSelf
@@ -160,7 +185,7 @@ class KOutput(KChainknife):
 
         :keyword string errors: error handling for decoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from stuf.six import u, b
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
@@ -178,7 +203,7 @@ class KOutput(KChainknife):
 
         :keyword string errors: error handling for encoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.bytes().oneach().peek()
@@ -196,7 +221,7 @@ class KOutput(KChainknife):
 
         :keyword string errors: error handling for decoding issues
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __([1], True, r't', b('i'), u('g'), None, (1,))
         >>> test.unicode().oneach().peek()
@@ -213,7 +238,7 @@ class KOutput(KChainknife):
         :keyword integer snapshot: number of steps ago ``1``, ``2``, ``3``,
           etc.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
@@ -233,14 +258,14 @@ class KOutput(KChainknife):
         '''
         Take baseline snapshot of current incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
 
     def baseline():  # @NoSelf
         '''
         Restore incoming things to baseline :meth:`snapshot`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
@@ -256,7 +281,7 @@ class KOutput(KChainknife):
         '''
         Restore incoming things to original snapshot.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
         >>> undone.peek()
@@ -269,5 +294,5 @@ class KOutput(KChainknife):
         '''
         Clear everything.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
