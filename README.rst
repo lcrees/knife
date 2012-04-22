@@ -1,22 +1,22 @@
-:mod:`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
+`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
-:mod:`knife` concentrates power normally found dispersed across the Python
+`knife` concentrates power normally found dispersed across the Python
 universe in one convenient shrink-wrapped package.
 
 Vitals
 ======
 
-:mod:`knife`'s documentation is found at http://readthedocs.org/docs/knife/en/latest/
+`knife`'s documentation is found at http://readthedocs.org/docs/knife/en/latest/
 or http://packages.python.org/knife/
 
-:mod:`knife` works with Python 2.6, 2.7, and 3.2.
+`knife` works with Python 2.6, 2.7, and 3.2.
 
 Installation
 ============
 
-:mod:`knife` is installed with `pip <http://www.pip-installer.org/en/latest/index.html>`_::
+`knife` is installed with `pip <http://www.pip-installer.org/en/latest/index.html>`_::
 
   $ pip install knife
   [... possibly exciting stuff happening ...]
@@ -28,7 +28,7 @@ Or `easy_install <http://packages.python.org/distribute/>`_::
   [... possibly exciting stuff happening ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://pypi.python.org/knife and installed
+`knife` can also be downloaded from http://pypi.python.org/knife and installed
 old school::
 
   $ python setup.py install
@@ -62,7 +62,7 @@ Things come out:
 Slightly More
 =============
 
-:mod:`knife` has over 40 methods that can be `chained <https://en.wikipedia.org/
+`knife` has over 40 methods that can be `chained <https://en.wikipedia.org/
 wiki/Fluent_interface>`_.
 
 *contrived example:*
@@ -84,7 +84,7 @@ Or used object-oriented style.
   >>> oo.get()
   {'a': 1, 'b': 2, 'c': 3}
   
-:mod:`knife` knives can roll the data it is knifing back to the results of
+`knife` knives can roll the data it is knifing back to the results of
 immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
@@ -107,30 +107,30 @@ arguments.
   >>> one.original().minmax().pipe(two).merge().back().sum().get()
   1002
 
-:mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`. Active
+`knife` knives come in two flavors: `active` and `lazy`. Active
 knives evaluate the result of each method immediately it's called. Calling the
 same method with a lazy knife only generate results when they are iterated over
-or :meth:`knife.lazy.lazyknife.get` is called to get results.
+or `knife.lazy.lazyknife.get` is called to get results.
   
-:class:`knife.lazy.lazyknife` combines all :mod:`knife` methods into one
-:mod:`knife` class:
+`knife.lazy.lazyknife` combines all `knife` methods into one
+`knife` class:
 
   >>> from knife import lazyknife
 
-It can be imported under its *dunderscore* (:class:`knife.__`) alias.
+It can be imported under its *dunderscore* (`knife.__`) alias.
 
   >>> from knife import __  
   
-:class:`knife.active.activeknife` combines every :mod:`knife` method in one
-combo :mod:`knife` class:
+`knife.active.activeknife` combines every `knife` method in one
+combo `knife` class:
 
   >>> from knife import activeknife
 
-It can be imported under its :class:`knife.knife` alias:
+It can be imported under its `knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods also come in focused classes group :mod:`knif` methods 
+`knife`'s methods also come in focused classes group `knife` methods 
 with related functionality that can be chained together into pipelines.
 
 *contrived example:*
