@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-'''setup for twoq'''
+'''setup for knife'''
 
 from os import getcwd
 from os.path import join
@@ -14,23 +14,22 @@ install_requires = list(l.strip() for l in open(
 ).readlines())
 
 setup(
-    name='twoq',
-    version='0.4.12',
-    description='iterator chaining, underscored by a two-headed queue',
+    name='knife',
+    version='0.5.0',
+    description='Pythonic remix of underscore.js: Things go in. Things get '
+        'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
-    keywords='queue generator utility iterator functional programming',
+    keywords='pipeline filtering chaining iterator functional fluent chaining',
     license='BSD',
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
-    url='https://bitbucket.org/lcrees/twoq',
-    packages=[
-        l.strip() for l in open(join(getcwd(), 'packages'), 'r').readlines()
-    ],
-    test_suite='twoq.tests',
+    url='https://bitbucket.org/lcrees/knife',
+    packages=['knife'],
+    test_suite='knife.tests',
     zip_safe=False,
     install_requires=install_requires,
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
