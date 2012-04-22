@@ -1,4 +1,4 @@
-:class:`knife.lazy.filterknife` --- Lazily evaluated filtering knife
+:class:`knife.lazy.filterknife` --- Lazier evaluated filtering knife
 ====================================================================
 
 .. module:: knife.lazy

@@ -39,6 +39,8 @@ class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
     Actively evaluated comparing knife.
 
     Comparison operations for incoming things.
+
+    >>> from knife.active import cmpknife
     '''
 
     __slots__ = SLOTS
@@ -50,6 +52,8 @@ class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
     Actively evaluated filtering knife.
 
     Filtering operations for incoming things.
+
+    >>> from knife.active import filterknife
     '''
 
     __slots__ = SLOTS
@@ -62,6 +66,8 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
     `Map <http://docs.python.org/library/functions.html#map>`_ operations for
     incoming things.
+
+    >>> from knife.active import mapknife
     '''
 
     __slots__ = SLOTS
@@ -73,6 +79,8 @@ class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
     Actively evaluated mathing knife.
 
     Numeric and statistical operations for incoming things.
+
+    >>> from knife.active import mathknife
     '''
 
     __slots__ = SLOTS
@@ -84,6 +92,8 @@ class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
     Actively evaluated ordering knife.
 
     Sorting and grouping operations for incoming things.
+
+    >>> from knife.active import orderknife
     '''
 
     __slots__ = SLOTS
@@ -94,8 +104,10 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
     '''
     Actively evaluated reducing knife.
 
-    `Reducing operations <http://docs.python.org/library/functions.html#map>`_
+    `Reducing <http://docs.python.org/library/functions.html#map>`_ operations
     for incoming things.
+
+    >>> from knife.active import reduceknife
     '''
 
     __slots__ = SLOTS
@@ -106,8 +118,9 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
     '''
     Actively evaluated repeating knife.
 
-    `Repetition <http://docs.python.org/library/functions.html#reduce>`_
-    operations for incoming things.
+    Repetition operations for incoming things.
+
+    >>> from knife.active import repeatknife
     '''
 
     __slots__ = SLOTS
@@ -118,8 +131,10 @@ class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
     '''
     Actively evaluated slicing knife.
 
-    `Slicing operations <http://docs.python.org/library/functions.html#slice>`_
+    `Slicing <http://docs.python.org/library/functions.html#slice>`_ operations 
     for incoming things.
+
+    >>> from knife.active import sliceknife
     '''
 
     __slots__ = SLOTS

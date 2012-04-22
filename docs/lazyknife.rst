@@ -1,4 +1,4 @@
-:class:`knife.lazy.lazyknife` --- Lazily evaluated combo knife
+:class:`knife.lazy.lazyknife` --- Lazier evaluated combo knife
 ==============================================================
 
 .. module:: knife.lazy

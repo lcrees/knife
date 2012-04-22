@@ -1,4 +1,4 @@
-:class:`knife.lazy.repeatknife` --- Lazily evaluated repeating knife
+:class:`knife.lazy.repeatknife` --- Lazier evaluated repeating knife
 ====================================================================
 
 .. module:: knife.lazy

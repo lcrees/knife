@@ -3,64 +3,87 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-knife Documentation
-===================
+*knife* Documentation
+#####################
 
 :mod:`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
-but remixed for maximum `Pythonicness <http://docs.python.org/glossary.html#term-pythonic>`_. 
-It delivers functionality scattered across the Python's `standard library <http://docs.
-python.org/library/index.html>`_ in one convenient shrink-wrapped package.
+but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
+
+:mod:`knife` concentrates power normally found dispersed across the Python
+universe in one convenient shrink-wrapped package.
 
 Vitals
-------
+======
 
-:mod:`knife`'s documentation can be found at http://readthedocs.org/docs/knife/en/latest/
+:mod:`knife`'s documentation is found at http://readthedocs.org/docs/knife/en/latest/
 or http://packages.python.org/knife/
 
 :mod:`knife` works with Python 2.6, 2.7, and 3.2.
 
 Installation
-------------
+============
 
-:mod:`knife` can be installed with `pip <http://www.pip-installer.org/en/latest
-/index.html>`_:
+:mod:`knife` is installed with `pip <http://www.pip-installer.org/en/latest/index.html>`_::
 
   $ pip install knife
-  [... stuff happens ...]
+  [... possibly exciting stuff happening ...]
   Successfully installed knife
   
-Or `easy_install <http://packages.python.org/distribute/>`_:
+Or `easy_install <http://packages.python.org/distribute/>`_::
 
   $ easy_install knife
-  [... stuff happens ...]
+  [... possibly exciting stuff happening ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://pypi.python.org/knife
+:mod:`knife` can also be downloaded from http://pypi.python.org/knife and installed
+old school::
+
+  $ python setup.py install
+  [... possibly exciting stuff happening ...]
+  Finished processing dependencies for knife
 
 Development
------------
+===========
 
- * :mod:`knife` public source repository is at https://bitbucket.org/lcrees/knife.
- * :mod:`knife` is mirrored on https://github.com/kwarterthieves/knife/.
- * :mod:`knife` issues can be reported at https://bitbucket.org/lcrees/knife/issues
- * :mod:`knife` is distributed under a `BSD <http://www.opensource.org/licenses/bsd-license.php>`_ license.
+ * Public repository: https://bitbucket.org/lcrees/knife.
+ * Mirror: https://github.com/kwarterthieves/knife/
+ * Issue tracker: https://bitbucket.org/lcrees/knife/issues
+ * License: `BSD <http://www.opensource.org/licenses/bsd-license.php>`_ license
 
-In Brief...
------------
+*knife* in 3 seconds
+====================
 
-:mod:`knife` features 45 carefully curated methods that can be `chained <https:
-//en.wikipedia.org/wiki/Fluent_interface>`_ into one pipeline.
+Things go in:
 
-*Higly contrived introductory example:*
+  >>> gauntlet = __(5, 4, 3, 2, 1)
+  
+Things get knifed:
+
+  >>> gauntlet.initial().rest().slice(1, 2).last()
+
+Things come out:
+
+  >>> gauntlet.get()
+  3
+
+Slightly More
+=============
+
+:mod:`knife` has over 40 methods that can be `chained <https://en.wikipedia.org/
+wiki/Fluent_interface>`_.
+
+*contrived example:*
+^^^^^^^^^^^^^^^^^^^^
 
   >>> from knife import __
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
-Or used in object-oriented style.
+Or used object-oriented style.
 
-*Higly contrived introductory example:*
+*contrived example:*
+^^^^^^^^^^^^^^^^^^^^
 
   >>> from knife import knife
   >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
@@ -69,21 +92,12 @@ Or used in object-oriented style.
   >>> oo.get()
   {'a': 1, 'b': 2, 'c': 3}
   
-:mod:`knife`'s methods are also available in more modular classes that can be
-chained together in pipelines.
+:mod:`knife` knives can roll the data it is knifing back to the results of
+immediately preceding steps, a baseline snapshot, or even the original
+arguments.
 
-*Higly contrived introductory example:*
-
-  >>> from knife.active import mathknife, reduceknife
-  >>> one = mathknife(10, 5, 100, 2, 1000)
-  >>> two = reduceknife()
-  >>> one.minmax().pipe(two).merge().back().min().get()
-  2
-  
-:mod:`knife` can also rollback the results of previous operations, a baseline
-snapshot, or its original arguments.
-
-*Higly contrived introductory example:*
+*contrived example:*
+^^^^^^^^^^^^^^^^^^^^
   
   >>> undone = __(1, 2, 3).prepend(1, 2, 3, 4, 5, 6)
   >>> undone.peek()
@@ -101,37 +115,43 @@ snapshot, or its original arguments.
   >>> one.original().minmax().pipe(two).merge().back().sum().get()
   1002
 
-:mod:`knife`'s knives come in two flavors: :mod:`active` and mod:`lazy`. Active
-knives evaluate the result of each operation upon method invocation. Lazy knives
-are more lazily evaluated when a :mod:`knife` is iterated over or :meth:`get`
-method is called to fetch the results.
-
-There is an active combo :mod:`knife` featuring all :mod:knife's method that 
-can be imported as:
-
-  >>> from knife import knife
+:mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`. Active
+knives evaluate the result of each method immediately it's called. Calling the
+same method with a lazy knife only generate results when they are iterated over
+or :meth:`knife.lazy.lazyknife.get` is called to get results.
   
-Or:
- 
-  >>> from knife import activeknife
-  
-There is a lazy combo :mod:`knife` that can be imported as a "dunderscore" (two
-underscores).
-
-  >>> from knife import __
-  
-Or:
+:class:`knife.lazy.lazyknife` combines all :mod:`knife` methods into one
+:mod:`knife` class:
 
   >>> from knife import lazyknife
+
+It can be imported under its *dunderscore* (:class:`knife.__`) alias.
+
+  >>> from knife import __  
   
-Specilized classes featuring a limited subset of :mod:`knife` functionality` are
-available in active or lazy flavors and documented below:
+:class:`knife.active.activeknife` combines every :mod:`knife` method in one
+combo :mod:`knife` class:
 
-Table of Contents
------------------
+  >>> from knife import activeknife
 
-lazy knives
------------
+It can be imported under its :class:`knife.knife` alias:
+ 
+  >>> from knife import knife
+
+:mod:`knife`'s methods also come in focused classes group :mod:`knif` methods 
+with related functionality that can be chained together into pipelines.
+
+*contrived example:*
+^^^^^^^^^^^^^^^^^^^^
+
+  >>> from knife.active import mathknife, reduceknife
+  >>> one = mathknife(10, 5, 100, 2, 1000)
+  >>> two = reduceknife()
+  >>> one.minmax().pipe(two).merge().back().min().get()
+  2
+
+Lazy knives
+===========
 
 .. toctree::
    :maxdepth: 2
@@ -146,8 +166,8 @@ lazy knives
    lrepeatknife
    lsliceknife
 
-active knives
--------------
+Active knives
+=============
 
 .. toctree::
    :maxdepth: 2
@@ -162,7 +182,7 @@ active knives
    arepeatknife
    asliceknife
 
-Indices and tables
+indices and tables
 ==================
 
 * :ref:`genindex`

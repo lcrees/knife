@@ -1,4 +1,4 @@
-:class:`knife.lazy.mathknife` --- Lazily evaluated mathing knife
+:class:`knife.lazy.mathknife` --- Lazier evaluated mathing knife
 ================================================================
 
 .. module:: knife.lazy
