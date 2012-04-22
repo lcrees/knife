@@ -110,10 +110,10 @@ contrived example:
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.append(1).undo().peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
-  >>> undone.append(1, 2).undo(2).peek()
-  [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  >>> undone.snapshot().append(1, 2).baseline().peek()
-  [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
+  >>> undone.append(1).append(2).undo(2).peek()
+  [1, 2, 3, 4, 5, 6, 1, 2, 3]
+  >>> undone.snapshot().append(1).append(2).baseline().peek()
+  [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.original().peek()
   [1, 2, 3]
 
