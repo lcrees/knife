@@ -31,7 +31,7 @@ def release():
     local('hg update next')
     local('hg merge pu; hg ci -m automerge')
     local('hg update maint')
-    local('hg merge default; hg ci -m automerge')
+    local('hg merge default; hg up -C; hg ci -m automerge')
     local('hg update default')
     local('hg merge next; hg ci -m automerge')
     local('hg update pu')
