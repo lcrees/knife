@@ -138,7 +138,7 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods also come in focused classes group :mod:`knif` methods 
+:mod:`knife`'s methods also come in focused classes group :mod:`knife` methods 
 with related functionality that can be chained together into pipelines.
 
 *contrived example:*
