@@ -105,9 +105,9 @@ contrived example:
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.append(1, 2).undo(2).peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  undone.snapshot().append(1, 2).baseline().peek()
+  >>> undone.snapshot().append(1, 2).baseline().peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  undone.original().peek()
+  >>> undone.original().peek()
   [1, 2, 3]
   >>> one.original().minmax().pipe(two).merge().back().max().get()
   1000
