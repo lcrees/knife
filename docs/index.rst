@@ -36,7 +36,7 @@ Or `easy_install <http://packages.python.org/distribute/>`_::
   [... possibly exciting stuff happening ...]
   Finished processing dependencies for knife
   
-:mod:`knife` can also be downloaded from http://pypi.python.org/knife and installed
+:mod:`knife` can also be downloaded from http://pypi.python.org/pypi/knife/ and installed
 old school::
 
   $ python setup.py install

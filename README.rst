@@ -27,13 +27,6 @@ Or `easy_install <http://packages.python.org/distribute/>`_::
   $ easy_install knife
   [... possibly exciting stuff happening ...]
   Finished processing dependencies for knife
-  
-`knife` can also be downloaded from http://pypi.python.org/knife and installed
-old school::
-
-  $ python setup.py install
-  [... possibly exciting stuff happening ...]
-  Finished processing dependencies for knife
 
 Development
 ===========
