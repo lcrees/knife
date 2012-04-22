@@ -67,7 +67,7 @@ Things come out:
   3
 
 Slightly more *knife*
-============
+=====================
 
 :mod:`knife` has 40 plus methods that can be `chained <https://en.wikipedia.org/
 wiki/Fluent_interface>`_ into pipelines.
