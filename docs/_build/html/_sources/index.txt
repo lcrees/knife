@@ -55,6 +55,7 @@ Development
 
 Things go in:
 
+  >>> from knife import __
   >>> gauntlet = __(5, 4, 3, 2, 1)
   
 Things get knifed:
@@ -75,7 +76,6 @@ wiki/Fluent_interface>`_ into pipelines.
 contrived example:
 ^^^^^^^^^^^^^^^^^^
 
-  >>> from knife import __
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
@@ -87,7 +87,7 @@ contrived example:
   >>> from knife import knife
   >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
   >>> oo.wrap(dict)
-  >>> oo.map()
+  >>> oo.merge()
   >>> oo.get()
   {'a': 1, 'b': 2, 'c': 3}
   
@@ -109,10 +109,6 @@ contrived example:
   [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
   >>> undone.original().peek()
   [1, 2, 3]
-  >>> one.original().minmax().pipe(two).merge().back().max().get()
-  1000
-  >>> one.original().minmax().pipe(two).merge().back().sum().get()
-  1002
 
 :mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`. Active
 knives evaluate the result of each method immediately it's called. Calling the
@@ -148,6 +144,10 @@ contrived example:
   >>> two = reduceknife()
   >>> one.minmax().pipe(two).merge().back().min().get()
   2
+  >>> one.original().minmax().pipe(two).merge().back().max().get()
+  1000
+  >>> one.original().minmax().pipe(two).merge().back().sum().get()
+  1002
 
 Lazy knives
 ===========

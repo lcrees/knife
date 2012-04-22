@@ -92,7 +92,8 @@ Finished processing dependencies for knife</pre>
 <div class="section" id="second-knife">
 <h2>3 second <em>knife</em><a class="headerlink" href="#second-knife" title="Permalink to this headline">¶</a></h2>
 <p>Things go in:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gauntlet</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gauntlet</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Things get knifed:</p>
@@ -110,8 +111,7 @@ Finished processing dependencies for knife</pre>
 <p><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> has 40 plus methods that can be <a class="reference external" href="https://en.wikipedia.org/wiki/Fluent_interface">chained</a> into pipelines.</p>
 <div class="section" id="contrived-example">
 <h3>contrived example:<a class="headerlink" href="#contrived-example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">__</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">initial</span><span class="p">()</span><span class="o">.</span><span class="n">rest</span><span class="p">()</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">initial</span><span class="p">()</span><span class="o">.</span><span class="n">rest</span><span class="p">()</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">3</span>
 </pre></div>
 </div>
@@ -122,7 +122,7 @@ Finished processing dependencies for knife</pre>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">knife</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span> <span class="o">=</span> <span class="n">knife</span><span class="p">((</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">map</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}</span>
 </pre></div>
@@ -144,10 +144,6 @@ arguments.</p>
 <span class="go">[1, 2, 3, 4, 5, 6, 1, 2, 3, 1]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">undone</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">one</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span><span class="o">.</span><span class="n">back</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="go">1000</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">one</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span><span class="o">.</span><span class="n">back</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="go">1002</span>
 </pre></div>
 </div>
 <p><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> knives come in two flavors: <tt class="xref py py-mod docutils literal"><span class="pre">active</span></tt> and <tt class="xref py py-mod docutils literal"><span class="pre">lazy</span></tt>. Active
@@ -182,6 +178,10 @@ methods together. These can also be chained into pipelines.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">two</span> <span class="o">=</span> <span class="n">reduceknife</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">one</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span><span class="o">.</span><span class="n">back</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">one</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span><span class="o">.</span><span class="n">back</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">one</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">minmax</span><span class="p">()</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">two</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">()</span><span class="o">.</span><span class="n">back</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1002</span>
 </pre></div>
 </div>
 </div>
