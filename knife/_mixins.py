@@ -144,8 +144,9 @@ class _OrderMixin(local):
         return grouper
 
     @staticmethod
-    def _reverse(iterable, sorted_=sorted):
-        return reversed(sorted_(iterable))
+    def _reverse(iterable, reversed_=reversed, tuple_=tuple):
+        for thing in reversed_(tuple_(iterable)):
+            yield thing
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):

@@ -26,7 +26,10 @@ loads = pickle.loads
 
 def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
     '''
-    Optimize a pickle string by removing unused PUT opcodes'''
+    Optimize a pickle string by removing unused PUT opcodes.
+
+    Raymond Hettinger Python cookbook recipe # 545418
+    '''
     # set of args used by a GET opcode
     this = d(obj, p)
     gets = s()
