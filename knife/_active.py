@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''active knifes'''
+'''active knives'''
 
 from threading import local
 from collections import deque
@@ -7,7 +7,7 @@ from contextlib import contextmanager
 
 from stuf.utils import clsname
 
-from knife._compat import pickle
+from knife._compat import loads, optimize
 
 
 class _ActiveMixin(local):
@@ -31,9 +31,9 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+    def _chain(self, d=optimize):
         # take snapshot
-        snapshot = d(self._in, p)
+        snapshot = d(self._in)
         # rebalance incoming with outcoming
         if self._history:
             self._in.clear()
@@ -76,9 +76,9 @@ class _ActiveMixin(local):
         self._hold.extend(things)
         return self
 
-    def _prependit(self, things, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+    def _prependit(self, things, d=optimize):
         # take snapshot
-        snapshot = d(self._in, p)
+        snapshot = d(self._in)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
@@ -88,9 +88,9 @@ class _ActiveMixin(local):
         self._in.extendleft(reversed(things))
         return self
 
-    def _appendit(self, things, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+    def _appendit(self, things, d=optimize):
         # take snapshot
-        snapshot = d(self._in, p)
+        snapshot = d(self._in)
         # make snapshot original snapshot?
         if self._original is None:
             self._original = snapshot
@@ -126,7 +126,7 @@ class _ActiveMixin(local):
         piped._args = self._args
         piped._kw = self._kw
         piped._wrapper = self._wrapper
-        self._pipe = None
+        self.clear()
         return piped
 
     def _repr(self, clsname_=clsname, list_=list):
@@ -140,7 +140,7 @@ class _ActiveMixin(local):
             list_(self._out),
         )
 
-    def _len(self):
+    def _len(self, len=len):
         # length of incoming things
         return len(self._in)
 
@@ -149,7 +149,7 @@ class _OutMixin(_ActiveMixin):
 
     '''active output mixin'''
 
-    def _undo(self, snapshot=0, loads_=pickle.loads):
+    def _undo(self, snapshot=0, loads_=loads):
         # clear everything
         self.clear()
         # if specified, use a specific snapshot
@@ -158,12 +158,12 @@ class _OutMixin(_ActiveMixin):
         self._in.extend(loads_(self._history.popleft()))
         return self
 
-    def _snapshot(self, d=pickle.dumps, p=pickle.HIGHEST_PROTOCOL):
+    def _snapshot(self, d=optimize):
         # take baseline snapshot of incoming things
-        self._baseline = d(self._in, p)
+        self._baseline = d(self._in)
         return self
 
-    def _rollback(self, loads_=pickle.loads):
+    def _rollback(self, loads_=loads):
         # clear everything
         self.clear()
         # clear snapshots
@@ -172,7 +172,7 @@ class _OutMixin(_ActiveMixin):
         self._in.extend(loads_(self._baseline))
         return self
 
-    def _revert(self, loads_=pickle.loads):
+    def _revert(self, loads_=loads):
         # clear everything
         self.clear()
         # clear snapshots
@@ -192,6 +192,8 @@ class _OutMixin(_ActiveMixin):
         self._kw = {}
         # default iterable wrapper
         self._wrapper = list_
+        # clear pipe
+        self._pipe = None
         # clear incoming things
         self._in.clear()
         # clear working things

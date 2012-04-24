@@ -7,23 +7,23 @@ from threading import local
 from functools import reduce
 from inspect import isclass, getmro
 from collections import deque, namedtuple
-from random import choice, sample, shuffle
+from random import shuffle, randrange
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
-    groupby, islice, tee, starmap, repeat, combinations, permutations,
-    product, chain)
+    groupby, islice, tee, starmap, repeat, combinations, permutations, chain)
 
 from stuf.six import (
-    strings, items, values, keys, filter, map, advance_iterator)
+    strings, items, values, keys, filter, map)
 from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 
 from knife._compat import (
-    Counter, ChainMap, ichain, ifilterfalse, zip_longest)
+    Counter, ChainMap, ichain, ifilterfalse, zip_longest, count)
 
 Count = namedtuple('Count', 'least most overall')
 MinMax = namedtuple('MinMax', 'min max')
 TrueFalse = namedtuple('TrueFalse', 'true false')
 GroupBy = namedtuple('Group', 'keys groups')
+slice = lambda x, y: next(islice(x, y, None))
 
 
 class _CmpMixin(local):
@@ -74,9 +74,9 @@ class _MathMixin(local):
     '''number mixin'''
 
     @staticmethod
-    def _average(iterable, s=sum, t=truediv, n=len, e=tee, l=list):
+    def _average(iterable, s=sum, t=truediv, n=count, e=tee):
         i1, i2 = e(iterable)
-        yield t(s(i1, 0.0), n(l(i2)))
+        yield t(s(i1, 0.0), n(i2))
 
     @staticmethod
     def _count(iterable, counter_=Counter, count_=Count):
@@ -98,11 +98,15 @@ class _MathMixin(local):
         return imax
 
     @staticmethod
-    def _median(iterable, s=sorted, l=list, d=truediv, int=int, len=len):
-        i = l(s(iterable))
-        e = d(len(i) - 1, 2)
+    def _median(iterable, s=sorted, d=truediv, int=int, count=count):
+        i1, i2 = tee(s(iterable))
+        e = d(count(i1) - 1, 2)
         p = int(e)
-        yield i[p] if e % 2 == 0 else truediv(i[p] + i[p + 1], 2)
+        if e % 2 == 0:
+            yield slice(i2, p)
+        else:
+            i3, i4 = tee(i2)
+            yield truediv(slice(i3, p) + slice(i4, p + 1), 2)
 
     @staticmethod
     def _minmax(iterable, imin=min, imax=max, tee_=tee, minmax_=MinMax):
@@ -110,9 +114,9 @@ class _MathMixin(local):
         yield minmax_(imin(i1), imax(i2))
 
     @staticmethod
-    def _range(iterable, list_=list, sorted_=sorted):
-        i1 = list_(sorted_(iterable))
-        yield i1[-1] - i1[0]
+    def _range(iterable, d=deque, sorted_=sorted):
+        i1, i2 = tee(sorted_(iterable))
+        yield d(i1, maxlen=1).pop() - next(i2)
 
     @staticmethod
     def _min(key, imin_=min):
@@ -140,8 +144,8 @@ class _OrderMixin(local):
         return grouper
 
     @staticmethod
-    def _reverse(iterable, l=list, r=reversed, c=ichain, p=product):
-        return c(p(r(l(iterable))))
+    def _reverse(iterable, sorted_=sorted):
+        return reversed(sorted_(iterable))
 
     @staticmethod
     def _shuffle(iterable, list_=list, shuffle_=shuffle):
@@ -173,9 +177,9 @@ class _RepeatMixin(local):
         return lambda x: permutations_(x, n)
 
     @staticmethod
-    def _repeat(n, usecall, call, r=repeat, t=tuple, l=list, s=starmap):
-        if usecall:
-            return lambda x: s(call, r(l(x), n))
+    def _repeat(n, use, call, r=repeat, t=tuple, s=starmap):
+        if use:
+            return lambda x: s(call, r(t(x), n))
         return lambda x: r(t(x), n)
 
 
@@ -216,12 +220,12 @@ class _MapMixin(local):
         return lambda x: imap_(call, x)
 
     @staticmethod
-    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain):
+    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain, m=map):
         if key:
-            return lambda x: map(call, c(map(k, x)))
+            return lambda x: m(call, c(m(k, x)))
         elif value:
-            return lambda x: map(call, c(map(v, x)))
-        return lambda x: starmap(call, c(map(i, x)))
+            return lambda x: m(call, c(m(v, x)))
+        return lambda x: starmap(call, c(m(i, x)))
 
 
 class _FilterMixin(local):
@@ -241,17 +245,17 @@ class _FilterMixin(local):
         return attrs
 
     @staticmethod
-    def _duality(true, f=filter, ff=ifilterfalse, l=list, t=tee, b=TrueFalse):
+    def _duality(true, f=filter, ff=ifilterfalse, u=tuple, t=tee, b=TrueFalse):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
-            yield b(l(f(true, truth_)), l(ff(true, false_)))
+            yield b(u(f(true, truth_)), u(ff(true, false_)))
         return duality
 
     @staticmethod
-    def _filter(true, false, ifilter_=filter, ifilterfalse_=ifilterfalse):
+    def _filter(true, false, f_=filter, ff_=ifilterfalse):
         if false:
-            return lambda x: ifilterfalse_(true, x)
-        return lambda x: ifilter_(true, x)
+            return lambda x: ff_(true, x)
+        return lambda x: f_(true, x)
 
     @staticmethod
     def _items(key, itemgetter_=itemgetter):
@@ -266,7 +270,7 @@ class _FilterMixin(local):
         return itemz
 
     @staticmethod
-    def _traverse(test, invert, odict=OrderedDict, chain_=chain, vars_=vars):
+    def _traverse(test, invert, odict_=OrderedDict, chain_=chain, vars_=vars):
         if invert:
             ifilter = ifilterfalse
         else:
@@ -274,7 +278,7 @@ class _FilterMixin(local):
         def members(iterable, beenthere=None): #@IgnorePep8
             isclass_ = isclass
             getattr_ = getattr
-            o_ = odict
+            o_ = odict_
             members_ = members
             ifilter_ = ifilter
             varz_ = vars_
@@ -307,7 +311,7 @@ class _FilterMixin(local):
             isinstance_ = isinstance
             selfname_ = selfname
             members_ = members
-            o_ = odict
+            o_ = odict_
             cm_ = ChainMap
             ifilter_ = ifilter
             test_ = test
@@ -330,12 +334,12 @@ class _ReduceMixin(local):
     '''reduce mixin'''
 
     @classmethod
-    def _flatten(cls, iterable, strings_=strings, isinstance_=isinstance):
+    def _flatten(cls, iterable, string_=strings, isinstance_=isinstance):
         smash_ = cls._flatten
         for item in iterable:
             try:
                 # don't recur over strings
-                if isinstance_(item, strings_):
+                if isinstance_(item, string_):
                     yield item
                 else:
                     # do recur over other things
@@ -369,12 +373,15 @@ class _SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
-    def _at(n, default, islice_=islice, next_=advance_iterator):
+    def _at(n, default, islice_=islice, next_=next):
         return lambda x: next_(islice_(x, n, None), default)
 
     @staticmethod
-    def _choice(iterable, choice_=choice, list_=list):
-        yield choice_(list_(iterable))
+    def _choice(t=tee, n=next, s=islice, rr=randrange, c=count):
+        def choice(iterable):
+            i1, i2 = t(iterable)
+            yield n(s(i1, rr(0, c(i2)), None))
+        return choice
 
     @staticmethod
     def _dice(n, fill, zip_longest_=zip_longest, iter_=iter):
@@ -385,33 +392,35 @@ class _SliceMixin(local):
         return lambda x: islice_(x, n) if n else next_(x)
 
     @staticmethod
-    def _initial(iterable, islice_=islice, len_=len, list_=list, t=tee):
-        i1, i2 = t(iterable)
-        return islice_(i1, len_(list_(i2)) - 1)
+    def _initial(iterable, islice_=islice, t_=tee, count_=count):
+        i1, i2 = t_(iterable)
+        return islice_(i1, count_(i2) - 1)
 
     @staticmethod
-    def _last(n, s=islice, d=deque, ln=len, l=list, t=tee, f=deferfunc):
+    def _last(n, s=islice, d=deque, t=tee, f=deferfunc, c=count):
         if n:
             def last(iterable):
                 i1, i2 = t(iterable)
-                return s(i1, ln(l(i2)) - n, None)
+                return s(i1, c(i2) - n, None)
             return last
         return lambda x: f(d(x, maxlen=1).pop)
 
     @staticmethod
-    def _rest(iterable, _islice=islice):
-        return _islice(iterable, 1, None)
+    def _rest(iterable, islice_=islice):
+        return islice_(iterable, 1, None)
 
     @staticmethod
-    def _sample(n, sample_=sample, list_=list):
-        def samplez(iterable):
-            yield sample_(list_(iterable), n)
-        return samplez
+    def _sample(n, t=tee, s=slice, rr=randrange, m=map, c=count):
+        def sample(iterable):
+            i1, i2 = t(iterable)
+            length = c(i1)
+            return m(lambda x: s(x, rr(0, length)), t(i2, n))
+        return sample
 
     @staticmethod
-    def _slice(start, stop, step, _islice=islice):
+    def _slice(start, stop, step, islice_=islice):
         if stop and step:
-            return lambda x: _islice(x, start, stop, step)
+            return lambda x: islice_(x, start, stop, step)
         elif stop:
-            return lambda x: _islice(x, start, stop)
-        return lambda x: _islice(x, start)
+            return lambda x: islice_(x, start, stop)
+        return lambda x: islice_(x, start)

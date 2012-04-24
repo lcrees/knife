@@ -413,7 +413,9 @@ class MapMixin(local):
         >>> test.worker(lambda x, y: x * y).argmap().get()
         [2, 6, 12]
         >>> # merge global positional arguments with iterable arguments
-        >>> test.original().worker(lambda x, y, z, a, b: x * y * z * a * b).params(7, 8, 9).argmap(merge=True).get()
+        >>> test.original().worker(
+        ...   lambda x, y, z, a, b: x * y * z * a * b
+        ... ).params(7, 8, 9).argmap(merge=True).get()
         [1008, 3024, 6048]
         '''
         with self._chain:
@@ -468,7 +470,9 @@ class MapMixin(local):
         >>> test.worker(tester).kwargmap().get()
         [6, 10, 14]
         >>> # merging global and iterable derived positional and keyword args
-        >>> test.original().worker(tester).params(1, 2, 3, b=5, w=10, y=13).kwargmap(merge=True).get()
+        >>> test.original().worker(tester).params(
+        ...   1, 2, 3, b=5, w=10, y=13
+        ... ).kwargmap(merge=True).get()
         [270, 330, 390]
         '''
         with self._chain:
@@ -582,7 +586,9 @@ class FilterMixin(local):
         >>> test.filter().get()
         [2, 4, 6]
         >>> # filter for false values
-        >>> test.original().worker(lambda x: x % 2 == 0).filter(invert=True).get()
+        >>> test.original().worker(
+        ...   lambda x: x % 2 == 0
+        ... ).filter(invert=True).get()
         [1, 3, 5]
         '''
         with self._chain:
@@ -650,7 +656,9 @@ class FilterMixin(local):
         ...        return True
         ...    return False
         >>> # using worker while filtering for False values
-        >>> __(stooge, stooge2, stooge3).worker(test).traverse(invert=True).get() # doctest: +NORMALIZE_WHITESPACE
+        >>> __(stooge, stooge2, stooge3).worker(test).traverse(
+        ...   invert=True
+        ... ).get() # doctest: +NORMALIZE_WHITESPACE
         [ChainMap(OrderedDict([('classname', 'stooge'), ('age', 40)])),
         ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])),
         ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]),
@@ -721,7 +729,9 @@ class ReduceMixin(local):
         >>> test.reduce(reverse=True).get()
         [4, 5, 2, 3, 0, 1]
         >>> # reduce from right side with initial value
-        >>> test.original().worker(lambda x, y: x + y).reduce([0, 0], True).get()
+        >>> test.original().worker(
+        ... lambda x, y: x + y
+        ... ).reduce([0, 0], True).get()
         [4, 5, 2, 3, 0, 1, 0, 0]
         '''
         with self._chain:
@@ -780,7 +790,7 @@ class SliceMixin(local):
         3
         '''
         with self._chain:
-            return self._iter(self._choice)
+            return self._iter(self._choice())
 
     def dice(self, n, fill=None):
         '''
