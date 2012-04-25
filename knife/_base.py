@@ -10,6 +10,8 @@ from re import compile as rcompile
 from stuf.six import map
 from parse import compile as pcompile
 
+from knife._compat import memoize
+
 SLOTS = [
      '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each', '_kw',
      '_history', '_worker', '_wrapper', '_args', '_pipe',
@@ -54,6 +56,7 @@ class _KnifeMixin(local):
         return self._worker if self._worker is not None else truth_
 
     @staticmethod
+    @memoize
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
         # compile glob pattern into regex
         if type == 'glob':
