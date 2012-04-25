@@ -23,6 +23,12 @@ def docs():
         local('make doctest')
 
 
+def update_docs():
+    docs()
+    local('hg ci -m docmerge; hg push')
+    local('./setup.py upload_sphinx')
+
+
 def tox_recreate():
     '''recreate knife test env'''
     prompt(
