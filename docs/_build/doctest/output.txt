@@ -1,0 +1,161 @@
+Results of doctest builder run on 2012-04-24 22:14:48
+=====================================================
+
+Document: index
+---------------
+1 items passed all tests:
+  28 tests in default
+28 tests in 1 items.
+28 passed and 0 failed.
+Test passed.
+
+Document: areduceknife
+----------------------
+1 items passed all tests:
+  39 tests in default
+39 tests in 1 items.
+39 passed and 0 failed.
+Test passed.
+
+Document: asliceknife
+---------------------
+1 items passed all tests:
+  42 tests in default
+42 tests in 1 items.
+42 passed and 0 failed.
+Test passed.
+
+Document: lorderknife
+---------------------
+1 items passed all tests:
+  37 tests in default
+37 tests in 1 items.
+37 passed and 0 failed.
+Test passed.
+
+Document: lreduceknife
+----------------------
+1 items passed all tests:
+  39 tests in default
+39 tests in 1 items.
+39 passed and 0 failed.
+Test passed.
+
+Document: lsliceknife
+---------------------
+1 items passed all tests:
+  42 tests in default
+42 tests in 1 items.
+42 passed and 0 failed.
+Test passed.
+
+Document: amapknife
+-------------------
+1 items passed all tests:
+  43 tests in default
+43 tests in 1 items.
+43 passed and 0 failed.
+Test passed.
+
+Document: afilterknife
+----------------------
+1 items passed all tests:
+  54 tests in default
+54 tests in 1 items.
+54 passed and 0 failed.
+Test passed.
+
+Document: arepeatknife
+----------------------
+1 items passed all tests:
+  36 tests in default
+36 tests in 1 items.
+36 passed and 0 failed.
+Test passed.
+
+Document: lazyknife
+-------------------
+1 items passed all tests:
+ 137 tests in default
+137 tests in 1 items.
+137 passed and 0 failed.
+Test passed.
+
+Document: lmathknife
+--------------------
+1 items passed all tests:
+  50 tests in default
+50 tests in 1 items.
+50 passed and 0 failed.
+Test passed.
+
+Document: amathknife
+--------------------
+1 items passed all tests:
+  50 tests in default
+50 tests in 1 items.
+50 passed and 0 failed.
+Test passed.
+
+Document: aorderknife
+---------------------
+1 items passed all tests:
+  37 tests in default
+37 tests in 1 items.
+37 passed and 0 failed.
+Test passed.
+
+Document: acmpknife
+-------------------
+1 items passed all tests:
+  39 tests in default
+39 tests in 1 items.
+39 passed and 0 failed.
+Test passed.
+
+Document: lmapknife
+-------------------
+1 items passed all tests:
+  43 tests in default
+43 tests in 1 items.
+43 passed and 0 failed.
+Test passed.
+
+Document: lrepeatknife
+----------------------
+1 items passed all tests:
+  36 tests in default
+36 tests in 1 items.
+36 passed and 0 failed.
+Test passed.
+
+Document: activeknife
+---------------------
+1 items passed all tests:
+ 137 tests in default
+137 tests in 1 items.
+137 passed and 0 failed.
+Test passed.
+
+Document: lcmpknife
+-------------------
+1 items passed all tests:
+  39 tests in default
+39 tests in 1 items.
+39 passed and 0 failed.
+Test passed.
+
+Document: lfilterknife
+----------------------
+1 items passed all tests:
+  54 tests in default
+54 tests in 1 items.
+54 passed and 0 failed.
+Test passed.
+
+Doctest summary
+===============
+  982 tests
+    0 failures in tests
+    0 failures in setup code
+    0 failures in cleanup code

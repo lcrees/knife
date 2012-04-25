@@ -10,6 +10,8 @@ from re import compile as rcompile
 from stuf.six import map
 from parse import compile as pcompile
 
+from knife._compat import memoize
+
 SLOTS = [
      '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each', '_kw',
      '_history', '_worker', '_wrapper', '_args', '_pipe',
@@ -54,6 +56,7 @@ class _KnifeMixin(local):
         return self._worker if self._worker is not None else truth_
 
     @staticmethod
+    @memoize
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
         # compile glob pattern into regex
         if type == 'glob':
@@ -62,18 +65,18 @@ class _KnifeMixin(local):
         return r(pat, flag).search if type == 'regex' else p(pat).search
 
     def _iter(self, call, iter_=iter, _imap=map):
-        # extend fetch with incoming things if knifeing them as one thing
+        # extend fetch with incoming things if knifing them as one thing
         return self._xtend(iter_(call(self._iterable)))
 
     def _one(self, call, _imap=map):
-        # append incoming things to fetch if knifeing them as one thing
+        # append incoming things to fetch if knifing them as one thing
         return self._append(call(self._iterable))
 
     def _many(self, call, _imap=map):
-        # extend fetch with incoming things if knifeing them as one thing
+        # extend fetch with incoming things if knifing them as one thing
         return self._xtend(call(self._iterable))
 
-    _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => UTIL: ({4}) => OUT: ({5})])'
+    _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 
     def _clearsp(self):
         # clear fetch snapshots

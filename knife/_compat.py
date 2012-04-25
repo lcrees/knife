@@ -2,6 +2,7 @@
 '''knife support'''
 
 from itertools import chain
+from pickletools import genops
 from functools import update_wrapper
 try:
     import cPickle as pickle
@@ -11,16 +12,78 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest  # @UnusedImport
-from collections import MutableMapping
+from collections import MutableMapping, deque
 
-from stuf.six import items, map as imap
+try:
+    from __builtin__ import intern
+except ImportError:
+    from sys import intern
+
+from stuf.six import items, map as imap, b
 from stuf.utils import OrderedDict, recursive_repr
-# pylint: disable-msg=f0401,w0611
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
-# pylint: enable-msg=f0401
+
+
+def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
+    f.cache = {}
+    def memoize_(*args, **kw): #@IgnorePep8
+        return f.cache.setdefault(
+            i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
+        )
+    return uw(f, memoize_)
+
 
 ichain = chain.from_iterable
 ifilterfalse = filterfalse
+dumps = pickle.dumps
+protocol = pickle.HIGHEST_PROTOCOL
+loads = memoize(lambda x: pickle.loads(x))
+
+
+@memoize
+def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
+    '''
+    Optimize a pickle string by removing unused PUT opcodes.
+
+    Raymond Hettinger Python cookbook recipe # 545418
+    '''
+    # set of args used by a GET opcode
+    this = d(obj, p)
+    gets = s()
+    gadd = gets.add
+    # (arg, startpos, stoppos) for the PUT opcodes
+    puts = q()
+    pappend = puts.append
+    # set to pos if previous opcode was a PUT
+    prevpos, prevarg = None, None
+    for opcode, arg, pos in genops(this):
+        if prevpos is not None:
+            pappend((prevarg, prevpos, pos))
+            prevpos = None
+        if 'PUT' in opcode.name:
+            prevarg, prevpos = arg, pos
+        elif 'GET' in opcode.name:
+            gadd(arg)
+    # Copy the pickle string except for PUTS without a corresponding GET
+    s = q()
+    sappend = s.append
+    i = 0
+    for arg, start, stop in puts:
+        sappend(this[i:stop if (arg in gets) else start])
+        i = stop
+    sappend(this[i:])
+    return b('').join(s)
+
+
+def count(iterable, enumerate=enumerate, next=next, iter=iter):
+    counter = enumerate(iterable, 1)
+    idx = ()
+    while 1:
+        try:
+            idx = next(counter)
+        except StopIteration:
+            return next(iter(idx), 0)
+
 
 import sys
 if not sys.version_info[0] == 2 and sys.version_info[1] < 7:
@@ -110,13 +173,13 @@ except ImportError:
             # reuses stored hash values if possible
             return len(set().union(*self.maps))
 
-        def __iter__(self):
+        def __iter__(self, set=set, iter=iter):
             return iter(set().union(*self.maps))
 
-        def __contains__(self, key):
+        def __contains__(self, key, any=any):
             return any(key in m for m in self.maps)
 
-        def __bool__(self):
+        def __bool__(self, any=any):
             return any(self.maps)
 
         @recursive_repr

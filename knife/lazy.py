@@ -131,7 +131,7 @@ class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
     '''
     Lazier evaluated slicing knife.
 
-    `Slicing <http://docs.python.org/library/functions.html#slice>`_ operations 
+    `Slicing <http://docs.python.org/library/functions.html#slice>`_ operations
     for incoming things.
 
     >>> from knife.lazy import sliceknife

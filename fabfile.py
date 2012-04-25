@@ -1,10 +1,10 @@
 '''knife fabfile'''
 
-from fabric.api import prompt, local, settings, env
+from fabric.api import prompt, local, settings, env, lcd
 
 
 def _test(val):
-    truth = val in ['py26', 'py27', 'py32']
+    truth = val in ['py26', 'py27', 'py31', 'py32']
     if truth is False:
         raise KeyError(val)
     return val
@@ -15,10 +15,24 @@ def tox():
     local('tox')
 
 
+def docs():
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
+
+
+def update_docs():
+    docs()
+    local('hg ci -m docmerge; hg push')
+    local('./setup.py upload_sphinx')
+
+
 def tox_recreate():
     '''recreate knife test env'''
     prompt(
-        'Enter testenv: [py26, py27, py32]',
+        'Enter testenv: [py26, py27, py31, py32]',
         'testenv',
         validate=_test,
     )
@@ -42,6 +56,7 @@ def release():
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
         local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
+    local('./setup.py upload_sphinx')
     local('rm -rf dist')
 
 

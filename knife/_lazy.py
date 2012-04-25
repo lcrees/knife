@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-'''lazily evaluated knifes'''
+'''lazily evaluated knives'''
 
 from threading import local
 from itertools import tee, chain
 from contextlib import contextmanager
 
 from stuf.utils import clsname
+
+from knife._compat import count
 
 
 class _LazyMixin(local):
@@ -117,7 +119,6 @@ class _LazyMixin(local):
         piped._args = self._args
         piped._kw = self._kw
         piped._wrapper = self._wrapper
-        self._pipe = None
         return piped
 
     def _repr(self, tee_=tee, l=list, clsname_=clsname):
@@ -135,10 +136,10 @@ class _LazyMixin(local):
             l(out2),
         )
 
-    def _len(self, tee_=tee, len_=len, list_=list):
+    def _len(self, tee_=tee, count_=count):
         # length of incoming things
         self._in, incoming = tee_(self._in)
-        return len_(list_(incoming))
+        return count_(incoming)
 
 
 class _OutMixin(_LazyMixin):
@@ -189,8 +190,10 @@ class _OutMixin(_LazyMixin):
         self._args = ()
         # clear worker keyword arguments
         self._kw = {}
-        # default iterable wrapper
+        # revert to default iterable wrapper
         self._wrapper = list_
+        # clear pipe
+        self._pipe = None
         # clear incoming things
         del self._in
         self._in = iter_([])
@@ -209,7 +212,7 @@ class _OutMixin(_LazyMixin):
         self._out, outs = tee_(self._out)
         return outs
 
-    def _peek(self, tee_=tee, list_=list, len_=len):
+    def _peek(self, tee_=tee, list_=list, count_=count):
         tell, self._in, out = tee_(self._in, 3)
         wrap = self._wrapper
         value = list_(wrap(i) for i in out) if self._each else wrap(out)
@@ -217,9 +220,9 @@ class _OutMixin(_LazyMixin):
         self._each = False
         # reset wrapper
         self._wrapper = list_
-        return value[0] if len_(list_(tell)) == 1 else value
+        return value[0] if count_(tell) == 1 else value
 
-    def _get(self, tee_=tee, list_=list, len_=len):
+    def _get(self, tee_=tee, list_=list, count_=count):
         tell, self._out, out = tee_(self._out, 3)
         wrap = self._wrapper
         value = list_(wrap(i) for i in out) if self._each else wrap(out)
@@ -227,4 +230,4 @@ class _OutMixin(_LazyMixin):
         self._each = False
         # reset wrapper
         self._wrapper = list_
-        return value[0] if len_(list_(tell)) == 1 else value
+        return value[0] if count_(tell) == 1 else value

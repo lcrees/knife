@@ -100,7 +100,7 @@ thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -119,7 +119,7 @@ thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -162,7 +162,7 @@ arguments</a>.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional <a class="reference internal" href="#knife.lazy.lazyknife.params" title="knife.lazy.lazyknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> with
 positional arguments derived from incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -172,7 +172,9 @@ positional arguments derived from incoming things</td>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">argmap</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[2, 6, 12]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># merge global positional arguments with iterable arguments</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">argmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">argmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[1008, 3024, 6048]</span>
 </pre></div>
 </div>
@@ -216,7 +218,7 @@ incoming thing found at index <cite>n</cite>.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -243,7 +245,7 @@ found in <cite>names</cite>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> (<em>string</em>) &#8211; attribute names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -274,7 +276,7 @@ found in <cite>names</cite>.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -290,6 +292,14 @@ found in <cite>names</cite>.</p>
 <tt class="descname">back</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.lazyknife.back" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch back to the previous <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> object that piped its incoming
 things through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -352,7 +362,7 @@ off <strong>one</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -388,7 +398,7 @@ for every <cite>n</cite> incoming things.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of incoming things to generate
 combinations from</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -407,7 +417,7 @@ combinations from</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -428,7 +438,7 @@ combinations from</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -462,7 +472,7 @@ incoming thing into <cite>n</cite> iterable incoming things.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -483,7 +493,7 @@ incoming thing into <cite>n</cite> iterable incoming things.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symmetric</strong> (<em>boolean</em>) &#8211; use <a class="reference external" href="http://docs.python.org/library/stdtypes.html#set.symmetric_difference">symmetric</a> difference</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -508,16 +518,16 @@ incoming thing into <cite>n</cite> iterable incoming things.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">__</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">divide</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">duality</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">divide</span><span class="o">.</span><span class="n">true</span>
-<span class="go">[2, 4, 6]</span>
+<span class="go">(2, 4, 6)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">divide</span><span class="o">.</span><span class="n">false</span>
-<span class="go">[1, 3, 5]</span>
+<span class="go">(1, 3, 5)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -533,7 +543,7 @@ incoming thing into <cite>n</cite> iterable incoming things.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things <a class="reference internal" href="#knife.lazy.lazyknife.worker" title="knife.lazy.lazyknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -542,7 +552,9 @@ incoming thing into <cite>n</cite> iterable incoming things.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[2, 4, 6]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># filter for false values</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[1, 3, 5]</span>
 </pre></div>
 </div>
@@ -559,7 +571,7 @@ just the <strong>first</strong> incoming thing.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -581,7 +593,7 @@ just the <strong>first</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -609,7 +621,7 @@ with <a class="reference internal" href="#knife.lazy.lazyknife.wrap" title="knif
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -634,7 +646,7 @@ everything except the <strong>last</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +664,7 @@ everything except the <strong>last</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -676,7 +688,7 @@ everything except the <strong>last</strong> incoming thing.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; method name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -701,7 +713,7 @@ everything except the <strong>last</strong> incoming thing.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> (<em>string</em>) &#8211; keys or indices</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -743,7 +755,7 @@ incoming things into a single <tt class="xref py py-class docutils literal"><spa
 and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
 <em>global_kwargs</em> + <em>iterable_kwargs</em>)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -756,7 +768,9 @@ and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">tester</span><span class="p">)</span><span class="o">.</span><span class="n">kwargmap</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[6, 10, 14]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># merging global and iterable derived positional and keyword args</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">tester</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">kwargmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">tester</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">13</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">kwargmap</span><span class="p">(</span><span class="n">merge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[270, 330, 390]</span>
 </pre></div>
 </div>
@@ -774,7 +788,7 @@ incoming thing.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -796,7 +810,7 @@ incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -820,7 +834,7 @@ incoming thing.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -850,7 +864,7 @@ the <a class="reference external" href="http://docs.python.org/glossary.html#ter
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -877,7 +891,7 @@ the <a class="reference external" href="http://docs.python.org/glossary.html#ter
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -898,7 +912,7 @@ things into one iterable incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -917,7 +931,7 @@ the <a class="reference external" href="http://docs.python.org/glossary.html#ter
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -939,7 +953,7 @@ the <a class="reference external" href="http://docs.python.org/glossary.html#ter
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1065,7 +1079,7 @@ for every <cite>n</cite> incoming things.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; number of incoming things to generate
 permutations from</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1084,6 +1098,8 @@ permutations from</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knife</strong> &#8211; another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1118,7 +1134,7 @@ every incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1137,7 +1153,7 @@ incoming things down to one incoming thing using <a class="reference internal" h
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
@@ -1147,7 +1163,7 @@ of incoming things</li>
 </ul>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -1163,7 +1179,9 @@ of incoming things</li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[4, 5, 2, 3, 0, 1]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># reduce from right side with initial value</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="o">.</span><span class="n">original</span><span class="p">()</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span>
+<span class="gp">... </span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">[4, 5, 2, 3, 0, 1, 0, 0]</span>
 </pre></div>
 </div>
@@ -1183,7 +1201,7 @@ of incoming things</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -1209,7 +1227,7 @@ everything except the <strong>first</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1227,7 +1245,7 @@ everything except the <strong>first</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1248,7 +1266,7 @@ everything except the <strong>first</strong> incoming thing.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>integer</em>) &#8211; sample size</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1266,7 +1284,7 @@ everything except the <strong>first</strong> incoming thing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
 <span class="go">[3, 1, 5, 4, 2]</span>
 </pre></div>
 </div>
@@ -1292,7 +1310,7 @@ of incoming things.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -1332,7 +1350,7 @@ of incoming things.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1361,7 +1379,7 @@ of incoming things.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
 </td>
 </tr>
 </tbody>
@@ -1391,7 +1409,7 @@ of incoming things.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things that <a class="reference internal" href="#knife.lazy.lazyknife.worker" title="knife.lazy.lazyknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
 <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1414,7 +1432,9 @@ of incoming things.</p>
 <span class="gp">... </span>       <span class="k">return</span> <span class="bp">True</span>
 <span class="gp">... </span>   <span class="k">return</span> <span class="bp">False</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># using worker while filtering for False values</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="n">stooge</span><span class="p">,</span> <span class="n">stooge2</span><span class="p">,</span> <span class="n">stooge3</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__</span><span class="p">(</span><span class="n">stooge</span><span class="p">,</span> <span class="n">stooge2</span><span class="p">,</span> <span class="n">stooge3</span><span class="p">)</span><span class="o">.</span><span class="n">worker</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span>
+<span class="gp">... </span>  <span class="n">invert</span><span class="o">=</span><span class="bp">True</span>
+<span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
 <span class="go">[ChainMap(OrderedDict([(&#39;classname&#39;, &#39;stooge&#39;), (&#39;age&#39;, 40)])),</span>
 <span class="go">ChainMap(OrderedDict([(&#39;classname&#39;, &#39;stooge2&#39;), (&#39;age&#39;, 50)])),</span>
 <span class="go">ChainMap(OrderedDict([(&#39;classname&#39;, &#39;stooge3&#39;), (&#39;age&#39;, 60)]),</span>
@@ -1492,7 +1512,7 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1510,7 +1530,7 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>
@@ -1574,7 +1594,7 @@ found at the same index position within the original iterables.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (a <tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
 </tr>
 </tbody>
 </table>

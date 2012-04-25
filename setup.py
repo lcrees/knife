@@ -15,7 +15,7 @@ install_requires = list(l.strip() for l in open(
 
 setup(
     name='knife',
-    version='0.5.1',
+    version='0.5.2',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
@@ -39,6 +39,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.1',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development',
