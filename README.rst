@@ -40,7 +40,7 @@ Development
  * Public repository: https://bitbucket.org/lcrees/knife.
  * Mirror: https://github.com/kwarterthieves/knife/
  * Issue tracker: https://bitbucket.org/lcrees/knife/issues
- * License: `BSD <http://www.opensource.org/licenses/bsd-license.php>`_ license
+ * License: `BSD <http://www.opensource.org/licenses/bsd-license.php>`_
 
 3 second *knife*
 ================
