@@ -164,8 +164,7 @@ class OrderMixin(object):
 
     def test_combo(self):
         self.assertEqual(
-            self.mclass(5, 4, 3, 2, 1).reverse().sort().get(),
-            [1, 2, 3, 4, 5]
+            self.mclass(5, 4, 3, 2, 1).reverse().sort().get(), [1, 2, 3, 4, 5]
         )
 
     def test_reverse(self):
@@ -303,7 +302,7 @@ class FilterMixin(object):
             self.mclass(1, 2, 3, 4, 5, 6).worker(
                 lambda x: x % 2 == 0
             ).duality().get(),
-            ([2, 4, 6], [1, 3, 5])
+            ((2, 4, 6), (1, 3, 5))
         )
 
 

@@ -15,7 +15,7 @@ class CmpMixin(local):
         Discover if :meth:`worker` is :const:`True` for **every** incoming
         thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(2, 4, 6, 8).worker(lambda x: x % 2 == 0).all().get()
@@ -28,7 +28,7 @@ class CmpMixin(local):
         '''
         Discover if :meth:`worker` is :const:`True` for **any** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 4, 5, 9).worker(lambda x: x % 2 == 0).any().get()
         True
@@ -45,7 +45,7 @@ class CmpMixin(local):
         :keyword boolean symmetric: use `symmetric <http://docs.python.org/
           library/stdtypes.html#set.symmetric_difference>`_ difference
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> test = __([1, 2, 3, 4, 5], [5, 2, 10], [10, 11, 2])
@@ -64,7 +64,7 @@ class CmpMixin(local):
         set.intersection>`_ within a series of `iterable <http://docs.python.
         org/glossary.html#term-iterable>`_ incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).intersection().get()
         [1, 2]
@@ -78,7 +78,7 @@ class CmpMixin(local):
         set.union>`_ within a series of `iterable <http://docs.python.org/
         glossary.html#term-iterable>`_ incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().get()
         [1, 10, 3, 2, 101]
@@ -90,7 +90,7 @@ class CmpMixin(local):
         '''
         Discover unique incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 1, 3, 1, 4).unique().get()
@@ -111,7 +111,7 @@ class MathMixin(local):
         '''
         Discover average value among incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(10, 40, 45).average().get()
@@ -128,7 +128,7 @@ class MathMixin(local):
         (*least common thing*, *most common thing*, [*counts of everything*
         (a :class:`list` of :class:`tuple` pairs of (*thing*, *count*))]).
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> common = __(11, 3, 5, 11, 7, 3, 5, 11).count().get()
         >>> # least common thing
@@ -150,7 +150,7 @@ class MathMixin(local):
         the `key function <http://docs.python.org/glossary.html#term-key-
         function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 4).max().get()
@@ -171,7 +171,7 @@ class MathMixin(local):
         '''
         Discover median value among incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(4, 5, 7, 2, 1).median().get()
         4
@@ -187,7 +187,7 @@ class MathMixin(local):
         the `key function <http://docs.python.org/glossary.html#term-key-
         function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(10, 5, 100, 2, 1000)
         >>> test.min().get()
@@ -204,7 +204,7 @@ class MathMixin(local):
 
         Collects :class:`namedtuple` (*minimum value*, *maximum value*).
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> minmax = __(1, 2, 4).minmax().get()
         >>> minmax.min
@@ -220,7 +220,7 @@ class MathMixin(local):
         Discover length of the smallest interval that can contain the value of
         every incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(3, 5, 7, 3, 11).range().get()
         8
@@ -237,7 +237,7 @@ class MathMixin(local):
 
         :keyword boolean precision: add floats with extended precision
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 3).sum().get()
@@ -262,7 +262,7 @@ class OrderMixin(local):
         Group incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default grouping
@@ -280,7 +280,7 @@ class OrderMixin(local):
         '''
         Reverse the order of incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).reverse().get()
         [1, 2, 3, 4, 5]
@@ -292,7 +292,7 @@ class OrderMixin(local):
         '''
         Randomly sort incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
           >>> __(5, 4, 3, 2, 1).shuffle().get() # doctest: +SKIP
           [3, 1, 5, 4, 2]
@@ -305,7 +305,7 @@ class OrderMixin(local):
         Reorder incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default sort
         >>> __(4, 6, 65, 3, 63, 2, 4).sort().get()
@@ -331,7 +331,7 @@ class RepeatMixin(local):
         :argument integer n: number of incoming things to generate
           combinations from
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(40, 50, 60).combinate(2).get()
@@ -344,7 +344,7 @@ class RepeatMixin(local):
         '''
         Duplicate (by deep copying) each incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([[1, [2, 3]], [4, [5, 6]]]).copy().get()
         [[1, [2, 3]], [4, [5, 6]]]
@@ -360,7 +360,7 @@ class RepeatMixin(local):
         :argument integer n: number of incoming things to generate
           permutations from
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(40, 50, 60).permutate(2).get()
         [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]
@@ -376,7 +376,7 @@ class RepeatMixin(local):
 
         :keyword boolean call: repeat results of invoking :meth:`worker`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # repeat iterable
         >>> __(40, 50, 60).repeat(3).get()
@@ -405,7 +405,7 @@ class MapMixin(local):
         :keyword boolean merge: merge global positional :meth:`params` with
           positional arguments derived from incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default behavior
@@ -413,7 +413,9 @@ class MapMixin(local):
         >>> test.worker(lambda x, y: x * y).argmap().get()
         [2, 6, 12]
         >>> # merge global positional arguments with iterable arguments
-        >>> test.original().worker(lambda x, y, z, a, b: x * y * z * a * b).params(7, 8, 9).argmap(merge=True).get()
+        >>> test.original().worker(
+        ...   lambda x, y, z, a, b: x * y * z * a * b
+        ... ).params(7, 8, 9).argmap(merge=True).get()
         [1008, 3024, 6048]
         '''
         with self._chain:
@@ -431,7 +433,7 @@ class MapMixin(local):
 
         :argument string name: method name
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # invoke list.index()
         >>> __([5, 1, 7], [3, 2, 1]).params(1).invoke('index').get()
@@ -457,7 +459,7 @@ class MapMixin(local):
           and keyword arguments like (*iterable_args* + *global_args*,
           *global_kwargs* + *iterable_kwargs*)
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> test = __(
@@ -468,7 +470,9 @@ class MapMixin(local):
         >>> test.worker(tester).kwargmap().get()
         [6, 10, 14]
         >>> # merging global and iterable derived positional and keyword args
-        >>> test.original().worker(tester).params(1, 2, 3, b=5, w=10, y=13).kwargmap(merge=True).get()
+        >>> test.original().worker(tester).params(
+        ...   1, 2, 3, b=5, w=10, y=13
+        ... ).kwargmap(merge=True).get()
         [270, 330, 390]
         '''
         with self._chain:
@@ -480,7 +484,7 @@ class MapMixin(local):
         '''
         Feed each incoming thing to :meth:`worker`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3).worker(lambda x: x * 3).map().get()
         [3, 6, 9]
@@ -497,7 +501,7 @@ class MapMixin(local):
 
         :keyword boolean values: collect mapping values only
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # filter items
         >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
@@ -528,7 +532,7 @@ class FilterMixin(local):
 
         :argument string names: attribute names
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> from stuf import stuf
@@ -556,14 +560,14 @@ class FilterMixin(local):
         :const:`True` for and the second everything :meth:`worker` is
         :const:`False` for.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
         >>> divide = test.duality().get()
         >>> divide.true
-        [2, 4, 6]
+        (2, 4, 6)
         >>> divide.false
-        [1, 3, 5]
+        (1, 3, 5)
         '''
         with self._chain:
             return self._iter(self._duality(self._test))
@@ -575,14 +579,16 @@ class FilterMixin(local):
         :keyword boolean invert: collect things :meth:`worker` is
           :const:`False` rather than :const:`True` for
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # filter for true values
         >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
         >>> test.filter().get()
         [2, 4, 6]
         >>> # filter for false values
-        >>> test.original().worker(lambda x: x % 2 == 0).filter(invert=True).get()
+        >>> test.original().worker(
+        ...   lambda x: x % 2 == 0
+        ... ).filter(invert=True).get()
         [1, 3, 5]
         '''
         with self._chain:
@@ -597,7 +603,7 @@ class FilterMixin(local):
 
         :argument string keys: keys or indices
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> stooge = [
         ...    dict(name='moe', age=40),
@@ -629,7 +635,7 @@ class FilterMixin(local):
         :keyword boolean invert: collect things that :meth:`worker` is
           :const:`False` rather than :const:`True` for
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> class stooge:
         ...    name = 'moe'
@@ -650,7 +656,9 @@ class FilterMixin(local):
         ...        return True
         ...    return False
         >>> # using worker while filtering for False values
-        >>> __(stooge, stooge2, stooge3).worker(test).traverse(invert=True).get() # doctest: +NORMALIZE_WHITESPACE
+        >>> __(stooge, stooge2, stooge3).worker(test).traverse(
+        ...   invert=True
+        ... ).get() # doctest: +NORMALIZE_WHITESPACE
         [ChainMap(OrderedDict([('classname', 'stooge'), ('age', 40)])),
         ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])),
         ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]),
@@ -672,7 +680,7 @@ class ReduceMixin(local):
         '''
         Reduce nested incoming things to flattened incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __([[1, [2], [3, [[4]]]], 'here']).flatten().get()
@@ -687,7 +695,7 @@ class ReduceMixin(local):
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming
         things into one iterable incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(['moe', 'larry'], [30, 40], [True, False]).merge().get()
         ['moe', 'larry', 30, 40, True, False]
@@ -700,7 +708,7 @@ class ReduceMixin(local):
         Reduce `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         incoming things down to one incoming thing using :meth:`worker`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         :keyword initial: starting value
 
@@ -708,7 +716,7 @@ class ReduceMixin(local):
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
           of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # reduce from left side
         >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce().get()
@@ -721,7 +729,9 @@ class ReduceMixin(local):
         >>> test.reduce(reverse=True).get()
         [4, 5, 2, 3, 0, 1]
         >>> # reduce from right side with initial value
-        >>> test.original().worker(lambda x, y: x + y).reduce([0, 0], True).get()
+        >>> test.original().worker(
+        ... lambda x, y: x + y
+        ... ).reduce([0, 0], True).get()
         [4, 5, 2, 3, 0, 1, 0, 0]
         '''
         with self._chain:
@@ -733,7 +743,7 @@ class ReduceMixin(local):
         term-iterable>`_ incoming things to :class:`tuples` composed of things
         found at the same index position within the original iterables.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(['moe', 'larry'], [30, 40], [True, False])
         >>> test.zip().get()
@@ -756,7 +766,7 @@ class SliceMixin(local):
 
         :keyword default: default returned if nothing is found at `n`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default behavior
@@ -774,13 +784,13 @@ class SliceMixin(local):
         Randomly `slice <http://docs.python.org/glossary.html#term-slice>`_
         off **one** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).choice().get() # doctest: +SKIP
         3
         '''
         with self._chain:
-            return self._iter(self._choice)
+            return self._iter(self._choice())
 
     def dice(self, n, fill=None):
         '''
@@ -792,7 +802,7 @@ class SliceMixin(local):
 
         :keyword fill: value to pad out incomplete iterables
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __('moe', 'larry', 'curly', 30, 40, 50, True).dice(2, 'x').get()
         [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
@@ -807,7 +817,7 @@ class SliceMixin(local):
 
         :keyword integer n: number of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(5, 4, 3, 2, 1).first().get()
@@ -824,7 +834,7 @@ class SliceMixin(local):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **last** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).initial().get()
         [5, 4, 3, 2]
@@ -840,7 +850,7 @@ class SliceMixin(local):
 
         :keyword integer n: number of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(5, 4, 3, 2, 1).last().get()
@@ -857,7 +867,7 @@ class SliceMixin(local):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **first** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).rest().get()
         [4, 3, 2, 1]
@@ -872,7 +882,7 @@ class SliceMixin(local):
 
         :argument integer n: sample size
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).sample(3).get() # doctest: +SKIP
         [2, 4, 5]
@@ -891,7 +901,7 @@ class SliceMixin(local):
 
         :keyword integer step: size of step in slice
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # slice from index 0 to 3
         >>> __(5, 4, 3, 2, 1).slice(2).get()
