@@ -15,7 +15,7 @@ class KCompare(AppspaceKey):
         Discover if :meth:`worker` is :const:`True` for **every** incoming
         thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(2, 4, 6, 8).worker(lambda x: x % 2 == 0).all().get()
@@ -26,7 +26,7 @@ class KCompare(AppspaceKey):
         '''
         Discover if :meth:`worker` is :const:`True` for **any** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 4, 5, 9).worker(lambda x: x % 2 == 0).any().get()
         True
@@ -41,7 +41,7 @@ class KCompare(AppspaceKey):
         :keyword boolean symmetric: use `symmetric <http://docs.python.org/
           library/stdtypes.html#set.symmetric_difference>`_ difference
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> test = __([1, 2, 3, 4, 5], [5, 2, 10], [10, 11, 2])
@@ -58,7 +58,7 @@ class KCompare(AppspaceKey):
         set.intersection>`_ within a series of `iterable <http://docs.python.
         org/glossary.html#term-iterable>`_ incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).intersection().get()
         [1, 2]
@@ -70,7 +70,7 @@ class KCompare(AppspaceKey):
         set.union>`_ within a series of `iterable <http://docs.python.org/
         glossary.html#term-iterable>`_ incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().get()
         [1, 10, 3, 2, 101]
@@ -80,7 +80,7 @@ class KCompare(AppspaceKey):
         '''
         Discover unique incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 1, 3, 1, 4).unique().get()
@@ -99,7 +99,7 @@ class KMath(AppspaceKey):
         '''
         Discover average value among incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(10, 40, 45).average().get()
@@ -114,7 +114,7 @@ class KMath(AppspaceKey):
         (*least common thing*, *most common thing*, [*counts of everything*
         (a :class:`list` of :class:`tuple` pairs of (*thing*, *count*))]).
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> common = __(11, 3, 5, 11, 7, 3, 5, 11).count().get()
         >>> # least common thing
@@ -134,7 +134,7 @@ class KMath(AppspaceKey):
         the `key function <http://docs.python.org/glossary.html#term-key-
         function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 4).max().get()
@@ -153,7 +153,7 @@ class KMath(AppspaceKey):
         '''
         Discover median value among incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(4, 5, 7, 2, 1).median().get()
         4
@@ -167,7 +167,7 @@ class KMath(AppspaceKey):
         the `key function <http://docs.python.org/glossary.html#term-key-
         function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(10, 5, 100, 2, 1000)
         >>> test.min().get()
@@ -182,7 +182,7 @@ class KMath(AppspaceKey):
 
         Collects :class:`namedtuple` (*minimum value*, *maximum value*).
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> minmax = __(1, 2, 4).minmax().get()
         >>> minmax.min
@@ -196,7 +196,7 @@ class KMath(AppspaceKey):
         Discover length of the smallest interval that can contain the value of
         every incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(3, 5, 7, 3, 11).range().get()
         8
@@ -211,7 +211,7 @@ class KMath(AppspaceKey):
 
         :keyword boolean precision: add floats with extended precision
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(1, 2, 3).sum().get()
@@ -234,7 +234,7 @@ class KOrder(AppspaceKey):
         Group incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default grouping
@@ -250,7 +250,7 @@ class KOrder(AppspaceKey):
         '''
         Reverse the order of incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).reverse().get()
         [1, 2, 3, 4, 5]
@@ -260,7 +260,7 @@ class KOrder(AppspaceKey):
         '''
         Randomly sort incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
           >>> __(5, 4, 3, 2, 1).shuffle().get() # doctest: +SKIP
           [3, 1, 5, 4, 2]
@@ -271,7 +271,7 @@ class KOrder(AppspaceKey):
         Reorder incoming things using :meth:`worker` as the `key function
         <http://docs.python.org/glossary.html#term-key-function>`_.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default sort
         >>> __(4, 6, 65, 3, 63, 2, 4).sort().get()
@@ -295,7 +295,7 @@ class KRepeat(AppspaceKey):
         :argument integer n: number of incoming things to generate
           combinations from
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __(40, 50, 60).combinate(2).get()
@@ -306,7 +306,7 @@ class KRepeat(AppspaceKey):
         '''
         Duplicate (by deep copying) each incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __([[1, [2, 3]], [4, [5, 6]]]).copy().get()
         [[1, [2, 3]], [4, [5, 6]]]
@@ -320,7 +320,7 @@ class KRepeat(AppspaceKey):
         :argument integer n: number of incoming things to generate
           permutations from
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(40, 50, 60).permutate(2).get()
         [(40, 50), (40, 60), (50, 40), (50, 60), (60, 40), (60, 50)]
@@ -334,7 +334,7 @@ class KRepeat(AppspaceKey):
 
         :keyword boolean call: repeat results of invoking :meth:`worker`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # repeat iterable
         >>> __(40, 50, 60).repeat(3).get()
@@ -361,7 +361,7 @@ class KMap(AppspaceKey):
         :keyword boolean merge: merge global positional :meth:`params` with
           positional arguments derived from incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default behavior
@@ -369,7 +369,9 @@ class KMap(AppspaceKey):
         >>> test.worker(lambda x, y: x * y).argmap().get()
         [2, 6, 12]
         >>> # merge global positional arguments with iterable arguments
-        >>> test.original().worker(lambda x, y, z, a, b: x * y * z * a * b).params(7, 8, 9).argmap(merge=True).get()
+        >>> test.original().worker(
+        ...   lambda x, y, z, a, b: x * y * z * a * b
+        ... ).params(7, 8, 9).argmap(merge=True).get()
         [1008, 3024, 6048]
         '''
 
@@ -385,7 +387,7 @@ class KMap(AppspaceKey):
 
         :argument string name: method name
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # invoke list.index()
         >>> __([5, 1, 7], [3, 2, 1]).params(1).invoke('index').get()
@@ -409,7 +411,7 @@ class KMap(AppspaceKey):
           and keyword arguments like (*iterable_args* + *global_args*,
           *global_kwargs* + *iterable_kwargs*)
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> test = __(
@@ -420,7 +422,9 @@ class KMap(AppspaceKey):
         >>> test.worker(tester).kwargmap().get()
         [6, 10, 14]
         >>> # merging global and iterable derived positional and keyword args
-        >>> test.original().worker(tester).params(1, 2, 3, b=5, w=10, y=13).kwargmap(merge=True).get()
+        >>> test.original().worker(tester).params(
+        ...   1, 2, 3, b=5, w=10, y=13
+        ... ).kwargmap(merge=True).get()
         [270, 330, 390]
         '''
 
@@ -428,7 +432,7 @@ class KMap(AppspaceKey):
         '''
         Feed each incoming thing to :meth:`worker`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3).worker(lambda x: x * 3).map().get()
         [3, 6, 9]
@@ -443,7 +447,7 @@ class KMap(AppspaceKey):
 
         :keyword boolean values: collect mapping values only
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # filter items
         >>> __(dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
@@ -472,7 +476,7 @@ class KFilter(AppspaceKey):
 
         :argument string names: attribute names
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> from stuf import stuf
@@ -498,14 +502,14 @@ class KFilter(AppspaceKey):
         :const:`True` for and the second everything :meth:`worker` is
         :const:`False` for.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
         >>> divide = test.duality().get()
         >>> divide.true
-        [2, 4, 6]
+        (2, 4, 6)
         >>> divide.false
-        [1, 3, 5]
+        (1, 3, 5)
         '''
 
     def filter(invert=False):  # @NoSelf
@@ -515,14 +519,16 @@ class KFilter(AppspaceKey):
         :keyword boolean invert: collect things :meth:`worker` is
           :const:`False` rather than :const:`True` for
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # filter for true values
         >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
         >>> test.filter().get()
         [2, 4, 6]
         >>> # filter for false values
-        >>> test.original().worker(lambda x: x % 2 == 0).filter(invert=True).get()
+        >>> test.original().worker(
+        ...   lambda x: x % 2 == 0
+        ... ).filter(invert=True).get()
         [1, 3, 5]
         '''
 
@@ -535,7 +541,7 @@ class KFilter(AppspaceKey):
 
         :argument string keys: keys or indices
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> stooge = [
         ...    dict(name='moe', age=40),
@@ -565,7 +571,7 @@ class KFilter(AppspaceKey):
         :keyword boolean invert: collect things that :meth:`worker` is
           :const:`False` rather than :const:`True` for
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> class stooge:
         ...    name = 'moe'
@@ -586,11 +592,13 @@ class KFilter(AppspaceKey):
         ...        return True
         ...    return False
         >>> # using worker while filtering for False values
-        >>> __(stooge, stooge2, stooge3).worker(test).traverse(invert=True).get() # doctest: +NORMALIZE_WHITESPACE
+        >>> __(stooge, stooge2, stooge3).worker(test).traverse(
+        ...   invert=True
+        ... ).get() # doctest: +NORMALIZE_WHITESPACE
         [ChainMap(OrderedDict([('classname', 'stooge'), ('age', 40)])),
         ChainMap(OrderedDict([('classname', 'stooge2'), ('age', 50)])),
         ChainMap(OrderedDict([('classname', 'stooge3'), ('age', 60)]),
-        OrderedDict([('age', 969), ('classname', 'stooge4')]))] 
+        OrderedDict([('age', 969), ('classname', 'stooge4')]))]
         '''
 
 
@@ -602,7 +610,7 @@ class KReduce(AppspaceKey):
         '''
         Reduce nested incoming things to flattened incoming things.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> __([[1, [2], [3, [[4]]]], 'here']).flatten().get()
@@ -615,7 +623,7 @@ class KReduce(AppspaceKey):
         <http://docs.python.org/glossary.html#term-iterable>`_ incoming
         things into one iterable incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(['moe', 'larry'], [30, 40], [True, False]).merge().get()
         ['moe', 'larry', 30, 40, True, False]
@@ -626,7 +634,7 @@ class KReduce(AppspaceKey):
         Reduce `iterable <http://docs.python.org/glossary.html#term-iterable>`_
         incoming things down to one incoming thing using :meth:`worker`.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         :keyword initial: starting value
 
@@ -634,7 +642,7 @@ class KReduce(AppspaceKey):
           <http://www.zvon.org/other/haskell/Outputprelude/foldr_f.html>`_
           of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # reduce from left side
         >>> __(1, 2, 3).worker(lambda x, y: x + y).reduce().get()
@@ -647,7 +655,9 @@ class KReduce(AppspaceKey):
         >>> test.reduce(reverse=True).get()
         [4, 5, 2, 3, 0, 1]
         >>> # reduce from right side with initial value
-        >>> test.original().worker(lambda x, y: x + y).reduce([0, 0], True).get()
+        >>> test.original().worker(
+        ... lambda x, y: x + y
+        ... ).reduce([0, 0], True).get()
         [4, 5, 2, 3, 0, 1, 0, 0]
         '''
 
@@ -657,7 +667,7 @@ class KReduce(AppspaceKey):
         term-iterable>`_ incoming things to :class:`tuples` composed of things
         found at the same index position within the original iterables.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> test = __(['moe', 'larry'], [30, 40], [True, False])
         >>> test.zip().get()
@@ -678,7 +688,7 @@ class KSlice(AppspaceKey):
 
         :keyword default: default returned if nothing is found at `n`
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> from knife import __
         >>> # default behavior
@@ -694,7 +704,7 @@ class KSlice(AppspaceKey):
         Randomly `slice <http://docs.python.org/glossary.html#term-slice>`_
         off **one** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).choice().get() # doctest: +SKIP
         3
@@ -710,7 +720,7 @@ class KSlice(AppspaceKey):
 
         :keyword fill: value to pad out incomplete iterables
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __('moe', 'larry', 'curly', 30, 40, 50, True).dice(2, 'x').get()
         [('moe', 'larry'), ('curly', 30), (40, 50), (True, 'x')]
@@ -738,7 +748,7 @@ class KSlice(AppspaceKey):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **last** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).initial().get()
         [5, 4, 3, 2]
@@ -752,7 +762,7 @@ class KSlice(AppspaceKey):
 
         :keyword integer n: number of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(5, 4, 3, 2, 1).last().get()
@@ -767,7 +777,7 @@ class KSlice(AppspaceKey):
         `Slice <http://docs.python.org/glossary.html#term-slice>`_ off
         everything except the **first** incoming thing.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(5, 4, 3, 2, 1).rest().get()
         [4, 3, 2, 1]
@@ -780,7 +790,7 @@ class KSlice(AppspaceKey):
 
         :argument integer n: sample size
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> __(1, 2, 3, 4, 5, 6).sample(3).get() # doctest: +SKIP
         [2, 4, 5]
@@ -797,7 +807,7 @@ class KSlice(AppspaceKey):
 
         :keyword integer step: size of step in slice
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # slice from index 0 to 3
         >>> __(5, 4, 3, 2, 1).slice(2).get()

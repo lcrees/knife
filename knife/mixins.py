@@ -565,9 +565,9 @@ class FilterMixin(local):
         >>> test = __(1, 2, 3, 4, 5, 6).worker(lambda x: x % 2 == 0)
         >>> divide = test.duality().get()
         >>> divide.true
-        [2, 4, 6]
+        (2, 4, 6)
         >>> divide.false
-        [1, 3, 5]
+        (1, 3, 5)
         '''
         with self._chain:
             return self._iter(self._duality(self._test))

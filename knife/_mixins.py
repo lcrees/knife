@@ -4,10 +4,10 @@
 from math import fsum
 from copy import deepcopy
 from threading import local
-from functools import reduce
 from inspect import isclass, getmro
-from collections import deque, namedtuple
+from functools import reduce, partial
 from random import shuffle, randrange
+from collections import deque, namedtuple
 from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, islice, tee, starmap, repeat, combinations, permutations, chain)
@@ -41,12 +41,12 @@ class _CmpMixin(local):
         return lambda x: any_(imap_(truth, x))
 
     @staticmethod
-    def _difference(symmetric, reduce_=reduce, set_=set):
+    def _difference(symmetric, reduce_=reduce, set_=set, partial_=partial):
         if symmetric:
             test = lambda x, y: set_(x).symmetric_difference(y)
         else:
             test = lambda x, y: set_(x).difference(y)
-        return lambda x: reduce_(test, x)
+        return partial_(reduce_, test)
 
     @staticmethod
     def _intersection(iterable, set_=set, reduce_=reduce):
@@ -189,24 +189,24 @@ class _MapMixin(local):
     '''mapping mixin'''
 
     @staticmethod
-    def _argmap(call, curr, arg, starmap_=starmap):
+    def _argmap(call, curr, arg, starmap_=starmap, partial_=partial):
         if curr:
             def argmap(*args):
                 return call(*(args + arg))
         else:
             argmap = call
-        return lambda x: starmap_(argmap, x)
+        return partial_(starmap_, argmap)
 
     @staticmethod
-    def _invoke(name, args, mc_=methodcaller, imap_=map):
+    def _invoke(name, args, mc_=methodcaller, imap_=map, partial_=partial):
         caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
             read = caller(thing)
             return thing if read is None else read
-        return lambda x: imap_(invoke, x)
+        return partial_(imap_, invoke)
 
     @staticmethod
-    def _kwargmap(call, curr, arg, kw, starmap_=starmap):
+    def _kwargmap(call, curr, arg, kw, starmap_=starmap, partial_=partial):
         if curr:
             def kwargmap(*params):
                 args, kwargs = params
@@ -214,11 +214,11 @@ class _MapMixin(local):
                 return call(*(args + arg), **kwargs)
         else:
             kwargmap = lambda x, y: call(*x, **y)
-        return lambda x: starmap_(kwargmap, x)
+        return partial_(starmap_, kwargmap)
 
     @staticmethod
-    def _map(call, imap_=map):
-        return lambda x: imap_(call, x)
+    def _map(call, imap_=map, partial_=partial):
+        return partial_(imap_, call)
 
     @staticmethod
     def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain, m=map):
@@ -253,10 +253,8 @@ class _FilterMixin(local):
         return duality
 
     @staticmethod
-    def _filter(true, false, f_=filter, ff_=ifilterfalse):
-        if false:
-            return lambda x: ff_(true, x)
-        return lambda x: f_(true, x)
+    def _filter(true, false, f_=filter, ff_=ifilterfalse, partial_=partial):
+        return partial_(ff_, true) if false else partial_(f_, true)
 
     @staticmethod
     def _items(key, itemgetter_=itemgetter):
@@ -393,8 +391,8 @@ class _SliceMixin(local):
         return lambda x: islice_(x, n) if n else next_(x)
 
     @staticmethod
-    def _initial(iterable, islice_=islice, t_=tee, count_=count):
-        i1, i2 = t_(iterable)
+    def _initial(iterable, islice_=islice, tee_=tee, count_=count):
+        i1, i2 = tee_(iterable)
         return islice_(i1, count_(i2) - 1)
 
     @staticmethod

@@ -98,7 +98,7 @@ Finished processing dependencies for knife</pre>
 </div>
 <p>Things get knifed:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gauntlet</span><span class="o">.</span><span class="n">initial</span><span class="p">()</span><span class="o">.</span><span class="n">rest</span><span class="p">()</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
-<span class="go">knife.lazy.lazyknife ([IN: ([3]) =&gt; WORK: ([]) =&gt; UTIL: ([]) =&gt; OUT: ([3])])</span>
+<span class="go">knife.lazy.lazyknife ([IN: ([3]) =&gt; WORK: ([]) =&gt; HOLD: ([]) =&gt; OUT: ([3])])</span>
 </pre></div>
 </div>
 <p>Things come out:</p>
@@ -123,13 +123,13 @@ Finished processing dependencies for knife</pre>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife</span> <span class="kn">import</span> <span class="n">knife</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span> <span class="o">=</span> <span class="n">knife</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">initial</span><span class="p">()</span>
-<span class="go">knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) =&gt; WORK: ([]) =&gt; UTIL: ([]) =&gt; OUT: ([5, 4, 3, 2])])</span>
+<span class="go">knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) =&gt; WORK: ([]) =&gt; HOLD: ([]) =&gt; OUT: ([5, 4, 3, 2])])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">rest</span><span class="p">()</span>
-<span class="go">knife.active.activeknife ([IN: ([5, 4, 3, 2]) =&gt; WORK: ([]) =&gt; UTIL: ([]) =&gt; OUT: ([4, 3, 2])])</span>
+<span class="go">knife.active.activeknife ([IN: ([5, 4, 3, 2]) =&gt; WORK: ([]) =&gt; HOLD: ([]) =&gt; OUT: ([4, 3, 2])])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">knife.active.activeknife ([IN: ([4, 3, 2]) =&gt; WORK: ([]) =&gt; UTIL: ([]) =&gt; OUT: ([3])])</span>
+<span class="go">knife.active.activeknife ([IN: ([4, 3, 2]) =&gt; WORK: ([]) =&gt; HOLD: ([]) =&gt; OUT: ([3])])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
-<span class="go">knife.active.activeknife ([IN: ([3]) =&gt; WORK: ([]) =&gt; UTIL: ([]) =&gt; OUT: ([3])])</span>
+<span class="go">knife.active.activeknife ([IN: ([3]) =&gt; WORK: ([]) =&gt; HOLD: ([]) =&gt; OUT: ([3])])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">oo</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="go">3</span>
 </pre></div>

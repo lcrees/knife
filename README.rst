@@ -53,7 +53,7 @@ Things go in:
 Things get knifed:
 
   >>> gauntlet.initial().rest().slice(1, 2).last()
-  knife.lazy.lazyknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
+  knife.lazy.lazyknife ([IN: ([3]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
 
 Things come out:
 
@@ -80,13 +80,13 @@ contrived example:
   >>> from knife import knife
   >>> oo = knife(5, 4, 3, 2, 1)
   >>> oo.initial()
-  knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) => WORK: ([]) => UTIL: ([]) => OUT: ([5, 4, 3, 2])])
+  knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) => WORK: ([]) => HOLD: ([]) => OUT: ([5, 4, 3, 2])])
   >>> oo.rest()
-  knife.active.activeknife ([IN: ([5, 4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([4, 3, 2])])
+  knife.active.activeknife ([IN: ([5, 4, 3, 2]) => WORK: ([]) => HOLD: ([]) => OUT: ([4, 3, 2])])
   >>> oo.slice(1, 2)
-  knife.active.activeknife ([IN: ([4, 3, 2]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
+  knife.active.activeknife ([IN: ([4, 3, 2]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
   >>> oo.last()
-  knife.active.activeknife ([IN: ([3]) => WORK: ([]) => UTIL: ([]) => OUT: ([3])])
+  knife.active.activeknife ([IN: ([3]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
   >>> oo.get()
   3
   

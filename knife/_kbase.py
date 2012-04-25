@@ -28,7 +28,7 @@ class KChainknife(AppspaceKey):
 
         :argument worker: a callable
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
 
     def params(*args, **kw):  # @NoSelf
@@ -38,7 +38,7 @@ class KChainknife(AppspaceKey):
         html#term-keyword-argument>`_ arguments used when :meth:`worker` is
         invoked.
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
         '''
 
     def pattern(pattern, type='parse', flags=0):  # @NoSelf
@@ -104,7 +104,7 @@ class KChainknife(AppspaceKey):
         Pipe incoming things through another :mod:`knife`.
 
         :argument knife: another :mod:`knife`
-        
+
         :rtype: :const:`self` (:obj:`knife` object)
         '''
 
@@ -112,7 +112,7 @@ class KChainknife(AppspaceKey):
         '''
         Switch back to the previous :mod:`knife` object that piped its incoming
         things through this :mod:`knife`.
-        
+
         :rtype: :const:`self` (:obj:`knife` object)
         '''
 

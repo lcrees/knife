@@ -13,7 +13,7 @@ except ImportError:
     import unittest  # @UnusedImport
 from collections import MutableMapping, deque
 
-from stuf.six import items, map as imap
+from stuf.six import items, map as imap, b
 from stuf.utils import OrderedDict, recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
 
@@ -55,7 +55,7 @@ def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
         sappend(this[i:stop if (arg in gets) else start])
         i = stop
     sappend(this[i:])
-    return ''.join(s)
+    return b('').join(s)
 
 
 def count(iterable, enumerate=enumerate, next=next, iter=iter):
