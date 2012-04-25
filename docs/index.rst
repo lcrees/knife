@@ -156,6 +156,13 @@ contrived example:
   >>> one.original().minmax().pipe(two).merge().back().sum().get()
   1002
 
+What's new in 0.5.2
+===================
+
+* verify PyPy 1.8, Python 3.1 compatibility
+* made randomizing methods lazier
+* memoize some routines
+
 Lazy knives
 ===========
 

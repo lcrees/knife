@@ -60,6 +60,16 @@ def release():
     local('rm -rf dist')
 
 
+def inplace():
+    '''inplace knife'''
+    with settings(warn_only=True):
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
+        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+    local('./setup.py sdist --format=bztar,gztar,zip upload')
+    update_docs()
+    local('rm -rf dist')
+
+
 def release_next():
     '''release knife from next branch'''
     local('hg update maint')

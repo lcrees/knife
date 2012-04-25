@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 '''ordering test mixins'''
 
+import platform
+
+PYPY = platform.python_implementation() == 'PyPy'
 
 class stooges: #@IgnorePep8
     name = 'moe'
@@ -117,7 +120,7 @@ class CmpMixin(object):
             self.mclass(
                 [1, 3, 4, 5], [5, 2, 10], [10, 11, 2]
             ).difference(True).get(),
-            [1, 3, 4, 11]
+            [11, 1, 3, 4] if PYPY else [1, 3, 4, 11]
         )
 
     def test_intersection(self):
@@ -130,7 +133,7 @@ class CmpMixin(object):
     def test_union(self):
         self.assertEqual(
             self.mclass([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().get(),
-            [1, 10, 3, 2, 101],
+            [10, 1, 2, 3, 101] if PYPY else [1, 10, 3, 2, 101],
         )
 
     def test_unique(self):
