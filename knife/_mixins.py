@@ -17,7 +17,7 @@ from stuf.six import (
 from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
 
 from knife._compat import (
-    Counter, ChainMap, ichain, ifilterfalse, zip_longest, count)
+    Counter, ChainMap, ichain, ifilterfalse, zip_longest, count, memoize)
 
 Count = namedtuple('Count', 'least most overall')
 MinMax = namedtuple('MinMax', 'min max')
@@ -31,16 +31,19 @@ class _CmpMixin(local):
     '''comparing mixin'''
 
     @staticmethod
+    @memoize
     def _all(truth, all_=all, imap_=map):
         # invoke worker on each item to yield truth
         return lambda x: all_(imap_(truth, x))
 
     @staticmethod
+    @memoize
     def _any(truth, any_=any, imap_=map):
         # invoke worker on each item to yield truth
         return lambda x: any_(imap_(truth, x))
 
     @staticmethod
+    @memoize
     def _difference(symmetric, reduce_=reduce, set_=set, partial_=partial):
         if symmetric:
             test = lambda x, y: set_(x).symmetric_difference(y)
@@ -57,6 +60,7 @@ class _CmpMixin(local):
         return reduce_(lambda x, y: set_(x).union(y), iterable)
 
     @staticmethod
+    @memoize
     def _unique(key, set_=set):
         def unique(iterable):
             seen = set_()
@@ -92,6 +96,7 @@ class _MathMixin(local):
         )
 
     @staticmethod
+    @memoize
     def _max(key, imax_=max):
         def imax(iterable):
             yield imax_(iterable, key=key)
@@ -119,12 +124,14 @@ class _MathMixin(local):
         yield d(i1, maxlen=1).pop() - next(i2)
 
     @staticmethod
+    @memoize
     def _min(key, imin_=min):
         def imin(iterable):
             yield imin_(iterable, key=key)
         return imin
 
     @staticmethod
+    @memoize
     def _sum(start, floats, isum_=sum, fsum_=fsum):
         summer_ = fsum_ if floats else lambda x: isum_(x, start)
         def isum(iterable): #@IgnorePep8
@@ -137,6 +144,7 @@ class _OrderMixin(local):
     '''order mixin'''
 
     @staticmethod
+    @memoize
     def _group(key, group_=groupby, sorted_=sorted, G=GroupBy, tuple_=tuple):
         def grouper(iterable):
             for k, g in group_(sorted_(iterable, key=key), key):
@@ -155,6 +163,7 @@ class _OrderMixin(local):
         yield iterable
 
     @staticmethod
+    @memoize
     def _sort(key, sorted_=sorted):
         def isort(iterable):
             yield sorted_(iterable, key=key)
@@ -178,6 +187,7 @@ class _RepeatMixin(local):
         return lambda x: permutations_(x, n)
 
     @staticmethod
+    @memoize
     def _repeat(n, use, call, r=repeat, t=tuple, s=starmap):
         if use:
             return lambda x: s(call, r(t(x), n))
@@ -189,6 +199,7 @@ class _MapMixin(local):
     '''mapping mixin'''
 
     @staticmethod
+    @memoize
     def _argmap(call, curr, arg, starmap_=starmap, partial_=partial):
         if curr:
             def argmap(*args):
@@ -198,6 +209,7 @@ class _MapMixin(local):
         return partial_(starmap_, argmap)
 
     @staticmethod
+    @memoize
     def _invoke(name, args, mc_=methodcaller, imap_=map, partial_=partial):
         caller = mc_(name, *args[0], **args[1])
         def invoke(thing): #@IgnorePep8
@@ -206,6 +218,7 @@ class _MapMixin(local):
         return partial_(imap_, invoke)
 
     @staticmethod
+    @memoize
     def _kwargmap(call, curr, arg, kw, starmap_=starmap, partial_=partial):
         if curr:
             def kwargmap(*params):
@@ -217,10 +230,12 @@ class _MapMixin(local):
         return partial_(starmap_, kwargmap)
 
     @staticmethod
+    @memoize
     def _map(call, imap_=map, partial_=partial):
         return partial_(imap_, call)
 
     @staticmethod
+    @memoize
     def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain, m=map):
         if key:
             return lambda x: m(call, c(m(k, x)))
@@ -234,6 +249,7 @@ class _FilterMixin(local):
     '''filtering mixin'''
 
     @staticmethod
+    @memoize
     def _attributes(names, _attrgetter=attrgetter):
         attrfind = _attrgetter(*names)
         def attrs(iterable, get=attrfind): #@IgnorePep8
@@ -246,6 +262,7 @@ class _FilterMixin(local):
         return attrs
 
     @staticmethod
+    @memoize
     def _duality(true, f=filter, ff=ifilterfalse, u=tuple, t=tee, b=TrueFalse):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
@@ -253,10 +270,12 @@ class _FilterMixin(local):
         return duality
 
     @staticmethod
+    @memoize
     def _filter(true, false, f_=filter, ff_=ifilterfalse, partial_=partial):
         return partial_(ff_, true) if false else partial_(f_, true)
 
     @staticmethod
+    @memoize
     def _items(key, itemgetter_=itemgetter):
         itemfind = itemgetter_(*key)
         def itemz(iterable, get=itemfind): #@IgnorePep8
@@ -269,11 +288,9 @@ class _FilterMixin(local):
         return itemz
 
     @staticmethod
+    @memoize
     def _traverse(test, invert, odict_=OrderedDict, chain_=chain, vars_=vars):
-        if invert:
-            ifilter = ifilterfalse
-        else:
-            ifilter = filter
+        ifilter = ifilterfalse if invert else filter
         def members(iterable, beenthere=None): #@IgnorePep8
             isclass_ = isclass
             getattr_ = getattr
@@ -333,12 +350,12 @@ class _ReduceMixin(local):
     '''reduce mixin'''
 
     @classmethod
-    def _flatten(cls, iterable, string_=strings, isinstance_=isinstance):
+    def _flatten(cls, iterable, strings_=strings, isinstance_=isinstance):
         smash_ = cls._flatten
         for item in iterable:
             try:
                 # don't recur over strings
-                if isinstance_(item, string_):
+                if isinstance_(item, strings_):
                     yield item
                 else:
                     # do recur over other things
@@ -353,6 +370,7 @@ class _ReduceMixin(local):
         return ichain_(iterable)
 
     @staticmethod
+    @memoize
     def _reduce(call, initial, reverse, reduce_=reduce):
         if reverse:
             if initial is None:
@@ -372,10 +390,12 @@ class _SliceMixin(local):
     '''slicing mixin'''
 
     @staticmethod
+    @memoize
     def _at(n, default, islice_=islice, next_=next):
         return lambda x: next_(islice_(x, n, None), default)
 
     @staticmethod
+    @memoize
     def _choice(t=tee, n=next, s=islice, rr=randrange, c=count):
         def choice(iterable):
             i1, i2 = t(iterable)
@@ -383,10 +403,12 @@ class _SliceMixin(local):
         return choice
 
     @staticmethod
+    @memoize
     def _dice(n, fill, zip_longest_=zip_longest, iter_=iter):
         return lambda x: zip_longest_(fillvalue=fill, *[iter_(x)] * n)
 
     @staticmethod
+    @memoize
     def _first(n=0, islice_=islice, next_=deferiter):
         return lambda x: islice_(x, n) if n else next_(x)
 
@@ -396,6 +418,7 @@ class _SliceMixin(local):
         return islice_(i1, count_(i2) - 1)
 
     @staticmethod
+    @memoize
     def _last(n, s=islice, d=deque, t=tee, f=deferfunc, c=count):
         if n:
             def last(iterable):
@@ -409,6 +432,7 @@ class _SliceMixin(local):
         return islice_(iterable, 1, None)
 
     @staticmethod
+    @memoize
     def _sample(n, t=tee, s=slice, rr=randrange, m=map, c=count):
         def sample(iterable):
             i1, i2 = t(iterable)

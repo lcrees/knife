@@ -98,7 +98,7 @@ contrived example:
   >>> oo.get()
   3
   
-A :mod:`knife` can rollback the state of things it has knifed back to results
+:mod:`knife` can roll its current state back to a previous state such as the results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 

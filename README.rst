@@ -90,7 +90,7 @@ contrived example:
   >>> oo.get()
   3
   
-A `knife` can rollback the state of things it has knifed back to results
+`knife` can roll its current state back to a previous state such as the results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 

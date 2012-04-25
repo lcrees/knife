@@ -3,6 +3,7 @@
 
 from itertools import chain
 from pickletools import genops
+from functools import update_wrapper
 try:
     import cPickle as pickle
 except ImportError:
@@ -13,17 +14,33 @@ except ImportError:
     import unittest  # @UnusedImport
 from collections import MutableMapping, deque
 
+try:
+    from __builtin__ import intern
+except ImportError:
+    from sys import intern
+
 from stuf.six import items, map as imap, b
 from stuf.utils import OrderedDict, recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
+
+
+def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
+    f.cache = {}
+    def memoize_(*args, **kw): #@IgnorePep8
+        return f.cache.setdefault(
+            i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
+        )
+    return uw(f, memoize_)
+
 
 ichain = chain.from_iterable
 ifilterfalse = filterfalse
 dumps = pickle.dumps
 protocol = pickle.HIGHEST_PROTOCOL
-loads = pickle.loads
+loads = memoize(lambda x: pickle.loads(x))
 
 
+@memoize
 def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
     '''
     Optimize a pickle string by removing unused PUT opcodes.
