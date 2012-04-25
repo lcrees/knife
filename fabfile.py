@@ -25,7 +25,8 @@ def docs():
 
 def update_docs():
     docs()
-    local('hg ci -m docmerge; hg push')
+    with settings(warn_only=True):
+        local('hg ci -m docmerge; hg push')
     local('./setup.py upload_sphinx')
 
 
@@ -62,11 +63,11 @@ def release():
 
 def inplace():
     '''inplace knife'''
+    update_docs()
     with settings(warn_only=True):
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
         local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
     local('./setup.py sdist --format=bztar,gztar,zip upload')
-    update_docs()
     local('rm -rf dist')
 
 

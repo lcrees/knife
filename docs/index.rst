@@ -16,7 +16,7 @@ universe in one convenient shrink-wrapped package.
 Vitals
 ======
 
-:mod:`knife` works with Python 2.6, 2.7, and 3.2.
+:mod:`knife` works with Python 2.6, 2.7, 3.1. and 3.2 and PyPy 1.8.
 
 mod:`knife` documentation is at http://readthedocs.org/docs/knife/en/latest/ or
 http://packages.python.org/knife/
