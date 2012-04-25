@@ -10,7 +10,7 @@
 loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
-:mod:`knife` concentrates power normally dispersed across the entire Python
+:mod:`knife` concentrates power that is normally dispersed across the entire Python
 universe in one convenient shrink-wrapped package.
 
 Vitals
@@ -55,11 +55,13 @@ Development
 
 Things go in:
 
+  >>> from knife import __
   >>> gauntlet = __(5, 4, 3, 2, 1)
   
 Things get knifed:
 
   >>> gauntlet.initial().rest().slice(1, 2).last()
+  knife.lazy.lazyknife ([IN: ([3]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
 
 Things come out:
 
@@ -75,7 +77,6 @@ wiki/Fluent_interface>`_ into pipelines.
 contrived example:
 ^^^^^^^^^^^^^^^^^^
 
-  >>> from knife import __
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
@@ -85,13 +86,19 @@ contrived example:
 ^^^^^^^^^^^^^^^^^^
 
   >>> from knife import knife
-  >>> oo = knife(('a', 1), ('b', 2), ('c', 3))
-  >>> oo.wrap(dict)
-  >>> oo.map()
+  >>> oo = knife(5, 4, 3, 2, 1)
+  >>> oo.initial()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2, 1]) => WORK: ([]) => HOLD: ([]) => OUT: ([5, 4, 3, 2])])
+  >>> oo.rest()
+  knife.active.activeknife ([IN: ([5, 4, 3, 2]) => WORK: ([]) => HOLD: ([]) => OUT: ([4, 3, 2])])
+  >>> oo.slice(1, 2)
+  knife.active.activeknife ([IN: ([4, 3, 2]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
+  >>> oo.last()
+  knife.active.activeknife ([IN: ([3]) => WORK: ([]) => HOLD: ([]) => OUT: ([3])])
   >>> oo.get()
-  {'a': 1, 'b': 2, 'c': 3}
+  3
   
-A :mod:`knife` knife can rollback the state of things it has knifed back to results
+:mod:`knife` can roll its current state back to a previous state such as the results
 of the immediately preceding steps, a baseline snapshot, or even the original
 arguments.
 
@@ -103,16 +110,12 @@ contrived example:
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.append(1).undo().peek()
   [1, 2, 3, 4, 5, 6, 1, 2, 3]
-  >>> undone.append(1, 2).undo(2).peek()
-  [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
-  >>> undone.snapshot().append(1, 2).baseline().peek()
-  [1, 2, 3, 4, 5, 6, 1, 2, 3, 1]
+  >>> undone.append(1).append(2).undo(2).peek()
+  [1, 2, 3, 4, 5, 6, 1, 2, 3]
+  >>> undone.snapshot().append(1).append(2).baseline().peek()
+  [1, 2, 3, 4, 5, 6, 1, 2, 3]
   >>> undone.original().peek()
   [1, 2, 3]
-  >>> one.original().minmax().pipe(two).merge().back().max().get()
-  1000
-  >>> one.original().minmax().pipe(two).merge().back().sum().get()
-  1002
 
 :mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`. Active
 knives evaluate the result of each method immediately it's called. Calling the
@@ -137,7 +140,7 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife`'s methods are available in more focused classes that group related 
+:mod:`knife` methods are available in more focused classes that group related 
 methods together. These can also be chained into pipelines.
 
 contrived example:
@@ -148,6 +151,10 @@ contrived example:
   >>> two = reduceknife()
   >>> one.minmax().pipe(two).merge().back().min().get()
   2
+  >>> one.original().minmax().pipe(two).merge().back().max().get()
+  1000
+  >>> one.original().minmax().pipe(two).merge().back().sum().get()
+  1002
 
 Lazy knives
 ===========

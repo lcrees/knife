@@ -1,10 +1,10 @@
 '''knife fabfile'''
 
-from fabric.api import prompt, local, settings, env
+from fabric.api import prompt, local, settings, env, lcd
 
 
 def _test(val):
-    truth = val in ['py26', 'py27', 'py32']
+    truth = val in ['py26', 'py27', 'py31', 'py32']
     if truth is False:
         raise KeyError(val)
     return val
@@ -15,10 +15,18 @@ def tox():
     local('tox')
 
 
+def docs():
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
+
+
 def tox_recreate():
     '''recreate knife test env'''
     prompt(
-        'Enter testenv: [py26, py27, py32]',
+        'Enter testenv: [py26, py27, py31, py32]',
         'testenv',
         validate=_test,
     )
@@ -31,7 +39,7 @@ def release():
     local('hg update next')
     local('hg merge pu; hg ci -m automerge')
     local('hg update maint')
-    local('hg merge default; hg up -C; hg ci -m automerge')
+    local('hg merge default; hg ci -m automerge')
     local('hg update default')
     local('hg merge next; hg ci -m automerge')
     local('hg update pu')
