@@ -4,7 +4,7 @@ from fabric.api import prompt, local, settings, env, lcd
 
 
 def _test(val):
-    truth = val in ['py26', 'py27', 'py31', 'py32']
+    truth = val in ['py26', 'py27', 'py31', 'py32', 'pypy']
     if truth is False:
         raise KeyError(val)
     return val
@@ -33,7 +33,7 @@ def update_docs():
 def tox_recreate():
     '''recreate knife test env'''
     prompt(
-        'Enter testenv: [py26, py27, py31, py32]',
+        'Enter testenv: [py26, py27, py31, py32, pypy]',
         'testenv',
         validate=_test,
     )
