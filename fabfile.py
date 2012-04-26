@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''knife fabfile'''
 
 from fabric.api import prompt, local, settings, env, lcd
