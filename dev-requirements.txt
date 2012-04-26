@@ -1,0 +1,8 @@
+stuf>=0.8.14
+parse>=1.4.1
+tox
+sphinx
+sphinxcontrib.spelling
+Sphinx-PyPI-upload
+Fabric
+hg-github

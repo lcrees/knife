@@ -55,7 +55,7 @@ def release():
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push github')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('./setup.py upload_sphinx')
     local('rm -rf dist')
@@ -63,11 +63,16 @@ def release():
 
 def inplace():
     '''inplace knife'''
-    update_docs()
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
     with settings(warn_only=True):
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push github')
     local('./setup.py sdist --format=bztar,gztar,zip upload')
+    local('./setup.py upload_sphinx')
     local('rm -rf dist')
 
 
@@ -83,6 +88,6 @@ def release_next():
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push github')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')
