@@ -733,7 +733,7 @@ class KSlice(AppspaceKey):
 
         :keyword integer n: number of incoming things
 
-        :rtype: :const:`self` (a :obj:`knife` object)
+        :rtype: :const:`self` (:obj:`knife` object)
 
         >>> # default behavior
         >>> __(5, 4, 3, 2, 1).first().get()
