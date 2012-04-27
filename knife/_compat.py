@@ -19,17 +19,21 @@ try:
 except ImportError:
     from sys import intern
 
-from stuf.six import items, map as imap, b
+from stuf.six import items, map as imap, b, function_code
 from stuf.utils import OrderedDict, recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
 
 
 def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
     f.cache = {}
-    def memoize_(*args, **kw): #@IgnorePep8
-        return f.cache.setdefault(
-            i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
-        )
+    if function_code(f).co_argcount == 1:
+        def memoize_(arg):
+            return f.cache.setdefault(i(r(arg)), f(arg))
+    else:
+        def memoize_(*args, **kw): #@IgnorePep8
+            return f.cache.setdefault(
+                i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
+            )
     return uw(f, memoize_)
 
 

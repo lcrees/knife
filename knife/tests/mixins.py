@@ -477,6 +477,14 @@ class MapMixin(object):
             ).kwargmap(True).get(),
             [270, 330, 390],
         )
+        self.assertEqual(
+            self.mclass(
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).apply(
+                test, 1, 2, 3, b=5, w=10, y=13
+            ).kwargmap(True).get(),
+            [270, 330, 390],
+        )
 
     def test_argmap(self):
         self.assertEqual(
@@ -489,6 +497,12 @@ class MapMixin(object):
             self.mclass((1, 2), (2, 3), (3, 4)).worker(
                 lambda x, y, z, a, b: x * y * z * a * b
             ).params(7, 8, 9).argmap(True).get(),
+            [1008, 3024, 6048],
+        )
+        self.assertEqual(
+            self.mclass((1, 2), (2, 3), (3, 4)).apply(
+                lambda x, y, z, a, b: x * y * z * a * b, 7, 8, 9
+            ).argmap(True).get(),
             [1008, 3024, 6048],
         )
 

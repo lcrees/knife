@@ -14,6 +14,8 @@ class KCompare(AppspaceKey):
         '''
         Discover if :meth:`worker` is :data:`True` for **all** incoming things.
 
+        :return: :func:`bool`
+
         :rtype: :obj:`knife` :term:`object`
 
         >>> from knife import __
@@ -22,25 +24,27 @@ class KCompare(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.all`
-            Python standard library
+          :func:`~all`
+            function in Python standard library
 
           `all <http://documentcloud.github.com/underscore/#all>`_
-            Underscore.js
+            function in Underscore.js
 
           `all <http://mirven.github.com/underscore.lua/#all>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `all <http://vti.github.com/underscore-perl/#all>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `all <http://brianhaveri.github.com/Underscore.php/#all>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def any():  # @NoSelf
         '''
         Discover if :meth:`worker` is :data:`True` for **any** incoming thing.
+
+        :return: :func:`bool`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -49,20 +53,20 @@ class KCompare(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.any`
-            Python standard library
+          :func:`~any`
+            function in Python standard library
 
           `any <http://documentcloud.github.com/underscore/#any>`_
-            Underscore.js
+            function in Underscore.js
 
           `any <http://mirven.github.com/underscore.lua/#any>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `any <http://vti.github.com/underscore-perl/#ant>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `any <http://brianhaveri.github.com/Underscore.php/#any>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def difference(symmetric=False):  # @NoSelf
@@ -71,6 +75,8 @@ class KCompare(AppspaceKey):
         things.
 
         :keyword bool symmetric: return symmetric difference
+
+        :return: :func:`list`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -85,25 +91,27 @@ class KCompare(AppspaceKey):
         .. seealso::
 
           :meth:`set.difference`
-            Python standard library
+            function in Python standard library
 
           :meth:`set.symmetric_difference`
-            Python standard library
+            function in Python standard library
 
           `difference <http://documentcloud.github.com/underscore/#difference>`_
-            Underscore.js
+            function in Underscore.js
 
           `difference <http://vti.github.com/underscore-perl/#difference>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `difference <http://brianhaveri.github.com/Underscore.php/#difference>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def intersect():  # @NoSelf
         '''
         Discover intersection within a series of :term:`iterable` incoming
         things.
+
+        :return: :func:`list`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -113,21 +121,23 @@ class KCompare(AppspaceKey):
         .. seealso::
 
           :meth:`set.intersection`
-            Python standard library
+            function in Python standard library
 
           `intersection <http://documentcloud.github.com/underscore/#intersection>`_
-            Underscore.js
+            function in Underscore.js
 
           `intersection <http://vti.github.com/underscore-perl/#intersection>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `intersection <http://brianhaveri.github.com/Underscore.php/#intersection>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def union():  # @NoSelf
         '''
         Discover union within a series of :term:`iterable` incoming things.
+
+        :return: :func:`list`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -137,16 +147,16 @@ class KCompare(AppspaceKey):
         .. seealso::
 
           :meth:`set.union`
-            Python standard library
+            function in Python standard library
 
           `union <http://documentcloud.github.com/underscore/#union>`_
-            Underscore.js
+            function in Underscore.js
 
           `union <http://vti.github.com/underscore-perl/#union>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `union <http://brianhaveri.github.com/Underscore.php/#union>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def unique():  # @NoSelf
@@ -165,13 +175,13 @@ class KCompare(AppspaceKey):
         .. seealso::
 
           `uniq <http://documentcloud.github.com/underscore/#uniq>`_
-            Underscore.js
+            function in Underscore.js
 
           `uniq <http://vti.github.com/underscore-perl/#uniq>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `uniq <http://brianhaveri.github.com/Underscore.php/#uniq>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
 
@@ -183,6 +193,8 @@ class KMath(AppspaceKey):
         '''
         Discover average value among incoming things.
 
+        :return: a number
+
         :rtype: :obj:`knife` :term:`object`
 
         >>> from knife import __
@@ -192,7 +204,8 @@ class KMath(AppspaceKey):
 
     def count():  # @NoSelf
         '''
-        Discover how common each incoming thing is.
+        Discover how common each incoming thing is and the overall count of
+        each incoming thing.
 
         :return: Collects :func:`~collections.namedtuple` ``Count(least=int,
           most=int, overall=[(thing1, int), (thing2, int), ...])``
@@ -232,25 +245,27 @@ class KMath(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.max`
-            Python standard library
+          :func:`~max`
+            function in Python standard library
 
           `max <http://documentcloud.github.com/underscore/#max>`_
-            Underscore.js
+            function in Underscore.js
 
           `max <http://mirven.github.com/underscore.lua/#max>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `max <http://vti.github.com/underscore-perl/#max>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `max <http://brianhaveri.github.com/Underscore.php/#max>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def median():  # @NoSelf
         '''
         Discover the median value among incoming things.
+
+        :return: a number
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -275,20 +290,20 @@ class KMath(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.min`
-            Python standard library
+          :func:`~min`
+            function in Python standard library
 
           `min <http://documentcloud.github.com/underscore/#min>`_
-            Underscore.js
+            function in Underscore.js
 
           `min <http://mirven.github.com/underscore.lua/#min>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `min <http://vti.github.com/underscore-perl/#min>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `min <http://brianhaveri.github.com/Underscore.php/#min>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def minmax():  # @NoSelf
@@ -311,6 +326,8 @@ class KMath(AppspaceKey):
         '''
         Discover the length of the smallest interval that can contain the
         value of every incoming thing.
+
+        :return: a number
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -339,6 +356,11 @@ class KMath(AppspaceKey):
         >>> # add floating points with extended precision
         >>> __(.1, .1, .1, .1, .1, .1, .1, .1).sum(precision=True).get()
         0.8
+
+        .. seealso::
+
+          :func:`sum`
+            function in Python standard library
         '''
 
 
@@ -350,7 +372,7 @@ class KOrder(AppspaceKey):
         '''
         Group incoming things using :meth:`worker` as the :term:`key function`.
 
-        :return: Collects :func:`~collections.namedtuple` ``Group(keys=keys,
+        :return: :func:`~collections.namedtuple` ``Group(keys=keys,
           groups=tuple)``
 
         :rtype: :obj:`knife` :term:`object`
@@ -367,16 +389,16 @@ class KOrder(AppspaceKey):
         .. seealso::
 
           :func:`itertools.groupby`
-            Python standard library
+            function in Python standard library
 
           `groupBy <http://documentcloud.github.com/underscore/#groupBy>`_
-            Underscore.js
+            function in Underscore.js
 
           `groupBy <http://vti.github.com/underscore-perl/#groupBy>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `groupBy <http://brianhaveri.github.com/Underscore.php/#groupBy>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def reverse():  # @NoSelf
@@ -390,11 +412,11 @@ class KOrder(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.reversed`
-            Python standard library
+          :func:`reversed`
+            function in Python standard library
 
           `reverse <http://mirven.github.com/underscore.lua/#reverse>`_
-            Underscore.lua
+            function in Underscore.lua
         '''
 
     def sort():  # @NoSelf
@@ -408,14 +430,14 @@ class KOrder(AppspaceKey):
 
         .. seealso::
 
-          :func:`ramdom.shuffle`
-            Python standard library
+          :func:`random.shuffle`
+            function in Python standard library
 
           `shuffle <http://documentcloud.github.com/underscore/#shuffle>`_
-            Underscore.js
+            function in Underscore.js
 
           `shuffle <http://brianhaveri.github.com/Underscore.php/#shuffle>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def shuffle():  # @NoSelf
@@ -435,20 +457,20 @@ class KOrder(AppspaceKey):
 
         .. seealso::
 
-          :func:`~__builtins__.sorted`
-            Python standard library
+          :func:`sorted`
+            function in Python standard library
 
           `sortBy <http://documentcloud.github.com/underscore/#sortBy>`_
-            Underscore.js
+            function in Underscore.js
 
           `sort <http://mirven.github.com/underscore.lua/#sort>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `sortBy <http://vti.github.com/underscore-perl/#sortBy>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `sortBy <http://brianhaveri.github.com/Underscore.php/#sortBy>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
 
@@ -472,7 +494,7 @@ class KRepeat(AppspaceKey):
         .. seealso::
 
           :func:`itertools.combinations`
-            Python standard library
+            function in Python standard library
         '''
 
     def copy():  # @NoSelf
@@ -487,7 +509,7 @@ class KRepeat(AppspaceKey):
         .. seealso::
 
           :func:`copy.deepcopy`
-            Python standard library
+            function in Python standard library
         '''
 
     def permutate(n):  # @NoSelf
@@ -505,7 +527,7 @@ class KRepeat(AppspaceKey):
         .. seealso::
 
           :func:`itertools.permutations`
-            Python standard library
+            function in Python standard library
         '''
 
     def repeat(n=None, call=False):  # @NoSelf
@@ -530,16 +552,16 @@ class KRepeat(AppspaceKey):
         .. seealso::
 
           :func:`itertools.repeat`
-            Python standard library
+            function in Python standard library
 
           `times <http://documentcloud.github.com/underscore/#times>`_
-            Underscore.js
+            function in Underscore.js
 
           `times <http://vti.github.com/underscore-perl/#times>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `times <http://brianhaveri.github.com/Underscore.php/#times>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
 
@@ -553,7 +575,8 @@ class KMap(AppspaceKey):
         argument`\s.
 
         :keyword bool merge: merge global positional :meth:`params` with
-          positional arguments derived from incoming things
+          positional arguments derived from incoming things when passed to
+          :meth:`worker`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -571,7 +594,7 @@ class KMap(AppspaceKey):
         .. seealso::
 
           :func:`itertools.starmap`
-            Python standard library
+            function in Python standard library
         '''
 
     def invoke(name):  # @NoSelf
@@ -598,16 +621,16 @@ class KMap(AppspaceKey):
         .. seealso::
 
           `invoke <http://documentcloud.github.com/underscore/#invoke>`_
-            Underscore.js
+            function in Underscore.js
 
           `invoke <http://mirven.github.com/underscore.lua/#invoke>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `invoke <http://vti.github.com/underscore-perl/#invoke>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `invoke <http://brianhaveri.github.com/Underscore.php/#invoke>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def kwargmap(merge=False):  # @NoSelf
@@ -620,7 +643,7 @@ class KMap(AppspaceKey):
           with positional and keyword arguments derived from incoming things
           into a single :func:`tuple` of wildcard positional and keyword
           arguments like ``(*iterable_args + global_args, **global_kwargs +
-          iterable_kwargs)``
+          iterable_kwargs)`` when passed to :meth:`worker`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -651,19 +674,19 @@ class KMap(AppspaceKey):
         .. seealso::
 
           :func:`itertools.imap`
-            Python standard library
+            function in Python standard library (replaces :func:`map` in Python 3)
 
           `map <http://documentcloud.github.com/underscore/#map>`_
-            Underscore.js
+            function in Underscore.js
 
           `map <http://mirven.github.com/underscore.lua/#map>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `map <http://vti.github.com/underscore-perl/#map>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `map <http://brianhaveri.github.com/Underscore.php/#map>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def mapping(keys=False, values=False):  # @NoSelf
@@ -692,28 +715,28 @@ class KMap(AppspaceKey):
         .. seealso::
 
           `keys <http://documentcloud.github.com/underscore/#keys>`_
-            Underscore.js
+            function in Underscore.js
 
           `values <http://documentcloud.github.com/underscore/#values>`_
-            Underscore.js
+            function in Underscore.js
 
           `keys <http://mirven.github.com/underscore.lua/#keys>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `values <http://mirven.github.com/underscore.lua/#values>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `keys <http://vti.github.com/underscore-perl/#keys>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `values <http://vti.github.com/underscore-perl/#values>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `keys <http://brianhaveri.github.com/Underscore.php/#keys>`_
-            Underscore.php
+            function in Underscore.php
 
-           `values <http://brianhaveri.github.com/Underscore.php/#values>`_
-             Underscore.php
+          `values <http://brianhaveri.github.com/Underscore.php/#values>`_
+            function in Underscore.php
         '''
 
 
@@ -749,10 +772,10 @@ class KFilter(AppspaceKey):
         .. seealso::
 
           :func:`operator.attrgetter`
-            Python standard library
+            function in Python standard library
 
           `pick <http://documentcloud.github.com/underscore/#pick>`_
-            Underscore.js
+            function in Underscore.js
         '''
 
     def duality():  # @NoSelf
@@ -793,34 +816,34 @@ class KFilter(AppspaceKey):
         .. seealso::
 
           :func:`itertools.ifilter`
-            Python standard library
+            function in Python standard library (replaces :func:`filter` in Python 3)
 
           :func:`itertools.ifilterfalse`
-            Python standard library
+            function in Python standard library (:func:`filterfalse` in Python 3)
 
           `filter <http://documentcloud.github.com/underscore/#filter>`_
-            Underscore.js
+            function in Underscore.js
 
           `reject <http://documentcloud.github.com/underscore/#reject>`_
-            Underscore.js
+            function in Underscore.js
 
           `filter <http://mirven.github.com/underscore.lua/#filter>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `reject <http://mirven.github.com/underscore.lua/#reject>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `filter <http://vti.github.com/underscore-perl/#filter>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `reject <http://vti.github.com/underscore-perl/#reject>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `filter <http://brianhaveri.github.com/Underscore.php/#filter>`_
-            Underscore.php
+            function in Underscore.php
 
           `reject <http://brianhaveri.github.com/Underscore.php/#reject>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def items(*keys):  # @NoSelf
@@ -854,19 +877,23 @@ class KFilter(AppspaceKey):
        .. seealso::
 
           :func:`operator.itemgetter`
-            Python standard library
+            function in Python standard library
 
           `pick <http://documentcloud.github.com/underscore/#pick>`_
-            Underscore.js
+            function in Underscore.js
         '''
 
     def traverse(self, invert=False):
         '''
-        Collect deeply nested values from incoming things matched by
-        :meth:`worker`.
+        Collect values from deeply :term:`nested scope`\s from incoming things
+        matched by :meth:`worker`.
 
         :keyword bool invert: collect incoming things that :meth:`worker` is
           :data:`False` rather than :data:`True` for
+
+        :returns: :term:`sequence` of `ChainMaps <http://docs.python.org/dev/
+          library/collections.html#collections.ChainMap>`_ containing
+          :class:`collections.OrderedDict`
 
         :rtype: :obj:`knife` :term:`object`
 
@@ -916,16 +943,16 @@ class KReduce(AppspaceKey):
         .. seealso::
 
           `flatten <http://documentcloud.github.com/underscore/#flatten>`_
-            Underscore.js
+            function in Underscore.js
 
           `flatten <http://mirven.github.com/underscore.lua/#flatten>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `flatten <http://vti.github.com/underscore-perl/#flatten>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `flatten <http://brianhaveri.github.com/Underscore.php/#flatten>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def merge():  # @NoSelf
@@ -940,8 +967,8 @@ class KReduce(AppspaceKey):
 
         .. seealso::
 
-          :classmethod:`itertools.chain.from_iterable`
-            Python standard library
+          :meth:`itertools.chain.from_iterable`
+            function in Python standard library
         '''
 
     def reduce(initial=None, reverse=False):  # @NoSelf
@@ -975,28 +1002,28 @@ class KReduce(AppspaceKey):
         .. seealso::
 
           :func:`functools.reduce`
-            Python standard library
+            function in Python standard library
 
           `reduce <http://documentcloud.github.com/underscore/#reduce>`_
-            Underscore.js
+            function in Underscore.js
 
           `reduceRight <http://documentcloud.github.com/underscore/#reduceRight>`_
-            Underscore.js
+            function in Underscore.js
 
           `reduce <http://mirven.github.com/underscore.lua/#reduce>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `reduce <http://vti.github.com/underscore-perl/#reduce>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `reduceRight <http://vti.github.com/underscore-perl/#reduceRight>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `reduce <http://brianhaveri.github.com/Underscore.php/#reduce>`_
-            Underscore.php
+            function in Underscore.php
 
           `reduceRight <http://brianhaveri.github.com/Underscore.php/#reduceRight>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def zip():  # @NoSelf
@@ -1014,16 +1041,16 @@ class KReduce(AppspaceKey):
         .. seealso::
 
           :func:`itertools.izip`
-            Python standard library
+            function in Python standard library (replaces :func:`zip` in Python 3)
 
           `zip <http://documentcloud.github.com/underscore/#zip>`_
-            Underscore.js
+            function in Underscore.js
 
           `zip <http://vti.github.com/underscore-perl/#zip>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `zip <http://brianhaveri.github.com/Underscore.php/#zip>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
 
@@ -1051,7 +1078,7 @@ class KSlice(AppspaceKey):
 
         .. seealso::
 
-          `"nth" <http://docs.python.org/library/itertools.html#recipes>`
+          `"nth" <http://docs.python.org/library/itertools.html#recipes>`_
             Itertools Recipes
         '''
 
@@ -1067,7 +1094,7 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           :func:`random.choice`
-            Python standard library
+            function in Python standard library
         '''
 
     def dice(n, fill=None):  # @NoSelf
@@ -1086,7 +1113,7 @@ class KSlice(AppspaceKey):
 
         .. seealso::
 
-          `"grouper" <http://docs.python.org/library/itertools.html#recipes>`
+          `"grouper" <http://docs.python.org/library/itertools.html#recipes>`_
             Itertools Recipes
         '''
 
@@ -1109,16 +1136,16 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           `first <http://documentcloud.github.com/underscore/#first>`_
-            Underscore.js
+            function in Underscore.js
 
           `first <http://mirven.github.com/underscore.lua/#first>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `first <http://vti.github.com/underscore-perl/#first>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `first <http://brianhaveri.github.com/Underscore.php/#first>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def initial():  # @NoSelf
@@ -1134,16 +1161,16 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           `initial <http://documentcloud.github.com/underscore/#initial>`_
-            Underscore.js
+            function in Underscore.js
 
           `initial <http://mirven.github.com/underscore.lua/#initial>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `initial <http://vti.github.com/underscore-perl/#initial>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `initial <http://brianhaveri.github.com/Underscore.php/#initial>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def last(n=0):  # @NoSelf
@@ -1165,16 +1192,16 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           `last <http://documentcloud.github.com/underscore/#last>`_
-            Underscore.js
+            function in Underscore.js
 
           `last <http://mirven.github.com/underscore.lua/#last>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `last <http://vti.github.com/underscore-perl/#last>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `last <http://brianhaveri.github.com/Underscore.php/#last>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def rest():  # @NoSelf
@@ -1190,16 +1217,16 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           `rest <http://documentcloud.github.com/underscore/#rest>`_
-            Underscore.js
+            function in Underscore.js
 
           `rest <http://mirven.github.com/underscore.lua/#rest>`_
-            Underscore.lua
+            function in Underscore.lua
 
           `rest <http://vti.github.com/underscore-perl/#rest>`_
-            Underscore.perl
+            function in Underscore.perl
 
           `rest <http://brianhaveri.github.com/Underscore.php/#rest>`_
-            Underscore.php
+            function in Underscore.php
         '''
 
     def sample(n):  # @NoSelf
@@ -1216,7 +1243,7 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           :func:`random.sample`
-            Python standard library
+            function in Python standard library
         '''
 
     def slice(start, stop=False, step=False):  # @NoSelf
@@ -1244,8 +1271,8 @@ class KSlice(AppspaceKey):
         .. seealso::
 
           :func:`itertools.islice`
-            Python standard library
+            function in Python standard library
 
           `slice <http://mirven.github.com/underscore.lua/#slice>`_
-            Underscore.lua
+            function in Underscore.lua
         '''

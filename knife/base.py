@@ -6,9 +6,33 @@ from threading import local
 from stuf.six import tounicode, tobytes
 
 
-class ChainknifeMixin(local):
+class KnifeMixin(local):
 
     '''base knife mixin'''
+
+    def apply(self, worker, *args, **kw):
+        '''
+        Assign :func:`callable` used to work on incoming things plus any
+        :term:`positional argument`\s and :term:`keyword argument`\s
+        it will use.
+
+        .. note::
+
+          Global :term:`positional argument`\s and :term:`keyword argument`\s
+          assigned with :meth:`params` are reset whenever :func:`apply` is
+          called.
+
+        :argument worker: a :func:`callable`
+
+        :rtype: :mod:`knife` :term:`object`
+        '''
+        # assign worker
+        self._worker = worker
+        # positional params
+        self._args = args
+        # keyword arguemnts
+        self._kw = kw
+        return self
 
     def worker(self, worker):
         '''
@@ -35,7 +59,7 @@ class ChainknifeMixin(local):
     def params(self, *args, **kw):
         '''
         Assign :term:`positional argument`\s and :term:`keyword argument`\s
-        globally used by :meth:`worker`.
+        to be used globally.
 
         :rtype: :mod:`knife` :term:`object`
         '''
@@ -143,7 +167,7 @@ class ChainknifeMixin(local):
         return self._repr()
 
 
-class OutMixin(ChainknifeMixin):
+class OutMixin(KnifeMixin):
 
     '''output mixin'''
 

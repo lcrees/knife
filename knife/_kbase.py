@@ -15,8 +15,25 @@ class KChainknife(AppspaceKey):
         :argument things: incoming things
         :keyword integer snapshots: snapshots to keep (default: ``5``)
         '''
-        
-   def worker(worker):
+
+    def apply(worker, *args, **kw):  # @NoSelf
+        '''
+        Assign :func:`callable` used to work on incoming things plus any
+        :term:`positional argument`\s and :term:`keyword argument`\s
+        it will use.
+
+        .. note::
+
+          Global :term:`positional argument`\s and :term:`keyword argument`\s
+          assigned with :meth:`params` are reset whenever :func:`apply` is
+          called.
+
+        :argument worker: a :func:`callable`
+
+        :rtype: :mod:`knife` :term:`object`
+        '''
+
+    def worker(worker):  # @NoSelf
         '''
         Assign :func:`callable` used to work on incoming things.
 
@@ -34,7 +51,7 @@ class KChainknife(AppspaceKey):
     def params(*args, **kw):  # @NoSelf
         '''
         Assign :term:`positional argument`\s and :term:`keyword argument`\s
-        globally used by :meth:`worker`.
+        to be used globally.
 
         :rtype: :mod:`knife` :term:`object`
         '''
@@ -244,8 +261,8 @@ class KOutput(KChainknife):
 
         .. note::
 
-          A snapshot of current incoming things is taken after a :mod:`knife`
-          :term: method is called but before the main body of the method
+          A snapshot of current incoming things is taken when a :mod:`knife`
+          :term:`method` is called but before the main body of the method
           executes.
 
         :keyword int snapshot: number of steps ago ``1``, ``2``, ``3``, etc.
