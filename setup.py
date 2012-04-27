@@ -16,7 +16,7 @@ install_requires = list(l.strip() for l in open(
 setup(
     name='knife',
     version='0.5.2',
-    description='Pythonic remix of underscore.js: Things go in. Things get '
+    description='Pythonic remix of Underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='pipeline filtering chaining iterator functional fluent chaining',

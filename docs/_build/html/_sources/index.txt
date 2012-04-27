@@ -7,7 +7,7 @@
 #####################
 
 :mod:`knife` is a powerful `Python <http://docs.python.org/>`_ multitool
-loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
+loosely inspired by `Underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
 :mod:`knife` concentrates power that is normally dispersed across the entire Python
@@ -18,7 +18,7 @@ Vitals
 
 :mod:`knife` works with Python 2.6, 2.7, 3.1. and 3.2 and PyPy 1.8.
 
-mod:`knife` documentation is at http://readthedocs.org/docs/knife/en/latest/ or
+:mod:`knife` documentation is at http://readthedocs.org/docs/knife/en/latest/ or
 http://packages.python.org/knife/
 
 Installation
@@ -71,7 +71,7 @@ Things come out:
 Slightly more *knife*
 =====================
 
-:mod:`knife` has 40 plus methods that can be `chained <https://en.wikipedia.org/
+:mod:`knife` has 40 plus :term:`method`\s that can be `chained <https://en.wikipedia.org/
 wiki/Fluent_interface>`_ into pipelines.
 
 contrived example:
@@ -80,7 +80,7 @@ contrived example:
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
-Or used object-oriented style.
+Or used :term:`object`\-oriented style.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -98,9 +98,9 @@ contrived example:
   >>> oo.get()
   3
   
-:mod:`knife` can roll its current state back to a previous state such as the results
-of the immediately preceding steps, a baseline snapshot, or even the original
-arguments.
+A :mod:`knife` :term:`object` can roll its current state back to previous states
+like snapshots of immediately preceding operations, a baseline snapshot, or even 
+a snapshot of the original arguments.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -117,9 +117,10 @@ contrived example:
   >>> undone.original().peek()
   [1, 2, 3]
 
-:mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`. Active
-knives evaluate the result of each method immediately it's called. Calling the
-same method with a lazy knife only generate results when they are iterated over
+:mod:`knife` knives come in two flavors: :mod:`active` and :mod:`lazy`.
+:mod:`active.knife` :term:`object`\s evaluate the result of calling a
+:term:`method` immediately after the call. Calling the same :term:`method` with
+a :mod:`lazy.knife` :term:`object` only yields results when it is iterated over
 or :meth:`knife.lazy.lazyknife.get` is called to get results.
   
 :class:`knife.lazy.lazyknife` combines all :mod:`knife` methods in one
@@ -132,7 +133,7 @@ It can be imported under its *dunderscore* (:class:`knife.__`) alias.
   >>> from knife import __  
   
 :class:`knife.active.activeknife` also combines every :mod:`knife` method in one
-combo :mod:`knife` class:
+combo :mod:`knife` :term:`class`:
 
   >>> from knife import activeknife
 
@@ -140,8 +141,9 @@ It can be imported under its :class:`knife.knife` alias:
  
   >>> from knife import knife
 
-:mod:`knife` methods are available in more focused classes that group related 
-methods together. These can also be chained into pipelines.
+:mod:`knife` :term:`method`\s are available in more focused :term:`class`\es
+that group related :term:`method`\s together. These :term:`class`\es can also be
+chained together into pipelines.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -201,4 +203,3 @@ indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

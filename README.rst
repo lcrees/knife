@@ -1,5 +1,5 @@
 `knife` is a powerful `Python <http://docs.python.org/>`_ multitool
-loosely inspired by `underscore.js <http://documentcloud.github.com/underscore/>`_
+loosely inspired by `Underscore.js <http://documentcloud.github.com/underscore/>`_
 but remixed for maximum `pythonicity <http://docs.python.org/glossary.html#term-pythonic>`_. 
 
 `knife` concentrates power that is normally dispersed across the entire
@@ -8,7 +8,7 @@ Python universe in one convenient shrink-wrapped package.
 Vitals
 ======
 
-`knife` works with Python 2.6, 2.7, 3.1. and 3.2 and PyPy 1.8.
+`knife` works with CPython 2.6, 2.7, 3.1. and 3.2 and PyPy 1.8.
 
 `knife` documentation is at http://readthedocs.org/docs/knife/en/latest/ or
 http://packages.python.org/knife/
@@ -90,9 +90,9 @@ contrived example:
   >>> oo.get()
   3
   
-`knife` can roll its current state back to a previous state such as the results
-of the immediately preceding steps, a baseline snapshot, or even the original
-arguments.
+A `knife` object can roll its current state back to previous states
+like snapshots of immediately preceding operations, a baseline snapshot, or even 
+a snapshot of the original arguments.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -109,10 +109,11 @@ contrived example:
   >>> undone.original().peek()
   [1, 2, 3]
 
-`knife` knives come in two flavors: `active` and `lazy`. Active
-knives evaluate the result of each method immediately it's called. Calling the
-same method with a lazy knife only generate results when they are iterated over
-or `knife.lazy.lazyknife.get` is called to get results.
+`knife` objects come in two flavors: `active` and `lazy`.
+`active.knife` objects evaluate the result of calling a
+method immediately after the call. Calling the same method with
+a `lazy.knife` object only yields results when it is iterated over
+or :meth:`knife.lazy.lazyknife.get` is called to get results.
   
 `knife.lazy.lazyknife` combines all `knife` methods in one class:
 
@@ -132,7 +133,7 @@ It can be imported under its `knife.knife` alias:
   >>> from knife import knife
 
 `knife` methods are available in more focused classes that group related 
-methods together. These can also be chained into pipelines.
+methods together. These classes can also be chained into pipelines.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -146,8 +147,7 @@ contrived example:
   1000
   >>> one.original().minmax().pipe(two).merge().back().sum().get()
   1002
-  
-  
+
 What's new in 0.5.2
 ===================
 
