@@ -110,6 +110,30 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="knife.lazy.mapknife.apply">
+<tt class="descname">apply</tt><big>(</big><em>worker</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a> used to work on incoming things plus any
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+it will use.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever <a class="reference internal" href="#knife.lazy.mapknife.apply" title="knife.lazy.mapknife.apply"><tt class="xref py py-func docutils literal"><span class="pre">apply</span></tt></a> is
+called.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="knife.lazy.mapknife.argmap">
 <tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.argmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Feed each incoming thing to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> as <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional
@@ -484,7 +508,7 @@ behavior <strong>after</strong> <a class="reference internal" href="#knife.lazy.
 <dt id="knife.lazy.mapknife.params">
 <tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
-globally used by <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
+to be used globally.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
