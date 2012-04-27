@@ -113,7 +113,7 @@ contrived example:
 `active.knife` objects evaluate the result of calling a
 method immediately after the call. Calling the same method with
 a `lazy.knife` object only yields results when it is iterated over
-or :meth:`knife.lazy.lazyknife.get` is called to get results.
+or `knife.lazy.lazyknife.get` is called to get results.
   
 `knife.lazy.lazyknife` combines all `knife` methods in one class:
 

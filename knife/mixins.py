@@ -789,8 +789,8 @@ class MapMixin(local):
           `keys <http://brianhaveri.github.com/Underscore.php/#keys>`_
             function in Underscore.php
 
-           `values <http://brianhaveri.github.com/Underscore.php/#values>`_
-             function in Underscore.php
+          `values <http://brianhaveri.github.com/Underscore.php/#values>`_
+            function in Underscore.php
         '''
         with self._chain:
             return self._many(self._mapping(self._identity, keys, values))
