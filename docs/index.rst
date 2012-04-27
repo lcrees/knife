@@ -161,7 +161,7 @@ contrived example:
 What's new in 0.5.2
 ===================
 
-* verify PyPy 1.8, Python 3.1 compatibility
+* verify PyPy 1.8, CPython 3.1 compatibility
 * made randomizing methods lazier
 * memoize some routines
 
