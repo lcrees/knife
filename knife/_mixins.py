@@ -13,8 +13,8 @@ from itertools import (
     groupby, islice, tee, starmap, repeat, combinations, permutations, chain)
 
 from stuf.six import (
-    strings, items, values, keys, filter, map)
-from stuf.utils import OrderedDict, selfname, deferiter, deferfunc
+    OrderedDict, strings, items, values, keys, filter, map)
+from stuf.utils import selfname, deferiter, deferfunc
 
 from knife._compat import (
     Counter, ChainMap, ichain, ifilterfalse, zip_longest, count, memoize)

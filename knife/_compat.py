@@ -19,9 +19,9 @@ try:
 except ImportError:
     from sys import intern
 
-from stuf.six import items, map as imap, b
-from stuf.utils import OrderedDict, recursive_repr
+from stuf.utils import recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
+from stuf.six import OrderedDict, items, map as imap, b
 
 
 def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
