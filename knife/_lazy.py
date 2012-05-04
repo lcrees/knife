@@ -19,16 +19,18 @@ class _LazyMixin(local):
         :argument things: incoming things
         :keyword integer snapshots: snapshots to keep (default: ``5``)
         '''
-        incoming = iter([things[0]]) if len(things) == 1 else iter(things)
-        super(_LazyMixin, self).__init__(incoming, iter([]), **kw)
+        incoming = (
+            (things[0],).__iter__() if len(things) == 1 else things.__iter__()
+        )
+        super(_LazyMixin, self).__init__(incoming, ().__iter__(), **kw)
         # working things
-        self._work = iter([])
+        self._work = ().__iter__()
         # holding things
-        self._hold = iter([])
+        self._hold = ().__iter__()
 
     @property
     @contextmanager
-    def _chain(self, iter_=iter, tee_=tee):
+    def _chain(self, tee_=tee):
         # take snapshot
         self._in, snapshot = tee_(self._in)
         # rebalance incoming with outcoming
@@ -47,10 +49,10 @@ class _LazyMixin(local):
         self._out = self._hold
         # clear working things
         del self._work
-        self._work = iter_([])
+        self._work = ().__iter__()
         # clear holding things
         del self._hold
-        self._hold = iter_([])
+        self._hold = ().__iter__()
 
     @property
     def _iterable(self):
@@ -62,9 +64,9 @@ class _LazyMixin(local):
         self._hold = chain_(things, self._hold)
         return self
 
-    def _append(self, things, chain_=chain, iter_=iter):
+    def _append(self, things, chain_=chain):
         # append thing after other holding things
-        self._hold = chain_(self._hold, iter_([things]))
+        self._hold = chain_(self._hold, (things,).__iter__())
         return self
 
     def _prependit(self, things, tee_=tee, chain_=chain):
@@ -144,7 +146,7 @@ class _OutMixin(_LazyMixin):
 
     '''lazy output mixin'''
 
-    def _undo(self, snapshot=0, iter_=iter):
+    def _undo(self, snapshot=0):
         # clear everything
         self.clear()
         # if specified, use a specific snapshot
@@ -153,7 +155,7 @@ class _OutMixin(_LazyMixin):
         self._in = self._history.popleft()
         # clear outgoing things
         del self._out
-        self._out = iter_([])
+        self._out = ().__iter__()
         return self
 
     def _snapshot(self, tee_=tee):
@@ -181,7 +183,7 @@ class _OutMixin(_LazyMixin):
         self._in, self._original = tee_(self._original)
         return self
 
-    def _clear(self, iter_=iter, list_=list):
+    def _clear(self, list_=list):
         # clear worker
         self._worker = None
         # clear worker positional arguments
@@ -194,16 +196,16 @@ class _OutMixin(_LazyMixin):
         self._pipe = None
         # clear incoming things
         del self._in
-        self._in = iter_([])
+        self._in = ().__iter__()
         # clear working things
         del self._work
-        self._work = iter_([])
+        self._work = ().__iter__()
         # clear holding things
         del self._hold
-        self._hold = iter_([])
+        self._hold = ().__iter__()
         # clear outgoing things
         del self._out
-        self._out = iter_([])
+        self._out = ().__iter__()
         return self
 
     def _iterate(self, tee_=tee):
