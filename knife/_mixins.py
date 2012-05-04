@@ -12,12 +12,12 @@ from operator import methodcaller, itemgetter, attrgetter, truediv
 from itertools import (
     groupby, islice, tee, starmap, repeat, combinations, permutations, chain)
 
+from stuf.utils import selfname, deferiter, deferfunc
 from stuf.six import (
     OrderedDict, strings, items, values, keys, filter, map)
-from stuf.utils import selfname, deferiter, deferfunc
 
 from knife._compat import (
-    Counter, ChainMap, ichain, ifilterfalse, zip_longest, count, memoize)
+    Counter, ChainMap, ichain, filterfalse, zip_longest, count, memoize)
 
 Count = namedtuple('Count', 'least most overall')
 MinMax = namedtuple('MinMax', 'min max')
@@ -84,13 +84,13 @@ class _MathMixin(local):
 
     @staticmethod
     def _count(iterable, counter_=Counter, count_=Count):
-        count = counter_(iterable)
-        commonality = count.most_common()
+        cnt = counter_(iterable)
+        commonality = cnt.most_common()
         yield count_(
             # least common
             commonality[:-2:-1][0][0],
             # most common (mode)
-            count.most_common(1)[0][0],
+            cnt.most_common(1)[0][0],
             # overall commonality
             commonality,
         )
@@ -103,9 +103,9 @@ class _MathMixin(local):
         return imax
 
     @staticmethod
-    def _median(iterable, s=sorted, d=truediv, int=int, count=count):
+    def _median(iterable, s=sorted, d=truediv, int=int, cnt=count):
         i1, i2 = tee(s(iterable))
-        e = d(count(i1) - 1, 2)
+        e = d(cnt(i1) - 1, 2)
         p = int(e)
         if e % 2 == 0:
             yield slice(i2, p)
@@ -119,9 +119,9 @@ class _MathMixin(local):
         yield minmax_(imin(i1), imax(i2))
 
     @staticmethod
-    def _range(iterable, d=deque, sorted_=sorted):
+    def _range(iterable, d=deque, sorted_=sorted, next_=next):
         i1, i2 = tee(sorted_(iterable))
-        yield d(i1, maxlen=1).pop() - next(i2)
+        yield d(i1, maxlen=1).pop() - next_(i2)
 
     @staticmethod
     @memoize
@@ -263,7 +263,7 @@ class _FilterMixin(local):
 
     @staticmethod
     @memoize
-    def _duality(true, f=filter, ff=ifilterfalse, u=tuple, t=tee, b=TrueFalse):
+    def _duality(true, f=filter, ff=filterfalse, u=tuple, t=tee, b=TrueFalse):
         def duality(iterable): #@IgnorePep8
             truth_, false_ = t(iterable)
             yield b(u(f(true, truth_)), u(ff(true, false_)))
@@ -271,7 +271,7 @@ class _FilterMixin(local):
 
     @staticmethod
     @memoize
-    def _filter(true, false, f_=filter, ff_=ifilterfalse, partial_=partial):
+    def _filter(true, false, f_=filter, ff_=filterfalse, partial_=partial):
         return partial_(ff_, true) if false else partial_(f_, true)
 
     @staticmethod
@@ -290,7 +290,7 @@ class _FilterMixin(local):
     @staticmethod
     @memoize
     def _traverse(test, invert, odict_=OrderedDict, chain_=chain, vars_=vars):
-        ifilter = ifilterfalse if invert else filter
+        ifilter = filterfalse if invert else filter
         def members(iterable, beenthere=None): #@IgnorePep8
             isclass_ = isclass
             getattr_ = getattr
@@ -350,20 +350,25 @@ class _ReduceMixin(local):
     '''reduce mixin'''
 
     @classmethod
-    def _flatten(cls, iterable, strings_=strings, isinstance_=isinstance):
+    def _flatten(cls, iterable, s_=strings, ii_=isinstance, n=next):
         smash_ = cls._flatten
-        for item in iterable:
-            try:
-                # don't recur over strings
-                if isinstance_(item, strings_):
+        next_ = iterable.__iter__()
+        try:
+            while 1:
+                item = n(next_)
+                try:
+                    # don't recur over strings
+                    if ii_(item, s_):
+                        yield item
+                    else:
+                        # do recur over other things
+                        for j in smash_(item):
+                            yield j
+                except (AttributeError, TypeError):
+                    # does not recur
                     yield item
-                else:
-                    # do recur over other things
-                    for j in smash_(item):
-                        yield j
-            except TypeError:
-                # does not recur
-                yield item
+        except StopIteration:
+            pass
 
     @staticmethod
     def _merge(iterable, ichain_=ichain):
@@ -396,7 +401,7 @@ class _SliceMixin(local):
 
     @staticmethod
     @memoize
-    def _choice(t=tee, n=next, s=islice, rr=randrange, c=count):
+    def _choice(t=tee, s=islice, rr=randrange, c=count, n=next):
         def choice(iterable):
             i1, i2 = t(iterable)
             yield n(s(i1, rr(0, c(i2)), None))
