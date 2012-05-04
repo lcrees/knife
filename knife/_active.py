@@ -16,9 +16,8 @@ class _ActiveMixin(local):
 
     def __init__(self, *things, **kw):
         '''
-        Initialize :mod:`knife`.
-
         :argument things: incoming things
+
         :keyword integer snapshots: snapshots to keep (default: ``5``)
         '''
         incoming = deque()

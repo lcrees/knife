@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''Lazily evaluated knives.'''
+'''Lazier evaluated knives.'''
 
 from knife.base import OutMixin
 from knife.mixins import (
@@ -21,11 +21,11 @@ class lazyknife(
 ):
 
     '''
-    Lazier evaluated combo knife.
+    Lazier evaluated combo knife. Features every :mod:`knife` method.
 
-    Combines features from every other :mod:`knife` knife.
+    .. note::
 
-    Aliased as :class:`__` when imported from :mod:`knife`.
+      Also aliased as :class:`~knife.__` when imported from :mod:`knife`.
 
     >>> from knife import __
     '''
@@ -36,9 +36,8 @@ class lazyknife(
 class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
     '''
-    Lazily evaluated comparing knife.
-
-    Comparison operations for incoming things.
+    Lazier evaluated comparing knife. Provides comparison operations for
+    incoming things.
 
     >>> from knife.lazy import cmpknife
     '''
@@ -49,9 +48,8 @@ class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
     '''
-    Lazier evaluated filtering knife.
-
-    Filtering operations for incoming things.
+    Lazier evaluated filtering knife. Provides filtering operations for
+    incoming things.
 
     >>> from knife.lazy import filterknife
     '''
@@ -62,10 +60,8 @@ class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
     '''
-    Lazier evaluated mapping knife.
-
-    `Map <http://docs.python.org/library/functions.html#map>`_ operations for
-    incoming things.
+    Lazier evaluated mapping knife. Provides `mapping <http://docs.python.org
+    /library/functions.html#map>`_ operations for incoming things.
 
     >>> from knife.lazy import mapknife
     '''
@@ -76,9 +72,8 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
     '''
-    Lazier evaluated mathing knife.
-
-    Numeric and statistical operations for incoming things.
+    Lazier evaluated mathing knife. Provides numeric and statistical
+    operations for incoming things.
 
     >>> from knife.lazy import mathknife
     '''
@@ -89,9 +84,8 @@ class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
     '''
-    Lazier evaluated ordering knife.
-
-    Sorting and grouping operations for incoming things.
+    Lazier evaluated ordering knife. Provides sorting and grouping operations
+    for incoming things.
 
     >>> from knife.lazy import orderknife
     '''
@@ -102,10 +96,8 @@ class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
     '''
-    Lazier evaluated reducing knife.
-
-    `Reducing <http://docs.python.org/library/functions.html#map>`_ operations
-    for incoming things.
+    Lazier evaluated reducing knife. Provides `reducing <http://docs.python.
+    org/library/functions.html#map>`_ operations for incoming things.
 
     >>> from knife.lazy import reduceknife
     '''
@@ -116,9 +108,8 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
     '''
-    Lazier evaluated repeating knife.
-
-    Repetition operations for incoming things.
+    Lazier evaluated repeating knife. Provides repetition operations for
+    incoming things.
 
     >>> from knife.lazy import repeatknife
     '''
@@ -129,10 +120,8 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
 
     '''
-    Lazier evaluated slicing knife.
-
-    `Slicing <http://docs.python.org/library/functions.html#slice>`_ operations
-    for incoming things.
+    Lazier evaluated slicing knife. Provides `slicing <http://docs.python.
+    org/library/functions.html#slice>`_ operations for incoming things.
 
     >>> from knife.lazy import sliceknife
     '''
