@@ -55,16 +55,15 @@
 <dl class="class">
 <dt id="knife.active.filterknife">
 <em class="property">class </em><tt class="descclassname">knife.active.</tt><tt class="descname">filterknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.filterknife" title="Permalink to this definition">¶</a></dt>
-<dd><p>Actively evaluated filtering knife.</p>
-<p>Filtering operations for incoming things.</p>
+<dd><p>Actively evaluated filtering knife. Provides filtering operations for
+incoming things.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife.active</span> <span class="kn">import</span> <span class="n">filterknife</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="knife.active.filterknife.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>*things</em>, <em>snapshots=5</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
-<table class="docutils field-list" frame="void" rules="none">
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -100,7 +99,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -112,17 +111,40 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.active.filterknife.ascii">
-<tt class="descname">ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
-<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<dt id="knife.active.filterknife.apply">
+<tt class="descname">apply</tt><big>(</big><em>worker</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a> used to work on incoming things plus any
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+it will use.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.active.filterknife.params" title="knife.active.filterknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever <a class="reference internal" href="#knife.active.filterknife.apply" title="knife.active.filterknife.apply"><tt class="xref py py-func docutils literal"><span class="pre">apply</span></tt></a> is
+called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.active.filterknife.ascii">
+<tt class="descname">ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.encode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">encode</span></tt></a> outgoing things as <a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">bytes</a> with the <tt class="docutils literal"><span class="pre">'latin-1'</span></tt> codec.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for encoding</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -137,15 +159,15 @@
 <dl class="method">
 <dt id="knife.active.filterknife.attrs">
 <tt class="descname">attrs</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.attrs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect <a class="reference external" href="http://docs.python.org/glossary.html#term-attribute">attribute</a> values from incoming things that match an attribute <em>name</em>
-found in <cite>names</cite>.</p>
+<dd><p>Collect <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-attribute" title="(in Python v2.7)"><em class="xref std std-term">attribute</em></a> values from incoming things that match an
+<strong>attribute name</strong> found in <cite>names</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> (<em>string</em>) &#8211; attribute names</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; attribute names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -166,18 +188,27 @@ found in <cite>names</cite>.</p>
 <span class="go">[]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/operator.html#operator.attrgetter" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">operator.attrgetter</span></tt></a></dt>
+<dd>function in Python standard library</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#pick">pick</a></dt>
+<dd>function in Underscore.js</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.filterknife.back">
 <tt class="descname">back</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.back" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch back to the previous <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> object that piped its incoming
-things through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<dd><p>Switch back to <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> that piped its incoming
+things through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -186,12 +217,12 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <dl class="method">
 <dt id="knife.active.filterknife.baseline">
 <tt class="descname">baseline</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.baseline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to baseline <a class="reference internal" href="#knife.active.filterknife.snapshot" title="knife.active.filterknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot()</span></tt></a>.</p>
+<dd><p>Restore incoming things back to the baseline <a class="reference internal" href="#knife.active.filterknife.snapshot" title="knife.active.filterknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -209,20 +240,20 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 
 <dl class="method">
 <dt id="knife.active.filterknife.bytes">
-<tt class="descname">bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
-<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things.</p>
+<tt class="descname">bytes</tt><big>(</big><em>encoding='utf_8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.encode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">encode</span></tt></a> outgoing things as <a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">bytes</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
+<li><strong>encoding</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; character <a class="reference external" href="http://docs.python.org/library/codecs.html#standard-encodings">encoding</a></li>
+<li><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p><a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for encoding</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -242,7 +273,7 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -251,14 +282,14 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <dl class="method">
 <dt id="knife.active.filterknife.duality">
 <tt class="descname">duality</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.duality" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divide incoming things into two <a class="reference external" href="http://docs.python.org/glossary.html#term-iterable">iterables</a>, the first everything <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for and the second everything <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> for.</p>
+<dd><p>Divide incoming things into two <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-iterable" title="(in Python v2.7)"><em class="xref std std-term">iterable</em></a>s, the first
+everything <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> is <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">True</span></tt></a> for and the second
+everything <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> is <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">False</span></tt></a> for.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -275,15 +306,15 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <dl class="method">
 <dt id="knife.active.filterknife.filter">
 <tt class="descname">filter</tt><big>(</big><em>invert=False</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect incoming things matched by <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<dd><p>Collect incoming things matched by <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; collect incoming things <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> is
+<a class="reference external" href="http://docs.python.org/2.7/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">False</span></tt></a> rather than <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">True</span></tt></a> for</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -298,33 +329,64 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <span class="go">[1, 3, 5]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/itertools.html#itertools.ifilter" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">itertools.ifilter</span></tt></a></dt>
+<dd>function in Python standard library (replaces <a class="reference internal" href="#knife.active.filterknife.filter" title="knife.active.filterknife.filter"><tt class="xref py py-func docutils literal"><span class="pre">filter</span></tt></a> in Python 3)</dd>
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/itertools.html#itertools.ifilterfalse" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">itertools.ifilterfalse</span></tt></a></dt>
+<dd>function in Python standard library (<tt class="xref py py-func docutils literal"><span class="pre">filterfalse</span></tt> in Python 3)</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#filter">filter</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#reject">reject</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#filter">filter</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#reject">reject</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#filter">filter</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#reject">reject</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#filter">filter</a></dt>
+<dd>function in Underscore.php</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#reject">reject</a></dt>
+<dd>function in Underscore.php</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.filterknife.get">
 <tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things wrapped with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
-<p>If there&#8217;s only one outgoing thing, only that thing will be returned.
-If there are multiple outgoing things, they will be returned wrapped
-with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
+<dd><p>Return outgoing things wrapped with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With only one outgoing thing, only that one outgoing thing is
+returned. With multiple outgoing things, they are returned wrapped
+with the wrapper assigned with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is
+<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>).</p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.filterknife.items">
 <tt class="descname">items</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect values from incoming things (usually <a class="reference external" href="http://docs.python.org/glossary.html#term-sequence">sequences</a> or <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mappings</a>) that match a <em>key</em> found in
-<cite>keys</cite>.</p>
+<dd><dl class="docutils">
+<dt>Collect values from incoming things (usually a <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-sequence" title="(in Python v2.7)"><em class="xref std std-term">sequence</em></a> or</dt>
+<dd><p class="first"><a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-mapping" title="(in Python v2.7)"><em class="xref std std-term">mapping</em></a>) that match a <strong>key</strong> found in <cite>keys</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> (<em>string</em>) &#8211; keys or indices</td>
+<tr class="field-odd field"><th class="field-name" colspan="2">argument str keys:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">keys or indices</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">stooge</span> <span class="o">=</span> <span class="p">[</span>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">stooge</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>   <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;moe&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">40</span><span class="p">),</span>
 <span class="gp">... </span>   <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;larry&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
 <span class="gp">... </span>   <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;curly&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
@@ -344,22 +406,36 @@ with <a class="reference internal" href="#knife.active.filterknife.wrap" title="
 <span class="go">[]</span>
 </pre></div>
 </div>
+</dd>
+</dl>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/operator.html#operator.itemgetter" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">operator.itemgetter</span></tt></a></dt>
+<dd>function in Python standard library</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#pick">pick</a></dt>
+<dd>function in Underscore.js</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.filterknife.oneach">
 <tt class="descname">oneach</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.oneach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle whether each outgoing thing should be individually wrapped with
-<a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> or whether all outgoing things should be wrapped with
-<a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> all at once.</p>
-<p>Default behavior is to <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> everything at once. The default
-behavior is reverted to <strong>after</strong> <a class="reference internal" href="#knife.active.filterknife.get" title="knife.active.filterknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.active.filterknife.peek" title="knife.active.filterknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is
-invoked.</p>
+the wrapper assigned with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>
+) or whether all outgoing things should be wrapped all at once.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> default behavior is to wrap all outgoing
+things all at once. <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>s reset back to this
+behavior <strong>after</strong> <a class="reference internal" href="#knife.active.filterknife.get" title="knife.active.filterknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get</span></tt></a> or <a class="reference internal" href="#knife.active.filterknife.peek" title="knife.active.filterknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek</span></tt></a> is called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -368,12 +444,18 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.active.filterknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.original" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to original snapshot.</p>
+<dd><p>Restore incoming things back to the original snapshot.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">THe original snapshot of incoming things is taken following the first
+<tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call but before the second <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call (if there is a second <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call)</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -389,13 +471,13 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.active.filterknife.params">
 <tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a> arguments used when <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-invoked.</p>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+to be used globally.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -404,22 +486,26 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.active.filterknife.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compile search <cite>pattern</cite> for use as <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
-<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a><a class="reference internal" href="#knife.active.filterknife.params" title="knife.active.filterknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when a pattern
-is compiled.</p>
+<dd><p>Compile search <cite>pattern</cite> for use as <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.active.filterknife.params" title="knife.active.filterknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever a new <cite>pattern</cite> is
+compiled.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
-<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile <cite>pattern</cite> with. Valid options
+<li><strong>pattern</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; search pattern</li>
+<li><strong>type</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; engine to compile <cite>pattern</cite> with. Valid options
 are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
-<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
+<li><strong>flags</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -441,23 +527,27 @@ are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#82
 <dl class="method">
 <dt id="knife.active.filterknife.peek">
 <tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.peek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Preview current incoming things wrapped with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
-<p>If there&#8217;s only one outgoing thing, only that thing will be returned.
-If there are multiple outgoing things, they will be returned wrapped
-with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
+<dd><p>Preview current incoming things wrapped with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With only one outgoing thing, only that one thing is returned. With
+multiple outgoing things, everything is returned wrapped with the
+wrapper assigned with <a class="reference internal" href="#knife.active.filterknife.wrap" title="knife.active.filterknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>).</p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.active.filterknife.pipe">
 <tt class="descname">pipe</tt><big>(</big><em>knife</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.pipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pipe incoming things through another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<dd><p>Pipe incoming things from some other <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>
+through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knife</strong> &#8211; another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knife</strong> &#8211; another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -473,7 +563,7 @@ with <a class="reference internal" href="#knife.active.filterknife.wrap" title="
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -486,12 +576,12 @@ with <a class="reference internal" href="#knife.active.filterknife.wrap" title="
 <dl class="method">
 <dt id="knife.active.filterknife.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.active.filterknife.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take baseline snapshot of current incoming things.</p>
+<dd><p>Take a baseline snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -500,16 +590,19 @@ with <a class="reference internal" href="#knife.active.filterknife.wrap" title="
 <dl class="method">
 <dt id="knife.active.filterknife.traverse">
 <tt class="descname">traverse</tt><big>(</big><em>invert=False</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.traverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect deeply nested values from incoming things matched by
-<a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<dd><p>Collect values from deeply <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-nested-scope" title="(in Python v2.7)"><em class="xref std std-term">nested scope</em></a>s from incoming things
+matched by <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<em>boolean</em>) &#8211; collect things that <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-<tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> rather than <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> for</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>invert</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; collect incoming things that <a class="reference internal" href="#knife.active.filterknife.worker" title="knife.active.filterknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> is
+<a class="reference external" href="http://docs.python.org/2.7/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">False</span></tt></a> rather than <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">True</span></tt></a> for</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-sequence" title="(in Python v2.7)"><em class="xref std std-term">sequence</em></a> of <a class="reference external" href="http://docs.python.org/dev/library/collections.html#collections.ChainMap">ChainMaps</a> containing
+<a class="reference external" href="http://docs.python.org/2.7/library/collections.html#collections.OrderedDict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">collections.OrderedDict</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -546,17 +639,20 @@ with <a class="reference internal" href="#knife.active.filterknife.wrap" title="
 <dl class="method">
 <dt id="knife.active.filterknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to a previous snapshot.</p>
-<p>A snapshot of incoming things is automatically taken at the start of
-each <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> operation.</p>
+<dd><p>Revert incoming things to a previous snapshot.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A snapshot of current incoming things is taken when a <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> is called but before the main body of the method
+executes.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>,
-etc.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; number of steps ago <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -578,21 +674,22 @@ etc.</td>
 
 <dl class="method">
 <dt id="knife.active.filterknife.unicode">
-<tt class="descname">unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/library/functions.html#unicode">unicode</a>
-(<a class="reference external" href="http://docs.python.org/py3k/library/functions.html#str">str</a> under
-Python 3) <a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#bytes.decode">decode()</a> outgoing things.</p>
+<tt class="descname">unicode</tt><big>(</big><em>encoding='utf_8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#knife.active.filterknife.unicode" title="knife.active.filterknife.unicode"><tt class="xref py py-func docutils literal"><span class="pre">unicode</span></tt></a> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str</span></tt></a> under Python 3) <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.decode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">decode</span></tt></a>
+outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
+<li><strong>encoding</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Unicode <a class="reference external" href="http://docs.python.org/library/codecs.html#standard-encodings">encoding</a></p>
+</li>
+<li><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p><a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for decoding</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -607,16 +704,20 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <dl class="method">
 <dt id="knife.active.filterknife.worker">
 <tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.worker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <a class="reference external" href="http://docs.python.org/library/functions.html#callable">callable</a> used to work on incoming things.</p>
-<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a> <a class="reference internal" href="#knife.active.filterknife.params" title="knife.active.filterknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when a new
-<cite>worker</cite> is assigned.</p>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a> used to work on incoming things.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.active.filterknife.params" title="knife.active.filterknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever a new <cite>worker</cite> is
+assigned.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a callable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -625,17 +726,20 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <dl class="method">
 <dt id="knife.active.filterknife.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.active.filterknife.wrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt> used to wrap
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>, <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-type" title="(in Python v2.7)"><em class="xref std std-term">type</em></a>, or <a class="reference external" href="http://docs.python.org/2.7/reference/compound_stmts.html#class" title="(in Python v2.7)"><tt class="xref std std-keyword docutils literal"><span class="pre">class</span></tt></a> used to wrap
 outgoing things.</p>
-<p>Default wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>. The default wrapper is reverted to
-after <a class="reference internal" href="#knife.active.filterknife.get" title="knife.active.filterknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.active.filterknife.peek" title="knife.active.filterknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is invoked.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> resets back to its default wrapper
+(<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>) after <a class="reference internal" href="#knife.active.filterknife.get" title="knife.active.filterknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get</span></tt></a> or <a class="reference internal" href="#knife.active.filterknife.peek" title="knife.active.filterknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek</span></tt></a> is called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>, <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#type" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">type</span></tt></a>, or <a class="reference external" href="http://docs.python.org/2.7/reference/compound_stmts.html#class" title="(in Python v2.7)"><tt class="xref std std-keyword docutils literal"><span class="pre">class</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>

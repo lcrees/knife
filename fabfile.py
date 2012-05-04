@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 '''knife fabfile'''
 
 from fabric.api import prompt, local, settings, env, lcd
 
 
 def _test(val):
-    truth = val in ['py26', 'py27', 'py31', 'py32']
+    truth = val in ['py26', 'py27', 'py31', 'py32', 'pypy']
     if truth is False:
         raise KeyError(val)
     return val
@@ -25,14 +26,15 @@ def docs():
 
 def update_docs():
     docs()
-    local('hg ci -m docmerge; hg push')
+    with settings(warn_only=True):
+        local('hg ci -m docmerge; hg push')
     local('./setup.py upload_sphinx')
 
 
 def tox_recreate():
     '''recreate knife test env'''
     prompt(
-        'Enter testenv: [py26, py27, py31, py32]',
+        'Enter testenv: [py26, py27, py31, py32, pypy]',
         'testenv',
         validate=_test,
     )
@@ -54,8 +56,23 @@ def release():
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push github')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
+    local('./setup.py upload_sphinx')
+    local('rm -rf dist')
+
+
+def inplace():
+    '''inplace knife'''
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
+    with settings(warn_only=True):
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
+        local('hg push github')
+    local('./setup.py sdist --format=bztar,gztar,zip upload')
     local('./setup.py upload_sphinx')
     local('rm -rf dist')
 
@@ -72,6 +89,6 @@ def release_next():
     with settings(warn_only=True):
         local('hg tag "%(tag)s"' % env)
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push git+ssh://git@github.com:kwarterthieves/knife.git')
+        local('hg push github')
     local('./setup.py register sdist --format=bztar,gztar,zip upload')
     local('rm -rf dist')

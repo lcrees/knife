@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 '''ordering test mixins'''
 
+import platform
+
+PYPY = platform.python_implementation() == 'PyPy'
 
 class stooges: #@IgnorePep8
     name = 'moe'
@@ -117,7 +120,7 @@ class CmpMixin(object):
             self.mclass(
                 [1, 3, 4, 5], [5, 2, 10], [10, 11, 2]
             ).difference(True).get(),
-            [1, 3, 4, 11]
+            [11, 1, 3, 4] if PYPY else [1, 3, 4, 11]
         )
 
     def test_intersection(self):
@@ -130,7 +133,7 @@ class CmpMixin(object):
     def test_union(self):
         self.assertEqual(
             self.mclass([1, 2, 3], [101, 2, 1, 10], [2, 1]).union().get(),
-            [1, 10, 3, 2, 101],
+            [10, 1, 2, 3, 101] if PYPY else [1, 10, 3, 2, 101],
         )
 
     def test_unique(self):
@@ -474,6 +477,14 @@ class MapMixin(object):
             ).kwargmap(True).get(),
             [270, 330, 390],
         )
+        self.assertEqual(
+            self.mclass(
+                ((1, 2), {'a': 2}), ((2, 3), {'a': 2}), ((3, 4), {'a': 2})
+            ).apply(
+                test, 1, 2, 3, b=5, w=10, y=13
+            ).kwargmap(True).get(),
+            [270, 330, 390],
+        )
 
     def test_argmap(self):
         self.assertEqual(
@@ -486,6 +497,12 @@ class MapMixin(object):
             self.mclass((1, 2), (2, 3), (3, 4)).worker(
                 lambda x, y, z, a, b: x * y * z * a * b
             ).params(7, 8, 9).argmap(True).get(),
+            [1008, 3024, 6048],
+        )
+        self.assertEqual(
+            self.mclass((1, 2), (2, 3), (3, 4)).apply(
+                lambda x, y, z, a, b: x * y * z * a * b, 7, 8, 9
+            ).argmap(True).get(),
             [1008, 3024, 6048],
         )
 

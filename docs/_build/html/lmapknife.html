@@ -55,17 +55,14 @@
 <dl class="class">
 <dt id="knife.lazy.mapknife">
 <em class="property">class </em><tt class="descclassname">knife.lazy.</tt><tt class="descname">mapknife</tt><big>(</big><em>*things</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lazier evaluated mapping knife.</p>
-<p><a class="reference external" href="http://docs.python.org/library/functions.html#map">Map</a> operations for
-incoming things.</p>
+<dd><p>Lazier evaluated mapping knife. Provides <a class="reference external" href="http://docs.python.org/library/functions.html#map">mapping</a> operations for incoming things.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">knife.lazy</span> <span class="kn">import</span> <span class="n">mapknife</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="knife.lazy.mapknife.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>*things</em>, <em>snapshots=5</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
-<table class="docutils field-list" frame="void" rules="none">
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -101,7 +98,7 @@ incoming things.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -113,18 +110,43 @@ incoming things.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="knife.lazy.mapknife.argmap">
-<tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.argmap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each incoming thing to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> as <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#function">wildcard</a> <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional
-arguments</a>.</p>
+<dt id="knife.lazy.mapknife.apply">
+<tt class="descname">apply</tt><big>(</big><em>worker</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a> used to work on incoming things plus any
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+it will use.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever <a class="reference internal" href="#knife.lazy.mapknife.apply" title="knife.lazy.mapknife.apply"><tt class="xref py py-func docutils literal"><span class="pre">apply</span></tt></a> is
+called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> with
-positional arguments derived from incoming things</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knife.lazy.mapknife.argmap">
+<tt class="descname">argmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.argmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed each incoming thing to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> as <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional
+argument</em></a>s.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; merge global positional <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> with
+positional arguments derived from incoming things when passed to
+<a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -140,20 +162,26 @@ positional arguments derived from incoming things</td>
 <span class="go">[1008, 3024, 6048]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/itertools.html#itertools.starmap" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">itertools.starmap</span></tt></a></dt>
+<dd>function in Python standard library</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.ascii">
 <tt class="descname">ascii</tt><big>(</big><em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
-<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things with the <tt class="docutils literal"><span class="pre">'ascii'</span></tt> codec.</p>
+<dd><p><a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.encode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">encode</span></tt></a> outgoing things as <a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">bytes</a> with the <tt class="docutils literal"><span class="pre">'latin-1'</span></tt> codec.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for encoding</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -168,13 +196,13 @@ positional arguments derived from incoming things</td>
 <dl class="method">
 <dt id="knife.lazy.mapknife.back">
 <tt class="descname">back</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.back" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch back to the previous <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> object that piped its incoming
-things through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<dd><p>Switch back to <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> that piped its incoming
+things through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -183,12 +211,12 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <dl class="method">
 <dt id="knife.lazy.mapknife.baseline">
 <tt class="descname">baseline</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.baseline" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to baseline <a class="reference internal" href="#knife.lazy.mapknife.snapshot" title="knife.lazy.mapknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot()</span></tt></a>.</p>
+<dd><p>Restore incoming things back to the baseline <a class="reference internal" href="#knife.lazy.mapknife.snapshot" title="knife.lazy.mapknife.snapshot"><tt class="xref py py-meth docutils literal"><span class="pre">snapshot</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -206,20 +234,20 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.bytes">
-<tt class="descname">bytes</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">byte</a>
-<a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#str.encode">encode()</a> outgoing things.</p>
+<tt class="descname">bytes</tt><big>(</big><em>encoding='utf_8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.encode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">encode</span></tt></a> outgoing things as <a class="reference external" href="http://docs.python.org/py3k/library/functions.html#bytes">bytes</a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for encoding issues</li>
+<li><strong>encoding</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; character <a class="reference external" href="http://docs.python.org/library/codecs.html#standard-encodings">encoding</a></li>
+<li><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p><a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for encoding</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -239,7 +267,7 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -248,27 +276,33 @@ things through this <tt class="xref py py-mod docutils literal"><span class="pre
 <dl class="method">
 <dt id="knife.lazy.mapknife.get">
 <tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return outgoing things wrapped with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
-<p>If there&#8217;s only one outgoing thing, only that thing will be returned.
-If there are multiple outgoing things, they will be returned wrapped
-with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
+<dd><p>Return outgoing things wrapped with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With only one outgoing thing, only that one outgoing thing is
+returned. With multiple outgoing things, they are returned wrapped
+with the wrapper assigned with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is
+<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>).</p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.invoke">
 <tt class="descname">invoke</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.invoke" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call method <cite>name</cite> from each incoming thing with the global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
-<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
-<a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a>.</p>
-<p>The original thing is kept if the return value of the method call is
-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>.</p>
+<dd><p>Feed global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword
+argument</em></a>s to each incoming thing&#8217;s <cite>name</cite> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The original thing is returned if the return value of <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a>
+<cite>name</cite> is <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-data docutils literal"><span class="pre">None</span></tt></a>.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; method name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; method name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -280,25 +314,38 @@ with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife
 <span class="go">[[1, 5, 7], [1, 2, 3]]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#invoke">invoke</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#invoke">invoke</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#invoke">invoke</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#invoke">invoke</a></dt>
+<dd>function in Underscore.php</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.kwargmap">
 <tt class="descname">kwargmap</tt><big>(</big><em>merge=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.kwargmap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each incoming thing as a <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of <a class="reference external" href="http://docs.python.org/reference/compound_stmts.html#function">wildcard</a> <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and
-<a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a>
-arguments to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<dd><p>Feed each incoming thing as a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">tuple</span></tt></a> of
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s to
+<a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<em>boolean</em>) &#8211; merge global positional or keyword
-<a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> with positional and keyword arguments derived from an
-incoming things into a single <tt class="xref py py-class docutils literal"><span class="pre">tuple</span></tt> of wildcard positional
-and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
-<em>global_kwargs</em> + <em>iterable_kwargs</em>)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; merge global positional or keyword <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a>
+with positional and keyword arguments derived from incoming things
+into a single <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">tuple</span></tt></a> of wildcard positional and keyword
+arguments like <tt class="docutils literal"><span class="pre">(*iterable_args</span> <span class="pre">+</span> <span class="pre">global_args,</span> <span class="pre">**global_kwargs</span> <span class="pre">+</span>
+<span class="pre">iterable_kwargs)</span></tt> when passed to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -322,12 +369,12 @@ and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
 <dl class="method">
 <dt id="knife.lazy.mapknife.map">
 <tt class="descname">map</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Feed each incoming thing to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
+<dd><p>Feed each incoming thing to <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -335,23 +382,38 @@ and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
 <span class="go">[3, 6, 9]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/itertools.html#itertools.imap" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">itertools.imap</span></tt></a></dt>
+<dd>function in Python standard library (replaces <a class="reference internal" href="#knife.lazy.mapknife.map" title="knife.lazy.mapknife.map"><tt class="xref py py-func docutils literal"><span class="pre">map</span></tt></a> in Python 3)</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#map">map</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#map">map</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#map">map</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#map">map</a></dt>
+<dd>function in Underscore.php</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.mapping">
 <tt class="descname">mapping</tt><big>(</big><em>keys=False</em>, <em>values=False</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> on incoming <a class="reference external" href="http://docs.python.org/glossary.html#term-mapping">mapping</a> things.</p>
+<dd><p>Run <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a> on incoming <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-mapping" title="(in Python v2.7)"><em class="xref std std-term">mapping</em></a> things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>keys</strong> (<em>boolean</em>) &#8211; collect mapping keys only</li>
-<li><strong>values</strong> (<em>boolean</em>) &#8211; collect mapping values only</li>
+<li><strong>keys</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; collect mapping keys only</li>
+<li><strong>values</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; collect mapping values only</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -370,22 +432,46 @@ and keyword arguments like (<em>iterable_args</em> + <em>global_args</em>,
 <span class="go">[2, 3, 4, 2, 3, 4]</span>
 </pre></div>
 </div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#keys">keys</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://documentcloud.github.com/underscore/#values">values</a></dt>
+<dd>function in Underscore.js</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#keys">keys</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://mirven.github.com/underscore.lua/#values">values</a></dt>
+<dd>function in Underscore.lua</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#keys">keys</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://vti.github.com/underscore-perl/#values">values</a></dt>
+<dd>function in Underscore.perl</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#keys">keys</a></dt>
+<dd>function in Underscore.php</dd>
+<dt><a class="reference external" href="http://brianhaveri.github.com/Underscore.php/#values">values</a></dt>
+<dd>function in Underscore.php</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.oneach">
 <tt class="descname">oneach</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.oneach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle whether each outgoing thing should be individually wrapped with
-<a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> or whether all outgoing things should be wrapped with
-<a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> all at once.</p>
-<p>Default behavior is to <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> everything at once. The default
-behavior is reverted to <strong>after</strong> <a class="reference internal" href="#knife.lazy.mapknife.get" title="knife.lazy.mapknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.lazy.mapknife.peek" title="knife.lazy.mapknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is
-invoked.</p>
+the wrapper assigned with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>
+) or whether all outgoing things should be wrapped all at once.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> default behavior is to wrap all outgoing
+things all at once. <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>s reset back to this
+behavior <strong>after</strong> <a class="reference internal" href="#knife.lazy.mapknife.get" title="knife.lazy.mapknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get</span></tt></a> or <a class="reference internal" href="#knife.lazy.mapknife.peek" title="knife.lazy.mapknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek</span></tt></a> is called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -394,12 +480,18 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.lazy.mapknife.original">
 <tt class="descname">original</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.original" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to original snapshot.</p>
+<dd><p>Restore incoming things back to the original snapshot.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">THe original snapshot of incoming things is taken following the first
+<tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call but before the second <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call (if there is a second <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> call)</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -415,13 +507,13 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.lazy.mapknife.params">
 <tt class="descname">params</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a> arguments used when <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a> is
-invoked.</p>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+to be used globally.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -430,22 +522,26 @@ invoked.</p>
 <dl class="method">
 <dt id="knife.lazy.mapknife.pattern">
 <tt class="descname">pattern</tt><big>(</big><em>pattern</em>, <em>type='parse'</em>, <em>flags=0</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compile search <cite>pattern</cite> for use as <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker()</span></tt></a>.</p>
-<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a><a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when a pattern
-is compiled.</p>
+<dd><p>Compile search <cite>pattern</cite> for use as <a class="reference internal" href="#knife.lazy.mapknife.worker" title="knife.lazy.mapknife.worker"><tt class="xref py py-meth docutils literal"><span class="pre">worker</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever a new <cite>pattern</cite> is
+compiled.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pattern</strong> (<em>string</em>) &#8211; search pattern</li>
-<li><strong>type</strong> (<em>string</em>) &#8211; engine to compile <cite>pattern</cite> with. Valid options
+<li><strong>pattern</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; search pattern</li>
+<li><strong>type</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; engine to compile <cite>pattern</cite> with. Valid options
 are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#8216;parse&#8217;</a>, <a class="reference external" href="http://docs.python.org/library/re.html">&#8216;re&#8217;</a>, or <a class="reference external" href="http://docs.python.org/library/fnmatch.html">&#8216;glob&#8217;</a></li>
-<li><strong>flags</strong> (<em>integer</em>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
+<li><strong>flags</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; regular expression <a class="reference external" href="http://docs.python.org/library/re.html#re.DEBUG">flags</a></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -467,23 +563,27 @@ are <a class="reference external" href="http://pypi.python.org/pypi/parse/">&#82
 <dl class="method">
 <dt id="knife.lazy.mapknife.peek">
 <tt class="descname">peek</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.peek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Preview current incoming things wrapped with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
-<p>If there&#8217;s only one outgoing thing, only that thing will be returned.
-If there are multiple outgoing things, they will be returned wrapped
-with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a>.</p>
+<dd><p>Preview current incoming things wrapped with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With only one outgoing thing, only that one thing is returned. With
+multiple outgoing things, everything is returned wrapped with the
+wrapper assigned with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife.lazy.mapknife.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap</span></tt></a> (default wrapper is <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>).</p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.pipe">
 <tt class="descname">pipe</tt><big>(</big><em>knife</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.pipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pipe incoming things through another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>.</p>
+<dd><p>Pipe incoming things from some other <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>
+through this <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knife</strong> &#8211; another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knife</strong> &#8211; another <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -499,7 +599,7 @@ with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>things</strong> &#8211; incoming things</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -512,12 +612,12 @@ with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife
 <dl class="method">
 <dt id="knife.lazy.mapknife.snapshot">
 <tt class="descname">snapshot</tt><big>(</big><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take baseline snapshot of current incoming things.</p>
+<dd><p>Take a baseline snapshot of current incoming things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -526,17 +626,20 @@ with <a class="reference internal" href="#knife.lazy.mapknife.wrap" title="knife
 <dl class="method">
 <dt id="knife.lazy.mapknife.undo">
 <tt class="descname">undo</tt><big>(</big><em>snapshot=0</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.undo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore incoming things to a previous snapshot.</p>
-<p>A snapshot of incoming things is automatically taken at the start of
-each <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> operation.</p>
+<dd><p>Revert incoming things to a previous snapshot.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A snapshot of current incoming things is taken when a <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt>
+<a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-method" title="(in Python v2.7)"><em class="xref std std-term">method</em></a> is called but before the main body of the method
+executes.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<em>integer</em>) &#8211; number of steps ago <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>,
-etc.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>snapshot</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; number of steps ago <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt>, etc.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -558,21 +661,22 @@ etc.</td>
 
 <dl class="method">
 <dt id="knife.lazy.mapknife.unicode">
-<tt class="descname">unicode</tt><big>(</big><em>encoding='utf-8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://docs.python.org/library/functions.html#unicode">unicode</a>
-(<a class="reference external" href="http://docs.python.org/py3k/library/functions.html#str">str</a> under
-Python 3) <a class="reference external" href="http://docs.python.org/py3k/library/stdtypes.html#bytes.decode">decode()</a> outgoing things.</p>
+<tt class="descname">unicode</tt><big>(</big><em>encoding='utf_8'</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#knife.lazy.mapknife.unicode" title="knife.lazy.mapknife.unicode"><tt class="xref py py-func docutils literal"><span class="pre">unicode</span></tt></a> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">str</span></tt></a> under Python 3) <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#str.decode" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">decode</span></tt></a>
+outgoing things.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>encoding</strong> (<em>string</em>) &#8211; Unicode encoding</li>
-<li><strong>errors</strong> (<em>string</em>) &#8211; error handling for decoding issues</li>
+<li><strong>encoding</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Unicode <a class="reference external" href="http://docs.python.org/library/codecs.html#standard-encodings">encoding</a></p>
+</li>
+<li><strong>errors</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p><a class="reference external" href="http://docs.python.org/library/codecs.html#codec-base-classes">error handling</a> for decoding</p>
+</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</p>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></p>
 </td>
 </tr>
 </tbody>
@@ -587,16 +691,20 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <dl class="method">
 <dt id="knife.lazy.mapknife.worker">
 <tt class="descname">worker</tt><big>(</big><em>worker</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.worker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <a class="reference external" href="http://docs.python.org/library/functions.html#callable">callable</a> used to work on incoming things.</p>
-<p>Global <a class="reference external" href="http://docs.python.org/glossary.html#term-positional-argument">positional</a> and <a class="reference external" href="http://docs.python.org/glossary.html#term-keyword-argument">keyword</a> <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params()</span></tt></a> are reset when a new
-<cite>worker</cite> is assigned.</p>
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a> used to work on incoming things.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Global <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-positional-argument" title="(in Python v2.7)"><em class="xref std std-term">positional argument</em></a>s and <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-keyword-argument" title="(in Python v2.7)"><em class="xref std std-term">keyword argument</em></a>s
+assigned with <a class="reference internal" href="#knife.lazy.mapknife.params" title="knife.lazy.mapknife.params"><tt class="xref py py-meth docutils literal"><span class="pre">params</span></tt></a> are reset whenever a new <cite>worker</cite> is
+assigned.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a callable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>worker</strong> &#8211; a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#callable" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">callable</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -605,17 +713,20 @@ Python 3) <a class="reference external" href="http://docs.python.org/py3k/librar
 <dl class="method">
 <dt id="knife.lazy.mapknife.wrap">
 <tt class="descname">wrap</tt><big>(</big><em>wrapper</em><big>)</big><a class="headerlink" href="#knife.lazy.mapknife.wrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assign <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt> used to wrap
+<dd><p>Assign <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>, <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-type" title="(in Python v2.7)"><em class="xref std std-term">type</em></a>, or <a class="reference external" href="http://docs.python.org/2.7/reference/compound_stmts.html#class" title="(in Python v2.7)"><tt class="xref std std-keyword docutils literal"><span class="pre">class</span></tt></a> used to wrap
 outgoing things.</p>
-<p>Default wrapper is <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt>. The default wrapper is reverted to
-after <a class="reference internal" href="#knife.lazy.mapknife.get" title="knife.lazy.mapknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or <a class="reference internal" href="#knife.lazy.mapknife.peek" title="knife.lazy.mapknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek()</span></tt></a> is invoked.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A <tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a> resets back to its default wrapper
+(<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">list</span></tt></a>) after <a class="reference internal" href="#knife.lazy.mapknife.get" title="knife.lazy.mapknife.get"><tt class="xref py py-meth docutils literal"><span class="pre">get</span></tt></a> or <a class="reference internal" href="#knife.lazy.mapknife.peek" title="knife.lazy.mapknife.peek"><tt class="xref py py-meth docutils literal"><span class="pre">peek</span></tt></a> is called.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">type</span></tt>, or <tt class="xref py py-obj docutils literal"><span class="pre">class</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wrapper</strong> &#8211; an <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a>, <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#type" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">type</span></tt></a>, or <a class="reference external" href="http://docs.python.org/2.7/reference/compound_stmts.html#class" title="(in Python v2.7)"><tt class="xref std std-keyword docutils literal"><span class="pre">class</span></tt></a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-const docutils literal"><span class="pre">self</span></tt> (<tt class="xref py py-obj docutils literal"><span class="pre">knife</span></tt> object)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-mod docutils literal"><span class="pre">knife</span></tt> <a class="reference external" href="http://docs.python.org/2.7/glossary.html#term-object" title="(in Python v2.7)"><em class="xref std std-term">object</em></a></td>
 </tr>
 </tbody>
 </table>
