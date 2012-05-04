@@ -62,6 +62,23 @@ def release():
     local('rm -rf dist')
 
 
+def releaser():
+    '''releaser knife'''
+    with lcd('./docs/'):
+        local('make clean')
+        local('make html')
+        local('make linkcheck')
+        local('make doctest')
+    prompt('Enter tag: ', 'tag')
+    with settings(warn_only=True):
+        local('hg tag "%(tag)s"' % env)
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
+        local('hg push github')
+    local('./setup.py register sdist --format=bztar,gztar,zip upload')
+    local('./setup.py upload_sphinx')
+    local('rm -rf dist')
+
+
 def inplace():
     '''inplace knife'''
     with lcd('./docs/'):
