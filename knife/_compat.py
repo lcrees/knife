@@ -5,23 +5,24 @@ from itertools import chain
 from pickletools import genops
 from functools import update_wrapper
 try:
-    import cPickle as pickle
+    from cPickle import loads as ld, dumps, HIGHEST_PROTOCOL
 except ImportError:
-    import pickle  # @UnusedImport
+    from pickle import loads as ld, dumps, HIGHEST_PROTOCOL  # @UnusedImport
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest  # @UnusedImport
-from collections import MutableMapping, deque
+from collections import MutableMapping
 
 try:
     from __builtin__ import intern
 except ImportError:
     from sys import intern
 
+from stuf.utils import recursive_repr
 from stuf.six import items, map as imap, b, function_code
-from stuf.utils import OrderedDict, recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
+from stuf.six import OrderedDict, items, map as imap, b
 
 
 def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
@@ -38,14 +39,11 @@ def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
 
 
 ichain = chain.from_iterable
-ifilterfalse = filterfalse
-dumps = pickle.dumps
-protocol = pickle.HIGHEST_PROTOCOL
-loads = memoize(lambda x: pickle.loads(x))
+loads = memoize(lambda x: ld(x))
 
 
 @memoize
-def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
+def optimize(obj, d=dumps, p=HIGHEST_PROTOCOL, s=set, g=genops, b_=b, n=next):
     '''
     Optimize a pickle string by removing unused PUT opcodes.
 
@@ -54,46 +52,56 @@ def optimize(obj, d=dumps, p=protocol, s=set, q=deque, g=genops):
     # set of args used by a GET opcode
     this = d(obj, p)
     gets = s()
-    gadd = gets.add
     # (arg, startpos, stoppos) for the PUT opcodes
-    puts = q()
-    pappend = puts.append
     # set to pos if previous opcode was a PUT
-    prevpos, prevarg = None, None
-    for opcode, arg, pos in genops(this):
-        if prevpos is not None:
-            pappend((prevarg, prevpos, pos))
-            prevpos = None
-        if 'PUT' in opcode.name:
-            prevarg, prevpos = arg, pos
-        elif 'GET' in opcode.name:
-            gadd(arg)
+    def iterthing(gets=gets, this=this, g=g, n=n):  # @IgnorePep8
+        gadd = gets.add
+        prevpos, prevarg = None, None
+        try:
+            nextr = g(this)
+            while 1:
+                opcode, arg, pos = n(nextr)
+                if prevpos is not None:
+                    yield prevarg, prevpos, pos
+                    prevpos = None
+                if 'PUT' in opcode.name:
+                    prevarg, prevpos = arg, pos
+                elif 'GET' in opcode.name:
+                    gadd(arg)
+        except StopIteration:
+            pass
     # Copy the pickle string except for PUTS without a corresponding GET
-    s = q()
-    sappend = s.append
-    i = 0
-    for arg, start, stop in puts:
-        sappend(this[i:stop if (arg in gets) else start])
-        i = stop
-    sappend(this[i:])
-    return b('').join(s)
+    def iterthingy(iterthing=iterthing(), this=this, n=n):  # @IgnorePep8
+        i = 0
+        try:
+            while 1:
+                arg, start, stop = n(iterthing)
+                yield this[i:stop if (arg in gets) else start]
+                i = stop
+        except StopIteration:
+            pass
+        yield this[i:]
+    return b_('').join(i for i in iterthingy())
 
 
-def count(iterable, enumerate=enumerate, next=next, iter=iter):
+def count(iterable, enumerate=enumerate, next=next):
     counter = enumerate(iterable, 1)
     idx = ()
     while 1:
         try:
             idx = next(counter)
         except StopIteration:
-            return next(iter(idx), 0)
+            try:
+                return next(idx.__iter__())
+            except StopIteration:
+                return 0
 
 
 import sys
 if not sys.version_info[0] == 2 and sys.version_info[1] < 7:
     from collections import Counter  # @UnresolvedImport
 else:
-    import heapq
+    from heapq import nlargest
     from operator import itemgetter
 
     class Counter(dict):
@@ -108,7 +116,7 @@ else:
             super(Counter, self).__init__()
             self.update(iterable, **kw)
 
-        def most_common(self, n=None):
+        def most_common(self, n=None, nl=nlargest, i=items, g=itemgetter):
             '''
             list the n most common elements and their counts from the most
             common to the least
@@ -117,8 +125,8 @@ else:
             '''
             # Emulate Bag.sortedByCount from Smalltalk
             if n is None:
-                return sorted(items(self), key=itemgetter(1), reverse=True)
-            return heapq.nlargest(n, self.iteritems(), key=itemgetter(1))
+                return sorted(i(self), key=g(1), reverse=True)
+            return nl(n, i(self), key=g(1))
 
         # Override dict methods where necessary
 
@@ -177,8 +185,8 @@ except ImportError:
             # reuses stored hash values if possible
             return len(set().union(*self.maps))
 
-        def __iter__(self, set=set, iter=iter):
-            return iter(set().union(*self.maps))
+        def __iter__(self, set=set):
+            return set().union(*self.maps).__iter__()
 
         def __contains__(self, key, any=any):
             return any(key in m for m in self.maps)

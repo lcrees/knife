@@ -7,7 +7,6 @@ from collections import deque
 from fnmatch import translate
 from re import compile as rcompile
 
-from stuf.six import map
 from parse import compile as pcompile
 
 from knife._compat import memoize
@@ -64,15 +63,15 @@ class _KnifeMixin(local):
             type = 'regex'
         return r(pat, flag).search if type == 'regex' else p(pat).search
 
-    def _iter(self, call, iter_=iter, _imap=map):
+    def _iter(self, call):
         # extend fetch with incoming things if knifing them as one thing
-        return self._xtend(iter_(call(self._iterable)))
+        return self._xtend(call(self._iterable).__iter__())
 
-    def _one(self, call, _imap=map):
+    def _one(self, call):
         # append incoming things to fetch if knifing them as one thing
         return self._append(call(self._iterable))
 
-    def _many(self, call, _imap=map):
+    def _many(self, call):
         # extend fetch with incoming things if knifing them as one thing
         return self._xtend(call(self._iterable))
 
