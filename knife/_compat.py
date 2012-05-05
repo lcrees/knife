@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 '''knife support'''
 
-from itertools import chain
 from pickletools import genops
 from functools import update_wrapper
 try:
@@ -20,30 +19,31 @@ except ImportError:
     from sys import intern
 
 from stuf.utils import recursive_repr
-from stuf.six import items, map as imap, b, function_code
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
-from stuf.six import OrderedDict, items, map as imap, b
+from stuf.six import OrderedDict, items, map as imap, b, function_code
 
 
 def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
-    f.cache = {}
+    f.cache = {}.setdefault
     if function_code(f).co_argcount == 1:
         def memoize_(arg):
-            return f.cache.setdefault(i(r(arg)), f(arg))
+            return f.cache(i(r(arg)), f(arg))
     else:
         def memoize_(*args, **kw): #@IgnorePep8
-            return f.cache.setdefault(
+            return f.setdefault(
                 i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
             )
     return uw(f, memoize_)
 
 
-ichain = chain.from_iterable
 loads = memoize(lambda x: ld(x))
 
 
 @memoize
-def optimize(obj, d=dumps, p=HIGHEST_PROTOCOL, s=set, g=genops, b_=b, n=next):
+def optimize(
+    obj, d=dumps, p=HIGHEST_PROTOCOL, s=set, g=genops, b_=b, n=next,
+    S=StopIteration
+):
     '''
     Optimize a pickle string by removing unused PUT opcodes.
 
@@ -68,7 +68,7 @@ def optimize(obj, d=dumps, p=HIGHEST_PROTOCOL, s=set, g=genops, b_=b, n=next):
                     prevarg, prevpos = arg, pos
                 elif 'GET' in opcode.name:
                     gadd(arg)
-        except StopIteration:
+        except S:
             pass
     # Copy the pickle string except for PUTS without a corresponding GET
     def iterthingy(iterthing=iterthing(), this=this, n=n):  # @IgnorePep8
@@ -78,22 +78,22 @@ def optimize(obj, d=dumps, p=HIGHEST_PROTOCOL, s=set, g=genops, b_=b, n=next):
                 arg, start, stop = n(iterthing)
                 yield this[i:stop if (arg in gets) else start]
                 i = stop
-        except StopIteration:
+        except S:
             pass
         yield this[i:]
     return b_('').join(i for i in iterthingy())
 
 
-def count(iterable, enumerate=enumerate, next=next):
+def count(iterable, enumerate=enumerate, next=next, S=StopIteration):
     counter = enumerate(iterable, 1)
     idx = ()
     while 1:
         try:
             idx = next(counter)
-        except StopIteration:
+        except S:
             try:
                 return next(idx.__iter__())
-            except StopIteration:
+            except S:
                 return 0
 
 

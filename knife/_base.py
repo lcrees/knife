@@ -59,8 +59,7 @@ class _KnifeMixin(local):
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
         # compile glob pattern into regex
         if type == 'glob':
-            pat = t(pat)
-            type = 'regex'
+            return r(t(pat), flag).search
         return r(pat, flag).search if type == 'regex' else p(pat).search
 
     def _iter(self, call):
