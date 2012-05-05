@@ -147,11 +147,6 @@ contrived example:
   1000
   >>> one.original().minmax().pipe(two).merge().back().sum().get()
   1002
-  
-What's new in 0.5.3
-===================
-
-* speedups
 
 What's new in 0.5.2
 ===================
