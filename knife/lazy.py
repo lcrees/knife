@@ -6,16 +6,16 @@ from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CmpMixin, OrderMixin)
 
-from knife._lazy import _OutMixin
-from knife._base import SLOTS, _KnifeMixin
-from knife._mixins import (
-    _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
-    _MathMixin, _CmpMixin, _OrderMixin)
+from knife import _lazy
+from knife import _base
+from knife import _mixins
 
 
 class lazyknife(
-    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin,
-    _MathMixin, _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
+    _lazy._OutMixin, _base._KnifeMixin, _mixins._CmpMixin,
+    _mixins._FilterMixin, _mixins._MapMixin, _mixins._MathMixin,
+    _mixins._OrderMixin, _mixins._ReduceMixin, _mixins._SliceMixin,
+    _mixins._RepeatMixin,
     OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
     MathMixin, SliceMixin, CmpMixin,
 ):
@@ -30,10 +30,12 @@ class lazyknife(
     >>> from knife import __
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
+class cmpknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, CmpMixin, _mixins._CmpMixin,
+):
 
     '''
     Lazier evaluated comparing knife. Provides comparison operations for
@@ -42,10 +44,13 @@ class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
     >>> from knife.lazy import cmpknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
+class filterknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, FilterMixin,
+    _mixins._FilterMixin,
+):
 
     '''
     Lazier evaluated filtering knife. Provides filtering operations for
@@ -54,10 +59,12 @@ class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
     >>> from knife.lazy import filterknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
+class mapknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, MapMixin, _mixins._MapMixin
+):
 
     '''
     Lazier evaluated mapping knife. Provides `mapping <http://docs.python.org
@@ -66,10 +73,13 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
     >>> from knife.lazy import mapknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
+class mathknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, MathMixin,
+    _mixins._MathMixin,
+):
 
     '''
     Lazier evaluated mathing knife. Provides numeric and statistical
@@ -78,10 +88,13 @@ class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
     >>> from knife.lazy import mathknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
+class orderknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, OrderMixin,
+    _mixins._OrderMixin,
+):
 
     '''
     Lazier evaluated ordering knife. Provides sorting and grouping operations
@@ -90,10 +103,13 @@ class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
     >>> from knife.lazy import orderknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
+class reduceknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, ReduceMixin,
+    _mixins._ReduceMixin,
+):
 
     '''
     Lazier evaluated reducing knife. Provides `reducing <http://docs.python.
@@ -102,10 +118,13 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
     >>> from knife.lazy import reduceknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
+class repeatknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, RepeatMixin,
+    _mixins._RepeatMixin,
+):
 
     '''
     Lazier evaluated repeating knife. Provides repetition operations for
@@ -114,10 +133,13 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
     >>> from knife.lazy import repeatknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS
 
 
-class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
+class sliceknife(
+    _lazy._OutMixin, _base._KnifeMixin, OutMixin, SliceMixin,
+    _mixins._SliceMixin
+):
 
     '''
     Lazier evaluated slicing knife. Provides `slicing <http://docs.python.
@@ -126,4 +148,4 @@ class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
     >>> from knife.lazy import sliceknife
     '''
 
-    __slots__ = SLOTS
+    __slots__ = _base.SLOTS

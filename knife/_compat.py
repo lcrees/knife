@@ -4,25 +4,27 @@
 from itertools import chain
 from pickletools import genops
 from functools import update_wrapper
+from collections import MutableMapping, namedtuple
 try:
+    from __builtin__ import intern
     from cPickle import loads as ld, dumps, HIGHEST_PROTOCOL
 except ImportError:
+    from sys import intern
     from pickle import loads as ld, dumps, HIGHEST_PROTOCOL  # @UnusedImport
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest  # @UnusedImport
-from collections import MutableMapping
-
-try:
-    from __builtin__ import intern
-except ImportError:
-    from sys import intern
 
 from stuf.utils import recursive_repr
-from stuf.six import items, map as imap, b, function_code
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
-from stuf.six import OrderedDict, items, map as imap, b
+from stuf.six import OrderedDict, items, map as imap, b, function_code
+
+
+Count = namedtuple('Count', 'least most overall')
+MinMax = namedtuple('MinMax', 'min max')
+TrueFalse = namedtuple('TrueFalse', 'true false')
+GroupBy = namedtuple('Group', 'keys groups')
 
 
 def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
@@ -36,7 +38,6 @@ def memoize(f, i=intern, z=items, r=repr, uw=update_wrapper):
                 i(r(args, z(kw)) if kw else r(args)), f(*args, **kw)
             )
     return uw(f, memoize_)
-
 
 ichain = chain.from_iterable
 loads = memoize(lambda x: ld(x))

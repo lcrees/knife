@@ -726,7 +726,8 @@ class MapMixin(local):
         .. seealso::
 
           :func:`itertools.imap`
-            function in Python standard library (replaces :func:`map` in Python 3)
+            function in Python standard library (replaces :func:`map` in
+            Python 3)
 
           `map <http://documentcloud.github.com/underscore/#map>`_
             function in Underscore.js
@@ -876,10 +877,12 @@ class FilterMixin(local):
         .. seealso::
 
           :func:`itertools.ifilter`
-            function in Python standard library (replaces :func:`filter` in Python 3)
+            function in Python standard library (replaces :func:`filter` in
+            Python 3)
 
           :func:`itertools.ifilterfalse`
-            function in Python standard library (:func:`filterfalse` in Python 3)
+            function in Python standard library (:func:`filterfalse` in
+            Python 3)
 
           `filter <http://documentcloud.github.com/underscore/#filter>`_
             function in Underscore.js
@@ -1117,7 +1120,8 @@ class ReduceMixin(local):
         .. seealso::
 
           :func:`itertools.izip`
-            function in Python standard library (replaces :func:`zip` in Python 3)
+            function in Python standard library (replaces :func:`zip` in
+            Python 3)
 
           `zip <http://documentcloud.github.com/underscore/#zip>`_
             function in Underscore.js

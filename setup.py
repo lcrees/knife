@@ -9,13 +9,25 @@ try:
 except ImportError:
     from distutils.core import setup
 
+#from Cython.Build import cythonize
+from Cython.Distutils import build_ext, Extension
+
+ext_modules = [
+#    Extension('knife._base', ['knife/_base.pyx']),
+    Extension('knife._mixins', ['knife/_mixins.pyx']),
+#    Extension('knife._active', ['knife/_active.pyx']),
+#    Extension('knife._lazy', ['knife/_lazy.pyx']),
+]
+
 install_requires = list(l.strip() for l in open(
     join(getcwd(), 'requirements.txt'), 'r',
 ).readlines())
 
 setup(
     name='knife',
-    version='0.5.3',
+    cmdclass={'build_ext': build_ext},
+    ext_modules=ext_modules,
+    version='0.5.4',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
