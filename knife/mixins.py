@@ -40,7 +40,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._one(self._all(self._test))
+            return self._all()
 
     def any(self):
         '''
@@ -71,7 +71,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._one(self._any(self._test))
+            return self._any()
 
     def difference(self, symmetric=False):
         '''
@@ -110,7 +110,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._difference(symmetric))
+            return self._difference(symmetric)
 
     def intersection(self):
         '''
@@ -139,7 +139,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._intersection)
+            return self._intersection()
 
     def union(self):
         '''
@@ -167,7 +167,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._union)
+            return self._union()
 
     def unique(self):
         '''
@@ -194,7 +194,7 @@ class CmpMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._unique(self._identity))
+            return self._unique()
 
 
 class MathMixin(local):
@@ -214,7 +214,7 @@ class MathMixin(local):
         31.666666666666668
         '''
         with self._chain:
-            return self._iter(self._average)
+            return self._average()
 
     def count(self):
         '''
@@ -238,7 +238,7 @@ class MathMixin(local):
         [(11, 3), (3, 2), (5, 2), (7, 1)]
         '''
         with self._chain:
-            return self._iter(self._count)
+            return self._count()
 
     def max(self):
         '''
@@ -277,7 +277,7 @@ class MathMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._max(self._identity))
+            return self._max()
 
     def median(self):
         '''
@@ -293,7 +293,7 @@ class MathMixin(local):
         4.5
         '''
         with self._chain:
-            return self._iter(self._median)
+            return self._median()
 
     def min(self):
         '''
@@ -326,7 +326,7 @@ class MathMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._min(self._identity))
+            return self._min()
 
     def minmax(self):
         '''
@@ -344,7 +344,7 @@ class MathMixin(local):
         4
         '''
         with self._chain:
-            return self._iter(self._minmax)
+            return self._minmax()
 
     def range(self):
         '''
@@ -359,7 +359,7 @@ class MathMixin(local):
         8
         '''
         with self._chain:
-            return self._iter(self._range)
+            return self._range()
 
     def sum(self, start=0, precision=False):
         '''
@@ -389,7 +389,7 @@ class MathMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._iter(self._sum(start, precision))
+            return self._sum(start, precision)
 
 
 class OrderMixin(local):
@@ -429,7 +429,7 @@ class OrderMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._group(self._identity))
+            return self._group()
 
     def reverse(self):
         '''
@@ -449,7 +449,7 @@ class OrderMixin(local):
             function in Underscore.lua
         '''
         with self._chain:
-            return self._many(self._reverse)
+            return self._reverse()
 
     def shuffle(self):
         '''
@@ -472,7 +472,7 @@ class OrderMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._shuffle)
+            return self._shuffle()
 
     def sort(self):
         '''
@@ -507,7 +507,7 @@ class OrderMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._sort(self._identity))
+            return self._sort()
 
 
 class RepeatMixin(local):
@@ -533,7 +533,7 @@ class RepeatMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._many(self._combinations(n))
+            return self._combinate(n)
 
     def copy(self):
         '''
@@ -550,7 +550,7 @@ class RepeatMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._many(self._copy)
+            return self._copy()
 
     def permutate(self, n):
         '''
@@ -570,7 +570,7 @@ class RepeatMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._many(self._permutations(n))
+            return self._permute(n)
 
     def repeat(self, n=None, call=False):
         '''
@@ -606,7 +606,7 @@ class RepeatMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._repeat(n, call, self._identity))
+            return self._repeat(n, call)
 
 
 class MapMixin(local):
@@ -641,7 +641,7 @@ class MapMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._many(self._argmap(self._worker, merge, self._args))
+            return self._argmap(merge)
 
     def invoke(self, name):
         '''
@@ -679,7 +679,7 @@ class MapMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._invoke(name, (self._args, self._kw)))
+            return self._invoke(name)
 
     def kwargmap(self, merge=False):
         '''
@@ -710,9 +710,7 @@ class MapMixin(local):
         [270, 330, 390]
         '''
         with self._chain:
-            return self._many(self._kwargmap(
-                self._worker, merge, self._args, self._kw,
-            ))
+            return self._kwargmap(merge)
 
     def map(self):
         '''
@@ -726,7 +724,8 @@ class MapMixin(local):
         .. seealso::
 
           :func:`itertools.imap`
-            function in Python standard library (replaces :func:`map` in Python 3)
+            function in Python standard library (replaces :func:`map` in
+            Python 3)
 
           `map <http://documentcloud.github.com/underscore/#map>`_
             function in Underscore.js
@@ -741,7 +740,7 @@ class MapMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._map(self._worker))
+            return self._map()
 
     def mapping(self, keys=False, values=False):
         '''
@@ -793,7 +792,7 @@ class MapMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._mapping(self._identity, keys, values))
+            return self._mapping(keys, values)
 
 
 class FilterMixin(local):
@@ -834,7 +833,7 @@ class FilterMixin(local):
             function in Underscore.js
         '''
         with self._chain:
-            return self._iter(self._attributes(names))
+            return self._attrs(names)
 
     def duality(self):
         '''
@@ -852,7 +851,7 @@ class FilterMixin(local):
         (1, 3, 5)
         '''
         with self._chain:
-            return self._iter(self._duality(self._test))
+            return self._duality()
 
     def filter(self, invert=False):
         '''
@@ -876,10 +875,12 @@ class FilterMixin(local):
         .. seealso::
 
           :func:`itertools.ifilter`
-            function in Python standard library (replaces :func:`filter` in Python 3)
+            function in Python standard library (replaces :func:`filter` in
+            Python 3)
 
           :func:`itertools.ifilterfalse`
-            function in Python standard library (:func:`filterfalse` in Python 3)
+            function in Python standard library (:func:`filterfalse` in
+            Python 3)
 
           `filter <http://documentcloud.github.com/underscore/#filter>`_
             function in Underscore.js
@@ -906,7 +907,7 @@ class FilterMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._filter(self._test, invert))
+            return self._filter(invert)
 
     def items(self, *keys):
         '''
@@ -945,7 +946,7 @@ class FilterMixin(local):
             function in Underscore.js
         '''
         with self._chain:
-            return self._iter(self._items(keys))
+            return self._items(keys)
 
     def traverse(self, invert=False):
         '''
@@ -989,11 +990,7 @@ class FilterMixin(local):
         OrderedDict([('age', 969), ('classname', 'stooge4')]))]
         '''
         with self._chain:
-            if self._worker is None:
-                test = lambda x: not x[0].startswith('__')
-            else:
-                test = self._worker
-            return self._many(self._traverse(test, invert))
+            return self._traverse(invert)
 
 
 class ReduceMixin(local):
@@ -1025,7 +1022,7 @@ class ReduceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._flatten)
+            return self._flatten()
 
     def merge(self):
         '''
@@ -1043,7 +1040,7 @@ class ReduceMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._many(self._merge)
+            return self._merge()
 
     def reduce(self, initial=None, reverse=False):
         '''
@@ -1100,7 +1097,7 @@ class ReduceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._one(self._reduce(self._worker, initial, reverse))
+            return self._reduce(initial, reverse)
 
     def zip(self):
         '''
@@ -1117,7 +1114,8 @@ class ReduceMixin(local):
         .. seealso::
 
           :func:`itertools.izip`
-            function in Python standard library (replaces :func:`zip` in Python 3)
+            function in Python standard library (replaces :func:`zip` in
+            Python 3)
 
           `zip <http://documentcloud.github.com/underscore/#zip>`_
             function in Underscore.js
@@ -1129,7 +1127,7 @@ class ReduceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._zip)
+            return self._zip()
 
 
 class SliceMixin(local):
@@ -1160,7 +1158,7 @@ class SliceMixin(local):
             Itertools Recipes
         '''
         with self._chain:
-            return self._one(self._at(n, default))
+            return self._at(n, default)
 
     def choice(self):
         '''
@@ -1177,7 +1175,7 @@ class SliceMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._iter(self._choice())
+            return self._choice()
 
     def dice(self, n, fill=None):
         '''
@@ -1199,7 +1197,7 @@ class SliceMixin(local):
             Itertools Recipes
         '''
         with self._chain:
-            return self._many(self._dice(n, fill))
+            return self._dice(n, fill)
 
     def first(self, n=0):
         '''
@@ -1232,7 +1230,7 @@ class SliceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._first(n))
+            return self._first(n)
 
     def initial(self):
         '''
@@ -1259,7 +1257,7 @@ class SliceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._initial)
+            return self._initial()
 
     def last(self, n=0):
         '''
@@ -1292,7 +1290,7 @@ class SliceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._iter(self._last(n))
+            return self._last(n)
 
     def rest(self):
         '''
@@ -1319,7 +1317,7 @@ class SliceMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._many(self._rest)
+            return self._rest()
 
     def sample(self, n):
         '''
@@ -1338,7 +1336,7 @@ class SliceMixin(local):
             function in Python standard library
         '''
         with self._chain:
-            return self._iter(self._sample(n))
+            return self._sample(n)
 
     def slice(self, start, stop=False, step=False):
         '''
@@ -1371,4 +1369,4 @@ class SliceMixin(local):
             function in Underscore.lua
         '''
         with self._chain:
-            return self._many(self._slice(start, stop, step))
+            return self._slice(start, stop, step)

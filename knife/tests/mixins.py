@@ -247,7 +247,7 @@ class FilterMixin(object):
             )],
         )
 
-    def test_attributes(self):
+    def test_attrs(self):
         from stuf import stuf
         stooge = [
             stuf(name='moe', age=40),

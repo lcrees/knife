@@ -62,18 +62,6 @@ class _KnifeMixin(local):
             return r(t(pat), flag).search
         return r(pat, flag).search if type == 'regex' else p(pat).search
 
-    def _iter(self, call):
-        # extend fetch with incoming things if knifing them as one thing
-        return self._xtend(call(self._iterable).__iter__())
-
-    def _one(self, call):
-        # append incoming things to fetch if knifing them as one thing
-        return self._append(call(self._iterable))
-
-    def _many(self, call):
-        # extend fetch with incoming things if knifing them as one thing
-        return self._xtend(call(self._iterable))
-
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 
     def _clearsp(self):
