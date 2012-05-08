@@ -18,7 +18,7 @@ try:
 except ImportError:
     from sys import intern
 
-from stuf.utils import recursive_repr
+from stuf.deep import recursive_repr
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport @UnusedImport @IgnorePep8
 from stuf.six import OrderedDict, items, map as imap, b, function_code
 

@@ -12,8 +12,8 @@ from parse import compile as pcompile
 from knife._compat import memoize
 
 SLOTS = [
-     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each', '_kw',
-     '_history', '_worker', '_wrapper', '_args', '_pipe',
+     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each',
+     '_kw', '_history', '_worker', '_wrapper', '_args', '_pipe',
 ]
 
 

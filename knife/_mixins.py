@@ -12,9 +12,9 @@ from operator import attrgetter, itemgetter, methodcaller, truediv
 from itertools import (
     chain, combinations, groupby, islice, repeat, permutations, starmap, tee)
 
-from stuf.utils import deferfunc, deferiter, selfname
-from stuf.six import (
-    OrderedDict, filter, items, keys, map, strings, values)
+from stuf.deep import selfname
+from stuf.iterable import deferfunc, deferiter
+from stuf.six import OrderedDict, filter, items, keys, map, strings, values
 
 from knife._compat import (
     Counter, ChainMap, count, filterfalse, memoize, zip_longest)

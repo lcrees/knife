@@ -5,7 +5,7 @@ from threading import local
 from collections import deque
 from contextlib import contextmanager
 
-from stuf.utils import clsname
+from stuf.deep import clsname
 
 from knife._compat import loads, optimize
 
