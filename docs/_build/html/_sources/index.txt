@@ -72,7 +72,7 @@ Slightly more *knife*
 =====================
 
 :mod:`knife` has 40 plus :term:`method`\s that can be `chained <https://en.wikipedia.org/
-wiki/Fluent_interface>`_ into pipelines.
+wiki/Fluent_interface>`_ into pipelines...
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -80,7 +80,7 @@ contrived example:
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
-Or used :term:`object`\-oriented style.
+...or used :term:`object`\-oriented style.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^

@@ -180,7 +180,7 @@ class CmpMixin(local):
         [1, 2, 3, 4]
         >>> # using worker as key function
         >>> __(1, 2, 1, 3, 1, 4).worker(round).unique().get()
-        [1, 2, 3, 4]
+        [1.0, 2.0, 3.0, 4.0]
 
         .. seealso::
 
