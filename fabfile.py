@@ -27,7 +27,8 @@ def docs():
 def update_docs():
     docs()
     with settings(warn_only=True):
-        local('hg ci -m docmerge; hg push')
+        local('hg ci -m docmerge; hg push ssh://bitbucket.org/lcrees/knife')
+        local('hg push github')
     local('./setup.py upload_sphinx')
 
 
