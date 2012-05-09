@@ -1,4 +1,4 @@
-Results of doctest builder run on 2012-05-09 13:07:53
+Results of doctest builder run on 2012-05-09 13:12:59
 =====================================================
 
 Document: index
