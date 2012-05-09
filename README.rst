@@ -64,7 +64,7 @@ Slightly more *knife*
 =====================
 
 `knife` has 40 plus methods that can be `chained <https://en.wikipedia.org/
-wiki/Fluent_interface>`_ into pipelines.
+wiki/Fluent_interface>`_ into pipelines...
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
@@ -72,7 +72,7 @@ contrived example:
   >>> __(5, 4, 3, 2, 1).initial().rest().slice(1, 2).last().get()
   3
 
-Or used object-oriented style.
+...or used object-oriented style.
 
 contrived example:
 ^^^^^^^^^^^^^^^^^^
