@@ -41,7 +41,7 @@ def update_docs():
     docs()
     with settings(warn_only=True):
         local('hg ci -m docmerge')
-        local('hg push ssh://bitbucket.org/lcrees/knife')
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
         local('hg push github')
     local(sphinxup)
 
