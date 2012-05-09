@@ -10,7 +10,7 @@ except ImportError:
     from distutils.core import setup
 
 install_requires = list(l.strip() for l in open(
-    join(getcwd(), 'requirements.txt'), 'r',
+    join(getcwd(), 'pips/requirements.txt'), 'r',
 ).readlines())
 
 setup(
