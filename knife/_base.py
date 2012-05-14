@@ -7,9 +7,8 @@ from collections import deque
 from fnmatch import translate
 from re import compile as rcompile
 
+from stuf.utils import memoize
 from parse import compile as pcompile
-
-from knife._compat import memoize
 
 SLOTS = [
      '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each',

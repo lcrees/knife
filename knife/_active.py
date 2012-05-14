@@ -6,8 +6,7 @@ from collections import deque
 from contextlib import contextmanager
 
 from stuf.deep import clsname
-
-from knife._compat import loads, optimize
+from stuf.utils import loads, optimize
 
 
 class _ActiveMixin(local):

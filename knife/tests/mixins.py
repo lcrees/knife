@@ -210,7 +210,8 @@ class FilterMixin(object):
         )
 
     def test_traverse(self):
-        from knife._compat import ChainMap, OrderedDict
+        from stuf.six import OrderedDict
+        from stuf.collects import ChainMap
         get = self.mclass(stooges, stoog2, stoog3).traverse().get()
         self.assertEqual(
             get,

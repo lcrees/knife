@@ -6,8 +6,7 @@ from itertools import tee, chain
 from contextlib import contextmanager
 
 from stuf.deep import clsname
-
-from knife._compat import count
+from stuf.iterable import count
 
 
 class _LazyMixin(local):

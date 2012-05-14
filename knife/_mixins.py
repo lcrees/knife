@@ -13,11 +13,12 @@ from itertools import (
     chain, combinations, groupby, islice, repeat, permutations, starmap, tee)
 
 from stuf.deep import selfname
-from stuf.iterable import deferfunc, deferiter
+from stuf.utils import memoize
+from stuf.collects import Counter, ChainMap
+from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport
+from stuf.iterable import deferfunc, deferiter, count
 from stuf.six import OrderedDict, filter, items, keys, map, strings, values
 
-from knife._compat import (
-    Counter, ChainMap, count, filterfalse, memoize, zip_longest)
 
 Count = namedtuple('Count', 'least most overall')
 GroupBy = namedtuple('Group', 'keys groups')
