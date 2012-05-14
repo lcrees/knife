@@ -1,5 +1,4 @@
-stuf>=0.8.16
-parse>=1.4.1
+include requirements.txt
 tox
 sphinx
 sphinxcontrib.spelling

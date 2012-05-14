@@ -18,7 +18,7 @@ setup(
     version='0.5.4',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
-    long_description=open(join(getcwd(), '../README.rst'), 'r').read(),
+    long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='pipeline filtering chaining iterator functional fluent chaining',
     license='BSD',
     author='L. C. Rees',

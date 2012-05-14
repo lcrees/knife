@@ -1,6 +1,4 @@
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/constants.html to http://docs.python.org/library/constants.html
-acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
@@ -14,10 +12,11 @@ acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/constants.html 
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
+acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
@@ -79,6 +78,7 @@ acmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html 
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+acmpknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
 acmpknife.rst:6: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 acmpknife.rst:6: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 acmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -128,8 +128,8 @@ activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.htm
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:23: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-activeknife.rst:27: [redirected] http://docs.python.org/2.7/library/operator.html to http://docs.python.org/library/operator.html
 activeknife.rst:10: [redirected] http://docs.python.org/2.7/library/random.html to http://docs.python.org/library/random.html
+activeknife.rst:27: [redirected] http://docs.python.org/2.7/library/operator.html to http://docs.python.org/library/operator.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -157,6 +157,7 @@ activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:5: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+activeknife.rst:14: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:20: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -199,7 +200,7 @@ activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http
 activeknife.rst:11: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-activeknife.rst:14: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
+activeknife.rst:10: [redirected] http://docs.python.org/2.7/library/copy.html to http://docs.python.org/library/copy.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -219,7 +220,7 @@ activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.htm
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:5: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
-activeknife.rst:10: [redirected] http://docs.python.org/2.7/library/copy.html to http://docs.python.org/library/copy.html
+activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/collections.html to http://docs.python.org/library/collections.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 activeknife.rst:13: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
@@ -233,7 +234,6 @@ activeknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/collections.html to http://docs.python.org/library/collections.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/collections.html to http://docs.python.org/library/collections.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 activeknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -480,8 +480,8 @@ amapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http:/
 amapknife.rst:1: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 amapknife.rst:6: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 amapknife.rst:6: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
-amapknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amapknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+amapknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amapknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 amapknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -544,8 +544,8 @@ amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amathknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 amathknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 amathknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
@@ -567,9 +567,9 @@ amathknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 amathknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 aorderknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+aorderknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+aorderknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 aorderknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
-aorderknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-aorderknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 aorderknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 aorderknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 aorderknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
@@ -644,8 +644,8 @@ aorderknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http
 aorderknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 aorderknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 aorderknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
+areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -718,8 +718,8 @@ areduceknife.rst:6: [redirected] http://docs.python.org/2.7/library/functions.ht
 areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 areduceknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
-areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 areduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 areduceknife.rst:15: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
@@ -791,8 +791,8 @@ arepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to htt
 arepeatknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 arepeatknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 arepeatknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-arepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 arepeatknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
+arepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 arepeatknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 arepeatknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 arepeatknife.rst:1: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
@@ -1026,8 +1026,8 @@ lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http:/
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-lazyknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:11: [redirected] http://docs.python.org/2.7/library/itertools.html to http://docs.python.org/library/itertools.html
+lazyknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/library/collections.html to http://docs.python.org/library/collections.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -1103,8 +1103,8 @@ lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http:/
 lazyknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lazyknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
-lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
+lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lazyknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -1214,8 +1214,8 @@ lcmpknife.rst:6: [redirected] http://docs.python.org/2.7/glossary.html to http:/
 lcmpknife.rst:6: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lcmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lcmpknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
-lcmpknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 lcmpknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+lcmpknife.rst:2: [redirected] http://docs.python.org/2.7/reference/compound_stmts.html to http://docs.python.org/reference/compound_stmts.html
 lfilterknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lfilterknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lfilterknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -1257,8 +1257,8 @@ lfilterknife.rst:6: [redirected] http://docs.python.org/2.7/glossary.html to htt
 lfilterknife.rst:30: [redirected] http://docs.python.org/2.7/library/operator.html to http://docs.python.org/library/operator.html
 lfilterknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lfilterknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-lfilterknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lfilterknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+lfilterknife.rst:7: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lfilterknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lfilterknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lfilterknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -1337,9 +1337,9 @@ lmapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http:/
 lmapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lmapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lmapknife.rst:6: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-lmapknife.rst:6: [redirected] http://docs.python.org/2.7/library/constants.html to http://docs.python.org/library/constants.html
 lmapknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lmapknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
+lmapknife.rst:6: [redirected] http://docs.python.org/2.7/library/constants.html to http://docs.python.org/library/constants.html
 lmapknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lmapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lmapknife.rst:1: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
@@ -1614,9 +1614,9 @@ lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to htt
 lreduceknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-lreduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lreduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
 lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
+lreduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lreduceknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lreduceknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
@@ -1697,8 +1697,8 @@ lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to htt
 lrepeatknife.rst:5: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
 lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
-lrepeatknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lrepeatknife.rst:1: [redirected] http://docs.python.org/2.7/library/stdtypes.html to http://docs.python.org/library/stdtypes.html
+lrepeatknife.rst:1: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/library/functions.html to http://docs.python.org/library/functions.html
 lrepeatknife.rst:2: [redirected] http://docs.python.org/2.7/glossary.html to http://docs.python.org/glossary.html
