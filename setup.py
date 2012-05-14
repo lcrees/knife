@@ -10,12 +10,12 @@ except ImportError:
     from distutils.core import setup
 
 install_requires = list(l.strip() for l in open(
-    join(getcwd(), 'requirements.txt'), 'r',
+    join(getcwd(), 'depends/requirements.txt'), 'r',
 ).readlines())
 
 setup(
     name='knife',
-    version='0.5.3',
+    version='0.5.4',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), '../README.rst'), 'r').read(),

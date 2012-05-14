@@ -1,3 +1,8 @@
+What's new in 0.5.4
+===================
+
+* remove compatibility imports to separate packages
+
 What's new in 0.5.3
 ===================
 
