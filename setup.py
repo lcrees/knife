@@ -4,14 +4,9 @@
 
 from os import getcwd
 from os.path import join
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
 
-install_requires = list(l.strip() for l in open(
-    join(getcwd(), 'depends/requirements.txt'), 'r',
-).readlines())
+from setuptools import setup, find_packages
+
 
 setup(
     name='knife',
@@ -24,10 +19,12 @@ setup(
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
     url='https://bitbucket.org/lcrees/knife',
-    packages=['knife'],
+    packages=find_packages(),
     test_suite='knife.tests',
     zip_safe=False,
-    install_requires=install_requires,
+    install_requires=list(l.strip() for l in open(
+        join(getcwd(), 'reqs/requires.txt'), 'r',
+    ).readlines()),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
