@@ -14,7 +14,7 @@ class TestActive(
 ):
 
     def setUp(self):
-        from knife.active import activeknife
+        from knife import activeknife
         self.mclass = activeknife
         self.pipe = activeknife
 

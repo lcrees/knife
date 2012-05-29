@@ -14,7 +14,7 @@ class TestLazy(
 ):
 
     def setUp(self):
-        from knife.lazy import lazyknife
+        from knife import lazyknife
         self.mclass = lazyknife
         self.pipe = lazyknife
 
