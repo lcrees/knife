@@ -4,451 +4,436 @@
 from math import fsum
 from copy import deepcopy
 from threading import local
-from inspect import isclass, getmro
-from functools import reduce, partial
-from random import shuffle, randrange
+from functools import reduce
+from inspect import getmro, isclass
+from random import randrange, shuffle
 from collections import deque, namedtuple
-from operator import methodcaller, itemgetter, attrgetter, truediv
+from operator import attrgetter, itemgetter, methodcaller, truediv
 from itertools import (
-    groupby, islice, tee, starmap, repeat, combinations, permutations, chain)
+    chain, combinations, groupby, islice, repeat, permutations, starmap, tee)
 
-from stuf.utils import selfname, deferiter, deferfunc
-from stuf.six import (
-    OrderedDict, strings, items, values, keys, filter, map)
-
-from knife._compat import (
-    Counter, ChainMap, ichain, filterfalse, zip_longest, count, memoize)
+from stuf.deep import selfname
+from stuf.utils import memoize
+from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport
+from stuf.iterable import deferfunc, deferiter, count
+from stuf.collects import OrderedDict, Counter, ChainMap
+from stuf.six import filter, items, keys, map, strings, values
 
 Count = namedtuple('Count', 'least most overall')
+GroupBy = namedtuple('Group', 'keys groups')
 MinMax = namedtuple('MinMax', 'min max')
 TrueFalse = namedtuple('TrueFalse', 'true false')
-GroupBy = namedtuple('Group', 'keys groups')
-slice = lambda x, y: next(islice(x, y, None))
+
+
+def slicer(x, y, iz=islice, nx=next):
+    return nx(iz(x, y, None))
 
 
 class _CmpMixin(local):
 
     '''comparing mixin'''
 
-    @staticmethod
     @memoize
-    def _all(truth, all_=all, imap_=map):
+    def _all(self, a=all, m=map):
         # invoke worker on each item to yield truth
-        return lambda x: all_(imap_(truth, x))
+        return self._append(a(m(self._test, self._iterable)))
 
-    @staticmethod
     @memoize
-    def _any(truth, any_=any, imap_=map):
+    def _any(self, a=any, m=map):
         # invoke worker on each item to yield truth
-        return lambda x: any_(imap_(truth, x))
+        return self._append(a(m(self._test, self._iterable)))
 
-    @staticmethod
     @memoize
-    def _difference(symmetric, reduce_=reduce, set_=set, partial_=partial):
+    def _difference(self, symmetric, rz=reduce, se=set):
         if symmetric:
-            test = lambda x, y: set_(x).symmetric_difference(y)
+            test = lambda x, y: se(x).symmetric_difference(y)
         else:
-            test = lambda x, y: set_(x).difference(y)
-        return partial_(reduce_, test)
+            test = lambda x, y: se(x).difference(y)
+        return self._xtend(rz(test, self._iterable))
 
-    @staticmethod
-    def _intersection(iterable, set_=set, reduce_=reduce):
-        return reduce_(lambda x, y: set_(x).intersection(y), iterable)
+    def _intersection(self, rz=reduce, se=set):
+        return self._xtend(
+            rz(lambda x, y: se(x).intersection(y), self._iterable)
+        )
 
-    @staticmethod
-    def _union(iterable, set_=set, reduce_=reduce):
-        return reduce_(lambda x, y: set_(x).union(y), iterable)
+    def _union(self, rz=reduce, se=set):
+        return self._xtend(rz(lambda x, y: se(x).union(y), self._iterable))
 
-    @staticmethod
     @memoize
-    def _unique(key, set_=set):
-        def unique(iterable):
-            seen = set_()
-            seenadd, key_ = seen.add, key
-            for element in iterable:
-                k = key_(element)
-                if k not in seen:
-                    seenadd(k)
-                    yield element
-        return unique
+    def _unique(self, nx=next, se=set, S=StopIteration):
+        def unique(key, iterable):
+            seen = se()
+            seenadd = seen.add
+            try:
+                while 1:
+                    element = key(nx(iterable))
+                    if element not in seen:
+                        yield element
+                        seenadd(element)
+            except S:
+                pass
+        return self._xtend(unique(self._identity, self._iterable))
 
 
 class _MathMixin(local):
 
     '''number mixin'''
 
-    @staticmethod
-    def _average(iterable, s=sum, t=truediv, n=count, e=tee):
-        i1, i2 = e(iterable)
-        yield t(s(i1, 0.0), n(i2))
+    def _average(self, cnt=count, su=sum, td=truediv, t=tee):
+        i1, i2 = t(self._iterable)
+        return self._append(td(su(i1, 0.0), cnt(i2)))
 
-    @staticmethod
-    def _count(iterable, counter_=Counter, count_=Count):
-        cnt = counter_(iterable)
-        commonality = cnt.most_common()
-        yield count_(
+    def _count(self, R=Counter, T=Count):
+        cnt = R(self._iterable).most_common
+        commonality = cnt()
+        return self._append(T(
             # least common
             commonality[:-2:-1][0][0],
             # most common (mode)
-            cnt.most_common(1)[0][0],
+            cnt(1)[0][0],
             # overall commonality
             commonality,
+        ))
+
+    @memoize
+    def _max(self, mx=max):
+        return self._append(mx(self._iterable, key=self._identity))
+
+    def _median(
+        self, t=tee, sd=sorted, td=truediv, i=int, cnt=count, z=slicer,
+    ):
+        i1, i2 = t(sd(self._iterable))
+        result = td(cnt(i1) - 1, 2)
+        pint = i(result)
+        if result % 2 == 0:
+            return self._append(z(i2, pint))
+        i3, i4 = t(i2)
+        return self._append(td(z(i3, pint) + z(i4, pint + 1), 2))
+
+    def _minmax(self, mn=min, mx=max, t=tee, MM=MinMax):
+        i1, i2 = t(self._iterable)
+        return self._append(MM(mn(i1), mx(i2)))
+
+    def _range(self, d=deque, sd=sorted, nx=next, t=tee):
+        i1, i2 = t(sd(self._iterable))
+        return self._append(d(i1, maxlen=1).pop() - nx(i2))
+
+    @memoize
+    def _min(self, mn=min):
+        return self._append(mn(self._iterable, key=self._identity))
+
+    @memoize
+    def _sum(self, start, floats, su=sum, fs=fsum):
+        return self._append(
+            fs(self._iterable) if floats else su(self._iterable, start)
         )
-
-    @staticmethod
-    @memoize
-    def _max(key, imax_=max):
-        def imax(iterable):
-            yield imax_(iterable, key=key)
-        return imax
-
-    @staticmethod
-    def _median(iterable, s=sorted, d=truediv, int=int, cnt=count):
-        i1, i2 = tee(s(iterable))
-        e = d(cnt(i1) - 1, 2)
-        p = int(e)
-        if e % 2 == 0:
-            yield slice(i2, p)
-        else:
-            i3, i4 = tee(i2)
-            yield truediv(slice(i3, p) + slice(i4, p + 1), 2)
-
-    @staticmethod
-    def _minmax(iterable, imin=min, imax=max, tee_=tee, minmax_=MinMax):
-        i1, i2 = tee_(iterable)
-        yield minmax_(imin(i1), imax(i2))
-
-    @staticmethod
-    def _range(iterable, d=deque, sorted_=sorted, next_=next):
-        i1, i2 = tee(sorted_(iterable))
-        yield d(i1, maxlen=1).pop() - next_(i2)
-
-    @staticmethod
-    @memoize
-    def _min(key, imin_=min):
-        def imin(iterable):
-            yield imin_(iterable, key=key)
-        return imin
-
-    @staticmethod
-    @memoize
-    def _sum(start, floats, isum_=sum, fsum_=fsum):
-        summer_ = fsum_ if floats else lambda x: isum_(x, start)
-        def isum(iterable): #@IgnorePep8
-            yield summer_(iterable)
-        return isum
 
 
 class _OrderMixin(local):
 
     '''order mixin'''
 
-    @staticmethod
     @memoize
-    def _group(key, group_=groupby, sorted_=sorted, G=GroupBy, tuple_=tuple):
-        def grouper(iterable):
-            for k, g in group_(sorted_(iterable, key=key), key):
-                yield G(k, tuple_(g))
-        return grouper
+    def _group(
+        self, G=GroupBy, S=StopIteration, g=groupby, nx=next, sd=sorted,
+        tu=tuple,
+    ):
+        def grouper(call, iterable):
+            try:
+                it = g(sd(iterable, key=call), call)
+                while 1:
+                    k, v = nx(it)
+                    yield G(k, tu(v))
+            except S:
+                pass
+        return self._xtend(grouper(self._identity, self._iterable))
 
-    @staticmethod
-    def _reverse(iterable, reversed_=reversed, tuple_=tuple):
-        for thing in reversed_(tuple_(iterable)):
-            yield thing
+    def _reverse(self, S=StopIteration, nx=next, rv=reversed, tu=tuple):
+        return self._xtend(rv(tu(self._iterable)))
 
-    @staticmethod
-    def _shuffle(iterable, list_=list, shuffle_=shuffle):
-        iterable = list_(iterable)
-        shuffle_(iterable)
-        yield iterable
+    def _shuffle(self, l=list, sf=shuffle):
+        iterable = l(self._iterable)
+        sf(iterable)
+        return self._xtend(iterable)
 
-    @staticmethod
     @memoize
-    def _sort(key, sorted_=sorted):
-        def isort(iterable):
-            yield sorted_(iterable, key=key)
-        return isort
+    def _sort(self, sd=sorted):
+        return self._xtend(sd(self._iterable, key=self._identity))
 
 
 class _RepeatMixin(local):
 
     '''repetition mixin'''
 
-    @staticmethod
-    def _combinations(n, combinations_=combinations):
-        return lambda x: combinations_(x, n)
+    def _combinate(self, n, cb=combinations):
+        return self._xtend(cb(self._iterable, n))
 
-    @staticmethod
-    def _copy(iterable, deepcopy_=deepcopy, imap_=map):
-        return imap_(deepcopy_, iterable)
+    def _copy(self, dc=deepcopy, m=map):
+        return self._xtend(m(dc, self._iterable))
 
-    @staticmethod
-    def _permutations(n, permutations_=permutations):
-        return lambda x: permutations_(x, n)
+    def _permute(self, n, pm=permutations):
+        return self._xtend(pm(self._iterable, n))
 
-    @staticmethod
     @memoize
-    def _repeat(n, use, call, r=repeat, t=tuple, s=starmap):
+    def _repeat(self, n, use, rt=repeat, sm=starmap, tu=tuple):
+        call = self._identity
         if use:
-            return lambda x: s(call, r(t(x), n))
-        return lambda x: r(t(x), n)
+            return self._xtend(sm(call, rt(tu(self._iterable), n)))
+        return self._xtend(rt(tu(self._iterable), n))
 
 
 class _MapMixin(local):
 
     '''mapping mixin'''
 
-    @staticmethod
     @memoize
-    def _argmap(call, curr, arg, starmap_=starmap, partial_=partial):
+    def _argmap(self, curr, sm=starmap):
+        call = self._worker
         if curr:
             def argmap(*args):
-                return call(*(args + arg))
-        else:
-            argmap = call
-        return partial_(starmap_, argmap)
+                return call(*(args + self._args))
+            return self._xtend(sm(argmap, self._iterable))
+        return self._xtend(sm(call, self._iterable))
 
-    @staticmethod
     @memoize
-    def _invoke(name, args, mc_=methodcaller, imap_=map, partial_=partial):
-        caller = mc_(name, *args[0], **args[1])
-        def invoke(thing): #@IgnorePep8
+    def _invoke(self, name, m=map, mc=methodcaller):
+        def invoke(thing, caller=mc(name, *self._args, **self._kw)):
             read = caller(thing)
             return thing if read is None else read
-        return partial_(imap_, invoke)
+        return self._xtend(m(invoke, self._iterable))
 
-    @staticmethod
     @memoize
-    def _kwargmap(call, curr, arg, kw, starmap_=starmap, partial_=partial):
+    def _kwargmap(self, curr, sm=starmap):
+        call = self._worker
         if curr:
             def kwargmap(*params):
                 args, kwargs = params
-                kwargs.update(kw)
-                return call(*(args + arg), **kwargs)
+                kwargs.update(self._kw)
+                return call(*(args + self._args), **kwargs)
         else:
             kwargmap = lambda x, y: call(*x, **y)
-        return partial_(starmap_, kwargmap)
+        return self._xtend(sm(kwargmap, self._iterable))
 
-    @staticmethod
     @memoize
-    def _map(call, imap_=map, partial_=partial):
-        return partial_(imap_, call)
+    def _map(self, m=map):
+        return self._xtend(m(self._worker, self._iterable))
 
-    @staticmethod
     @memoize
-    def _mapping(call, key, value, k=keys, i=items, v=values, c=ichain, m=map):
+    def _mapping(
+        self, key, value, ky=keys, it=items, vl=values, sm=starmap,
+        m=map, ci=chain.from_iterable,
+    ):
+        call = self._identity
         if key:
-            return lambda x: m(call, c(m(k, x)))
+            return self._xtend(m(call, ci(m(ky, self._iterable))))
         elif value:
-            return lambda x: m(call, c(m(v, x)))
-        return lambda x: starmap(call, c(m(i, x)))
+            return self._xtend(m(call, ci(m(vl, self._iterable))))
+        return self._xtend(sm(call, ci(m(it, self._iterable))))
 
 
 class _FilterMixin(local):
 
     '''filtering mixin'''
 
-    @staticmethod
     @memoize
-    def _attributes(names, _attrgetter=attrgetter):
-        attrfind = _attrgetter(*names)
-        def attrs(iterable, get=attrfind): #@IgnorePep8
-            AttrErr_ = AttributeError
-            for thing in iterable:
-                try:
-                    yield get(thing)
-                except AttrErr_:
-                    pass
-        return attrs
+    def _attrs(
+        self, names, A=AttributeError, S=StopIteration, ag=attrgetter, nx=next
+    ):
+        def attrs(iterable, get=ag(*names)):
+            try:
+                while 1:
+                    try:
+                        yield get(nx(iterable))
+                    except A:
+                        pass
+            except S:
+                pass
+        return self._xtend(attrs(self._iterable))
 
-    @staticmethod
     @memoize
-    def _duality(true, f=filter, ff=filterfalse, u=tuple, t=tee, b=TrueFalse):
-        def duality(iterable): #@IgnorePep8
-            truth_, false_ = t(iterable)
-            yield b(u(f(true, truth_)), u(ff(true, false_)))
-        return duality
+    def _duality(
+        self, TF=TrueFalse, f=filter, ff=filterfalse, tu=tuple, t=tee,
+    ):
+        truth, false = t(self._iterable)
+        call = self._test
+        return self._append(TF(tu(f(call, truth)), tu(ff(call, false))))
 
-    @staticmethod
     @memoize
-    def _filter(true, false, f_=filter, ff_=filterfalse, partial_=partial):
-        return partial_(ff_, true) if false else partial_(f_, true)
+    def _filter(self, false, f=filter, ff=filterfalse):
+        return self._xtend((ff if false else f)(self._worker, self._iterable))
 
-    @staticmethod
     @memoize
-    def _items(key, itemgetter_=itemgetter):
-        itemfind = itemgetter_(*key)
-        def itemz(iterable, get=itemfind): #@IgnorePep8
-            IndexErr_, KeyErr_, TypeErr_ = IndexError, KeyError, TypeError
-            for thing in iterable:
-                try:
-                    yield get(thing)
-                except (IndexErr_, KeyErr_, TypeErr_):
-                    pass
-        return itemz
+    def _items(
+        self, key, ig=itemgetter, I=IndexError, K=KeyError, T=TypeError,
+        nx=next, S=StopIteration,
+    ):
+        def itemz(iterable, get=ig(*key)):
+            try:
+                while 1:
+                    try:
+                        yield get(nx(iterable))
+                    except (I, K, T):
+                        pass
+            except S:
+                pass
+        return self._xtend(itemz(self._iterable))
 
-    @staticmethod
     @memoize
-    def _traverse(test, invert, odict_=OrderedDict, chain_=chain, vars_=vars):
-        ifilter = filterfalse if invert else filter
-        def members(iterable, beenthere=None): #@IgnorePep8
-            isclass_ = isclass
-            getattr_ = getattr
-            o_ = odict_
-            members_ = members
-            ifilter_ = ifilter
-            varz_ = vars_
+    def _traverse(
+        self, invert, CM=ChainMap, OD=OrderedDict, S=StopIteration, cn=chain,
+        d=dir, f=filter, ff=filterfalse, ga=getattr, gm=getmro, ic=isclass,
+        ii=isinstance, nx=next, se=set, sn=selfname, vz=vars, it=iter,
+    ):
+        if self._worker is None:
+            test = lambda x: not x[0].startswith('__')
+        else:
+            test = self._worker
+        ifilter = ff if invert else f
+        def members(iterable, beenthere=None):  # @IgnorePep8
+            mro = gm(iterable)
+            names = it(d(iterable))
             if beenthere is None:
-                beenthere = set()
-            test_ = test
-            mro = getmro(iterable)
-            names = dir(iterable)
-            adder_ = beenthere.add
-            for name in names:
-                # yes, it's really supposed to be a tuple
-                for base in chain_([iterable], mro):
-                    var = varz_(base)
-                    if name in var:
-                        obj = var[name]
-                        break
-                else:
-                    obj = getattr_(iterable, name)
-                if obj in beenthere:
-                    continue
-                else:
-                    adder_(obj)
-                if isclass_(obj):
-                    yield name, o_((k, v) for k, v in ifilter_(
-                        test_, members_(obj, beenthere),
-                    ))
-                else:
-                    yield name, obj
-        def traverse(iterable): #@IgnorePep8
-            isinstance_ = isinstance
-            selfname_ = selfname
-            members_ = members
-            o_ = odict_
-            cm_ = ChainMap
-            ifilter_ = ifilter
-            test_ = test
-            for iterator in iterable:
-                chaining = cm_()
-                chaining['classname'] = selfname_(iterator)
-                cappend = chaining.maps.append
-                for k, v in ifilter_(test_, members_(iterator)):
-                    if isinstance_(v, o_):
-                        v['classname'] = k
-                        cappend(v)
+                beenthere = se()
+            adder = beenthere.add
+            try:
+                while 1:
+                    name = nx(names)
+                    # yes, it's really supposed to be a tuple
+                    for base in cn([iterable], mro):
+                        var = vz(base)
+                        if name in var:
+                            obj = var[name]
+                            break
                     else:
-                        chaining[k] = v
-                yield chaining
-        return traverse
+                        obj = ga(iterable, name)
+                    if obj in beenthere:
+                        continue
+                    else:
+                        adder(obj)
+                    if ic(obj):
+                        yield name, OD((k, v) for k, v in ifilter(
+                            test, members(obj, beenthere),
+                        ))
+                    else:
+                        yield name, obj
+            except StopIteration:
+                pass
+        def traverse(iterable):  # @IgnorePep8
+            try:
+                iterable = it(iterable)
+                while 1:
+                    iterator = nx(iterable)
+                    chaining = CM()
+                    chaining['classname'] = sn(iterator)
+                    cappend = chaining.maps.append
+                    for k, v in ifilter(test, members(iterator)):
+                        if isinstance(v, OD):
+                            v['classname'] = k
+                            cappend(v)
+                        else:
+                            chaining[k] = v
+                    yield chaining
+            except StopIteration:
+                pass
+        return self._xtend(traverse(self._iterable))
 
 
 class _ReduceMixin(local):
 
     '''reduce mixin'''
 
-    @classmethod
-    def _flatten(cls, iterable, s_=strings, ii_=isinstance, n=next):
-        smash_ = cls._flatten
-        next_ = iterable.__iter__()
-        try:
-            while 1:
-                item = n(next_)
-                try:
-                    # don't recur over strings
-                    if ii_(item, s_):
+    def _flatten(
+        self, A=AttributeError, S=StopIteration, T=TypeError, nx=next,
+        st=strings, ii=isinstance,
+    ):
+        def flatten(iterable):
+            next_ = iterable.__iter__()
+            try:
+                while 1:
+                    item = nx(next_)
+                    try:
+                        # don't recur over strings
+                        if ii(item, st):
+                            yield item
+                        else:
+                            # do recur over other things
+                            for j in flatten(item):
+                                yield j
+                    except (A, T):
+                        # does not recur
                         yield item
-                    else:
-                        # do recur over other things
-                        for j in smash_(item):
-                            yield j
-                except (AttributeError, TypeError):
-                    # does not recur
-                    yield item
-        except StopIteration:
-            pass
+            except S:
+                pass
+        return self._xtend(flatten(self._iterable))
 
-    @staticmethod
-    def _merge(iterable, ichain_=ichain):
-        return ichain_(iterable)
+    def _merge(self, ci=chain.from_iterable):
+        return self._xtend(ci(self._iterable))
 
-    @staticmethod
     @memoize
-    def _reduce(call, initial, reverse, reduce_=reduce):
+    def _reduce(self, initial, reverse, rz=reduce):
+        call = self._worker
         if reverse:
             if initial is None:
-                return lambda i: reduce_(lambda x, y: call(y, x), i)
-            return lambda i: reduce_(lambda x, y: call(y, x), i, initial)
+                return self._append(
+                    rz(lambda x, y: call(y, x), self._iterable)
+                )
+            return self._append(
+                rz(lambda x, y: call(y, x), self._iterable, initial)
+            )
         if initial is None:
-            return lambda x: reduce_(call, x)
-        return lambda x: reduce_(call, x, initial)
+            return self._append(rz(call, self._iterable))
+        return self._append(rz(call, self._iterable, initial))
 
-    @staticmethod
-    def _zip(iterable, zip_=zip_longest):
-        return zip_(*iterable)
+    def _zip(self, zip_=zip_longest):
+        return self._xtend(zip_(*self._iterable))
 
 
 class _SliceMixin(local):
 
     '''slicing mixin'''
 
-    @staticmethod
     @memoize
-    def _at(n, default, islice_=islice, next_=next):
-        return lambda x: next_(islice_(x, n, None), default)
+    def _at(self, n, default, iz=islice, nx=next):
+        return self._append(nx(iz(self._iterable, n, None), default))
 
-    @staticmethod
     @memoize
-    def _choice(t=tee, s=islice, rr=randrange, c=count, n=next):
-        def choice(iterable):
-            i1, i2 = t(iterable)
-            yield n(s(i1, rr(0, c(i2)), None))
-        return choice
+    def _choice(self, cnt=count, iz=islice, nx=next, rr=randrange, t=tee):
+        i1, i2 = t(self._iterable)
+        return self._append(iz(i1, rr(0, cnt(i2)), None))
 
-    @staticmethod
     @memoize
-    def _dice(n, fill, zip_longest_=zip_longest, iter_=iter):
-        return lambda x: zip_longest_(fillvalue=fill, *[iter_(x)] * n)
+    def _dice(self, n, fill, zl=zip_longest):
+        return self._xtend(
+            zl(fillvalue=fill, *[self._iterable.__iter__()] * n)
+        )
 
-    @staticmethod
     @memoize
-    def _first(n=0, islice_=islice, next_=deferiter):
-        return lambda x: islice_(x, n) if n else next_(x)
+    def _first(self, n=0, df=deferiter, iz=islice):
+        return self._xtend(iz(self._iterable, n) if n else df(self._iterable))
 
-    @staticmethod
-    def _initial(iterable, islice_=islice, tee_=tee, count_=count):
-        i1, i2 = tee_(iterable)
-        return islice_(i1, count_(i2) - 1)
+    def _initial(self, cnt=count, iz=islice, t=tee):
+        i1, i2 = t(self._iterable)
+        return self._xtend(iz(i1, cnt(i2) - 1))
 
-    @staticmethod
     @memoize
-    def _last(n, s=islice, d=deque, t=tee, f=deferfunc, c=count):
+    def _last(self, n, cnt=count, d=deque, df=deferfunc, iz=islice, t=tee):
         if n:
-            def last(iterable):
-                i1, i2 = t(iterable)
-                return s(i1, c(i2) - n, None)
-            return last
-        return lambda x: f(d(x, maxlen=1).pop)
+            i1, i2 = t(self._iterable)
+            return self._xtend(iz(i1, cnt(i2) - n, None))
+        return self._xtend(df(d(self._iterable, maxlen=1).pop))
 
-    @staticmethod
-    def _rest(iterable, islice_=islice):
-        return islice_(iterable, 1, None)
+    def _rest(self, iz=islice):
+        return self._xtend(iz(self._iterable, 1, None))
 
-    @staticmethod
     @memoize
-    def _sample(n, t=tee, s=slice, rr=randrange, m=map, c=count):
-        def sample(iterable):
-            i1, i2 = t(iterable)
-            length = c(i1)
-            return m(lambda x: s(x, rr(0, length)), t(i2, n))
-        return sample
+    def _sample(self, n, t=tee, z=slice, rr=randrange, m=map, cnt=count):
+        i1, i2 = t(self._iterable)
+        length = cnt(i1)
+        return self._xtend(m(lambda x: z(x, rr(0, length)), t(i2, n)))
 
-    @staticmethod
-    def _slice(start, stop, step, islice_=islice):
+    def _slice(self, start, stop, step, iz=islice):
         if stop and step:
-            return lambda x: islice_(x, start, stop, step)
+            return self._xtend(iz(self._iterable, start, stop, step))
         elif stop:
-            return lambda x: islice_(x, start, stop)
-        return lambda x: islice_(x, start)
+            return self._xtend(iz(self._iterable, start, stop))
+        return self._xtend(iz(self._iterable, start))

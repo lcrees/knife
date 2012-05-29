@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''active knife tests'''
 
-from knife._compat import unittest
+from stuf.six import unittest
 
 from knife.tests.mixins import (
     Mixin, MapMixin, RepeatMixin, ReduceMixin, SliceMixin, FilterMixin,

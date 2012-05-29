@@ -14,8 +14,8 @@ from knife._mixins import (
 
 
 class lazyknife(
-    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin,
-    _MathMixin, _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
+    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin, _MathMixin,
+    _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
     OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
     MathMixin, SliceMixin, CmpMixin,
 ):

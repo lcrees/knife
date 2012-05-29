@@ -3,6 +3,18 @@
 
 from fabric.api import prompt, local, settings, env, lcd
 
+regup = './setup.py register sdist --format=gztar,zip upload'
+nodist = 'rm -rf ./dist'
+sphinxup = './setup.py upload_sphinx'
+
+
+def _promptup():
+    prompt('Enter tag: ', 'tag')
+    with settings(warn_only=True):
+        local('hg tag "%(tag)s"' % env)
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
+        local('hg push github')
+
 
 def _test(val):
     truth = val in ['py26', 'py27', 'py31', 'py32', 'pypy']
@@ -17,7 +29,7 @@ def tox():
 
 
 def docs():
-    with lcd('./docs/'):
+    with lcd('docs/'):
         local('make clean')
         local('make html')
         local('make linkcheck')
@@ -27,8 +39,10 @@ def docs():
 def update_docs():
     docs()
     with settings(warn_only=True):
-        local('hg ci -m docmerge; hg push')
-    local('./setup.py upload_sphinx')
+        local('hg ci -m docmerge')
+        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
+        local('hg push github')
+    local(sphinxup)
 
 
 def tox_recreate():
@@ -43,6 +57,7 @@ def tox_recreate():
 
 def release():
     '''release knife'''
+    docs()
     local('hg update pu')
     local('hg update next')
     local('hg merge pu; hg ci -m automerge')
@@ -52,43 +67,42 @@ def release():
     local('hg merge next; hg ci -m automerge')
     local('hg update pu')
     local('hg merge default; hg ci -m automerge')
-    prompt('Enter tag: ', 'tag')
-    with settings(warn_only=True):
-        local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push github')
-    local('./setup.py register sdist --format=bztar,gztar,zip upload')
-    local('./setup.py upload_sphinx')
-    local('rm -rf dist')
+    _promptup()
+    local(regup)
+    local(sphinxup)
+    local(nodist)
+
+
+def releaser():
+    '''knife releaser'''
+    docs()
+    _promptup()
+    local(regup)
+    local(sphinxup)
+    local(nodist)
 
 
 def inplace():
-    '''inplace knife'''
-    with lcd('./docs/'):
-        local('make clean')
-        local('make html')
-        local('make linkcheck')
-        local('make doctest')
+    '''in-place knife'''
+    docs()
     with settings(warn_only=True):
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
         local('hg push github')
-    local('./setup.py sdist --format=bztar,gztar,zip upload')
-    local('./setup.py upload_sphinx')
-    local('rm -rf dist')
+    local('./setup.py sdist --format=gztar,zip upload')
+    local(sphinxup)
+    local(nodist)
 
 
 def release_next():
     '''release knife from next branch'''
+    docs()
     local('hg update maint')
     local('hg merge default; hg ci -m automerge')
     local('hg update default')
     local('hg merge next; hg ci -m automerge')
     local('hg update next')
     local('hg merge default; hg ci -m automerge')
-    prompt('Enter tag: ', 'tag')
-    with settings(warn_only=True):
-        local('hg tag "%(tag)s"' % env)
-        local('hg push ssh://hg@bitbucket.org/lcrees/knife')
-        local('hg push github')
-    local('./setup.py register sdist --format=bztar,gztar,zip upload')
-    local('rm -rf dist')
+    _promptup()
+    local(regup)
+    local(sphinxup)
+    local(nodist)

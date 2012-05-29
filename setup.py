@@ -4,18 +4,13 @@
 
 from os import getcwd
 from os.path import join
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
 
-install_requires = list(l.strip() for l in open(
-    join(getcwd(), 'requirements.txt'), 'r',
-).readlines())
+from setuptools import setup, find_packages
+
 
 setup(
     name='knife',
-    version='0.5.3',
+    version='0.5.5',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
@@ -24,10 +19,12 @@ setup(
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
     url='https://bitbucket.org/lcrees/knife',
-    packages=['knife'],
+    packages=find_packages(),
     test_suite='knife.tests',
     zip_safe=False,
-    install_requires=install_requires,
+    install_requires=list(l.strip() for l in open(
+        join(getcwd(), 'reqs/requires.txt'), 'r',
+    ).readlines()),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

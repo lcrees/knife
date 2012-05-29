@@ -85,7 +85,6 @@ class KnifeMixin(local):
           are `'parse' <http://pypi.python.org/pypi/parse/>`_, `'re'
           <http://docs.python.org/library/re.html>`_, or `'glob' <http://docs.
           python.org/library/fnmatch.html>`_
-
         :keyword int flags: regular expression `flags <http://docs.python.org/
           library/re.html#re.DEBUG>`_
 
