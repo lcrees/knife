@@ -4,30 +4,13 @@
 
 from os import getcwd
 from os.path import join
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
 
-#from Cython.Build import cythonize
-from Cython.Distutils import build_ext, Extension
+from setuptools import setup, find_packages
 
-ext_modules = [
-#    Extension('knife._base', ['knife/_base.pyx']),
-    Extension('knife._mixins', ['knife/_mixins.pyx']),
-#    Extension('knife._active', ['knife/_active.pyx']),
-#    Extension('knife._lazy', ['knife/_lazy.pyx']),
-]
-
-install_requires = list(l.strip() for l in open(
-    join(getcwd(), 'requirements.txt'), 'r',
-).readlines())
 
 setup(
     name='knife',
-    cmdclass={'build_ext': build_ext},
-    ext_modules=ext_modules,
-    version='0.5.4',
+    version='0.5.5',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
@@ -36,10 +19,12 @@ setup(
     author='L. C. Rees',
     author_email='lcrees@gmail.com',
     url='https://bitbucket.org/lcrees/knife',
-    packages=['knife'],
+    packages=find_packages(),
     test_suite='knife.tests',
     zip_safe=False,
-    install_requires=install_requires,
+    install_requires=list(l.strip() for l in open(
+        join(getcwd(), 'reqs/requires.txt'), 'r',
+    ).readlines()),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

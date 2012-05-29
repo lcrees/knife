@@ -7,13 +7,12 @@ from collections import deque
 from fnmatch import translate
 from re import compile as rcompile
 
+from stuf.utils import memoize
 from parse import compile as pcompile
 
-from knife._compat import memoize
-
 SLOTS = [
-     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each', '_kw',
-     '_history', '_worker', '_wrapper', '_args', '_pipe',
+     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each',
+     '_kw', '_history', '_worker', '_wrapper', '_args', '_pipe',
 ]
 
 
@@ -59,21 +58,8 @@ class _KnifeMixin(local):
     def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
         # compile glob pattern into regex
         if type == 'glob':
-            pat = t(pat)
-            type = 'regex'
+            return r(t(pat), flag).search
         return r(pat, flag).search if type == 'regex' else p(pat).search
-
-    def _iter(self, call):
-        # extend fetch with incoming things if knifing them as one thing
-        return self._xtend(call(self._iterable).__iter__())
-
-    def _one(self, call):
-        # append incoming things to fetch if knifing them as one thing
-        return self._append(call(self._iterable))
-
-    def _many(self, call):
-        # extend fetch with incoming things if knifing them as one thing
-        return self._xtend(call(self._iterable))
 
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 

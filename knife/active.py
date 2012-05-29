@@ -6,16 +6,16 @@ from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CmpMixin, OrderMixin)
 
-import knife._base as _base
-import knife._mixins as _mixins
-import knife._active as _active
+from knife._active import _OutMixin
+from knife._base import SLOTS, _KnifeMixin
+from knife._mixins import (
+    _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
+    _MathMixin, _CmpMixin, _OrderMixin)
 
 
 class activeknife(
-    _active._OutMixin, _base._KnifeMixin, _mixins._CmpMixin,
-    _mixins._FilterMixin, _mixins._MapMixin, _mixins._MathMixin,
-    _mixins._OrderMixin, _mixins._ReduceMixin, _mixins._SliceMixin,
-    _mixins._RepeatMixin,
+    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin, _MathMixin,
+    _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
     OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
     MathMixin, SliceMixin, CmpMixin,
 ):
@@ -30,13 +30,10 @@ class activeknife(
     >>> from knife import knife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class cmpknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, CmpMixin,
-    _mixins._CmpMixin,
-):
+class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
 
     '''
     Actively evaluated comparing knife. Provides comparison operations for
@@ -45,13 +42,10 @@ class cmpknife(
     >>> from knife.active import cmpknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class filterknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, FilterMixin,
-    _mixins._FilterMixin,
-):
+class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
 
     '''
     Actively evaluated filtering knife. Provides filtering operations for
@@ -60,13 +54,10 @@ class filterknife(
     >>> from knife.active import filterknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class mapknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, MapMixin,
-    _mixins._MapMixin,
-):
+class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
 
     '''
     Actively evaluated mapping knife. Provides `mapping <http://docs.python.org
@@ -75,13 +66,10 @@ class mapknife(
     >>> from knife.active import mapknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class mathknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, MathMixin,
-    _mixins._MathMixin,
-):
+class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
 
     '''
     Actively evaluated mathing knife. Provides numeric and statistical
@@ -90,13 +78,10 @@ class mathknife(
     >>> from knife.active import mathknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class orderknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, OrderMixin,
-    _mixins._OrderMixin,
-):
+class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
 
     '''
     Actively evaluated ordering knife. Provides sorting and grouping operations
@@ -105,13 +90,10 @@ class orderknife(
     >>> from knife.active import orderknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class reduceknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, ReduceMixin,
-    _mixins._ReduceMixin,
-):
+class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
 
     '''
     Actively evaluated reducing knife. Provides `reducing <http://docs.python.
@@ -120,13 +102,10 @@ class reduceknife(
     >>> from knife.active import reduceknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class repeatknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, RepeatMixin,
-    _mixins._RepeatMixin,
-):
+class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
 
     '''
     Actively evaluated repeating knife. Provides repetition operations for
@@ -135,13 +114,10 @@ class repeatknife(
     >>> from knife.active import repeatknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS
 
 
-class sliceknife(
-    _active._OutMixin, _base._KnifeMixin, OutMixin, SliceMixin,
-    _mixins._SliceMixin
-):
+class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
 
     '''
     Actively evaluated slicing knife. Provides `slicing <http://docs.python.
@@ -150,4 +126,4 @@ class sliceknife(
     >>> from knife.active import sliceknife
     '''
 
-    __slots__ = _base.SLOTS
+    __slots__ = SLOTS

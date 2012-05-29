@@ -5,9 +5,8 @@ from threading import local
 from collections import deque
 from contextlib import contextmanager
 
-from stuf.utils import clsname
-
-from knife._compat import loads, optimize
+from stuf.deep import clsname
+from stuf.utils import loads, optimize
 
 
 class _ActiveMixin(local):
