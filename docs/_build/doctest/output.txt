@@ -1,48 +1,13 @@
-Results of doctest builder run on 2012-05-24 15:53:21
+Results of doctest builder run on 2012-05-28 22:17:38
 =====================================================
 
 Document: index
 ---------------
-**********************************************************************
-File "index.rst", line ?, in default
-Failed example:
-    one.original().minmax().pipe(two).merge().back().max().get()
-Exception raised:
-    Traceback (most recent call last):
-      File "/usr/local/Cellar/python/2.7.3/lib/python2.7/doctest.py", line 1289, in __run
-        compileflags, 1) in test.globs
-      File "<doctest default[4]>", line 1, in <module>
-        one.original().minmax().pipe(two).merge().back().max().get()
-      File "/Users/lrees/Documents/libraries/knife/knife/base.py", line 370, in original
-        return self._revert()
-      File "/Users/lrees/Documents/libraries/knife/knife/_active.py", line 181, in _revert
-        self._in.extend(loads_(self._original))
-      File "/Users/lrees/Documents/libraries/stuf/stuf/utils.py", line 29, in <lambda>
-        loads = memoize(lambda x: ld(x, encoding='latin-1'))
-    TypeError: loads() takes no keyword arguments
-**********************************************************************
-File "index.rst", line ?, in default
-Failed example:
-    one.original().minmax().pipe(two).merge().back().sum().get()
-Exception raised:
-    Traceback (most recent call last):
-      File "/usr/local/Cellar/python/2.7.3/lib/python2.7/doctest.py", line 1289, in __run
-        compileflags, 1) in test.globs
-      File "<doctest default[5]>", line 1, in <module>
-        one.original().minmax().pipe(two).merge().back().sum().get()
-      File "/Users/lrees/Documents/libraries/knife/knife/base.py", line 370, in original
-        return self._revert()
-      File "/Users/lrees/Documents/libraries/knife/knife/_active.py", line 181, in _revert
-        self._in.extend(loads_(self._original))
-      File "/Users/lrees/Documents/libraries/stuf/stuf/utils.py", line 29, in <lambda>
-        loads = memoize(lambda x: ld(x, encoding='latin-1'))
-    TypeError: loads() takes no keyword arguments
-**********************************************************************
-1 items had failures:
-   2 of  28 in default
+1 items passed all tests:
+  28 tests in default
 28 tests in 1 items.
-26 passed and 2 failed.
-***Test Failed*** 2 failures.
+28 passed and 0 failed.
+Test passed.
 
 Document: areduceknife
 ----------------------
@@ -191,6 +156,6 @@ Test passed.
 Doctest summary
 ===============
   982 tests
-    2 failures in tests
+    0 failures in tests
     0 failures in setup code
     0 failures in cleanup code

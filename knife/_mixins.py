@@ -14,11 +14,10 @@ from itertools import (
 
 from stuf.deep import selfname
 from stuf.utils import memoize
-from stuf.collects import Counter, ChainMap
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport
 from stuf.iterable import deferfunc, deferiter, count
-from stuf.six import OrderedDict, filter, items, keys, map, strings, values
-
+from stuf.collects import OrderedDict, Counter, ChainMap
+from stuf.six import filter, items, keys, map, strings, values
 
 Count = namedtuple('Count', 'least most overall')
 GroupBy = namedtuple('Group', 'keys groups')
@@ -281,73 +280,60 @@ class _FilterMixin(local):
 
     @memoize
     def _traverse(
-        self, invert, CM=ChainMap, O=OrderedDict, S=StopIteration, cn=chain,
+        self, invert, CM=ChainMap, OD=OrderedDict, S=StopIteration, cn=chain,
         d=dir, f=filter, ff=filterfalse, ga=getattr, gm=getmro, ic=isclass,
-        ii=isinstance, nx=next, se=set, sn=selfname, vz=vars,
+        ii=isinstance, nx=next, se=set, sn=selfname, vz=vars, it=iter,
     ):
         if self._worker is None:
             test = lambda x: not x[0].startswith('__')
         else:
             test = self._worker
         ifilter = ff if invert else f
-        def members(iterable, beenthere=None): #@IgnorePep8
-            isclass_ = ic
-            getattr_ = ga
-            o_ = O
-            members_ = members
-            ifilter_ = ifilter
-            varz_ = vz
-            test_ = test
+        def members(iterable, beenthere=None):  # @IgnorePep8
             mro = gm(iterable)
-            names = d(iterable).__iter__()
+            names = it(d(iterable))
             if beenthere is None:
                 beenthere = se()
-            adder_ = beenthere.add
+            adder = beenthere.add
             try:
                 while 1:
                     name = nx(names)
                     # yes, it's really supposed to be a tuple
                     for base in cn([iterable], mro):
-                        var = varz_(base)
+                        var = vz(base)
                         if name in var:
                             obj = var[name]
                             break
                     else:
-                        obj = getattr_(iterable, name)
+                        obj = ga(iterable, name)
                     if obj in beenthere:
                         continue
                     else:
-                        adder_(obj)
-                    if isclass_(obj):
-                        yield name, o_((k, v) for k, v in ifilter_(
-                            test_, members_(obj, beenthere),
+                        adder(obj)
+                    if ic(obj):
+                        yield name, OD((k, v) for k, v in ifilter(
+                            test, members(obj, beenthere),
                         ))
                     else:
                         yield name, obj
-            except S:
+            except StopIteration:
                 pass
-        def traverse(iterable): #@IgnorePep8
-            isinstance_ = ii
-            selfname_ = sn
-            members_ = members
-            o_ = O
-            cm_ = CM
-            ifilter_ = ifilter
-            test_ = test
+        def traverse(iterable):  # @IgnorePep8
             try:
+                iterable = it(iterable)
                 while 1:
                     iterator = nx(iterable)
-                    chaining = cm_()
-                    chaining['classname'] = selfname_(iterator)
+                    chaining = CM()
+                    chaining['classname'] = sn(iterator)
                     cappend = chaining.maps.append
-                    for k, v in ifilter_(test_, members_(iterator)):
-                        if isinstance_(v, o_):
+                    for k, v in ifilter(test, members(iterator)):
+                        if isinstance(v, OD):
                             v['classname'] = k
                             cappend(v)
                         else:
                             chaining[k] = v
                     yield chaining
-            except S:
+            except StopIteration:
                 pass
         return self._xtend(traverse(self._iterable))
 

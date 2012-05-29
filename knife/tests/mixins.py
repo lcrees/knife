@@ -19,6 +19,20 @@ class stoog3: #@IgnorePep8
         age = 969
 
 
+class stooge: #@IgnorePep8
+    name = 'moe'
+    age = 40
+class stooge2(stooge): #@IgnorePep8
+    pname = 'larry'
+    page = 50
+class stooge3(stoog2): #@IgnorePep8
+    aname = 'curly'
+    rage = 60
+    class stooge4(stooge): #@IgnorePep8
+        kname = 'beastly'
+        mage = 969
+
+
 class MathMixin(object):
 
     def test_pipe(self):
@@ -210,25 +224,15 @@ class FilterMixin(object):
         )
 
     def test_traverse(self):
-        from stuf.six import OrderedDict
-        from stuf.collects import ChainMap
-        get = self.mclass(stooges, stoog2, stoog3).traverse().get()
+        self.maxDiff = None
+        from stuf.collects import ChainMap, OrderedDict
+        get = self.mclass(stoog3).traverse().get()
         self.assertEqual(
             get,
-            [ChainMap(OrderedDict([
-                ('classname', 'stooges'), ('age', 40), ('name', 'moe'),
-            ])),
             ChainMap(OrderedDict([
-                ('classname', 'stoog2'), ('age', 50), ('name', 'larry'),
-            ])),
-            ChainMap(
+                ('classname', 'stoog3'), ('age', 60), ('name', 'curly')]),
                 OrderedDict([
-                    ('classname', 'stoog3'), ('age', 60), ('name', 'curly'),
-                ]),
-                OrderedDict([
-                    ('age', 969), ('name', 'beastly'), ('classname', 'stoog4'),
-                ])
-            )],
+                ('age', 969), ('name', 'beastly'), ('classname', 'stoog4')]))
         )
         def test(x): #@IgnorePep8
             if x[0] == 'name':
@@ -247,6 +251,23 @@ class FilterMixin(object):
                 OrderedDict([('classname', 'stoog4'), ('age', 969)])
             )],
         )
+        get = self.mclass(stooge, stooge2, stooge3).traverse().get()
+        self.assertEqual(
+            get,
+            [ChainMap(OrderedDict([
+                ('classname', 'stooge'), ('age', 40), ('name', 'moe')])),
+            ChainMap(
+                OrderedDict([
+                    ('classname', 'stooge'), ('age', 40), ('name', 'moe'),
+                    ('classname', 'stooge2'), ('page', 50), ('pname', 'larry')
+                ])
+            ),
+            ChainMap(OrderedDict([
+                ('classname', 'stooge3'), ('age', 50), ('aname', 'curly'),
+                ('name', 'larry'), ('rage', 60)]), OrderedDict([('age', 40),
+                ('kname', 'beastly'), ('mage', 969), ('name', 'moe'),
+                ('classname', 'stooge4')]))
+    ])
 
     def test_attrs(self):
         from stuf import stuf

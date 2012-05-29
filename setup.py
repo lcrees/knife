@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='knife',
-    version='0.5.4',
+    version='0.5.5',
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
