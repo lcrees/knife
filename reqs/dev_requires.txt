@@ -1,4 +1,4 @@
-include requirements.txt
+include requires.txt
 tox
 sphinx
 sphinxcontrib.spelling
