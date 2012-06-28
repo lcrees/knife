@@ -19,3 +19,8 @@ What's new in 0.5.2
 * verify PyPy 1.8, Python 3.1 compatibility
 * made randomizing methods lazier
 * memoize some routines
+
+What's new in 0.5.6
+===================
+
+- selectively memoize

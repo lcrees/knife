@@ -6,7 +6,9 @@ from collections import deque
 from contextlib import contextmanager
 
 from stuf.deep import clsname
-from stuf.utils import loads, optimize
+from stuf.utils import loads, optimize, memoize
+
+moptimize = memoize(optimize)
 
 
 class _ActiveMixin(local):
@@ -29,7 +31,7 @@ class _ActiveMixin(local):
 
     @property
     @contextmanager
-    def _chain(self, d=optimize):
+    def _chain(self, d=moptimize):
         # take snapshot
         snapshot = d(self._in)
         # rebalance incoming with outcoming
@@ -74,7 +76,7 @@ class _ActiveMixin(local):
         self._hold.extend(things)
         return self
 
-    def _prependit(self, things, d=optimize):
+    def _prependit(self, things, d=moptimize):
         # take snapshot
         snapshot = d(self._in)
         # make snapshot original snapshot?
@@ -86,7 +88,7 @@ class _ActiveMixin(local):
         self._in.extendleft(reversed(things))
         return self
 
-    def _appendit(self, things, d=optimize):
+    def _appendit(self, things, d=moptimize):
         # take snapshot
         snapshot = d(self._in)
         # make snapshot original snapshot?
