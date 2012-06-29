@@ -8,9 +8,17 @@ from os.path import join
 from setuptools import setup, find_packages
 
 
+def getversion(fname):
+    '''
+    Get the __version__ without importing.
+    '''
+    for line in open(fname):
+        if line.startswith('__version__'):
+            return '%s.%s.%s' % eval(line[13:])
+
 setup(
     name='knife',
-    version='0.5.6',
+    version=getversion('knife/__init__.py'),
     description='Pythonic remix of underscore.js: Things go in. Things get '
         'knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
