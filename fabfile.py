@@ -18,9 +18,8 @@ def getversion(fname):
 
 
 def _promptup():
-    prompt('Enter tag: ', 'tag')
     with settings(warn_only=True):
-        local('hg tag "%(tag)s"' % getversion('knife/__init__.py'))
+        local('hg tag "%s"' % getversion('knife/__init__.py'))
         local('hg push ssh://hg@bitbucket.org/lcrees/knife')
         local('hg push github')
 

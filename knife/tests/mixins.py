@@ -134,7 +134,7 @@ class CmpMixin(object):
             self.mclass(
                 [1, 3, 4, 5], [5, 2, 10], [10, 11, 2]
             ).difference(True).get(),
-            [11, 1, 3, 4] if PYPY else [1, 3, 4, 11]
+            [3, 1, 11, 4] if PYPY else [1, 3, 4, 11]
         )
 
     def test_intersection(self):
