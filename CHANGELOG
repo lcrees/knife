@@ -24,3 +24,8 @@ What's new in 0.5.6
 ===================
 
 - selectively memoize
+
+What's new in 0.5.7
+===================
+
+- fix more issues with traversal
