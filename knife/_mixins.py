@@ -289,11 +289,10 @@ class _FilterMixin(local):
         else:
             test = self._worker
         ifilter = ff if invert else f
-        def members(iterable, beenthere=None):  # @IgnorePep8
+        def members(iterable):  # @IgnorePep8
             mro = gm(iterable)
             names = it(d(iterable))
-            if beenthere is None:
-                beenthere = se()
+            beenthere = se()
             adder = beenthere.add
             try:
                 while 1:
@@ -306,13 +305,13 @@ class _FilterMixin(local):
                             break
                     else:
                         obj = ga(iterable, name)
-                    if obj in beenthere:
+                    if (name, obj) in beenthere:
                         continue
                     else:
-                        adder(obj)
+                        adder((name, obj))
                     if ic(obj):
                         yield name, OD((k, v) for k, v in ifilter(
-                            test, members(obj, beenthere),
+                            test, members(obj),
                         ))
                     else:
                         yield name, obj
