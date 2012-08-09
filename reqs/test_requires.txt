@@ -1,2 +1,1 @@
 hg+ssh://hg@bitbucket.org/lcrees/stuf@pu#egg=stuf
-parse>=1.4.1

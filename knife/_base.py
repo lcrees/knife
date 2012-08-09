@@ -9,11 +9,12 @@ from re import compile as rcompile
 
 from stuf.utils import memoize
 from parse import compile as pcompile
+from stuf.patterns import searcher
 
-SLOTS = [
-     '_in', '_work', '_hold', '_out', '_original', '_baseline', '_each',
-     '_kw', '_history', '_worker', '_wrapper', '_args', '_pipe',
-]
+SLOTS = (
+    '_in _work _hold _out _original _baseline _each _kw _history _worker '
+    '_wrapper _args _pipe'
+).split()
 
 
 class _KnifeMixin(local):
@@ -55,11 +56,9 @@ class _KnifeMixin(local):
 
     @staticmethod
     @memoize
-    def _pattern(pat, type, flag, t=translate, r=rcompile, p=pcompile):
+    def _pattern(pat, type, flags, t=translate, r=rcompile, p=pcompile):
         # compile glob pattern into regex
-        if type == 'glob':
-            return r(t(pat), flag).search
-        return r(pat, flag).search if type == 'regex' else p(pat).search
+        return searcher((type, pat))
 
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 
