@@ -10,7 +10,7 @@ from tests.mixins import (
 
 class TestActive(
     unittest.TestCase, Mixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
-    SliceMixin, RepeatMixin, MathMixin, CmpMixin
+    SliceMixin, RepeatMixin, MathMixin, CmpMixin,
 ):
 
     def setUp(self):

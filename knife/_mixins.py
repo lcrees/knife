@@ -31,8 +31,6 @@ def slicer(x, y, iz=islice, nx=next):
 
 class _CmpMixin(local):
 
-    '''comparing mixin'''
-
     @memoize
     def _all(self, a=all, m=map):
         # invoke worker on each item to yield truth
@@ -76,8 +74,6 @@ class _CmpMixin(local):
 
 
 class _MathMixin(local):
-
-    '''number mixin'''
 
     def _average(self, cnt=count, su=sum, td=truediv, t=tee):
         i1, i2 = t(self._iterable)
@@ -131,8 +127,6 @@ class _MathMixin(local):
 
 class _OrderMixin(local):
 
-    '''order mixin'''
-
     @memoize
     def _group(
         self, G=GroupBy, S=StopIteration, g=groupby, nx=next, sd=sorted,
@@ -163,8 +157,6 @@ class _OrderMixin(local):
 
 class _RepeatMixin(local):
 
-    '''repetition mixin'''
-
     def _combinate(self, n, cb=combinations):
         return self._xtend(cb(self._iterable, n))
 
@@ -183,8 +175,6 @@ class _RepeatMixin(local):
 
 
 class _MapMixin(local):
-
-    '''mapping mixin'''
 
     @memoize
     def _argmap(self, curr, sm=starmap):
@@ -232,8 +222,6 @@ class _MapMixin(local):
 
 
 class _FilterMixin(local):
-
-    '''filtering mixin'''
 
     @memoize
     def _attrs(
@@ -339,8 +327,6 @@ class _FilterMixin(local):
 
 class _ReduceMixin(local):
 
-    '''reduce mixin'''
-
     def _flatten(
         self, A=AttributeError, S=StopIteration, T=TypeError, nx=next,
         st=strings, ii=isinstance,
@@ -388,8 +374,6 @@ class _ReduceMixin(local):
 
 
 class _SliceMixin(local):
-
-    '''slicing mixin'''
 
     @memoize
     def _at(self, n, default, iz=islice, nx=next):

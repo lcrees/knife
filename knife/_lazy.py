@@ -11,7 +11,7 @@ from stuf.iterable import count
 
 class _LazyMixin(local):
 
-    '''lazy knife mixin'''
+    '''Lazy knife mixin.'''
 
     def __init__(self, *things, **kw):
         '''
@@ -143,7 +143,7 @@ class _LazyMixin(local):
 
 class _OutMixin(_LazyMixin):
 
-    '''lazy output mixin'''
+    '''Lazy output mixin.'''
 
     def _undo(self, snapshot=0):
         # clear everything

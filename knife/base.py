@@ -8,7 +8,7 @@ from stuf.six import tounicode, tobytes
 
 class KnifeMixin(local):
 
-    '''base knife mixin'''
+    '''Base knife mixin.'''
 
     def apply(self, worker, *args, **kw):
         '''
@@ -168,7 +168,7 @@ class KnifeMixin(local):
 
 class OutMixin(KnifeMixin):
 
-    '''output mixin'''
+    '''Output mixin.'''
 
     def __iter__(self):
         '''Iterate over outgoing things.'''

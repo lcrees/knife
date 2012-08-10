@@ -6,9 +6,7 @@ from appspace.keys import AppspaceKey
 
 class KCompare(AppspaceKey):
 
-    '''
-    comparing knife key
-    '''
+    '''Comparing knife key.'''
 
     def all():  # @NoSelf
         '''
@@ -187,7 +185,7 @@ class KCompare(AppspaceKey):
 
 class KMath(AppspaceKey):
 
-    '''mathing knife key'''
+    '''Mathing knife key.'''
 
     def average():  # @NoSelf
         '''
@@ -366,7 +364,7 @@ class KMath(AppspaceKey):
 
 class KOrder(AppspaceKey):
 
-    '''ordering knife mixin'''
+    '''Ordering knife key.'''
 
     def group():  # @NoSelf
         '''
@@ -476,7 +474,7 @@ class KOrder(AppspaceKey):
 
 class KRepeat(AppspaceKey):
 
-    '''repeating knife key'''
+    '''Repeating knife key.'''
 
     def combinate(n):  # @NoSelf
         '''
@@ -567,7 +565,7 @@ class KRepeat(AppspaceKey):
 
 class KMap(AppspaceKey):
 
-    '''mapping knife key'''
+    '''Mapping knife key.'''
 
     def argmap(merge=False):  # @NoSelf
         '''
@@ -743,7 +741,7 @@ class KMap(AppspaceKey):
 
 class KFilter(AppspaceKey):
 
-    '''filtering knife key'''
+    '''Filtering knife key.'''
 
     def attrs(*names):  # @NoSelf
         '''
@@ -931,7 +929,7 @@ class KFilter(AppspaceKey):
 
 class KReduce(AppspaceKey):
 
-    '''reducing knife key'''
+    '''Reducing knife key.'''
 
     def flatten():  # @NoSelf
         '''
@@ -1060,7 +1058,7 @@ class KReduce(AppspaceKey):
 
 class KSlice(AppspaceKey):
 
-    '''slicing knife key'''
+    '''Slicing knife key.'''
 
     def at(n, default=None):  # @NoSelf
         '''

@@ -10,7 +10,7 @@ from tests.mixins import (
 
 class TestLazy(
     unittest.TestCase, Mixin, CmpMixin, MapMixin, ReduceMixin, OrderMixin,
-    SliceMixin, RepeatMixin, MathMixin, FilterMixin
+    SliceMixin, RepeatMixin, MathMixin, FilterMixin,
 ):
 
     def setUp(self):
@@ -75,7 +75,6 @@ class TestSlice(unittest.TestCase, Mixin, SliceMixin):
     def setUp(self):
         from knife.lazy import sliceknife
         self.mclass = sliceknife
-
 
 if __name__ == '__main__':
     unittest.main()

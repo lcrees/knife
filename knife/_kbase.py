@@ -6,7 +6,7 @@ from appspace.keys import AppspaceKey
 
 class KChainknife(AppspaceKey):
 
-    '''base knife key'''
+    '''Base knife key.'''
 
     def __init__(*things, **kw):  # @NoSelf
         '''
@@ -142,7 +142,7 @@ class KChainknife(AppspaceKey):
 
 class KOutput(KChainknife):
 
-    '''output key'''
+    '''Output key.'''
 
     def __iter__():  # @NoSelf
         '''Iterate over outgoing things.'''

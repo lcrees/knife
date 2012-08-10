@@ -4,11 +4,8 @@
 from operator import truth
 from threading import local
 from collections import deque
-from fnmatch import translate
-from re import compile as rcompile
 
 from stuf.utils import memoize
-from parse import compile as pcompile
 from stuf.patterns import searcher
 
 SLOTS = (
@@ -19,7 +16,7 @@ SLOTS = (
 
 class _KnifeMixin(local):
 
-    '''base knife mixin'''
+    '''Base knife mixin.'''
 
     def __init__(self, ins, outs, **kw):
         super(_KnifeMixin, self).__init__()
@@ -56,9 +53,9 @@ class _KnifeMixin(local):
 
     @staticmethod
     @memoize
-    def _pattern(pat, type, flags, t=translate, r=rcompile, p=pcompile):
+    def _pattern(pat, type, flags, s=searcher):
         # compile glob pattern into regex
-        return searcher((type, pat))
+        return s((type, pat))
 
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 

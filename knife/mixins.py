@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-'''knife mixins'''
+'''knife mixins.'''
 
 from threading import local
 
 
 class CmpMixin(local):
 
-    '''
-    comparing knife mixin
-    '''
+    '''Comparing knife mixin.'''
 
     def all(self):
         '''
@@ -199,7 +197,7 @@ class CmpMixin(local):
 
 class MathMixin(local):
 
-    '''mathing knife mixin'''
+    '''Mathing knife mixin.'''
 
     def average(self):
         '''
@@ -394,7 +392,7 @@ class MathMixin(local):
 
 class OrderMixin(local):
 
-    '''ordering knife mixin'''
+    '''Ordering knife mixin.'''
 
     def group(self):
         '''
@@ -512,7 +510,7 @@ class OrderMixin(local):
 
 class RepeatMixin(local):
 
-    '''repeating knife mixin'''
+    '''Repeating knife mixin.'''
 
     def combinate(self, n):
         '''
@@ -611,7 +609,7 @@ class RepeatMixin(local):
 
 class MapMixin(local):
 
-    '''mapping knife mixin'''
+    '''Mapping knife mixin.'''
 
     def argmap(self, merge=False):
         '''
@@ -797,7 +795,7 @@ class MapMixin(local):
 
 class FilterMixin(local):
 
-    '''filtering knife mixin'''
+    '''Filtering knife mixin.'''
 
     def attrs(self, *names):
         '''
@@ -995,7 +993,7 @@ class FilterMixin(local):
 
 class ReduceMixin(local):
 
-    '''reducing knife mixin'''
+    '''Reducing knife mixin.'''
 
     def flatten(self):
         '''
@@ -1132,7 +1130,7 @@ class ReduceMixin(local):
 
 class SliceMixin(local):
 
-    '''slicing knife mixin'''
+    '''Slicing knife mixin.'''
 
     def at(self, n, default=None):
         '''
