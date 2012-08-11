@@ -5,6 +5,7 @@ from operator import truth
 from threading import local
 from collections import deque
 
+from stuf.six import identity
 from stuf.utils import memoize
 from stuf.patterns import searcher
 
@@ -44,7 +45,7 @@ class _KnifeMixin(local):
     @property
     def _identity(self):
         # use  generic identity function for worker if no worker assigned
-        return self._worker if self._worker is not None else lambda x: x
+        return self._worker if self._worker is not None else identity
 
     @property
     def _test(self, truth_=truth):

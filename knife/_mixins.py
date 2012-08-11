@@ -17,7 +17,7 @@ from stuf.utils import memoize
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport
 from stuf.iterable import deferfunc, deferiter, count
 from stuf.collects import OrderedDict, Counter, ChainMap
-from stuf.six import filter, items, keys, map, strings, values
+from stuf.six import filter, items, keys, map, isstring, values, next
 
 Count = namedtuple('Count', 'least most overall')
 GroupBy = namedtuple('Group', 'keys groups')
@@ -329,7 +329,7 @@ class _ReduceMixin(local):
 
     def _flatten(
         self, A=AttributeError, S=StopIteration, T=TypeError, nx=next,
-        st=strings, ii=isinstance,
+        st=isstring,
     ):
         def flatten(iterable):
             next_ = iterable.__iter__()
@@ -338,7 +338,7 @@ class _ReduceMixin(local):
                     item = nx(next_)
                     try:
                         # don't recur over strings
-                        if ii(item, st):
+                        if st(item):
                             yield item
                         else:
                             # do recur over other things
