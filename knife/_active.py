@@ -6,9 +6,7 @@ from collections import deque
 from contextlib import contextmanager
 
 from stuf.deep import clsname
-from stuf.utils import loads, optimize, memoize
-
-moptimize = memoize(optimize)
+from stuf.utils import loads, optimize, moptimize
 
 
 class _ActiveMixin(local):

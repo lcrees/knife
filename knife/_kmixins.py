@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''knife mixin keys'''
+'''knife mixin keys.'''
 
 from appspace.keys import AppspaceKey
 

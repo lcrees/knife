@@ -56,7 +56,7 @@ class _KnifeMixin(local):
     @memoize
     def _pattern(pat, type, flags, s=searcher):
         # compile glob pattern into regex
-        return s((type, pat))
+        return s((type, pat), flags)
 
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
 
