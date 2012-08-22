@@ -564,6 +564,12 @@ class MapMixin(object):
             ).worker(lambda x, y: x * y).mapping().get(),
             [2, 6, 12, 2, 6, 12],
         )
+        self.assertEqual(
+            self.mclass(
+                dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
+            ).mapping(mapmerge=True).get(),
+            dict([(1, 2), (2, 3), (3, 4)]),
+        )
 
 
 class Mixin(object):

@@ -210,14 +210,19 @@ class _MapMixin(local):
 
     @memoize
     def _mapping(
-        self, key, value, ky=keys, it=items, vl=values, sm=starmap,
-        m=map, ci=chain.from_iterable,
+        self, key, value, unchain, mapmerge, ky=keys, it=items, vl=values,
+        sm=starmap, m=map, ci=chain.from_iterable,
     ):
-        call = self._identity
+        if mapmerge:
+            self._wrapper = dict
+        if unchain:
+            aget = attrgetter('maps')
+            self._iterable = (aget(i) for i in self._iterable)
         if key:
-            return self._xtend(m(call, ci(m(ky, self._iterable))))
+            return self._xtend(m(self._identity, ci(m(ky, self._iterable))))
         elif value:
-            return self._xtend(m(call, ci(m(vl, self._iterable))))
+            return self._xtend(m(self._identity, ci(m(vl, self._iterable))))
+        call = (lambda x, y: (x, y)) if self._worker is None else self._worker
         return self._xtend(sm(call, ci(m(it, self._iterable))))
 
 

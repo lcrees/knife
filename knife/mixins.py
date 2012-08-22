@@ -740,7 +740,7 @@ class MapMixin(local):
         with self._chain:
             return self._map()
 
-    def mapping(self, keys=False, values=False):
+    def mapping(self, keys=False, values=False, unchain=False, mapmerge=False):
         '''
         Run :meth:`worker` on incoming :term:`mapping` things.
 
@@ -790,7 +790,7 @@ class MapMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            return self._mapping(keys, values)
+            return self._mapping(keys, values, unchain, mapmerge)
 
 
 class FilterMixin(local):
