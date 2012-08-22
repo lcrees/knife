@@ -178,7 +178,7 @@ class _MapMixin(local):
 
     @memoize
     def _argmap(self, curr, sm=starmap):
-        call = self._worker
+        call = self._identity
         if curr:
             def argmap(*args):
                 return call(*(args + self._args))
@@ -194,7 +194,7 @@ class _MapMixin(local):
 
     @memoize
     def _kwargmap(self, curr, sm=starmap):
-        call = self._worker
+        call = self._identity
         if curr:
             def kwargmap(*params):
                 args, kwargs = params
@@ -206,7 +206,7 @@ class _MapMixin(local):
 
     @memoize
     def _map(self, m=map):
-        return self._xtend(m(self._worker, self._iterable))
+        return self._xtend(m(self._identity, self._iterable))
 
     @memoize
     def _mapping(
@@ -275,7 +275,7 @@ class _FilterMixin(local):
         if self._worker is None:
             test = lambda x: not x[0].startswith('__')
         else:
-            test = self._worker
+            test = self._identity
         ifilter = ff if invert else f
         def members(iterable):  # @IgnorePep8
             mro = gm(iterable)
@@ -356,7 +356,7 @@ class _ReduceMixin(local):
 
     @memoize
     def _reduce(self, initial, reverse, rz=reduce):
-        call = self._worker
+        call = self._identity
         if reverse:
             if initial is None:
                 return self._append(

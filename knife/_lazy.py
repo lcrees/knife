@@ -151,7 +151,10 @@ class _OutMixin(_LazyMixin):
         # if specified, use a specific snapshot
         if snapshot:
             self._history.rotate(-(snapshot - 1))
-        self._in = self._history.popleft()
+        try:
+            self._in = self._history.popleft()
+        except IndexError:
+            raise IndexError('nothing to undo')
         # clear outgoing things
         del self._out
         self._out = ().__iter__()

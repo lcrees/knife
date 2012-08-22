@@ -153,7 +153,10 @@ class _OutMixin(_ActiveMixin):
         # if specified, use a specific snapshot
         if snapshot:
             self._history.rotate(-(snapshot - 1))
-        self._in.extend(loads_(self._history.popleft()))
+        try:
+            self._in.extend(loads_(self._history.popleft()))
+        except IndexError:
+            raise IndexError('nothing to undo')
         return self
 
     def _snapshot(self, d=optimize):
