@@ -59,8 +59,3 @@ class _KnifeMixin(local):
         return s((type, pat), flags)
 
     _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
-
-    def _clearsp(self):
-        # clear fetch snapshots
-        self._history.clear()
-        return self

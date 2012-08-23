@@ -567,7 +567,7 @@ class MapMixin(object):
         self.assertEqual(
             self.mclass(
                 dict([(1, 2), (2, 3), (3, 4)]), dict([(1, 2), (2, 3), (3, 4)])
-            ).mapping(mapmerge=True).get(),
+            ).mapping().wrap(dict).get(),
             dict([(1, 2), (2, 3), (3, 4)]),
         )
 
@@ -606,6 +606,7 @@ class Mixin(object):
         self.assertEqual(queue.peek(), [1, 2, 3, 4, 5, 6, 1, 2, 3, 1])
         queue.original()
         self.assertEqual(queue.peek(), [1, 2, 3])
+        self.assertRaises(IndexError, lambda: queue.undo().undo())
 
     def test_wrap(self):
         self.assertIsInstance(

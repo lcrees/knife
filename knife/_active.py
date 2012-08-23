@@ -168,7 +168,7 @@ class _OutMixin(_ActiveMixin):
         # clear everything
         self.clear()
         # clear snapshots
-        self._clearsp()
+        self._history.clear()
         # revert to baseline snapshot of incoming things
         self._in.extend(loads_(self._baseline))
         return self
@@ -177,7 +177,7 @@ class _OutMixin(_ActiveMixin):
         # clear everything
         self.clear()
         # clear snapshots
-        self._clearsp()
+        self._history.clear()
         # clear baseline
         self._baseline = None
         # restore original snapshot of incoming things

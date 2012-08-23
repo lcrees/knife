@@ -169,7 +169,7 @@ class _OutMixin(_LazyMixin):
         # clear everything
         self.clear()
         # clear snapshots
-        self._clearsp()
+        self._history.clear()
         # revert to baseline snapshot of incoming things
         self._in, self._baseline = tee_(self._baseline)
         return self
@@ -178,7 +178,7 @@ class _OutMixin(_LazyMixin):
         # clear everything
         self.clear()
         # clear snapshots
-        self._clearsp()
+        self._history.clear()
         # clear baseline
         self._baseline = None
         # restore original snapshot of incoming things
