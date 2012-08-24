@@ -12,8 +12,8 @@ from operator import attrgetter, itemgetter, methodcaller, truediv
 from itertools import (
     chain, combinations, groupby, islice, repeat, permutations, starmap, tee)
 
-from stuf.deep import selfname
 from stuf.utils import memoize
+from stuf.deep import selfname, members
 from stuf.six.moves import filterfalse, zip_longest  # @UnresolvedImport
 from stuf.iterable import deferfunc, deferiter, count
 from stuf.collects import OrderedDict, Counter, ChainMap
@@ -323,6 +323,20 @@ class _FilterMixin(local):
             except StopIteration:
                 pass
         return self._xtend(traverse(self._iterable))
+
+    def _mro(self, ci=chain.from_iterable, map=map, getmro=getmro):
+        return self._xtend(ci(map(getmro, self._iterable)))
+
+    def _members(
+        self, invert, ci=chain.from_iterable, map=map, getmro=members,
+        f=filter, ff=filterfalse,
+    ):
+        if self._worker is None:
+            test = lambda x: not x[0].startswith('__')
+        else:
+            test = self._identity
+        ifilter = ff if invert else f
+        return self._xtend(ifilter(test, ci(map(members, self._iterable))))
 
 
 class _ReduceMixin(local):

@@ -330,6 +330,19 @@ class FilterMixin(object):
             ((2, 4, 6), (1, 3, 5))
         )
 
+    def test_members(self):
+        self.assertEqual(
+            self.mclass(stoog3).members().get(),
+            [('age', 60), ('name', 'curly'), ('stoog4', stoog3.stoog4)],
+        )
+        self.assertEqual(
+            self.mclass(stoog3).members(True).get(),
+             [('__doc__', None), ('__module__', 'tests.mixins')],
+        )
+
+    def test_mro(self):
+        self.assertEqual(self.mclass(stooge3).mro().get(), [stooge3, stoog2])
+
 
 class SliceMixin(object):
 
@@ -425,7 +438,6 @@ class ReduceMixin(object):
         )
 
     def test_zip(self):
-        # auto
         self.assertEqual(
             self.mclass(
                 ['moe', 'larry', 'curly'], [30, 40, 50], [True, False, False]

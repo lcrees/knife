@@ -990,6 +990,25 @@ class FilterMixin(local):
         with self._chain:
             return self._traverse(invert)
 
+    def members(self, inverse=False):
+        '''
+        Collect values from shallowly from classes or objects matched by
+        :meth:`worker`.
+
+        :keyword bool invert: collect incoming things that :meth:`worker` is
+          :data:`False` rather than :data:`True` for
+
+        :returns: :term:`sequence` of :func:`tuple` of keys and value
+
+        :rtype: :obj:`knife` :term:`object`
+        '''
+        with self._chain:
+            return self._members(inverse)
+
+    def mro(self):
+        with self._chain:
+            return self._mro()
+
 
 class ReduceMixin(local):
 
