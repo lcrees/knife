@@ -2,6 +2,7 @@
 '''base knife mixins'''
 
 from threading import local
+from functools import partial
 
 from stuf.six import tounicode, tobytes
 
@@ -67,6 +68,10 @@ class KnifeMixin(local):
         self._args = args
         # keyword arguemnts
         self._kw = kw
+        return self
+
+    def partial(self, worker, *args, **kw):
+        self._worker = partial(worker, *args, **kw)
         return self
 
     def pattern(self, pattern, type='parse', flags=0):
