@@ -339,7 +339,7 @@ class _FilterMixin(local):
             test = self._identity
         ifilter = filterfalse if invert else filter
         return self._xtend(ifilter(
-            test, chain.from_iterable(map(members, self._iterable))
+            test, chain.from_iterable(map(members, self._iterable)),
         ))
 
 

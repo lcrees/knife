@@ -19,8 +19,7 @@ def getversion(fname):
 setup(
     name='knife',
     version=getversion('knife/__init__.py'),
-    description='Pythonic remix of underscore.js: Things go in. Things get '
-        'knifed. Things go out.',
+    description='Things go in. Things get knifed. Things go out.',
     long_description=open(join(getcwd(), 'README.rst'), 'r').read(),
     keywords='pipeline filtering chaining iterator functional fluent chaining',
     license='BSD',
@@ -46,6 +45,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.1',
         'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
