@@ -1,23 +1,231 @@
 # -*- coding: utf-8 -*-
 '''Actively evaluated knives.'''
 
-from knife.base import OutMixin
+from threading import local
+from collections import deque
+from contextlib import contextmanager
+
+from stuf.deep import clsname
+from stuf.utils import loads, optimize, moptimize
+
+from knife.base import KnifeMixin, SLOTS
 from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CmpMixin, OrderMixin)
 
-from knife._active import _OutMixin
-from knife._base import SLOTS, _KnifeMixin
-from knife._mixins import (
-    _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
-    _MathMixin, _CmpMixin, _OrderMixin)
+
+class _ActiveMixin(local):
+
+    '''active knife mixin'''
+
+    def __init__(self, *things, **kw):
+        '''
+        :argument things: incoming things
+
+        :keyword integer snapshots: snapshots to keep (default: ``5``)
+        '''
+        incoming = deque()
+        incoming.extend(things)
+        super(_ActiveMixin, self).__init__(incoming, deque(), **kw)
+        # working things
+        self._work = deque()
+        # holding things
+        self._hold = deque()
+
+    @property
+    @contextmanager
+    def _chain(self, d=moptimize):
+        # take snapshot
+        snapshot = d(self._in)
+        # rebalance incoming with outcoming
+        if self._history:
+            self._in.clear()
+            self._in.extend(self._out)
+        # make snapshot original snapshot?
+        else:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # move incoming things to working things
+        self._work.extend(self._in)
+        yield
+        out = self._out
+        # clear outgoing things
+        out.clear()
+        # extend outgoing things with holding things
+        out.extend(self._hold)
+        # clear working things
+        self._work.clear()
+        # clear holding things
+        self._hold.clear()
+
+    @property
+    def _iterable(self):
+        # derived from Raymond Hettinger Python Cookbook recipe # 577155
+        call = self._work.popleft
+        try:
+            while 1:
+                yield call()
+        except IndexError:
+            pass
+
+    def _append(self, thing):
+        # append thing after other holding things
+        self._hold.append(thing)
+        return self
+
+    def _xtend(self, things):
+        # place things after holding things
+        self._hold.extend(things)
+        return self
+
+    def _prependit(self, things, d=moptimize):
+        # take snapshot
+        snapshot = d(self._in)
+        # make snapshot original snapshot?
+        if self._original is None:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # place thing before other holding things
+        self._in.extendleft(reversed(things))
+        return self
+
+    def _appendit(self, things, d=moptimize):
+        # take snapshot
+        snapshot = d(self._in)
+        # make snapshot original snapshot?
+        if self._original is None:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # place things after other incoming things
+        self._in.extend(things)
+        return self
+
+    def _pipeit(self, knife):
+        knife.clear()
+        knife._history.clear()
+        knife._history.extend(self._history)
+        knife._original = self._original
+        knife._baseline = self._baseline
+        knife._out.extend(self._out)
+        knife._worker = self._worker
+        knife._args = self._args
+        knife._kw = self._kw
+        knife._wrapper = self._wrapper
+        knife._pipe = self
+        return knife
+
+    def _unpipeit(self):
+        piped = self._pipe
+        piped.clear()
+        piped._history.clear()
+        piped._history.extend(self._history)
+        piped._original = self._original
+        piped._baseline = self._baseline
+        piped._out.extend(self._out)
+        piped._worker = self._worker
+        piped._args = self._args
+        piped._kw = self._kw
+        piped._wrapper = self._wrapper
+        self.clear()
+        return piped
+
+    def _repr(self, clsname_=clsname, list_=list):
+        # object representation
+        return self._REPR.format(
+            self.__module__,
+            clsname_(self),
+            list_(self._in),
+            list_(self._work),
+            list_(self._hold),
+            list_(self._out),
+        )
+
+    def _len(self, len=len):
+        # length of incoming things
+        return len(self._in)
+
+    def _undo(self, snapshot=0, loads_=loads):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        try:
+            self._in.extend(loads_(self._history.popleft()))
+        except IndexError:
+            raise IndexError('nothing to undo')
+        return self
+
+    def _snapshot(self, d=optimize):
+        # take baseline snapshot of incoming things
+        self._baseline = d(self._in)
+        return self
+
+    def _rollback(self, loads_=loads):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._history.clear()
+        # revert to baseline snapshot of incoming things
+        self._in.extend(loads_(self._baseline))
+        return self
+
+    def _revert(self, loads_=loads):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._history.clear()
+        # clear baseline
+        self._baseline = None
+        # restore original snapshot of incoming things
+        self._in.extend(loads_(self._original))
+        return self
+
+    def _clear(self, list_=list):
+        # clear worker
+        self._worker = None
+        # clear worker positional arguments
+        self._args = ()
+        # clear worker keyword arguments
+        self._kw = {}
+        # default iterable wrapper
+        self._wrapper = list_
+        # clear pipe
+        self._pipe = None
+        # clear incoming things
+        self._in.clear()
+        # clear working things
+        self._work.clear()
+        # clear holding things
+        self._hold.clear()
+        # clear outgoing things
+        self._out.clear()
+        return self
+
+    def _iterate(self, iter_=iter):
+        return iter_(self._out)
+
+    def _peek(self, len_=len, list_=list):
+        wrap, out = self._wrapper, self._in
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(value) == 1 else value
+
+    def _get(self, len_=len, list_=list):
+        wrap, out = self._wrapper, self._out
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        self._each = False
+        self._wrapper = list_
+        return value[0] if len_(value) == 1 else value
 
 
 class activeknife(
-    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin, _MathMixin,
-    _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
-    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
-    MathMixin, SliceMixin, CmpMixin,
+    _ActiveMixin, KnifeMixin, FilterMixin, MapMixin, ReduceMixin,
+    OrderMixin, RepeatMixin, MathMixin, SliceMixin, CmpMixin,
 ):
 
     '''
@@ -33,7 +241,7 @@ class activeknife(
     __slots__ = SLOTS
 
 
-class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
+class cmpknife(_ActiveMixin, KnifeMixin, CmpMixin):
 
     '''
     Actively evaluated comparing knife. Provides comparison operations for
@@ -45,7 +253,7 @@ class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
     __slots__ = SLOTS
 
 
-class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
+class filterknife(_ActiveMixin, KnifeMixin, FilterMixin):
 
     '''
     Actively evaluated filtering knife. Provides filtering operations for
@@ -57,7 +265,7 @@ class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
     __slots__ = SLOTS
 
 
-class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
+class mapknife(_ActiveMixin, KnifeMixin, MapMixin):
 
     '''
     Actively evaluated mapping knife. Provides `mapping <http://docs.python.org
@@ -69,7 +277,7 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
     __slots__ = SLOTS
 
 
-class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
+class mathknife(_ActiveMixin, KnifeMixin, MathMixin):
 
     '''
     Actively evaluated mathing knife. Provides numeric and statistical
@@ -81,7 +289,7 @@ class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
     __slots__ = SLOTS
 
 
-class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
+class orderknife(_ActiveMixin, KnifeMixin, OrderMixin):
 
     '''
     Actively evaluated ordering knife. Provides sorting and grouping operations
@@ -93,7 +301,7 @@ class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
     __slots__ = SLOTS
 
 
-class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
+class reduceknife(_ActiveMixin, KnifeMixin, ReduceMixin):
 
     '''
     Actively evaluated reducing knife. Provides `reducing <http://docs.python.
@@ -105,7 +313,7 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
     __slots__ = SLOTS
 
 
-class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
+class repeatknife(_ActiveMixin, KnifeMixin, RepeatMixin):
 
     '''
     Actively evaluated repeating knife. Provides repetition operations for
@@ -117,7 +325,7 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
     __slots__ = SLOTS
 
 
-class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
+class sliceknife(_ActiveMixin, KnifeMixin, SliceMixin):
 
     '''
     Actively evaluated slicing knife. Provides `slicing <http://docs.python.

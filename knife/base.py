@@ -1,15 +1,65 @@
 # -*- coding: utf-8 -*-
-'''base knife mixins'''
+'''Base knife mixins.'''
 
 from threading import local
 from functools import partial
+from operator import truth
+from collections import deque
 
-from stuf.six import tounicode, tobytes
+from stuf.utils import memoize
+from stuf.patterns import searcher
+from stuf.six import identity, tounicode, tobytes
+
+SLOTS = (
+    '_in _work _hold _out _original _baseline _each _kw _history _worker _args'
+    '_wrapper _pipe'
+).split()
 
 
 class KnifeMixin(local):
 
     '''Base knife mixin.'''
+
+    _REPR = '{0}.{1} ([IN: ({2}) => WORK: ({3}) => HOLD: ({4}) => OUT: ({5})])'
+
+    def __init__(self, ins, outs, **kw):
+        super(KnifeMixin, self).__init__()
+        # incoming things
+        self._in = ins
+        # outgoing things
+        self._out = outs
+        # pipe out default
+        self._pipe = None
+        # default output default
+        self._each = False
+        # original and baseline snapshots
+        self._original = self._baseline = None
+        # maximum number of history snapshots to keep (default: 5)
+        self._history = deque(maxlen=kw.pop('snapshots', 5))
+        # worker default
+        self._worker = None
+        # position arguments default
+        self._args = ()
+        # keyword arguments default
+        self._kw = {}
+        # default wrapper default
+        self._wrapper = list
+
+    @property
+    def _identity(self):
+        # use  generic identity function for worker if no worker assigned
+        return self._worker if self._worker is not None else identity
+
+    @property
+    def _test(self, truth_=truth):
+        # use truth operator function for worker if no worker assigned
+        return self._worker if self._worker is not None else truth_
+
+    @staticmethod
+    @memoize
+    def _pattern(pat, type, flags, s=searcher):
+        # compile glob pattern into regex
+        return s((type, pat), flags)
 
     def apply(self, worker, *args, **kw):
         '''
@@ -169,11 +219,6 @@ class KnifeMixin(local):
     def __repr__(self):
         '''String representation.'''
         return self._repr()
-
-
-class OutMixin(KnifeMixin):
-
-    '''Output mixin.'''
 
     def __iter__(self):
         '''Iterate over outgoing things.'''

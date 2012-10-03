@@ -1,23 +1,243 @@
 # -*- coding: utf-8 -*-
 '''Lazier evaluated knives.'''
 
-from knife.base import OutMixin
+from threading import local
+from itertools import tee, chain
+from contextlib import contextmanager
+
+from stuf.deep import clsname
+from stuf.iterable import count
+
+from knife.base import SLOTS, KnifeMixin
 from knife.mixins import (
     RepeatMixin, MapMixin, SliceMixin, ReduceMixin, FilterMixin, MathMixin,
     CmpMixin, OrderMixin)
 
-from knife._lazy import _OutMixin
-from knife._base import SLOTS, _KnifeMixin
-from knife._mixins import (
-    _RepeatMixin, _MapMixin, _SliceMixin, _ReduceMixin, _FilterMixin,
-    _MathMixin, _CmpMixin, _OrderMixin)
+
+class _LazyMixin(local):
+
+    '''Lazy knife mixin.'''
+
+    def __init__(self, *things, **kw):
+        '''
+        :argument things: incoming things
+        :keyword integer snapshots: snapshots to keep (default: ``5``)
+        '''
+        incoming = (
+            (things[0],).__iter__() if len(things) == 1 else things.__iter__()
+        )
+        super(_LazyMixin, self).__init__(incoming, ().__iter__(), **kw)
+        # working things
+        self._work = ().__iter__()
+        # holding things
+        self._hold = ().__iter__()
+
+    @property
+    @contextmanager
+    def _chain(self, tee_=tee):
+        # take snapshot
+        self._in, snapshot = tee_(self._in)
+        # rebalance incoming with outcoming
+        if self._history:
+            self._in, self._out = tee_(self._out)
+        # make snapshot original snapshot?
+        else:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # move incoming things to working things
+        work, self._in = tee_(self._in)
+        self._work = work
+        yield
+        # extend outgoing things with holding things
+        self._out = self._hold
+        # clear working things
+        del self._work
+        self._work = ().__iter__()
+        # clear holding things
+        del self._hold
+        self._hold = ().__iter__()
+
+    @property
+    def _iterable(self):
+        # iterable derived from link in chain
+        return self._work
+
+    def _xtend(self, things, chain_=chain):
+        # place things after holding things
+        self._hold = chain_(things, self._hold)
+        return self
+
+    def _append(self, things, chain_=chain):
+        # append thing after other holding things
+        self._hold = chain_(self._hold, (things,).__iter__())
+        return self
+
+    def _prependit(self, things, tee_=tee, chain_=chain):
+        # take snapshot
+        self._in, snapshot = tee_(self._in)
+        # make snapshot original snapshot?
+        if self._original is None:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # place things before other incoming things
+        self._in = chain_(things, self._in)
+        return self
+
+    def _appendit(self, things, tee_=tee, chain_=chain):
+        # take snapshot
+        self._in, snapshot = tee_(self._in)
+        # make snapshot original snapshot?
+        if self._original is None:
+            self._original = snapshot
+        # place snapshot at beginning of snapshot stack
+        self._history.appendleft(snapshot)
+        # place things before other incoming things
+        self._in = chain_(self._in, things)
+        return self
+
+    def _pipeit(self, knife):
+        knife.clear()
+        knife._history.clear()
+        knife._history.extend(self._history)
+        knife._original = self._original
+        knife._baseline = self._baseline
+        knife._out = self._out
+        knife._worker = self._worker
+        knife._args = self._args
+        knife._kw = self._kw
+        knife._wrapper = self._wrapper
+        knife._pipe = self
+        return knife
+
+    def _unpipeit(self):
+        piped = self._pipe
+        piped.clear()
+        piped._history.clear()
+        piped._history.extend(self._history)
+        piped._original = self._original
+        piped._baseline = self._baseline
+        piped._out = self._out
+        piped._worker = self._worker
+        piped._args = self._args
+        piped._kw = self._kw
+        piped._wrapper = self._wrapper
+        return piped
+
+    def _repr(self, tee_=tee, l=list, clsname_=clsname):
+        # object representation
+        self._in, in2 = tee_(self._in)
+        self._out, out2 = tee_(self._out)
+        self._work, work2 = tee_(self._work)
+        self._hold, hold2 = tee_(self._hold)
+        return self._REPR.format(
+            self.__module__,
+            clsname_(self),
+            l(in2),
+            l(work2),
+            l(hold2),
+            l(out2),
+        )
+
+    def _len(self, tee_=tee, count_=count):
+        # length of incoming things
+        self._in, incoming = tee_(self._in)
+        return count_(incoming)
+
+    def _undo(self, snapshot=0):
+        # clear everything
+        self.clear()
+        # if specified, use a specific snapshot
+        if snapshot:
+            self._history.rotate(-(snapshot - 1))
+        try:
+            self._in = self._history.popleft()
+        except IndexError:
+            raise IndexError('nothing to undo')
+        # clear outgoing things
+        del self._out
+        self._out = ().__iter__()
+        return self
+
+    def _snapshot(self, tee_=tee):
+        # take baseline snapshot of incoming things
+        self._in, self._baseline = tee_(self._in)
+        return self
+
+    def _rollback(self, tee_=tee):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._history.clear()
+        # revert to baseline snapshot of incoming things
+        self._in, self._baseline = tee_(self._baseline)
+        return self
+
+    def _revert(self, tee_=tee):
+        # clear everything
+        self.clear()
+        # clear snapshots
+        self._history.clear()
+        # clear baseline
+        self._baseline = None
+        # restore original snapshot of incoming things
+        self._in, self._original = tee_(self._original)
+        return self
+
+    def _clear(self, list_=list):
+        # clear worker
+        self._worker = None
+        # clear worker positional arguments
+        self._args = ()
+        # clear worker keyword arguments
+        self._kw = {}
+        # revert to default iterable wrapper
+        self._wrapper = list_
+        # clear pipe
+        self._pipe = None
+        # clear incoming things
+        del self._in
+        self._in = ().__iter__()
+        # clear working things
+        del self._work
+        self._work = ().__iter__()
+        # clear holding things
+        del self._hold
+        self._hold = ().__iter__()
+        # clear outgoing things
+        del self._out
+        self._out = ().__iter__()
+        return self
+
+    def _iterate(self, tee_=tee):
+        self._out, outs = tee_(self._out)
+        return outs
+
+    def _peek(self, tee_=tee, list_=list, count_=count):
+        tell, self._in, out = tee_(self._in, 3)
+        wrap = self._wrapper
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        # reset each flag
+        self._each = False
+        # reset wrapper
+        self._wrapper = list_
+        return value[0] if count_(tell) == 1 else value
+
+    def _get(self, tee_=tee, list_=list, count_=count):
+        tell, self._out, out = tee_(self._out, 3)
+        wrap = self._wrapper
+        value = list_(wrap(i) for i in out) if self._each else wrap(out)
+        # reset each flag
+        self._each = False
+        # reset wrapper
+        self._wrapper = list_
+        return value[0] if count_(tell) == 1 else value
 
 
 class lazyknife(
-    _OutMixin, _KnifeMixin, _CmpMixin, _FilterMixin, _MapMixin, _MathMixin,
-    _OrderMixin, _ReduceMixin, _SliceMixin, _RepeatMixin,
-    OutMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin, RepeatMixin,
-    MathMixin, SliceMixin, CmpMixin,
+    _LazyMixin, KnifeMixin, FilterMixin, MapMixin, ReduceMixin, OrderMixin,
+    RepeatMixin, MathMixin, SliceMixin, CmpMixin,
 ):
 
     '''
@@ -33,7 +253,7 @@ class lazyknife(
     __slots__ = SLOTS
 
 
-class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
+class cmpknife(_LazyMixin, KnifeMixin, CmpMixin):
 
     '''
     Lazier evaluated comparing knife. Provides comparison operations for
@@ -45,7 +265,7 @@ class cmpknife(_OutMixin, _KnifeMixin, OutMixin, CmpMixin, _CmpMixin):
     __slots__ = SLOTS
 
 
-class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
+class filterknife(_LazyMixin, KnifeMixin, FilterMixin):
 
     '''
     Lazier evaluated filtering knife. Provides filtering operations for
@@ -57,7 +277,7 @@ class filterknife(_OutMixin, _KnifeMixin, OutMixin, FilterMixin, _FilterMixin):
     __slots__ = SLOTS
 
 
-class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
+class mapknife(_LazyMixin, KnifeMixin, MapMixin):
 
     '''
     Lazier evaluated mapping knife. Provides `mapping <http://docs.python.org
@@ -69,7 +289,7 @@ class mapknife(_OutMixin, _KnifeMixin, OutMixin, MapMixin, _MapMixin):
     __slots__ = SLOTS
 
 
-class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
+class mathknife(_LazyMixin, KnifeMixin, MathMixin):
 
     '''
     Lazier evaluated mathing knife. Provides numeric and statistical
@@ -81,7 +301,7 @@ class mathknife(_OutMixin, _KnifeMixin, OutMixin, MathMixin, _MathMixin):
     __slots__ = SLOTS
 
 
-class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
+class orderknife(_LazyMixin, KnifeMixin, OrderMixin):
 
     '''
     Lazier evaluated ordering knife. Provides sorting and grouping operations
@@ -93,7 +313,7 @@ class orderknife(_OutMixin, _KnifeMixin, OutMixin, OrderMixin, _OrderMixin):
     __slots__ = SLOTS
 
 
-class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
+class reduceknife(_LazyMixin, KnifeMixin, ReduceMixin):
 
     '''
     Lazier evaluated reducing knife. Provides `reducing <http://docs.python.
@@ -105,7 +325,7 @@ class reduceknife(_OutMixin, _KnifeMixin, OutMixin, ReduceMixin, _ReduceMixin):
     __slots__ = SLOTS
 
 
-class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
+class repeatknife(_LazyMixin, KnifeMixin, RepeatMixin):
 
     '''
     Lazier evaluated repeating knife. Provides repetition operations for
@@ -117,7 +337,7 @@ class repeatknife(_OutMixin, _KnifeMixin, OutMixin, RepeatMixin, _RepeatMixin):
     __slots__ = SLOTS
 
 
-class sliceknife(_OutMixin, _KnifeMixin, OutMixin, SliceMixin, _SliceMixin):
+class sliceknife(_LazyMixin, KnifeMixin, SliceMixin):
 
     '''
     Lazier evaluated slicing knife. Provides `slicing <http://docs.python.
