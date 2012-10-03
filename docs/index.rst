@@ -71,7 +71,7 @@ Things come out:
 Slightly more *knife*
 =====================
 
-:mod:`knife` has 40 plus :term:`method`\s that can be `chained <https://en.wikipedia.org/
+:mod:`knife` has 40 plus :term:`method`\s that can be `chained <http://en.wikipedia.org/
 wiki/Fluent_interface>`_ into pipelines...
 
 contrived example:
