@@ -335,13 +335,14 @@ class FilterMixin(object):
             self.mclass(stoog3).members().get(),
             [('age', 60), ('name', 'curly'), ('stoog4', stoog3.stoog4)],
         )
-        self.assertEqual(
-            self.mclass(stoog3).members(True).get(),
-             [('__doc__', None), ('__module__', 'tests.mixins')],
-        )
+        results = self.mclass(stoog3).members(True).get()
+        self.assertIn(('__doc__', None), results)
+        self.assertIn(('__module__', 'tests.mixins'), results)
 
     def test_mro(self):
-        self.assertEqual(self.mclass(stooge3).mro().get(), [stooge3, stoog2])
+        results = self.mclass(stooge3).mro().get()
+        self.assertIn(stooge3, results)
+        self.assertIn(stoog2, results)
 
 
 class SliceMixin(object):

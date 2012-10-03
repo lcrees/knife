@@ -678,10 +678,10 @@ class RepeatMixin(local):
             function in Underscore.php
         '''
         with self._chain:
-            call = self._identity
+            callr = self._identity
             if call:
                 return self._xtend(
-                    starmap(call, repeat(tuple(self._iterable), n))
+                    starmap(callr, repeat(tuple(self._iterable), n))
                 )
             return self._xtend(repeat(tuple(self._iterable), n))
 
@@ -1031,7 +1031,8 @@ class FilterMixin(local):
         '''
         with self._chain:
             return self._xtend(
-            (filterfalse if invert else filter)(self._worker, self._iterable)
+                (filterfalse if invert else filter)(
+                    self._worker, self._iterable)
             )
 
     def items(self, *keys):
@@ -1131,6 +1132,7 @@ class FilterMixin(local):
             else:
                 test = self._identity
             ifilter = filterfalse if invert else filter
+
             def members(iterable):  # @IgnorePep8
                 mro = getmro(iterable)
                 names = iter(dir(iterable))
@@ -1165,6 +1167,7 @@ class FilterMixin(local):
                             yield name, obj
                 except StopIteration:
                     pass
+
             def traverse(iterable):  # @IgnorePep8
                 try:
                     iterable = iter(iterable)

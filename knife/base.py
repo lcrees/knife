@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 '''Base knife mixins.'''
 
+from operator import truth
 from threading import local
 from functools import partial
-from operator import truth
 from collections import deque
 
 from stuf.utils import memoize
